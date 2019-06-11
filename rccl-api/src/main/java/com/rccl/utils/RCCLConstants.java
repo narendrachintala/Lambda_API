@@ -40,6 +40,7 @@ public class RCCLConstants {
 	public final static String SAIL_MONTH_F = "sail_month";
 	public final static String SAIL_DATE_F = "sail_date";
 	public final static String CAT_CLASS_F = "cat_class";
+	public final static String CATEGORY_F = "category";
 	public final static String OCCUPANCY_F = "occupancy";
 	
 	/**

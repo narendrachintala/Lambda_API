@@ -26,7 +26,7 @@ public class FilterDataHelper {
 		String AND = ") and ";
 
 		if (filterData != null && !filterData.isEmpty()) {
-
+			
 			if (!CollectionUtils.isNullOrEmpty(filterData.get(RCCLConstants.METAPRODUCT_F))) {
 
 				queryBuffer.append(RCCLConstants.METAPRODUCT_F).append(IN);

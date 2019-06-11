@@ -16,7 +16,7 @@ import com.rccl.utils.RCCLConstants;
  * @author narendra.chintala
  *
  */
-public class GetMetaProductFilterData implements RequestHandler<Map<String, List<String>>, FilterDataDTO> {
+public class GetProductCodeFilterData implements RequestHandler<Map<String, List<String>>, FilterDataDTO> {
 
 	@Override
 	public FilterDataDTO handleRequest(Map<String, List<String>> requestMap, Context context) {
@@ -25,14 +25,14 @@ public class GetMetaProductFilterData implements RequestHandler<Map<String, List
 
 		FilterDataService dataService = new FilterDataService();
 		FilterDataDTO response = //new FilterDataDTO();
-				dataService.getFilterData(FiltersData.getRequestData(), RCCLConstants.OCCUPANCY_F);
+				dataService.getFilterData(FiltersData.getRequestData(), RCCLConstants.PRODUCT_CODE_F);
 		
 		return response;
 
 	}
 
 	public static void main(String[] args) {
-		System.out.println(new GetMetaProductFilterData().handleRequest(null, null));
+		System.out.println(new GetProductCodeFilterData().handleRequest(null, null));
 	}
 
 }

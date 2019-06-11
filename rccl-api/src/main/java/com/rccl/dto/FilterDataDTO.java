@@ -19,4 +19,9 @@ public class FilterDataDTO {
 		this.filterData = filterData;
 	}
 
+	@Override
+	public String toString() {
+		return "FilterDataDTO [filterData=" + filterData + "]";
+	}
+
 }

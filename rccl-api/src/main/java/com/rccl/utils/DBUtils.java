@@ -33,7 +33,7 @@ public class DBUtils {
 
 			filterQuery = filterQuery.replace(RCCLConstants.TABLE_NAME_Q,
 					filterData.get(RCCLConstants.TABLE_NAME).get(0));
-			filterQuery = filterQuery.replace(RCCLConstants.FILTER_COLUMN_Q, filter_column);
+			filterQuery = filterQuery.replaceAll(RCCLConstants.FILTER_COLUMN_Q, filter_column);
 
 		}
 		filterQuery = filterQuery.replace(RCCLConstants.FILTER_COLUMN_Q, filter_column);
@@ -42,7 +42,11 @@ public class DBUtils {
 		} else {
 			FilterDataHelper filterDataHelper = new FilterDataHelper();
 			String whereCondition = filterDataHelper.generateFilterCondition(filterData, queryBuffer);
-			filterQuery = filterQuery.replace(RCCLConstants.WHERE_CONDITION_Q, whereCondition);
+			if (whereCondition.equals("")) {
+				filterQuery = filterQuery.replace(RCCLConstants.WHERE_CONDITION_Q, "1=1");
+			} else {
+				filterQuery = filterQuery.replace(RCCLConstants.WHERE_CONDITION_Q, whereCondition);
+			}
 		}
 		// generate where condition and append to filter query
 		// queryBuffer.append(filterQuery).append(generateFilterCondition(filterData,

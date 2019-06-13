@@ -1,2 +1,2 @@
 # LAMBDA_API
-List of lambda functions for RCCL API's
+List of lambda functions for API's

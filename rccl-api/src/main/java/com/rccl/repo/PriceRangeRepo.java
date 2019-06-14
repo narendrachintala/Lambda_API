@@ -7,11 +7,11 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gson.Gson;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
+
 import com.rccl.dbutils.RevorioConnect;
-import com.rccl.dto.FilterDataDTO;
-import com.rccl.dto.PriceRangeDTO;
-import com.rccl.processor.FilterDataProcessor;
+import com.rccl.dto.PriceRangeReq;
+import com.rccl.model.PriceRangeDTO;
 import com.rccl.utils.DBUtils;
 import com.rccl.utils.RCCLConstants;
 
@@ -21,32 +21,20 @@ import com.rccl.utils.RCCLConstants;
  *
  */
 public class PriceRangeRepo {
-	
-	public FilterDataDTO getFilterData(Map<String, List<String>> filterData, String filter_column) {
+
+	public List<PriceRangeDTO> getPriceRangeData(Map<String, List<String>> filterData) {
 		Connection conn = RevorioConnect.getInstance().getConnection();
-		PriceRangeDTO results = new PriceRangeDTO();
+		List<PriceRangeDTO> priceData = null;
 		DBUtils dbUtils = DBUtils.getInstance();
 		try {
-			String filterQuery = dbUtils.generateFilterQuery(filterData, filter_column);
-			System.out.println("filterQuery: " + filterQuery);
-			PreparedStatement pstmt = conn.prepareStatement(filterQuery);
-			pstmt.setFetchSize(RCCLConstants.MAX_FETCH_ROWS);
+			String getPriceRangeQuery = dbUtils.getPriceRangeDataQuery(filterData);
+			System.out.println("getPriceRangeQuery: " + getPriceRangeQuery);
+			PreparedStatement pstmt = conn.prepareStatement(getPriceRangeQuery);
+			pstmt.setFetchSize(RCCLConstants.MID_FETCH_ROWS);
 			ResultSet rs = pstmt.executeQuery();
-			
-			FilterDataProcessor dataProcessor = new FilterDataProcessor();
-			while(rs.next()) {
-			dataProcessor.processResult(rs);
-			} 
-			
-			
-			/*
-			 * BeanListHandler<String> handle = new BeanListHandler<String>(String.class);
-			 * List<String> rr = handle.handle(rs); Gson gson = new Gson();
-			 * System.out.println(gson.toJson(rr));
-			 */
-			//results.setFilterData(dataProcessor.getResult());
-			Gson gson = new Gson();
-			System.out.println(gson.toJson(results));
+
+			BeanListHandler<PriceRangeDTO> handle = new BeanListHandler<PriceRangeDTO>(PriceRangeDTO.class);
+			priceData = handle.handle(rs);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -56,9 +44,35 @@ public class PriceRangeRepo {
 				e.printStackTrace();
 			}
 		}
-		return null;
+		return priceData;
 
 	}
 
+	public boolean updatePriceRangeData(PriceRangeReq priceRangeReq) {
+		Connection conn = RevorioConnect.getInstance().getConnection();
+		DBUtils dbUtils = DBUtils.getInstance();
+		Integer status = 0;
+		try {
+			String updatePriceRangeQuery = dbUtils.updatePriceRangeDataQuery(priceRangeReq);
+			System.out.println("updatePriceRangeQuery: " + updatePriceRangeQuery);
+			PreparedStatement pstmt = conn.prepareStatement(updatePriceRangeQuery);
+			pstmt.setFetchSize(RCCLConstants.MIN_FETCH_ROWS);
+			status = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (status == 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 
 }

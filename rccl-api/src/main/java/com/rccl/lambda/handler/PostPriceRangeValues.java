@@ -8,6 +8,8 @@ import java.util.Map;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
+import com.rccl.dto.PriceRangeReq;
+import com.rccl.model.PriceRangeDTO;
 import com.rccl.utils.RCCLConstants;
 
 /**
@@ -15,14 +17,20 @@ import com.rccl.utils.RCCLConstants;
  * @author narendra.chintala
  *
  */
-public class PostPriceRangeValues implements RequestHandler<Map<String, Object>, Map<String, Object>> {
+public class PostPriceRangeValues implements RequestHandler<PriceRangeReq, List<PriceRangeDTO>> {
 
 	@Override
-	public Map<String, Object> handleRequest(Map<String, Object> price_range_values, Context context) {
-		context.getLogger().log("PRICE_RANGE_MIN: " + price_range_values.get(RCCLConstants.PRICE_RANGE_MIN));
-		context.getLogger().log("PRICE_RANGE_MIN: " + price_range_values.get(RCCLConstants.PRICE_RANGE_MAX));
-		context.getLogger().log("PRICE_RANGE_MIN: " + price_range_values.get(RCCLConstants.FILTER_DATA));
-		return price_range_values;
+	/**
+	 * Post price range data based on applied filters and requested data
+	 */
+	public List<PriceRangeDTO> handleRequest(PriceRangeReq request, Context context) {
+		Gson gson = new Gson();
+		context.getLogger().log("Input: " + gson.toJson(request));
+		System.out.println("PostPriceHandleRequest");
+		List<PriceRangeDTO> postPrice= new ArrayList<PriceRangeDTO>();
+
+		return postPrice;
+
 	}
 
 	public static void main(String[] args) {

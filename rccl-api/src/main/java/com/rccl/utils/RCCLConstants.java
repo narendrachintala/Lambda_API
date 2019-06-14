@@ -44,6 +44,16 @@ public class RCCLConstants {
 	public final static String OCCUPANCY_F = "occupancy";
 	
 	/**
+	 * PriceRangePara table updatable columns
+	 */
+	
+	public final static String L1_RANGE_MIN="l1_range_min";
+	public final static String L1_RANGE_MAX="l1_range_max";
+	public final static String L1_INSERT_DATE="l1_insert_date";
+	public final static String L2_RANGE_MIN="l2_range_min";
+	public final static String L2_RANGE_MAX="l2_range_max";
+	
+	/**
 	 * UI keys
 	 */
 	public static final String PRICE_RANGE_MIN = "price_range_min";

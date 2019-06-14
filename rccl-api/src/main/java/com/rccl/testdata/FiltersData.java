@@ -17,8 +17,10 @@
 
 			Map<String, List<String>> requestData = new HashMap<String, List<String>>();
 			List<String> metaproducts = new ArrayList<String>();
-			metaproducts.add("OASIS");
-			requestData.put(RCCLConstants.METAPRODUCT_F, metaproducts);
+		/*
+		 * metaproducts.add("OASIS"); requestData.put(RCCLConstants.METAPRODUCT_F,
+		 * metaproducts);
+		 */
 
 		/*
 		 * List<String> product_codes = new ArrayList<String>();

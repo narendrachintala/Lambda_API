@@ -34,6 +34,10 @@ public class ConfigUtil {
 	public String getPriceRangeData() {
 		return conf.getProperty("get_price_range_data");
 	}
+	
+	public String updatePriceRangeData() {
+		return conf.getProperty("update_price_range_para");
+	}
 
 	public String updatePauseParaData() {
 		return conf.getProperty("update_pause_para");
@@ -43,8 +47,6 @@ public class ConfigUtil {
 		return conf.getProperty("get_pause_para_data");
 	}
 
-	public String updatePriceRangeData() {
-		return conf.getProperty("update_price_range_para");
-	}
+	
 
 }

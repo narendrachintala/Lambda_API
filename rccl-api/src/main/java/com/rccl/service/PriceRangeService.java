@@ -3,7 +3,8 @@ package com.rccl.service;
 import java.util.List;
 import java.util.Map;
 
-import com.rccl.dto.FilterDataDTO;
+import com.rccl.dto.PriceRangeReq;
+import com.rccl.model.PriceRangeDTO;
 import com.rccl.repo.PriceRangeRepo;
 
 /**
@@ -12,17 +13,29 @@ import com.rccl.repo.PriceRangeRepo;
  *
  */
 public class PriceRangeService {
-	
-	public FilterDataDTO getPriceRangeData(Map<String, List<String>> map, String filter_column) {
-		FilterDataDTO filterData = null;
+
+	public List<PriceRangeDTO> getPriceRangeData(Map<String, List<String>> reqMap) {
+		List<PriceRangeDTO> priceRangeData = null;
 		try {
 			PriceRangeRepo repo = new PriceRangeRepo();
-			filterData = repo.getFilterData(map, filter_column);
+			priceRangeData = repo.getPriceRangeData(reqMap);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return filterData;
+		return priceRangeData;
+	}
+
+	public boolean updatePriceRangeData(PriceRangeReq priceRangeReq) {
+		PriceRangeRepo priceRangeRepo = null;
+		boolean status = false;
+		try {
+			priceRangeRepo = new PriceRangeRepo();
+			status = priceRangeRepo.updatePriceRangeData(priceRangeReq);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return status;
 	}
 
 }

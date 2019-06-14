@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.rccl.dbutils.RevorioConnect;
-import com.rccl.dto.FilterDataDTO;
+import com.rccl.model.FilterDataDTO;
 import com.rccl.processor.FilterDataProcessor;
 import com.rccl.utils.DBUtils;
 import com.rccl.utils.RCCLConstants;

@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.amazonaws.util.CollectionUtils;
+import com.rccl.dto.PriceRangeReq;
 import com.rccl.utils.helper.FilterDataHelper;
+import com.rccl.utils.helper.PriceRangeDataHelper;
 
 /**
  * 
@@ -53,6 +55,39 @@ public class DBUtils {
 		// queryBuffer));
 
 		return filterQuery;
+	}
+
+	public String getPriceRangeDataQuery(Map<String, List<String>> filterData) {
+		StringBuffer queryBuffer = new StringBuffer();
+		String getPriceRangeQuery = new String(configInst.getPriceRangeData());
+		FilterDataHelper filterDataHelper = new FilterDataHelper();
+		String whereCondition = filterDataHelper.generateFilterCondition(filterData, queryBuffer);
+		if (whereCondition.equals("")) {
+			getPriceRangeQuery = getPriceRangeQuery.replace(RCCLConstants.WHERE_CONDITION_Q, "1=1");
+		} else {
+			getPriceRangeQuery = getPriceRangeQuery.replace(RCCLConstants.WHERE_CONDITION_Q, whereCondition);
+		}
+		return getPriceRangeQuery;
+	}
+
+	public String updatePriceRangeDataQuery(PriceRangeReq priceRangeReq) {
+		StringBuffer queryBuffer = new StringBuffer();
+		String getPriceRangeQuery = new String(configInst.updatePriceRangeData());
+
+		FilterDataHelper filterDataHelper = new FilterDataHelper();
+		filterDataHelper.generateFilterCondition(priceRangeReq.getFilters(),
+				queryBuffer);
+
+		PriceRangeDataHelper priceRangeDataHelper = new PriceRangeDataHelper();
+		queryBuffer.append(" and ");
+		String finalWhereCondition = priceRangeDataHelper.generateFilterCondition(priceRangeReq, queryBuffer);
+
+		if (finalWhereCondition.equals("")) {
+			getPriceRangeQuery = getPriceRangeQuery.replace(RCCLConstants.WHERE_CONDITION_Q, "1=1");
+		} else {
+			getPriceRangeQuery = getPriceRangeQuery.replace(RCCLConstants.WHERE_CONDITION_Q, finalWhereCondition);
+		}
+		return getPriceRangeQuery;
 	}
 
 }

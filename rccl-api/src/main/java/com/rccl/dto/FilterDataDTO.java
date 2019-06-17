@@ -1,4 +1,4 @@
-package com.rccl.model;
+package com.rccl.dto;
 
 import java.util.List;
 

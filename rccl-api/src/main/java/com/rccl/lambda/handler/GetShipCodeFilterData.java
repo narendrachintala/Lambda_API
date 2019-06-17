@@ -6,7 +6,7 @@ import java.util.Map;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
-import com.rccl.model.FilterDataDTO;
+import com.rccl.dto.FilterDataDTO;
 import com.rccl.service.FilterDataService;
 import com.rccl.testdata.FiltersData;
 import com.rccl.utils.RCCLConstants;

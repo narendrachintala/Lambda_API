@@ -1,9 +1,12 @@
-package com.rccl.dto;
+package com.rccl.model;
 
 import java.util.List;
 import java.util.Map;
 
-public class PriceRangeReq {
+import com.google.gson.Gson;
+import com.rccl.testdata.FiltersData;
+
+public class PriceRange {
 
 	private Map<String, List<String>> filters;
 	private Double l1_range_min;
@@ -58,6 +61,21 @@ public class PriceRangeReq {
 
 	public void setL2_range_max(Double l2_range_max) {
 		this.l2_range_max = l2_range_max;
+	}
+
+	public static void main(String[] args) {
+
+		PriceRange priceRangeDTO = new PriceRange();
+		FiltersData filtersData = new FiltersData();
+		priceRangeDTO.setFilters(filtersData.getRequestData());
+		priceRangeDTO.setL1_range_max(1d);
+		priceRangeDTO.setL1_range_min(-1d);
+		priceRangeDTO.setL2_range_max(2d);
+		priceRangeDTO.setL2_range_min(-2d);
+
+		Gson gson = new Gson();
+		System.out.println(gson.toJson(priceRangeDTO));
+
 	}
 
 }

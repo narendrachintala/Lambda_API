@@ -10,8 +10,8 @@ import java.util.Map;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import com.rccl.dbutils.RevorioConnect;
-import com.rccl.dto.PriceRangeReq;
-import com.rccl.model.PriceRangeDTO;
+import com.rccl.dto.PriceRangeDTO;
+import com.rccl.model.PriceRange;
 import com.rccl.utils.DBUtils;
 import com.rccl.utils.RCCLConstants;
 
@@ -48,7 +48,7 @@ public class PriceRangeRepo {
 
 	}
 
-	public boolean updatePriceRangeData(PriceRangeReq priceRangeReq) {
+	public boolean updatePriceRangeData(PriceRange priceRangeReq) {
 		Connection conn = RevorioConnect.getInstance().getConnection();
 		DBUtils dbUtils = DBUtils.getInstance();
 		Integer status = 0;

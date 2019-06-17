@@ -5,8 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.rccl.dto.FilterDataDTO;
 import com.rccl.infra.ResultProcessor;
-import com.rccl.model.FilterDataDTO;
 import com.rccl.utils.RCCLConstants;
 
 /**

@@ -3,7 +3,7 @@ package com.rccl.service;
 import java.util.List;
 import java.util.Map;
 
-import com.rccl.model.FilterDataDTO;
+import com.rccl.dto.FilterDataDTO;
 import com.rccl.repo.FilterDataRepo;
 
 /**

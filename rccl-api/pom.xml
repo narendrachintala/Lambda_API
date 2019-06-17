@@ -76,6 +76,8 @@
 			<artifactId>aws-lambda-java-core</artifactId>
 			<version>1.1.0</version>
 		</dependency>
+		<!-- mvn install:install-file -Dfile=ojdbc6-11.2.0.3.jar 
+		-DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.3 -Dpackaging=jar -->
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc6</artifactId>

@@ -3,8 +3,8 @@ package com.rccl.service;
 import java.util.List;
 import java.util.Map;
 
-import com.rccl.dto.PriceRangeReq;
-import com.rccl.model.PriceRangeDTO;
+import com.rccl.dto.PriceRangeDTO;
+import com.rccl.model.PriceRange;
 import com.rccl.repo.PriceRangeRepo;
 
 /**
@@ -26,7 +26,7 @@ public class PriceRangeService {
 		return priceRangeData;
 	}
 
-	public boolean updatePriceRangeData(PriceRangeReq priceRangeReq) {
+	public boolean updatePriceRangeData(PriceRange priceRangeReq) {
 		PriceRangeRepo priceRangeRepo = null;
 		boolean status = false;
 		try {

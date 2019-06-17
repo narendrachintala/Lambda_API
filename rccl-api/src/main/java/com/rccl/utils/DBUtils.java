@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.amazonaws.util.CollectionUtils;
-import com.rccl.dto.PriceRangeReq;
+import com.rccl.model.PriceRange;
 import com.rccl.utils.helper.FilterDataHelper;
 import com.rccl.utils.helper.PriceRangeDataHelper;
 
@@ -70,7 +70,7 @@ public class DBUtils {
 		return getPriceRangeQuery;
 	}
 
-	public String updatePriceRangeDataQuery(PriceRangeReq priceRangeReq) {
+	public String updatePriceRangeDataQuery(PriceRange priceRangeReq) {
 		StringBuffer queryBuffer = new StringBuffer();
 		String getPriceRangeQuery = new String(configInst.updatePriceRangeData());
 

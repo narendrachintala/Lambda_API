@@ -8,8 +8,7 @@ import java.util.Map;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
-import com.rccl.dto.PriceRangeReq;
-import com.rccl.model.PriceRangeDTO;
+import com.rccl.dto.PriceRangeDTO;
 import com.rccl.utils.RCCLConstants;
 
 /**
@@ -17,13 +16,13 @@ import com.rccl.utils.RCCLConstants;
  * @author narendra.chintala
  *
  */
-public class PostPriceRangeValues implements RequestHandler<PriceRangeReq, List<PriceRangeDTO>> {
+public class PostPriceRangeValues implements RequestHandler<PriceRangeDTO, List<PriceRangeDTO>> {
 
 	@Override
 	/**
 	 * Post price range data based on applied filters and requested data
 	 */
-	public List<PriceRangeDTO> handleRequest(PriceRangeReq request, Context context) {
+	public List<PriceRangeDTO> handleRequest(PriceRangeDTO request, Context context) {
 		Gson gson = new Gson();
 		context.getLogger().log("Input: " + gson.toJson(request));
 		System.out.println("PostPriceHandleRequest");

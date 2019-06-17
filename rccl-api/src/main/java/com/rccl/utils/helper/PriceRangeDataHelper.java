@@ -1,11 +1,11 @@
 package com.rccl.utils.helper;
 
-import com.rccl.dto.PriceRangeReq;
+import com.rccl.model.PriceRange;
 import com.rccl.utils.RCCLConstants;
 
 public class PriceRangeDataHelper {
 
-	public String generateFilterCondition(PriceRangeReq priceRangeReq, StringBuffer queryBuffer) {
+	public String generateFilterCondition(PriceRange priceRangeReq, StringBuffer queryBuffer) {
 
 		String IN = " in (";
 		String AND = ") and ";

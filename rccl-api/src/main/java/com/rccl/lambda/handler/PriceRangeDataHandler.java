@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.rccl.model.PriceRangeDTO;
+import com.rccl.dto.PriceRangeDTO;
 import com.rccl.testdata.FiltersData;
 
 public class PriceRangeDataHandler implements RequestHandler<Map<String, List<String>>, List<PriceRangeDTO>> {

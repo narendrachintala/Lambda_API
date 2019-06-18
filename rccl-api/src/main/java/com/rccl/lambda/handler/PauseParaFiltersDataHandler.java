@@ -1,15 +1,43 @@
 package com.rccl.lambda.handler;
 
+import java.util.List;
+import java.util.Map;
+
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.google.gson.Gson;
+import com.rccl.model.PausePara;
+import com.rccl.service.PauseParaDataService;
+import com.rccl.testdata.FiltersData;
 
-public class PauseParaFiltersDataHandler implements RequestHandler<Object, String> {
+/**
+ * The Class PauseParaFiltersDataHandler.
+ */
+public class PauseParaFiltersDataHandler implements RequestHandler<Map<String, List<String>>, List<PausePara>> {
 
-	@Override
-	public String handleRequest(Object input, Context context) {
-		context.getLogger().log("Input: " + input);
-		String response = null;
-		return response;
+	/* (non-Javadoc)
+	 * @see com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java.lang.Object, com.amazonaws.services.lambda.runtime.Context)
+	 * 
+	 */
+	public List<PausePara> handleRequest(Map<String, List<String>> request, Context context) {
+		PauseParaDataService PauseParaService = new PauseParaDataService();
+		List<PausePara> pauseParaList = PauseParaService.getPauseParaData(request);
+
+		Gson gson = new Gson();
+		System.out.println(gson.toJson(pauseParaList));
+
+		return pauseParaList;
+
+	}
+
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
+	public static void main(String[] args) {
+		FiltersData data = new FiltersData();
+		new PauseParaFiltersDataHandler().handleRequest(data.getRequestData(), null);
 	}
 
 }

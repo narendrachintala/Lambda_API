@@ -36,8 +36,7 @@ public class PauseParaFiltersDataHandler implements RequestHandler<Map<String, L
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-		FiltersData data = new FiltersData();
-		new PauseParaFiltersDataHandler().handleRequest(data.getRequestData(), null);
+		new PauseParaFiltersDataHandler().handleRequest(FiltersData.getRequestData(), null);
 	}
 
 }

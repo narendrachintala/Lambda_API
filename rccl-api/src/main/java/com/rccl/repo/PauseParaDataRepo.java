@@ -43,23 +43,5 @@ public class PauseParaDataRepo {
 
 	}
 
-	//public boolean updatePauseParaData(PauseParaReq PauseParaReq) {
-		/*
-		 * Connection conn = RevorioConnect.getInstance().getConnection();
-		 * PauseParaDBUtils dbUtils = PauseParaDBUtils.getInstance(); Integer status =
-		 * 0; try { String updatePauseParaQuery =
-		 * dbUtils.updatePauseParaQuery(PauseParaReq);
-		 * System.out.println("updatePriceRangeQuery: " + updatePauseParaQuery);
-		 * PreparedStatement pstmt = conn.prepareStatement(updatePauseParaQuery);
-		 * pstmt.setFetchSize(RCCLConstants.MIN_FETCH_ROWS); status =
-		 * pstmt.executeUpdate();
-		 * 
-		 * } catch (SQLException e) { e.printStackTrace(); } finally { try {
-		 * conn.close(); } catch (SQLException e) { e.printStackTrace(); } } if (status
-		 * == 0) { return false; } else { return true; }
-		 */}
-
-
-
-
+}
 	

@@ -10,6 +10,8 @@ import com.rccl.repo.PauseParaDataRepo;
 /**
  * 
  * @author narendra.chintala
+ * 
+ * We are Defining a class as service provider with 'get' and 'update' where access to 'repo' is defined
  *
  */
 public class PauseParaDataService {

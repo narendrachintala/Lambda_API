@@ -15,13 +15,12 @@ public class FilterDataService {
 
 	public FilterDataDTO getFilterData(Map<String, List<String>> map, String filter_column) {
 		FilterDataDTO filterData = null;
-		try {
-			FilterDataRepo repo = new FilterDataRepo();
-			filterData = repo.getFilterData(map, filter_column);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		/*
+		 * try { FilterDataRepo repo = new FilterDataRepo(); filterData =
+		 * repo.getFilterData(map, filter_column);
+		 * 
+		 * } catch (Exception e) { e.printStackTrace(); }
+		 */
 		return filterData;
 	}
 }

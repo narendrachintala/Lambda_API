@@ -7,7 +7,7 @@ package com.rccl.dto;
  */
 public class PriceRangeDTO {
 
-	private String currency;
+	private String CURRENCY;
 	private String METAPRODUCT;
 	private String PRODUCT_CODE;
 	private String SHIP_CODE;
@@ -23,12 +23,12 @@ public class PriceRangeDTO {
 	private String L2_INSERT_DATE;
 	private String USER_ID;
 
-	public String getCurrency() {
-		return currency;
+	public String getCURRENCY() {
+		return CURRENCY;
 	}
 
-	public void setCurrency(String currency) {
-		this.currency = currency;
+	public void setCURRENCY(String cURRENCY) {
+		CURRENCY = cURRENCY;
 	}
 
 	public String getMETAPRODUCT() {

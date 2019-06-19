@@ -14,11 +14,16 @@ import com.rccl.repo.PriceRangeRepo;
  */
 public class PriceRangeService {
 
-	public List<PriceRangeDTO> getPriceRangeData(Map<String, List<String>> reqMap) {
+	
+	/**
+	 * @param request contains end user chosen filter criteria
+	 * @return returns final price range parameter data with applied criteria
+	 */
+	public List<PriceRangeDTO> getPriceRangeData(Map<String, List<String>> request) {
 		List<PriceRangeDTO> priceRangeData = null;
 		try {
 			PriceRangeRepo repo = new PriceRangeRepo();
-			priceRangeData = repo.getPriceRangeData(reqMap);
+			priceRangeData = repo.getPriceRangeData(request);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -26,6 +31,10 @@ public class PriceRangeService {
 		return priceRangeData;
 	}
 
+	/**
+	 * @param priceRangeReq
+	 * @return
+	 */
 	public boolean updatePriceRangeData(PriceRange priceRangeReq) {
 		PriceRangeRepo priceRangeRepo = null;
 		boolean status = false;

@@ -3,7 +3,7 @@ package com.rccl.service;
 import java.util.List;
 import java.util.Map;
 
-import com.rccl.dto.PauseParaReq;
+import com.rccl.dto.PauseParaDTO;
 import com.rccl.model.PausePara;
 import com.rccl.repo.PauseParaDataRepo;
 
@@ -14,8 +14,8 @@ import com.rccl.repo.PauseParaDataRepo;
  */
 public class PauseParaDataService {
 
-	public List<PausePara> getPauseParaData(Map<String, List<String>> reqMap) {
-		List<PausePara> PauseParaData = null;
+	public List<PauseParaDTO> getPauseParaData(Map<String, List<String>> reqMap) {
+		List<PauseParaDTO> PauseParaData = null;
 		try {
 			PauseParaDataRepo repo = new PauseParaDataRepo();
 			PauseParaData = repo.getPausePara(reqMap);
@@ -26,7 +26,7 @@ public class PauseParaDataService {
 		return PauseParaData;
 	}
 
-	public boolean updatePauseParaData(PauseParaReq pauseParaReq) {
+	public boolean updatePauseParaData(PausePara pauseParaReq) {
 		PauseParaDataRepo pauseParaRepo = null;
 		boolean status = false;
 		try {

@@ -11,11 +11,15 @@ import com.rccl.service.PauseParaDataService;
 import com.rccl.testdata.FiltersData;
 
 /**
+ * 
  * The Class PauseParaFiltersDataHandler.
+ * 
+ * Here PauseParaFiltersDataHandler implements RequestHandler where we will raise request
  */
 public class PauseParaFiltersDataHandler implements RequestHandler<Map<String, List<String>>, List<PauseParaDTO>> {
 
-	/* (non-Javadoc)
+	/*
+	 *  (non-Javadoc)
 	 * @see com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java.lang.Object, com.amazonaws.services.lambda.runtime.Context)
 	 * 
 	 */
@@ -34,6 +38,10 @@ public class PauseParaFiltersDataHandler implements RequestHandler<Map<String, L
 	 * The main method.
 	 *
 	 * @param args the arguments
+	 * 
+	 * generating sample data and sending it as request to PauseParaFiltersDataHandler.
+	 * 
+	 * 
 	 */
 	public static void main(String[] args) {
 		new PauseParaFiltersDataHandler().handleRequest(FiltersData.getRequestData(), null);

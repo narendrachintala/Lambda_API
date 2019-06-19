@@ -3,6 +3,10 @@ package com.rccl.utils;
 import java.util.List;
 import java.util.Map;
 
+/*
+ * Establishes connection and generates where condition
+ */
+
 import com.rccl.utils.helper.FilterDataHelper;
 
 public class PauseParaDBUtils {

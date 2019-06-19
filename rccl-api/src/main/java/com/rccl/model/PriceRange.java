@@ -1,24 +1,16 @@
 package com.rccl.model;
 
-import java.util.List;
-import java.util.Map;
+/**
+ * @author narendra.chintala
+ *
+ */
+public class PriceRange extends FiltersData{
 
-public class PriceRange {
-
-	private Map<String, List<String>> filters;
 	private Double l1_range_min;
 	private Double l1_range_max;
 	private Double l1_insert_date;
 	private Double l2_range_min;
 	private Double l2_range_max;
-
-	public Map<String, List<String>> getFilters() {
-		return filters;
-	}
-
-	public void setFilters(Map<String, List<String>> filters) {
-		this.filters = filters;
-	}
 
 	public Double getL1_range_min() {
 		return l1_range_min;

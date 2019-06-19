@@ -10,16 +10,15 @@ import java.util.Map;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import com.rccl.dbutils.RevorioConnect;
-import com.rccl.dto.PauseParaReq;
-//import com.rccl.dto.PriceRangeReq;
+import com.rccl.dto.PauseParaDTO;
 import com.rccl.model.PausePara;
 import com.rccl.utils.PauseParaDBUtils;
 import com.rccl.utils.RCCLConstants;
 
 public class PauseParaDataRepo {
-	public List<PausePara> getPausePara(Map<String, List<String>> filterData) {
+	public List<PauseParaDTO> getPausePara(Map<String, List<String>> filterData) {
 		Connection conn = RevorioConnect.getInstance().getConnection();
-		List<PausePara> PauseParaData = null;
+		List<PauseParaDTO> PauseParaData = null;
 		PauseParaDBUtils dbUtils = PauseParaDBUtils.getInstance();
 		try {
 			String getPauseParaQuery = dbUtils.getPauseParaDataQuery(filterData);
@@ -28,7 +27,7 @@ public class PauseParaDataRepo {
 			pstmt.setFetchSize(RCCLConstants.MID_FETCH_ROWS);
 			ResultSet rs = pstmt.executeQuery();
 
-			BeanListHandler<PausePara> handle = new BeanListHandler<PausePara>(PausePara.class);
+			BeanListHandler<PauseParaDTO> handle = new BeanListHandler<PauseParaDTO>(PauseParaDTO.class);
 			PauseParaData = handle.handle(rs);
 		} catch (SQLException e) {
 			e.printStackTrace();

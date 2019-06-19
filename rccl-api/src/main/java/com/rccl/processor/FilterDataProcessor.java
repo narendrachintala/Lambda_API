@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.rccl.dto.FilterDataDTO;
-import com.rccl.infra.ResultProcessor;
 import com.rccl.utils.RCCLConstants;
 
 /**

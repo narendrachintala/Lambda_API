@@ -12,12 +12,12 @@ import com.rccl.service.PriceRangeService;
  * @author narendra.chintala
  *
  */
-public class PriceRangeDataHandler implements RequestHandler<ParameterFiltersData, List<PriceRangeDTO>> {
+public class GetPriceRangeDataHandler implements RequestHandler<ParameterFiltersData, List<PriceRangeDTO>> {
 
 	/*
 	 * This method will be invoked from AWS Lambda function to fetch price range
 	 * parameter data based on provided filter criteria
-	 * 
+	 *
 	 * @see
 	 * com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java.lang.
 	 * Object, com.amazonaws.services.lambda.runtime.Context)
@@ -32,6 +32,7 @@ public class PriceRangeDataHandler implements RequestHandler<ParameterFiltersDat
 		} else {
 			System.out.println();
 		}
+		System.out.println(priceRangeList.size());
 
 		return priceRangeList;
 
@@ -39,12 +40,9 @@ public class PriceRangeDataHandler implements RequestHandler<ParameterFiltersDat
 
 	/**
 	 * The main method will be used for testing with sample data.
-	 *
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-
-		new PriceRangeDataHandler().handleRequest(null, null);
+		new GetPriceRangeDataHandler().handleRequest(null, null);
 	}
-
 }

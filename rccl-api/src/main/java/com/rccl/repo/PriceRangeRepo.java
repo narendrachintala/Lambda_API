@@ -12,7 +12,7 @@ import com.rccl.dbutils.RevorioConnect;
 import com.rccl.dto.PriceRangeDTO;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PriceRange;
-import com.rccl.utils.DBUtils;
+import com.rccl.utils.PriceRangeDBUtil;
 import com.rccl.utils.RCCLConstants;
 
 /**
@@ -22,12 +22,17 @@ import com.rccl.utils.RCCLConstants;
  */
 public class PriceRangeRepo {
 
+	/**
+	 * Gets the price range data.
+	 * @param filterData the filter data
+	 * @return the price range data
+	 */
 	public List<PriceRangeDTO> getPriceRangeData(ParameterFiltersData filterData) {
 		Connection conn = RevorioConnect.getInstance().getConnection();
 		List<PriceRangeDTO> priceData = null;
-		DBUtils dbUtils = DBUtils.getInstance();
+		PriceRangeDBUtil priceRangeDBUtil = PriceRangeDBUtil.getInstance();
 		try {
-			String getPriceRangeQuery = dbUtils.getPriceRangeDataQuery(filterData);
+			String getPriceRangeQuery = priceRangeDBUtil.getPriceRangeDataQuery(filterData);
 			System.out.println("getPriceRangeQuery: " + getPriceRangeQuery);
 			PreparedStatement pstmt = conn.prepareStatement(getPriceRangeQuery);
 			pstmt.setFetchSize(RCCLConstants.MID_FETCH_ROWS);
@@ -48,12 +53,17 @@ public class PriceRangeRepo {
 
 	}
 
+	/**
+	 * Update price range data.
+	 * @param priceRangeReq the price range req
+	 * @return true, if successful
+	 */
 	public boolean updatePriceRangeData(PriceRange priceRangeReq) {
 		Connection conn = RevorioConnect.getInstance().getConnection();
-		DBUtils dbUtils = DBUtils.getInstance();
+		PriceRangeDBUtil priceRangeDBUtil = PriceRangeDBUtil.getInstance();
 		Integer status = 0;
 		try {
-			String updatePriceRangeQuery = dbUtils.updatePriceRangeDataQuery(priceRangeReq);
+			String updatePriceRangeQuery = priceRangeDBUtil.updatePriceRangeDataQuery(priceRangeReq);
 			System.out.println("updatePriceRangeQuery: " + updatePriceRangeQuery);
 			PreparedStatement pstmt = conn.prepareStatement(updatePriceRangeQuery);
 			pstmt.setFetchSize(RCCLConstants.MIN_FETCH_ROWS);

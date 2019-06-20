@@ -43,7 +43,15 @@ public class PauseParaFiltersDataHandler implements RequestHandler<ParameterFilt
 	 * 
 	 */
 	public static void main(String[] args) {
-		new PauseParaFiltersDataHandler().handleRequest(null, null);
+		ParameterFiltersData parameterFiltersData = new ParameterFiltersData();
+		parameterFiltersData.setCat_class("N");
+		parameterFiltersData.setCategory("double");
+		parameterFiltersData.setMetaproduct("OASIS");
+		parameterFiltersData.setOccupancy("quad");
+		parameterFiltersData.setProduct_code("7N CARIBBEAN");
+		parameterFiltersData.setSail_month(10);
+		parameterFiltersData.setShip_code("HM");
+		new PauseParaFiltersDataHandler().handleRequest(parameterFiltersData, null);
 	}
 
 }

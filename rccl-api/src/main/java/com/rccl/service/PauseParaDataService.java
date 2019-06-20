@@ -1,9 +1,9 @@
 package com.rccl.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.rccl.dto.PauseParaDTO;
+import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PausePara;
 import com.rccl.repo.PauseParaDataRepo;
 
@@ -16,11 +16,11 @@ import com.rccl.repo.PauseParaDataRepo;
  */
 public class PauseParaDataService {
 
-	public List<PauseParaDTO> getPauseParaData(Map<String, List<String>> reqMap) {
+	public List<PauseParaDTO> getPauseParaData(ParameterFiltersData request) {
 		List<PauseParaDTO> PauseParaData = null;
 		try {
 			PauseParaDataRepo repo = new PauseParaDataRepo();
-			PauseParaData = repo.getPausePara(reqMap);
+			PauseParaData = repo.getPausePara(request);
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -5,12 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import com.rccl.dbutils.RevorioConnect;
 import com.rccl.dto.PriceRangeDTO;
+import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PriceRange;
 import com.rccl.utils.DBUtils;
 import com.rccl.utils.RCCLConstants;
@@ -22,7 +22,7 @@ import com.rccl.utils.RCCLConstants;
  */
 public class PriceRangeRepo {
 
-	public List<PriceRangeDTO> getPriceRangeData(Map<String, List<String>> filterData) {
+	public List<PriceRangeDTO> getPriceRangeData(ParameterFiltersData filterData) {
 		Connection conn = RevorioConnect.getInstance().getConnection();
 		List<PriceRangeDTO> priceData = null;
 		DBUtils dbUtils = DBUtils.getInstance();

@@ -5,18 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import com.rccl.dbutils.RevorioConnect;
 import com.rccl.dto.PauseParaDTO;
-import com.rccl.model.PausePara;
+import com.rccl.model.ParameterFiltersData;
 import com.rccl.utils.PauseParaDBUtils;
 import com.rccl.utils.RCCLConstants;
 
 public class PauseParaDataRepo {
-	public List<PauseParaDTO> getPausePara(Map<String, List<String>> filterData) {
+	public List<PauseParaDTO> getPausePara(ParameterFiltersData filterData) {
 		Connection conn = RevorioConnect.getInstance().getConnection();
 		List<PauseParaDTO> PauseParaData = null;
 		PauseParaDBUtils dbUtils = PauseParaDBUtils.getInstance();

@@ -3,6 +3,9 @@ package com.rccl.utils;
 import java.util.List;
 import java.util.Map;
 
+import com.rccl.model.FiltersData;
+import com.rccl.model.ParameterFiltersData;
+
 /*
  * Establishes connection and generates where condition
  */
@@ -22,7 +25,7 @@ public class PauseParaDBUtils {
 		return _instance;
 	}
 	
-	public String getPauseParaDataQuery(Map<String,List<String>> filterdata) {
+	public String getPauseParaDataQuery(ParameterFiltersData filterdata) {
 		StringBuffer querybuffer= new StringBuffer();
 		String getPauseParaData = new String(configInst.getPauseParaData());
 		FilterDataHelper filterDataHelper = new FilterDataHelper();

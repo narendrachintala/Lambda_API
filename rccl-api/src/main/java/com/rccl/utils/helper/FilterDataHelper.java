@@ -1,6 +1,5 @@
 package com.rccl.utils.helper;
 
-import com.rccl.model.FiltersData;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.utils.CustomFun;
 import com.rccl.utils.RCCLConstants;

@@ -1,19 +1,18 @@
 package com.rccl.lambda.handler;
 
 import java.util.List;
-import java.util.Map;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.rccl.dto.PriceRangeDTO;
+import com.rccl.model.ParameterFiltersData;
 import com.rccl.service.PriceRangeService;
-import com.rccl.testdata.FiltersData;
 
 /**
  * @author narendra.chintala
  *
  */
-public class PriceRangeDataHandler implements RequestHandler<Map<String, List<String>>, List<PriceRangeDTO>> {
+public class PriceRangeDataHandler implements RequestHandler<ParameterFiltersData, List<PriceRangeDTO>> {
 
 	/*
 	 * This method will be invoked from AWS Lambda function to fetch price range
@@ -24,7 +23,7 @@ public class PriceRangeDataHandler implements RequestHandler<Map<String, List<St
 	 * Object, com.amazonaws.services.lambda.runtime.Context)
 	 * 
 	 */
-	public List<PriceRangeDTO> handleRequest(Map<String, List<String>> request, Context context) {
+	public List<PriceRangeDTO> handleRequest(ParameterFiltersData request, Context context) {
 		context.getLogger().log("Input: " + request);
 		List<PriceRangeDTO> priceRangeList = null;
 		if (request != null) {
@@ -45,7 +44,7 @@ public class PriceRangeDataHandler implements RequestHandler<Map<String, List<St
 	 */
 	public static void main(String[] args) {
 
-		new PriceRangeDataHandler().handleRequest(FiltersData.getRequestData(), null);
+		new PriceRangeDataHandler().handleRequest(null, null);
 	}
 
 }

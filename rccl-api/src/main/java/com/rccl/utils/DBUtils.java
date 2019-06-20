@@ -1,6 +1,7 @@
 package com.rccl.utils;
 
 import com.rccl.model.FiltersData;
+import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PriceRange;
 import com.rccl.utils.helper.FilterDataHelper;
 import com.rccl.utils.helper.PriceRangeDataHelper;
@@ -54,7 +55,7 @@ public class DBUtils {
 		return filterQuery;
 	}
 
-	public String getPriceRangeDataQuery(FiltersData filterData) {
+	public String getPriceRangeDataQuery(ParameterFiltersData filterData) {
 		StringBuffer queryBuffer = new StringBuffer();
 		String getPriceRangeQuery = new String(configInst.getPriceRangeData());
 		FilterDataHelper filterDataHelper = new FilterDataHelper();

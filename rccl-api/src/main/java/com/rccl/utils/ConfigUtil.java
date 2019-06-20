@@ -46,6 +46,10 @@ public class ConfigUtil {
 	public String getPauseParaData() {
 		return conf.getProperty("get_pause_para_data");
 	}
+	
+	public String getRollingWindowData() {
+		return conf.getProperty("get_rolling_window_data");
+	}
 
 	public String getSecretManagemerName() {
 		return conf.getProperty("secret-manager");
@@ -57,6 +61,10 @@ public class ConfigUtil {
 	
 	public String getRegion() {
 		return conf.getProperty("region");
+	}
+	
+	public String updateRollingWindow() {
+		return conf.getProperty("update_rolling_window_para");
 	}
 
 }

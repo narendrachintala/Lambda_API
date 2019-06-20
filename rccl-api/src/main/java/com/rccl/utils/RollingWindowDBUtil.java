@@ -1,8 +1,5 @@
 package com.rccl.utils;
 
-import java.util.List;
-import java.util.Map;
-
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.RollingWindow;
 import com.rccl.utils.helper.FilterDataHelper;
@@ -55,8 +52,7 @@ public class RollingWindowDBUtil {
 		String getRollingWindowQuery = new String(configInst.updateRollingWindow());
 		System.out.println("reading query from config:" + getRollingWindowQuery);
 		FilterDataHelper filterDataHelper = new FilterDataHelper();
-		//String finalWhereCondition = filterDataHelper.generateFilterCondition(request.getFilters(), queryBuffer);
-		String finalWhereCondition = "";
+		String finalWhereCondition = filterDataHelper.generateFilterCondition(request.getFiltersData(), queryBuffer);
 		RollingWindowDataHelper rollingWindowDataHelper = new RollingWindowDataHelper();
 		String finalUpdateCondition = rollingWindowDataHelper.generateFilterCondition(request, queryBuffer1);
 		if (finalWhereCondition.equals("")) {

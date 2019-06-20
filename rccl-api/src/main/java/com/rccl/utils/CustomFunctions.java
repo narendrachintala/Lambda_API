@@ -1,6 +1,6 @@
 package com.rccl.utils;
 
-public class CustomFun {
+public class CustomFunctions {
 
 	public static boolean isNullOrEmpty(String val) {
 

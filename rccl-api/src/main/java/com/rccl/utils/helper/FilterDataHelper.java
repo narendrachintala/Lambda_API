@@ -1,7 +1,7 @@
 package com.rccl.utils.helper;
 
 import com.rccl.model.ParameterFiltersData;
-import com.rccl.utils.CustomFun;
+import com.rccl.utils.CustomFunctions;
 import com.rccl.utils.RCCLConstants;
 
 /**
@@ -24,21 +24,21 @@ public class FilterDataHelper {
 
 		if (filterData != null) {
 
-			if (!CustomFun.isNullOrEmpty(filterData.getMetaproduct())) {
+			if (!CustomFunctions.isNullOrEmpty(filterData.getMetaproduct())) {
 
 				queryBuffer.append(RCCLConstants.METAPRODUCT_F).append(IN);
 				queryBuffer.append(join(filterData.getMetaproduct()));
 				queryBuffer.append(AND);
 
 			}
-			if (!CustomFun.isNullOrEmpty(filterData.getProduct_code())) {
+			if (!CustomFunctions.isNullOrEmpty(filterData.getProduct_code())) {
 
 				queryBuffer.append(RCCLConstants.PRODUCT_CODE_F).append(IN);
 				queryBuffer.append(join(filterData.getProduct_code()));
 				queryBuffer.append(AND);
 
 			}
-			if (!CustomFun.isNullOrEmpty(filterData.getShip_code())) {
+			if (!CustomFunctions.isNullOrEmpty(filterData.getShip_code())) {
 
 				queryBuffer.append(RCCLConstants.SHIP_CODE_F).append(IN);
 				queryBuffer.append(join(filterData.getShip_code()));
@@ -59,14 +59,14 @@ public class FilterDataHelper {
 				queryBuffer.append(AND);
 
 			}
-			if (!CustomFun.isNullOrEmpty(filterData.getCat_class())) {
+			if (!CustomFunctions.isNullOrEmpty(filterData.getCat_class())) {
 
 				queryBuffer.append(RCCLConstants.CAT_CLASS_F).append(IN);
 				queryBuffer.append(join(filterData.getCat_class()));
 				queryBuffer.append(AND);
 
 			}
-			if (!CustomFun.isNullOrEmpty(filterData.getOccupancy())) {
+			if (!CustomFunctions.isNullOrEmpty(filterData.getOccupancy())) {
 
 				queryBuffer.append(RCCLConstants.OCCUPANCY_F).append(IN);
 				queryBuffer.append(join(filterData.getOccupancy()));

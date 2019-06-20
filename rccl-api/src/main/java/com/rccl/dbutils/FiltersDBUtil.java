@@ -2,7 +2,7 @@ package com.rccl.dbutils;
 
 import com.rccl.model.FiltersData;
 import com.rccl.utils.ConfigUtil;
-import com.rccl.utils.CustomFun;
+import com.rccl.utils.CustomFunctions;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.helper.FilterDataHelper;
 
@@ -31,7 +31,7 @@ public class FiltersDBUtil {
 	public String generateFilterQuery(FiltersData filterData, String filter_column) {
 		StringBuffer queryBuffer = new StringBuffer();
 		String filterQuery = new String(configInst.getFilterDataQuery());
-		if (!CustomFun.isNullOrEmpty(filterData.getTable_name())) {
+		if (!CustomFunctions.isNullOrEmpty(filterData.getTable_name())) {
 
 			filterQuery = filterQuery.replace(RCCLConstants.TABLE_NAME_Q, filterData.getTable_name());
 			filterQuery = filterQuery.replaceAll(RCCLConstants.FILTER_COLUMN_Q, filter_column);

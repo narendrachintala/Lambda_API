@@ -68,5 +68,14 @@ public class RCCLConstants {
 	public static final String TABLE_NAME_Q = ":TABLE_NAME";
 	public static final String FILTER_COLUMN_Q = ":FILTER_COLUMN";
 	public static final String WHERE_CONDITION_Q = ":WHERE_CONDITION";
+	public static final String SETTER_COLUMNS_Q = ":SETTER_COLUMNS";
+	
+	/**
+	 * Rolling window table update columns
+	 */
+	public final static String PREV_FORECAST="prev_forecast";
+	public final static String FUT_FORECAST="fut_forecast";
+	public final static String PRICE_WINDOW="price_window";
+	public final static String WTS="wts";
 
 }

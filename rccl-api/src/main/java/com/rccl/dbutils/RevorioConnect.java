@@ -15,9 +15,14 @@ public class RevorioConnect {
 			try {
 				Class.forName("oracle.jdbc.driver.OracleDriver");
 				System.out.println("Oracle driver loaded");
+				/*
+				 * _instance.setConnection(DriverManager.getConnection(
+				 * "jdbc:oracle:thin:@//<host>:<port>/<service_name>", "<schema>",
+				 * "<password>"));
+				 */
 				_instance.setConnection(DriverManager.getConnection(
-						"jdbc:oracle:thin:@//<host>:<port>/<service_name>", "<schema>",
-						"<password>"));
+						"jdbc:oracle:thin:@//edssp-exa.rccl.com:1689/srvc_dss_rptg_edss.rccl.com", "revoreo",
+						"B222330EE3+00D65A"));
 				
 				System.out.println("oracle connection established");
 			} catch (Exception ioe) {

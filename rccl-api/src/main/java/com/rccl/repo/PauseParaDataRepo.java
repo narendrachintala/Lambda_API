@@ -8,10 +8,10 @@ import java.util.List;
 
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
+import com.rccl.dbutils.PauseParaDBUtils;
 import com.rccl.dbutils.RevorioConnect;
 import com.rccl.dto.PauseParaDTO;
 import com.rccl.model.ParameterFiltersData;
-import com.rccl.utils.PauseParaDBUtils;
 import com.rccl.utils.RCCLConstants;
 
 public class PauseParaDataRepo {

@@ -1,10 +1,12 @@
-package com.rccl.utils;
+package com.rccl.dbutils;
 
 import java.util.List;
 import java.util.Map;
 
 import com.rccl.model.FiltersData;
 import com.rccl.model.ParameterFiltersData;
+import com.rccl.utils.ConfigUtil;
+import com.rccl.utils.RCCLConstants;
 
 /*
  * Establishes connection and generates where condition

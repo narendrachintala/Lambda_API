@@ -9,11 +9,11 @@ import java.util.List;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import com.rccl.dbutils.RevorioConnect;
+import com.rccl.dbutils.RollingWindowDBUtil;
 import com.rccl.dto.RollingWindowDTO;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.RollingWindow;
 import com.rccl.utils.RCCLConstants;
-import com.rccl.utils.RollingWindowDBUtil;
 
 /**
  * The Class RollingWindowRepo.

@@ -2,7 +2,7 @@ package com.rccl.model;
 
 import java.util.Date;
 
-public class ParameterFiltersData {
+public class ParameterFiltersData extends APIGatewayBuilder{
 
 	private String metaproduct;
 	private String product_code;

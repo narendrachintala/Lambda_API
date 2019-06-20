@@ -8,11 +8,11 @@ import java.util.List;
 
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
+import com.rccl.dbutils.PriceRangeDBUtil;
 import com.rccl.dbutils.RevorioConnect;
 import com.rccl.dto.PriceRangeDTO;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PriceRange;
-import com.rccl.utils.PriceRangeDBUtil;
 import com.rccl.utils.RCCLConstants;
 
 /**

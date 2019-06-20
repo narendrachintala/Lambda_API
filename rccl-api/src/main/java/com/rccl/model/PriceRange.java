@@ -4,13 +4,22 @@ package com.rccl.model;
  * @author narendra.chintala
  *
  */
-public class PriceRange extends FiltersData{
+public class PriceRange {
 
+	ParameterFiltersData filterData;
 	private Double l1_range_min;
 	private Double l1_range_max;
 	private Double l1_insert_date;
 	private Double l2_range_min;
 	private Double l2_range_max;
+
+	public ParameterFiltersData getFilterData() {
+		return filterData;
+	}
+
+	public void setFilterData(ParameterFiltersData filterData) {
+		this.filterData = filterData;
+	}
 
 	public Double getL1_range_min() {
 		return l1_range_min;

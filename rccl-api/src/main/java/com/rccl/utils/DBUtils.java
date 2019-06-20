@@ -1,9 +1,6 @@
 package com.rccl.utils;
 
-import java.util.List;
-import java.util.Map;
-
-import com.amazonaws.util.CollectionUtils;
+import com.rccl.model.FiltersData;
 import com.rccl.model.PriceRange;
 import com.rccl.utils.helper.FilterDataHelper;
 import com.rccl.utils.helper.PriceRangeDataHelper;
@@ -26,15 +23,15 @@ public class DBUtils {
 		return _instance;
 	}
 
-	public String generateFilterQuery(Map<String, List<String>> filterData, String filter_column) {
+	public String generateFilterQuery(FiltersData filterData, String filter_column) {
 
 		StringBuffer queryBuffer = new StringBuffer();
 		String filterQuery = new String(configInst.getFilterDataQuery());
 
-		if (!CollectionUtils.isNullOrEmpty(filterData.get(RCCLConstants.TABLE_NAME))) {
+		if (!CustomFun.isNullOrEmpty(filterData.getTable_name())) {
 
 			filterQuery = filterQuery.replace(RCCLConstants.TABLE_NAME_Q,
-					filterData.get(RCCLConstants.TABLE_NAME).get(0));
+					filterData.getTable_name());
 			filterQuery = filterQuery.replaceAll(RCCLConstants.FILTER_COLUMN_Q, filter_column);
 
 		}
@@ -57,7 +54,7 @@ public class DBUtils {
 		return filterQuery;
 	}
 
-	public String getPriceRangeDataQuery(Map<String, List<String>> filterData) {
+	public String getPriceRangeDataQuery(FiltersData filterData) {
 		StringBuffer queryBuffer = new StringBuffer();
 		String getPriceRangeQuery = new String(configInst.getPriceRangeData());
 		FilterDataHelper filterDataHelper = new FilterDataHelper();
@@ -75,7 +72,7 @@ public class DBUtils {
 		String getPriceRangeQuery = new String(configInst.updatePriceRangeData());
 
 		FilterDataHelper filterDataHelper = new FilterDataHelper();
-		filterDataHelper.generateFilterCondition(priceRangeReq.getFilters(),
+		filterDataHelper.generateFilterCondition(priceRangeReq.getFilterData(),
 				queryBuffer);
 
 		PriceRangeDataHelper priceRangeDataHelper = new PriceRangeDataHelper();

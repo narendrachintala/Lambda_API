@@ -4,11 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
 
 import com.rccl.dbutils.RevorioConnect;
 import com.rccl.dto.FilterDataDTO;
+import com.rccl.model.FiltersData;
 import com.rccl.processor.FilterDataProcessor;
 import com.rccl.utils.DBUtils;
 import com.rccl.utils.RCCLConstants;
@@ -20,7 +19,7 @@ import com.rccl.utils.RCCLConstants;
  */
 public class FilterDataRepo {
 
-	public FilterDataDTO getFilterData(Map<String, List<String>> filterData, String filter_column) {
+	public FilterDataDTO getFilterData(FiltersData filterData, String filter_column) {
 		Connection conn = RevorioConnect.getInstance().getConnection();
 		FilterDataDTO results = new FilterDataDTO();
 		DBUtils dbUtils = DBUtils.getInstance();

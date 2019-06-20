@@ -1,18 +1,15 @@
 package com.rccl.model;
 
-import java.util.List;
-import java.util.Map;
+public class FiltersData extends ParameterFiltersData {
 
-public class FiltersData {
+	private String table_name;
 
-	private Map<String, List<String>> filters;
-
-	public Map<String, List<String>> getFilters() {
-		return filters;
+	public String getTable_name() {
+		return table_name;
 	}
 
-	public void setFilters(Map<String, List<String>> filters) {
-		this.filters = filters;
+	public void setTable_name(String table_name) {
+		this.table_name = table_name;
 	}
 
 }

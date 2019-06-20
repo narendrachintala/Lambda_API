@@ -1,9 +1,9 @@
 package com.rccl.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.rccl.dto.RollingWindowDTO;
+import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.RollingWindow;
 import com.rccl.repo.RollingWindowRepo;
 
@@ -16,7 +16,7 @@ public class RollingWindowService {
 	 * @param request the request
 	 * @return the rolling window data
 	 */
-	public List<RollingWindowDTO> getRollingWindowData(Map<String, List<String>> request) {
+	public List<RollingWindowDTO> getRollingWindowData(ParameterFiltersData request) {
 		List<RollingWindowDTO> rollingWindowData = null;
 		try {
 			RollingWindowRepo repo = new RollingWindowRepo();

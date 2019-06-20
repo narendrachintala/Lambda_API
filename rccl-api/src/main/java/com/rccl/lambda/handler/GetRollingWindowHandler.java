@@ -1,20 +1,19 @@
 package com.rccl.lambda.handler;
 
 import java.util.List;
-import java.util.Map;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
 import com.rccl.dto.RollingWindowDTO;
+import com.rccl.model.ParameterFiltersData;
 import com.rccl.service.RollingWindowService;
-import com.rccl.testdata.FiltersData;
 
 /**
  * The Class RollingWindowHandler.
  */
 // Start of Lambda Function request
-public class GetRollingWindowHandler implements RequestHandler<Map<String, List<String>>, List<RollingWindowDTO>> {
+public class GetRollingWindowHandler implements RequestHandler<ParameterFiltersData, List<RollingWindowDTO>> {
 	
 	/**
 	 * executes on requesting for list of values for specific table name
@@ -22,7 +21,7 @@ public class GetRollingWindowHandler implements RequestHandler<Map<String, List<
 	 * @param context lambda context object
 	 * @return the list of column values based on provided tablename
 	 */
-	public List<RollingWindowDTO> handleRequest(Map<String, List<String>> request, Context context) {
+	public List<RollingWindowDTO> handleRequest(ParameterFiltersData request, Context context) {
 		List<RollingWindowDTO> rollingWindowList = null;
 		// verify input request is not null
 		if (request != null) {
@@ -42,9 +41,15 @@ public class GetRollingWindowHandler implements RequestHandler<Map<String, List<
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-		Gson gson = new Gson();
 		// prepares sample input data for handler class
-		System.out.println("Sample Input request:" + gson.toJson(FiltersData.getRequestData()));
-		new GetRollingWindowHandler().handleRequest(FiltersData.getRequestData(), null);
+		ParameterFiltersData parameterFiltersData = new ParameterFiltersData();
+		parameterFiltersData.setCat_class("N");
+		parameterFiltersData.setCategory("double");
+		parameterFiltersData.setMetaproduct("OASIS");
+		parameterFiltersData.setOccupancy("quad");
+		parameterFiltersData.setProduct_code("7N CARIBBEAN");
+		parameterFiltersData.setSail_month(10);
+		parameterFiltersData.setShip_code("HM");
+		new GetRollingWindowHandler().handleRequest(parameterFiltersData, null);
 	}
 }

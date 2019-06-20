@@ -5,12 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import com.rccl.dbutils.RevorioConnect;
 import com.rccl.dto.RollingWindowDTO;
+import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.RollingWindow;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.RollingWindowDBUtil;
@@ -26,7 +26,7 @@ public class RollingWindowRepo {
 	 * @return the rolling window data
 	 */
 	// This method is used to fetch results from DB
-	public List<RollingWindowDTO> getRollingWindowData(Map<String, List<String>> request) {
+	public List<RollingWindowDTO> getRollingWindowData(ParameterFiltersData request) {
 		Connection conn = RevorioConnect.getInstance().getConnection();
 		List<RollingWindowDTO> rollingWindowData = null;
 		RollingWindowDBUtil dbUtils = RollingWindowDBUtil.getInstance();

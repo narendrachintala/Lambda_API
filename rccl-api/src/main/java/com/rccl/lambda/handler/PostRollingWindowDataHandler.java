@@ -72,7 +72,7 @@ public class PostRollingWindowDataHandler implements RequestHandler<RollingWindo
 		filteredOccupancy.add("double");
 		filteredData.put(RCCLConstants.OCCUPANCY_F, filteredOccupancy);
 
-		roWindow.setFilters(filteredData);
+		//roWindow.setFilters(filteredData);
 		Gson gson = new Gson();
 		String json = gson.toJson(roWindow);
 		

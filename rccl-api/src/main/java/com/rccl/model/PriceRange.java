@@ -6,7 +6,7 @@ package com.rccl.model;
  */
 public class PriceRange {
 
-	ParameterFiltersData filterData;
+	private  ParameterFiltersData filterData;
 	private Double l1_range_min;
 	private Double l1_range_max;
 	private Double l1_insert_date;

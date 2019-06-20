@@ -23,7 +23,7 @@ public class FilterDataHelper {
 		String AND = ") and ";
 
 		if (filterData != null) {
-			
+
 			if (!CustomFun.isNullOrEmpty(filterData.getMetaproduct())) {
 
 				queryBuffer.append(RCCLConstants.METAPRODUCT_F).append(IN);
@@ -83,6 +83,7 @@ public class FilterDataHelper {
 	}
 
 	private String join(String str) {
-		return String.join(",", str);
+		return new StringBuilder().append('\'').append(str).append('\'').toString();
 	}
+
 }

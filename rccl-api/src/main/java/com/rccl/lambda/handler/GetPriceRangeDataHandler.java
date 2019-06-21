@@ -10,7 +10,7 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
 import com.rccl.dto.PriceRangeDTO;
 import com.rccl.model.ParameterFiltersData;
-import com.rccl.model.validator.PriceRangeValidator;
+import com.rccl.model.validator.RequestDataValidator;
 import com.rccl.service.PriceRangeService;
 import com.rccl.testdata.FiltersData;
 import com.rccl.utils.helper.RCCLException;
@@ -34,9 +34,10 @@ public class GetPriceRangeDataHandler implements RequestHandler<ParameterFilters
 		context.getLogger().log("Input: " + request);
 		List<PriceRangeDTO> priceRangeList = null;
 		LambdaLogger logger = context.getLogger();
+		
 		try {
 			// validating request data
-			PriceRangeValidator priceRangeValidator = new PriceRangeValidator();
+			RequestDataValidator priceRangeValidator = new RequestDataValidator();
 			priceRangeValidator.validateGetRequest(request);
 
 			PriceRangeService priceRangeService = new PriceRangeService();

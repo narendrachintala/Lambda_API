@@ -58,7 +58,7 @@ public class GetRollingWindowHandler implements RequestHandler<ParameterFiltersD
 		parameterFiltersData.setMetaproduct("");
 		parameterFiltersData.setOccupancy("quad");
 		parameterFiltersData.setProduct_code("7N CARIBBEAN");
-		parameterFiltersData.setSail_month(10);
+		parameterFiltersData.setSail_month("10");
 		parameterFiltersData.setShip_code("HM");
 		new GetRollingWindowHandler().handleRequest(parameterFiltersData, null);
 	}

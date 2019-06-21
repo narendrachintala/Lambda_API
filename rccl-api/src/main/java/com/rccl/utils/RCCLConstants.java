@@ -6,15 +6,15 @@ package com.rccl.utils;
  *
  */
 public class RCCLConstants {
-	
+
 	/**
 	 * DB Keys
 	 */
-	
+
 	public final static Integer MIN_FETCH_ROWS = 100;
 	public final static Integer MID_FETCH_ROWS = 250;
 	public final static Integer MAX_FETCH_ROWS = 500;
-	
+
 	/**
 	 * 
 	 */
@@ -42,17 +42,17 @@ public class RCCLConstants {
 	public final static String CAT_CLASS_F = "cat_class";
 	public final static String CATEGORY_F = "category";
 	public final static String OCCUPANCY_F = "occupancy";
-	
+
 	/**
 	 * PriceRangePara table updatable columns
 	 */
-	
-	public final static String L1_RANGE_MIN="l1_range_min";
-	public final static String L1_RANGE_MAX="l1_range_max";
-	public final static String L1_INSERT_DATE="l1_insert_date";
-	public final static String L2_RANGE_MIN="l2_range_min";
-	public final static String L2_RANGE_MAX="l2_range_max";
-	
+
+	public final static String L1_RANGE_MIN = "l1_range_min";
+	public final static String L1_RANGE_MAX = "l1_range_max";
+	public final static String L1_INSERT_DATE = "l1_insert_date";
+	public final static String L2_RANGE_MIN = "l2_range_min";
+	public final static String L2_RANGE_MAX = "l2_range_max";
+
 	/**
 	 * UI keys
 	 */
@@ -60,8 +60,7 @@ public class RCCLConstants {
 	public static final String PRICE_RANGE_MAX = "price_range_max";
 	public static final String FILTER_DATA = "filter_criteria";
 	public static final String TABLE_NAME = "table_name";
-	
-	
+
 	/**
 	 * Named queries
 	 */
@@ -69,13 +68,20 @@ public class RCCLConstants {
 	public static final String FILTER_COLUMN_Q = ":FILTER_COLUMN";
 	public static final String WHERE_CONDITION_Q = ":WHERE_CONDITION";
 	public static final String SETTER_COLUMNS_Q = ":SETTER_COLUMNS";
-	
+
 	/**
 	 * Rolling window table update columns
 	 */
-	public final static String PREV_FORECAST="prev_forecast";
-	public final static String FUT_FORECAST="fut_forecast";
-	public final static String PRICE_WINDOW="price_window";
-	public final static String WTS="wts";
+	public final static String PREV_FORECAST = "prev_forecast";
+	public final static String FUT_FORECAST = "fut_forecast";
+	public final static String PRICE_WINDOW = "price_window";
+	public final static String WTS = "wts";
+
+	/**
+	 * Error messages
+	 */
+	public final static String ERROR_JSON = "error_json";
+	public final static String ERROR_METAPRODUCT="error_metaproduct";
+	public final static String EX_GET_REQUEST="ex_get_request";
 
 }

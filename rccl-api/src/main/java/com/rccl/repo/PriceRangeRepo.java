@@ -2,17 +2,18 @@ package com.rccl.repo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.dbutils.handlers.BeanListHandler;
-
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.rccl.dbutils.PriceRangeDBUtil;
 import com.rccl.dbutils.RevorioConnect;
 import com.rccl.dto.PriceRangeDTO;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PriceRange;
+import com.rccl.processor.PriceRangeResultProcessor;
+import com.rccl.processor.QueryExecutor;
 import com.rccl.utils.RCCLConstants;
 
 /**
@@ -24,37 +25,35 @@ public class PriceRangeRepo {
 
 	/**
 	 * Gets the price range data.
-	 * @param filterData the filter data
+	 * 
+	 * @param filterData
+	 * @param context
 	 * @return the price range data
 	 */
-	public List<PriceRangeDTO> getPriceRangeData(ParameterFiltersData filterData) {
-		Connection conn = RevorioConnect.getInstance().getConnection();
-		List<PriceRangeDTO> priceData = null;
+	public List<PriceRangeDTO> getPriceRangeData(ParameterFiltersData filterData, LambdaLogger logger) {
+
 		PriceRangeDBUtil priceRangeDBUtil = PriceRangeDBUtil.getInstance();
+		QueryExecutor queryExecutor = new QueryExecutor();
+		List<PriceRangeDTO> priceData = new ArrayList<PriceRangeDTO>();
+
 		try {
 			String getPriceRangeQuery = priceRangeDBUtil.getPriceRangeDataQuery(filterData);
-			System.out.println("getPriceRangeQuery: " + getPriceRangeQuery);
-			PreparedStatement pstmt = conn.prepareStatement(getPriceRangeQuery);
-			pstmt.setFetchSize(RCCLConstants.MID_FETCH_ROWS);
-			ResultSet rs = pstmt.executeQuery();
-
-			BeanListHandler<PriceRangeDTO> handle = new BeanListHandler<PriceRangeDTO>(PriceRangeDTO.class);
-			priceData = handle.handle(rs);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			PriceRangeResultProcessor processor = new PriceRangeResultProcessor();
+			processor.setResult(priceData);
+			queryExecutor.execute(getPriceRangeQuery, null, logger, processor);
+			priceData = processor.getResult();
+		} catch (Exception e) {
+			logger.log(e.getMessage());
+			throw e;
 		}
+
 		return priceData;
 
 	}
 
 	/**
 	 * Update price range data.
+	 * 
 	 * @param priceRangeReq the price range req
 	 * @return true, if successful
 	 */

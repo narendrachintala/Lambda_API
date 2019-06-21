@@ -1,14 +1,12 @@
 package com.rccl.model;
 
-import java.util.Date;
-
-public class ParameterFiltersData{
+public class ParameterFiltersData {
 
 	private String metaproduct;
 	private String product_code;
 	private String ship_code;
-	private Integer sail_month;
-	private Date sail_date;
+	private String sail_month;
+	private String sail_date;
 	private String cat_class;
 	private String category;
 	private String occupancy;
@@ -37,19 +35,19 @@ public class ParameterFiltersData{
 		this.ship_code = ship_code;
 	}
 
-	public Integer getSail_month() {
+	public String getSail_month() {
 		return sail_month;
 	}
 
-	public void setSail_month(Integer sail_month) {
+	public void setSail_month(String sail_month) {
 		this.sail_month = sail_month;
 	}
 
-	public Date getSail_date() {
+	public String getSail_date() {
 		return sail_date;
 	}
 
-	public void setSail_date(Date sail_date) {
+	public void setSail_date(String sail_date) {
 		this.sail_date = sail_date;
 	}
 

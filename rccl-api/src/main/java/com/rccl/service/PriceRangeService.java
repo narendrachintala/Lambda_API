@@ -2,6 +2,7 @@ package com.rccl.service;
 
 import java.util.List;
 
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.rccl.dto.PriceRangeDTO;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PriceRange;
@@ -17,13 +18,14 @@ public class PriceRangeService {
 	
 	/**
 	 * @param request contains end user chosen filter criteria
+	 * @param lambdaLogger 
 	 * @return returns final price range parameter data with applied criteria
 	 */
-	public List<PriceRangeDTO> getPriceRangeData(ParameterFiltersData request) {
+	public List<PriceRangeDTO> getPriceRangeData(ParameterFiltersData request, LambdaLogger logger) {
 		List<PriceRangeDTO> priceRangeData = null;
 		try {
 			PriceRangeRepo repo = new PriceRangeRepo();
-			priceRangeData = repo.getPriceRangeData(request);
+			priceRangeData = repo.getPriceRangeData(request,logger);
 
 		} catch (Exception e) {
 			e.printStackTrace();

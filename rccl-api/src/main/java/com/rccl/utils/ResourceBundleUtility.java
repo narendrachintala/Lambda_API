@@ -9,9 +9,9 @@ import java.util.Properties;
 public class ResourceBundleUtility {
 	private static final String RCCL_CONFIG_PROPERTY_FILE = "i18n.MessagesBundle_en_US.properties";
 	private static Properties conf = new Properties();
-	
+
 	private static ResourceBundleUtility _instance;
-	
+
 	public static ResourceBundleUtility getInstance() {
 		if (_instance == null) {
 			_instance = new ResourceBundleUtility();
@@ -25,19 +25,11 @@ public class ResourceBundleUtility {
 		return _instance;
 	}
 
-	public String getErrorMetaProduct() {
-		return conf.getProperty("error_metaproduct");
+	public String getValue(String key) {
+		return conf.getProperty(key);
 	}
-	
-	public String getExGetRequest() {
-		return conf.getProperty("ex_get_request");
-	}
-	
-	public String getErrorJson() {
-		return conf.getProperty("error_json");
-	}
-	
+
 	public static void main(String[] args) {
-		System.out.println(ResourceBundleUtility.getInstance().getErrorMetaProduct());
+		System.out.println(ResourceBundleUtility.getInstance().getValue(RCCLConstants.ERROR_METAPRODUCT));
 	}
 }

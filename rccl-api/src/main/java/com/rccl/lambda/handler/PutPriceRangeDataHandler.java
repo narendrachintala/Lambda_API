@@ -17,7 +17,7 @@ import com.rccl.utils.RCCLConstants;
  * @author narendra.chintala
  *
  */
-public class PostPriceRangeValues implements RequestHandler<PriceRange, List<PriceRangeDTO>> {
+public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, List<PriceRangeDTO>> {
 
 	@Override
 	/**

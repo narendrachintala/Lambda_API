@@ -6,6 +6,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.rccl.dto.PriceRangeDTO;
 import com.rccl.model.ParameterFiltersData;
+import com.rccl.model.validator.PriceRangeValidator;
 import com.rccl.service.PriceRangeService;
 
 /**
@@ -25,6 +26,11 @@ public class GetPriceRangeDataHandler implements RequestHandler<ParameterFilters
 	 */
 	public List<PriceRangeDTO> handleRequest(ParameterFiltersData request, Context context) {
 		context.getLogger().log("Input: " + request);
+
+		// validating request data
+		PriceRangeValidator priceRangeValidator = new PriceRangeValidator();
+		priceRangeValidator.validateGetRequest(request);
+
 		List<PriceRangeDTO> priceRangeList = null;
 		if (request != null) {
 			PriceRangeService priceRangeService = new PriceRangeService();
@@ -40,6 +46,7 @@ public class GetPriceRangeDataHandler implements RequestHandler<ParameterFilters
 
 	/**
 	 * The main method will be used for testing with sample data.
+	 * 
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {

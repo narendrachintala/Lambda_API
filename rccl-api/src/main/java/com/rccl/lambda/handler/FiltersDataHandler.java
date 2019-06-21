@@ -6,6 +6,7 @@ import com.rccl.dto.FilterDataDTO;
 import com.rccl.model.FiltersData;
 import com.rccl.service.FilterDataService;
 import com.rccl.utils.RCCLConstants;
+import com.rccl.utils.helper.RCCLException;
 
 /**
  * @author narendra.chintala
@@ -34,6 +35,7 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, FilterDat
 			response = dataService.getFilterData(request, RCCLConstants.METAPRODUCT_F);
 		} catch (Exception e) {
 			context.getLogger().log("Error occurred while invoking rev_pre_getMetaProducts API: " + e.getMessage());
+			throw new RCCLException("Error occurred while invoking rev_pre_getMetaProducts API: ", e.getCause());
 		}
 
 		return response;

@@ -7,7 +7,10 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
 import com.rccl.dto.RollingWindowDTO;
 import com.rccl.model.ParameterFiltersData;
+import com.rccl.model.validator.RequestDataValidator;
 import com.rccl.service.RollingWindowService;
+import com.rccl.utils.ResourceBundleUtility;
+import com.rccl.utils.helper.RCCLException;
 
 /**
  * The Class RollingWindowHandler.
@@ -23,16 +26,23 @@ public class GetRollingWindowHandler implements RequestHandler<ParameterFiltersD
 	 */
 	public List<RollingWindowDTO> handleRequest(ParameterFiltersData request, Context context) {
 		List<RollingWindowDTO> rollingWindowList = null;
-		// verify input request is not null
-		if (request != null) {
-			RollingWindowService rollingWindowService = new RollingWindowService();
-			rollingWindowList = rollingWindowService.getRollingWindowData(request);
+		RequestDataValidator requestDataValidator = new RequestDataValidator();
+		ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+		try {
+			requestDataValidator.validateGetRequest(request);
+			// verify input request is not null
+			if (request != null) {
+				RollingWindowService rollingWindowService = new RollingWindowService();
+				rollingWindowList = rollingWindowService.getRollingWindowData(request);
+			}
+			System.out.println("result set size:" + rollingWindowList.size());
+			System.out.println(rollingWindowList.get(0).getCat_class());
+			Gson gson = new Gson();
+			System.out.println("final Result:" + gson.toJson(rollingWindowList));
 		}
-		System.out.println("result set size:" + rollingWindowList.size());
-		//Gson gson = new GsonBuilder().serializeNulls().create();
-		System.out.println(rollingWindowList.get(0).getCat_class());
-		Gson gson = new Gson();
-		System.out.println("final Result:" + gson.toJson(rollingWindowList));
+		catch (Exception ex) {
+			throw new RCCLException(rBundleUtility.getExGetRequest(), ex);
+		}
 		return rollingWindowList;
 	}
 
@@ -45,7 +55,7 @@ public class GetRollingWindowHandler implements RequestHandler<ParameterFiltersD
 		ParameterFiltersData parameterFiltersData = new ParameterFiltersData();
 		parameterFiltersData.setCat_class("N");
 		parameterFiltersData.setCategory("double");
-		parameterFiltersData.setMetaproduct("OASIS");
+		parameterFiltersData.setMetaproduct("");
 		parameterFiltersData.setOccupancy("quad");
 		parameterFiltersData.setProduct_code("7N CARIBBEAN");
 		parameterFiltersData.setSail_month(10);

@@ -6,7 +6,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.rccl.dto.PriceRangeDTO;
 import com.rccl.model.ParameterFiltersData;
-import com.rccl.model.validator.PriceRangeValidator;
+import com.rccl.model.validator.RequestDataValidator;
 import com.rccl.service.PriceRangeService;
 
 /**
@@ -28,7 +28,7 @@ public class GetPriceRangeDataHandler implements RequestHandler<ParameterFilters
 		context.getLogger().log("Input: " + request);
 
 		// validating request data
-		PriceRangeValidator priceRangeValidator = new PriceRangeValidator();
+		RequestDataValidator priceRangeValidator = new RequestDataValidator();
 		priceRangeValidator.validateGetRequest(request);
 
 		List<PriceRangeDTO> priceRangeList = null;

@@ -9,7 +9,6 @@ import com.rccl.dto.RollingWindowDTO;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.validator.RequestDataValidator;
 import com.rccl.service.RollingWindowService;
-import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.helper.RCCLException;
 
 /**
@@ -27,7 +26,6 @@ public class GetRollingWindowHandler implements RequestHandler<ParameterFiltersD
 	public List<RollingWindowDTO> handleRequest(ParameterFiltersData request, Context context) {
 		List<RollingWindowDTO> rollingWindowList = null;
 		RequestDataValidator requestDataValidator = new RequestDataValidator();
-		ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 		try {
 			requestDataValidator.validateGetRequest(request);
 			// verify input request is not null
@@ -41,7 +39,7 @@ public class GetRollingWindowHandler implements RequestHandler<ParameterFiltersD
 			System.out.println("final Result:" + gson.toJson(rollingWindowList));
 		}
 		catch (Exception ex) {
-			throw new RCCLException(rBundleUtility.getExGetRequest(), ex);
+			throw new RCCLException("Error occured while executing GetPriceRangeDataHandler", ex);
 		}
 		return rollingWindowList;
 	}

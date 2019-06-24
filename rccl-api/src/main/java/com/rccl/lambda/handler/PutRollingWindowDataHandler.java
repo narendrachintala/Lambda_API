@@ -47,7 +47,7 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 		parameterFiltersData.setMetaproduct("CANADA");
 		parameterFiltersData.setOccupancy("double");
 		parameterFiltersData.setProduct_code("CANADA");
-		parameterFiltersData.setSail_month(6);
+		parameterFiltersData.setSail_month("6");
 		parameterFiltersData.setShip_code("OA");
 		
 		roWindow.setFiltersData(parameterFiltersData);

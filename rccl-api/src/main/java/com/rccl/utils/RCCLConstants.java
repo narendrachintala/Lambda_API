@@ -76,6 +76,8 @@ public class RCCLConstants {
 	public final static String FUT_FORECAST = "fut_forecast";
 	public final static String PRICE_WINDOW = "price_window";
 	public final static String WTS = "wts";
+	public final static String PREV_DEMAND_WINDOW = "prev_demand_window";
+	public final static String FUT_DEMAND_WINDOW = "fut_demand_window";
 
 	/**
 	 * Error messages

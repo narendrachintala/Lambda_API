@@ -58,6 +58,7 @@ public class GetPriceRangeDataHandler
 			logger.log("Error occured while executing GetPriceRangeDataHandler: " + e.getMessage());
 			throw new RCCLException("Error occured while executing GetPriceRangeDataHandler", e);
 		}
+		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
 
 	}
@@ -69,10 +70,11 @@ public class GetPriceRangeDataHandler
 	 */
 	public static void main(String[] args) {
 
-		ParameterFiltersData data = new ParameterFiltersData();
-		data.setMetaproduct("OASIS");
-		System.out.println(new GsonBuilder().serializeNulls().create().toJson(data));
-		System.exit(0);
+		/*
+		 * ParameterFiltersData data = new ParameterFiltersData();
+		 * data.setMetaproduct("OASIS"); System.out.println(new
+		 * GsonBuilder().serializeNulls().create().toJson(data)); System.exit(0);
+		 */
 
 		new GetPriceRangeDataHandler().handleRequest(FiltersData.getRequestData(), new Context() {
 

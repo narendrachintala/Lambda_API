@@ -7,44 +7,53 @@ import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.rccl.dto.RollingWindowDTO;
+import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.validator.RequestDataValidator;
 import com.rccl.service.RollingWindowService;
+import com.rccl.utils.RCCLConstants;
+import com.rccl.utils.ResponseUtil;
 import com.rccl.utils.helper.RCCLException;
 
 /**
  * The Class RollingWindowHandler.
  */
 // Start of Lambda Function request
-public class GetRollingWindowHandler implements RequestHandler<ParameterFiltersData, List<RollingWindowDTO>> {
-	
+public class GetRollingWindowHandler
+		implements RequestHandler<ParameterFiltersData, GatewayResponse<? extends Object>> {
+
 	/**
 	 * executes on requesting for list of values for specific table name
 	 * @param request contains chosen filters as key-value pair
 	 * @param context lambda context object
 	 * @return the list of column values based on provided tablename
 	 */
-	public List<RollingWindowDTO> handleRequest(ParameterFiltersData request, Context context) {
+	public GatewayResponse<? extends Object> handleRequest(ParameterFiltersData request, Context context) {
 		context.getLogger().log("Input: " + request);
 		LambdaLogger logger = context.getLogger();
+		
+		GatewayResponse<? extends Object> response = null;
+		ResponseUtil respUtil = ResponseUtil.getInstance();
 		
 		List<RollingWindowDTO> rollingWindowList = null;
 		try {
 			RequestDataValidator requestDataValidator = new RequestDataValidator();
-			requestDataValidator.validateGetRequest(request);
-			RollingWindowService rollingWindowService = new RollingWindowService();
-			rollingWindowList = rollingWindowService.getRollingWindowData(request, logger);
+			response = requestDataValidator.validateGetRequest(request);
+			if (response == null) {
+				RollingWindowService rollingWindowService = new RollingWindowService();
+				rollingWindowList = rollingWindowService.getRollingWindowData(request, logger);
+				response = new GatewayResponse<List<RollingWindowDTO>>(rollingWindowList, respUtil.getHeaders(),
+						RCCLConstants.SC_OK);
+			}
 		}
 		catch (Exception ex) {
 			logger.log("Error occured while executing GetRollingWindowHandler: " + ex.getMessage());
 			throw new RCCLException("Error occured while executing GetRollingWindowHandler", ex);
 		}
-		System.out.println("result set size:" + rollingWindowList.size());
-		Gson gson = new Gson();
-		System.out.println("final Result:" + gson.toJson(rollingWindowList));
-		return rollingWindowList;
+		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
+		return response;
 	}
 
 	/**
@@ -61,7 +70,7 @@ public class GetRollingWindowHandler implements RequestHandler<ParameterFiltersD
 		parameterFiltersData.setProduct_code("7N CARIBBEAN");
 		parameterFiltersData.setSail_month("10");
 		parameterFiltersData.setShip_code("HM");
-		new GetRollingWindowHandler().handleRequest(parameterFiltersData, new Context() {
+		new GetRollingWindowHandler().handleRequest(null, new Context() {
 			
 			@Override
 			public int getRemainingTimeInMillis() {

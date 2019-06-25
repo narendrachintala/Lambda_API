@@ -1,5 +1,9 @@
 package com.rccl.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
+
+@JsonPOJOBuilder
 public class ParameterFiltersData {
 
 	private String metaproduct;
@@ -73,6 +77,13 @@ public class ParameterFiltersData {
 
 	public void setOccupancy(String occupancy) {
 		this.occupancy = occupancy;
+	}
+
+	@Override
+	public String toString() {
+		return "ParameterFiltersData [metaproduct=" + metaproduct + ", product_code=" + product_code + ", ship_code="
+				+ ship_code + ", sail_month=" + sail_month + ", sail_date=" + sail_date + ", cat_class=" + cat_class
+				+ ", category=" + category + ", occupancy=" + occupancy + "]";
 	}
 
 }

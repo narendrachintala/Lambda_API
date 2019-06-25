@@ -1,5 +1,8 @@
 package com.rccl.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
+@JsonPOJOBuilder
 public class FiltersData extends ParameterFiltersData {
 
 	private String table_name;

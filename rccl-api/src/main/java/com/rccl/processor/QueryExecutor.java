@@ -14,15 +14,12 @@ import com.rccl.utils.helper.RCCLException;
 
 public class QueryExecutor {
 
-	public void execute(String query, List<String> params, LambdaLogger logger, ResultProcessor<?> resultProcessor) {
+	public void execute(String query, LambdaLogger logger, ResultProcessor<?> resultProcessor) {
 
 		if (resultProcessor == null) {
 			throw new RCCLException("Please add resultProcessor", null);
 		}
-		if (resultProcessor.getResult() == null) {
-			throw new RCCLException("Initialize resultprocessor result object in  before you start", null);
-		}
-
+		
 		Connection con = RevorioConnect.getInstance().getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -36,17 +33,9 @@ public class QueryExecutor {
 		}
 
 		try {
-			i = 1;
-			if (!CollectionUtils.isNullOrEmpty(params)) {
-				for (String p : params) {
-					logger.log("param" + i + ":" + p);
-					stmt.setString(i++, p);
-				}
-			}
-			logger.log("statement object :" + stmt);
 			stmt.setFetchSize(resultProcessor.getFetchSize());
 			rs = stmt.executeQuery();
-			while (rs.next()) {
+			if (rs != null) {
 				resultProcessor.processResult(rs);
 			}
 

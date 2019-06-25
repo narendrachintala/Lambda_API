@@ -40,7 +40,7 @@ public class PriceRangeRepo {
 			String getPriceRangeQuery = priceRangeDBUtil.getPriceRangeDataQuery(filterData);
 			PriceRangeResultProcessor processor = new PriceRangeResultProcessor();
 			processor.setResult(priceData);
-			queryExecutor.execute(getPriceRangeQuery, null, logger, processor);
+			queryExecutor.execute(getPriceRangeQuery, logger, processor);
 			priceData = processor.getResult();
 		} catch (Exception e) {
 			logger.log(e.getMessage());

@@ -2,6 +2,7 @@ package com.rccl.service;
 
 import java.util.List;
 
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.rccl.dto.RollingWindowDTO;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.RollingWindow;
@@ -16,11 +17,11 @@ public class RollingWindowService {
 	 * @param request the request
 	 * @return the rolling window data
 	 */
-	public List<RollingWindowDTO> getRollingWindowData(ParameterFiltersData request) {
+	public List<RollingWindowDTO> getRollingWindowData(ParameterFiltersData request, LambdaLogger logger) {
 		List<RollingWindowDTO> rollingWindowData = null;
 		try {
 			RollingWindowRepo repo = new RollingWindowRepo();
-			rollingWindowData = repo.getRollingWindowData(request);
+			rollingWindowData = repo.getRollingWindowData(request, logger);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -32,12 +33,12 @@ public class RollingWindowService {
 	 * @param request the request
 	 * @return true, if successful
 	 */
-	public boolean updateRollingWindowData(RollingWindow request) {
+	public boolean updateRollingWindowData(RollingWindow request, LambdaLogger logger) {
 		RollingWindowRepo rollingWindowRepo = null;
 		boolean status = false;
 		try {
 			rollingWindowRepo = new RollingWindowRepo();
-			status = rollingWindowRepo.updateRollingWindowData(request);
+			status = rollingWindowRepo.updateRollingWindowData(request, logger);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

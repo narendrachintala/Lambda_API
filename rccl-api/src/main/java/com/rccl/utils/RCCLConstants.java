@@ -85,5 +85,27 @@ public class RCCLConstants {
 	public final static String EX_GET_REQUEST="ex_get_request";
 	public final static String ERROR_FILTERS_DATA="filters_data";
 	public final static String ERROR_UPDATE_FIELDS="update_fields";
+	
+	/**
+	 * Status codes
+	 */
+
+	public final static int SC_OK = 200;
+	public final static int SC_CREATED = 201;
+	public final static int SC_BAD_REQUEST = 400;
+	public final static int UN_AUTHORIZED = 401;
+	public final static int FORBIDDEN = 403;
+	public final static int SC_NOT_FOUND = 404;
+	public final static int SC_INTERNAL_SERVER_ERROR = 500;
+
+	/**
+	 * Status Messages
+	 */
+	public final static String SUCCESS_MSG = "SUCCESS";
+	public final static String BAD_REQUEST_MSG = "BAD_REQUEST";
+	public final static String UN_AUTHORIZED_MSG = "UN_AUTHORIZED";
+	public final static String FORBIDDEN_MSG = "FORBIDDEN";
+	public final static String NOT_FOUND_MSG = "NOT_FOUND";
+	public final static String SERVER_ERROR_MSG = "SERVER_ERROR";
 
 }

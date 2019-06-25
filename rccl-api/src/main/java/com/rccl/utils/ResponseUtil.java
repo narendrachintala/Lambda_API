@@ -14,14 +14,14 @@ public class ResponseUtil {
 		return _instance;
 	}
 
-	public Map<String, String> getSuccessMessage(String req_id, String status_message) {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put(RCCLConstants.REQUEST_ID, req_id);
-		map.put(RCCLConstants.STATUS, status_message);
-		// map.put(RCCLConstants.STATUS_CODE, RCCLConstants.SUCCESS);
-		// map.put(RCCLConstants.STATUS_MESSAGE, status_message);
-		return map;
-	}
+	/*
+	 * public Map<String, String> getSuccessMessage(String req_id, String
+	 * status_message) { Map<String, String> map = new HashMap<String, String>();
+	 * map.put(RCCLConstants.REQUEST_ID, req_id); map.put(RCCLConstants.STATUS,
+	 * status_message); // map.put(RCCLConstants.STATUS_CODE,
+	 * RCCLConstants.SUCCESS); // map.put(RCCLConstants.STATUS_MESSAGE,
+	 * status_message); return map; }
+	 */
 
 	public Map<String, String> getHeaders() {
 		Map<String, String> headers = new HashMap<>();

@@ -1,11 +1,16 @@
 package com.rccl.lambda.handler;
 
+import com.amazonaws.services.lambda.runtime.ClientContext;
+import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.RollingWindow;
+import com.rccl.model.validator.RollingWindowDataValidator;
 import com.rccl.service.RollingWindowService;
+import com.rccl.utils.helper.RCCLException;
 
 /**
  * The Class PostRollingWindowDataHandler.
@@ -18,11 +23,17 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 	 * @return true if update is successful
 	 */
 	public Boolean handleRequest(RollingWindow request, Context context) {
+		context.getLogger().log("Input: " + request);
+		LambdaLogger logger = context.getLogger();
 		boolean update = false;
-		// verify input request is not null
-		if (request != null) {
+		try {
+			RollingWindowDataValidator rDataValidator = new RollingWindowDataValidator();
+			rDataValidator.validatePutRequest(request);
 			RollingWindowService rollingWindowService = new RollingWindowService();
-			update = rollingWindowService.updateRollingWindowData(request);
+			update = rollingWindowService.updateRollingWindowData(request, logger);
+		} catch (Exception ex) {
+			logger.log("Error occured while executing GetRollingWindowHandler: " + ex.getMessage());
+			throw new RCCLException("Error occured while executing GetRollingWindowHandler", ex);
 		}
 		System.out.println("value of update():" + update);
 		return update;
@@ -56,6 +67,80 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 		
 		System.out.println("Sample Input data:" + json);
 		
-		new PutRollingWindowDataHandler().handleRequest(roWindow, null);
+		new PutRollingWindowDataHandler().handleRequest(roWindow, new Context() {
+			
+			@Override
+			public int getRemainingTimeInMillis() {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+			
+			@Override
+			public int getMemoryLimitInMB() {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+			
+			@Override
+			public LambdaLogger getLogger() {
+				// TODO Auto-generated method stub
+				return new LambdaLogger() {
+					
+					@Override
+					public void log(String string) {
+						// TODO Auto-generated method stub
+						
+					}
+				};
+			}
+			
+			@Override
+			public String getLogStreamName() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public String getLogGroupName() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public String getInvokedFunctionArn() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public CognitoIdentity getIdentity() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public String getFunctionVersion() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public String getFunctionName() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public ClientContext getClientContext() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public String getAwsRequestId() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		});
 	}
 }

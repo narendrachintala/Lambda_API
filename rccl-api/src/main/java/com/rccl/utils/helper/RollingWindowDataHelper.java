@@ -13,7 +13,7 @@ public class RollingWindowDataHelper {
 	 * @param queryBuffer the query buffer
 	 * @return the string
 	 */
-	public String generateFilterCondition(RollingWindow request, StringBuffer queryBuffer) {
+	public String generateSetterCondition(RollingWindow request, StringBuffer queryBuffer) {
 		String EQUALS = " = ";
 		String COMMA = ",";
 		String finalQuery = "";

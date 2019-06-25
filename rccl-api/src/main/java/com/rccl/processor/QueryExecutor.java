@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.util.CollectionUtils;
 import com.rccl.dbutils.RevorioConnect;
@@ -23,7 +22,6 @@ public class QueryExecutor {
 		Connection con = RevorioConnect.getInstance().getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		int i = 0;
 
 		try {
 			System.out.println("executing query : " + query);
@@ -38,7 +36,6 @@ public class QueryExecutor {
 			if (rs != null) {
 				resultProcessor.processResult(rs);
 			}
-
 		} catch (Exception e) {
 			throw new RCCLException("error in querying table", e);
 		} finally {
@@ -60,9 +57,8 @@ public class QueryExecutor {
 		}
 	}
 
-	public int executeUpdate(String query, List<String> params, Context context) {
+	public int executeUpdate(String query, List<String> params, LambdaLogger logger) {
 
-		LambdaLogger logger = context.getLogger();
 		Connection con = RevorioConnect.getInstance().getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;

@@ -56,7 +56,7 @@ public class RollingWindowDBUtil {
 		FilterDataHelper filterDataHelper = new FilterDataHelper();
 		String finalWhereCondition = filterDataHelper.generateFilterCondition(request.getFiltersData(), queryBuffer);
 		RollingWindowDataHelper rollingWindowDataHelper = new RollingWindowDataHelper();
-		String finalUpdateCondition = rollingWindowDataHelper.generateFilterCondition(request, queryBuffer1);
+		String finalUpdateCondition = rollingWindowDataHelper.generateSetterCondition(request, queryBuffer1);
 		if (finalWhereCondition.equals("")) {
 			getRollingWindowQuery = getRollingWindowQuery.replace(RCCLConstants.WHERE_CONDITION_Q, "1=1");
 		} else {

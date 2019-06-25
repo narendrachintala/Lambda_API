@@ -107,5 +107,10 @@ public class RCCLConstants {
 	public final static String FORBIDDEN_MSG = "FORBIDDEN";
 	public final static String NOT_FOUND_MSG = "NOT_FOUND";
 	public final static String SERVER_ERROR_MSG = "SERVER_ERROR";
+	
+	
+	/**
+	 * Query 
+	 */
 
 }

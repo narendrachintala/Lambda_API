@@ -1,96 +1,126 @@
 package com.rccl.lambda.handler;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.amazonaws.services.lambda.runtime.ClientContext;
+import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.google.gson.Gson;
-import com.rccl.dto.PriceRangeDTO;
 import com.rccl.model.PriceRange;
-import com.rccl.utils.RCCLConstants;
+import com.rccl.service.PriceRangeService;
+import com.rccl.testdata.FiltersData;
+import com.rccl.utils.helper.RCCLException;
 
 /**
  * 
  * @author narendra.chintala
  *
  */
-public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, List<PriceRangeDTO>> {
+public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Boolean> {
 
 	@Override
 	/**
 	 * Post price range data based on applied filters and requested data
 	 */
-	public List<PriceRangeDTO> handleRequest(PriceRange request, Context context) {
-		Gson gson = new Gson();
-		context.getLogger().log("Input: " + gson.toJson(request));
-		System.out.println("PostPriceHandleRequest");
-		List<PriceRangeDTO> postPrice= new ArrayList<PriceRangeDTO>();
+	public Boolean handleRequest(PriceRange request, Context context) {
+		Boolean result = false;
+		LambdaLogger logger = context.getLogger();
 
-		return postPrice;
+		try {
+			context.getLogger().log("input: " + request.toString());
+			PriceRangeService priceRangeService = new PriceRangeService();
+			result = priceRangeService.updatePriceRangeData(request, logger);
+		} catch (Exception e) {
+			//logger.log("Error occured while executing PutPriceRangeDataHandler: " + e);
+			throw new RCCLException("Error occured while executing PutPriceRangeDataHandler: ", e);
+		}
+		return result;
 
 	}
 
 	public static void main(String[] args) {
 
-		Map<String, Object> price_range_values = new HashMap<String, Object>();
+		PriceRange priceRangeReq = new PriceRange();
 
-		price_range_values.put(RCCLConstants.PRICE_RANGE_MIN, -0.2);
-		price_range_values.put(RCCLConstants.PRICE_RANGE_MAX, 0.2);
+		priceRangeReq.setL1_range_min(-0.2);
+		priceRangeReq.setL1_range_max(0.2);
 
-		Map<String, List<String>> filteredData = new HashMap<String, List<String>>();
+		priceRangeReq.setFilterData(FiltersData.getRequestData());
 
-		List<String> filteredMetaProducts = new ArrayList<String>();
-		filteredMetaProducts.add("OASIS");
-		/*
-		 * filteredMetaProducts.add("7N CARIBBIAN");
-		 * filteredMetaProducts.add("SHORT CARIBBIAN");
-		 * filteredMetaProducts.add("7N CARIBBIAN"); filteredMetaProducts.add("CANADA");
-		 */
+		new PutPriceRangeDataHandler().handleRequest(priceRangeReq, new Context() {
 
-		filteredData.put(RCCLConstants.METAPRODUCT_F, filteredMetaProducts);
+			@Override
+			public int getRemainingTimeInMillis() {
+				// TODO Auto-generated method stub
+				return 0;
+			}
 
-		List<String> filteredProductCode = new ArrayList<String>();
-		filteredProductCode.add("CARIBEST");
-		/* filteredProductCode.add("CARIBWST"); */
+			@Override
+			public int getMemoryLimitInMB() {
+				// TODO Auto-generated method stub
+				return 0;
+			}
 
-		filteredData.put(RCCLConstants.PRODUCT_CODE_F, filteredProductCode);
+			@Override
+			public LambdaLogger getLogger() {
+				// TODO Auto-generated method stub
+				return new LambdaLogger() {
 
-		List<String> filteredShipCode = new ArrayList<String>();
-		filteredShipCode.add("SY");
-		/* filteredShipCode.add("AL"); */
+					@Override
+					public void log(String string) {
+						// TODO Auto-generated method stub
 
-		filteredData.put(RCCLConstants.SHIP_CODE_F, filteredShipCode);
+					}
+				};
+			}
 
-		List<String> filteredSailMonth = new ArrayList<String>();
-		filteredSailMonth.add("1");
-		/* filteredSailMonth.add("2"); */
+			@Override
+			public String getLogStreamName() {
+				// TODO Auto-generated method stub
+				return null;
+			}
 
-		filteredData.put(RCCLConstants.SAIL_MONTH_F, filteredSailMonth);
+			@Override
+			public String getLogGroupName() {
+				// TODO Auto-generated method stub
+				return null;
+			}
 
-		List<String> filteredSailDate = new ArrayList<String>();
-		filteredSailDate.add("2019/10/10");
+			@Override
+			public String getInvokedFunctionArn() {
+				// TODO Auto-generated method stub
+				return null;
+			}
 
-		filteredData.put(RCCLConstants.SAIL_DATE_F, filteredSailDate);
+			@Override
+			public CognitoIdentity getIdentity() {
+				// TODO Auto-generated method stub
+				return null;
+			}
 
-		List<String> filteredCatClass = new ArrayList<String>();
-		filteredCatClass.add("O");
-		/* filteredCatClass.add("D"); */
+			@Override
+			public String getFunctionVersion() {
+				// TODO Auto-generated method stub
+				return null;
+			}
 
-		filteredData.put(RCCLConstants.CAT_CLASS_F, filteredCatClass);
+			@Override
+			public String getFunctionName() {
+				// TODO Auto-generated method stub
+				return null;
+			}
 
-		List<String> filteredOccupancy = new ArrayList<String>();
-		filteredOccupancy.add("double");
-		/* filteredOccupancy.add("quad"); */
+			@Override
+			public ClientContext getClientContext() {
+				// TODO Auto-generated method stub
+				return null;
+			}
 
-		filteredData.put(RCCLConstants.OCCUPANCY_F, filteredOccupancy);
+			@Override
+			public String getAwsRequestId() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		});
 
-		price_range_values.put(RCCLConstants.FILTER_DATA, filteredData);
-
-		Gson gson = new Gson();
-		String json = gson.toJson(price_range_values);
-		System.out.println("json: " + json);
 	}
 }

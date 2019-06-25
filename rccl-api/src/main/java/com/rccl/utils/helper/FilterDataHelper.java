@@ -10,17 +10,17 @@ import com.rccl.utils.RCCLConstants;
  *
  */
 public class FilterDataHelper {
-	/*
-	 * public static FilterDataHelper _instance;
-	 * 
-	 * public static FilterDataHelper getInstance() { if (_instance == null) {
-	 * _instance = new FilterDataHelper(); } return _instance; }
-	 */
 
+	/**
+	 * 
+	 * @param filterData  contains end user chosen filter criteria
+	 * @param queryBuffer
+	 * @return returns generated query string
+	 */
 	public String generateFilterCondition(ParameterFiltersData filterData, StringBuffer queryBuffer) {
 
-		String IN = " in (";
-		String AND = ") and ";
+		String IN = RCCLConstants.IN;
+		String AND = RCCLConstants.AND;
 
 		if (filterData != null) {
 

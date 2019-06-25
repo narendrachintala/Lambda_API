@@ -14,7 +14,7 @@ import com.rccl.utils.RCCLConstants;
 public abstract class ResultProcessor<T> extends Object {
 
 	protected T result = null;
-	protected Integer fetchSize = RCCLConstants.MIN_FETCH_ROWS;
+	protected Integer fetchSize = RCCLConstants.MIN_FETCH_ROWS;  //fetch number of rows in result-set for one traverse
 
 	public abstract void processResult(ResultSet paramResultSet) throws SQLException;
 

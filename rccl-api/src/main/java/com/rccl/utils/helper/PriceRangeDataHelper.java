@@ -7,9 +7,9 @@ public class PriceRangeDataHelper {
 
 	public String generateSetterCondition(PriceRange priceRangeReq, StringBuffer queryBuffer) {
 
-		String EQUALS = "=";
-		String COMMA = ",";
-		String SINGLE_QUOTE = "'";
+		String EQUALS = RCCLConstants.EQUALS;
+		String COMMA = RCCLConstants.COMMA;
+		String SINGLE_QUOTE = RCCLConstants.SINGLE_QUOTE;
 
 		if (priceRangeReq.getL1_range_max() != null) {
 

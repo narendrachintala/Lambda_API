@@ -110,7 +110,13 @@ public class RCCLConstants {
 	
 	
 	/**
-	 * Query 
+	 * Query builder constatnts
 	 */
+	
+	public final static String EQUALS = "=";
+	public final static String COMMA = ",";
+	public final static String SINGLE_QUOTE = "'";
+	public final static String IN = " in (";
+	public final static String AND = ") and ";
 
 }

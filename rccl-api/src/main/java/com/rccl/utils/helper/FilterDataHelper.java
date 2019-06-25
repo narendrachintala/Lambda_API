@@ -13,14 +13,14 @@ public class FilterDataHelper {
 
 	/**
 	 * 
-	 * @param filterData contains end user chosen filter criteria
+	 * @param filterData  contains end user chosen filter criteria
 	 * @param queryBuffer
 	 * @return returns generated query string
 	 */
 	public String generateFilterCondition(ParameterFiltersData filterData, StringBuffer queryBuffer) {
 
-		String IN = " in (";
-		String AND = ") and ";
+		String IN = RCCLConstants.IN;
+		String AND = RCCLConstants.AND;
 
 		if (filterData != null) {
 

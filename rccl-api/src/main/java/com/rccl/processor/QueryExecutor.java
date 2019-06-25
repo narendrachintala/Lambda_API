@@ -18,10 +18,7 @@ public class QueryExecutor {
 		if (resultProcessor == null) {
 			throw new RCCLException("Please add resultProcessor", null);
 		}
-		if (resultProcessor.getResult() == null) {
-			throw new RCCLException("Initialize resultprocessor result object in  before you start", null);
-		}
-
+		
 		Connection con = RevorioConnect.getInstance().getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;

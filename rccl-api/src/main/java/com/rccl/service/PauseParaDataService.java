@@ -2,6 +2,7 @@ package com.rccl.service;
 
 import java.util.List;
 
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.rccl.dto.PauseParaDTO;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PausePara;
@@ -16,11 +17,11 @@ import com.rccl.repo.PauseParaDataRepo;
  */
 public class PauseParaDataService {
 
-	public List<PauseParaDTO> getPauseParaData(ParameterFiltersData request) {
+	public List<PauseParaDTO> getPauseParaData(ParameterFiltersData request, LambdaLogger logger) {
 		List<PauseParaDTO> PauseParaData = null;
 		try {
 			PauseParaDataRepo repo = new PauseParaDataRepo();
-			PauseParaData = repo.getPausePara(request);
+			PauseParaData = repo.getPausePara(request,logger);
 
 		} catch (Exception e) {
 			e.printStackTrace();

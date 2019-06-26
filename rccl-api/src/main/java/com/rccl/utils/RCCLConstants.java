@@ -84,6 +84,7 @@ public class RCCLConstants {
 	 */
 	public final static String ERROR_JSON = "error_json";
 	public final static String ERROR_METAPRODUCT="error_metaproduct";
+	public final static String ERROR_TABLE_NAME="error_table_name";
 	public final static String EX_GET_REQUEST="ex_get_request";
 	public final static String ERROR_FILTERS_DATA="filters_data";
 	public final static String ERROR_UPDATE_FIELDS="update_fields";

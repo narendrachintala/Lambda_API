@@ -23,7 +23,9 @@ public class FilterDataProcessor extends ResultProcessor<List<String>> {
 
 	@Override
 	public void processResult(ResultSet rs) throws SQLException {
-		result.add(rs.getString(RCCLConstants.FILTER_DATA_COLUMN));
+		while (rs.next()) {
+			result.add(rs.getString(RCCLConstants.FILTER_DATA_COLUMN));
+		}
 		dto.setFilterData(result);
 	}
 

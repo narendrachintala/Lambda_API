@@ -38,6 +38,16 @@ public class RollingWindowDataHelper {
 			queryBuffer.append(request.getWts());
 			queryBuffer.append(COMMA);
 		}
+		if (request.getFut_demand_window() != null) {
+			queryBuffer.append(RCCLConstants.FUT_DEMAND_WINDOW).append(EQUALS);
+			queryBuffer.append(request.getPrev_forecast());
+			queryBuffer.append(COMMA);
+		}
+		if (request.getPrev_demand_window() != null) {
+			queryBuffer.append(RCCLConstants.PREV_DEMAND_WINDOW).append(EQUALS);
+			queryBuffer.append(request.getPrice_window());
+			queryBuffer.append(COMMA);
+		}
 		// removing last appended extra ,
 		if (queryBuffer.toString().endsWith(",")) {
 			finalQuery = queryBuffer.substring(0, queryBuffer.length() - 1);

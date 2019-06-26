@@ -76,6 +76,8 @@ public class RCCLConstants {
 	public final static String FUT_FORECAST = "fut_forecast";
 	public final static String PRICE_WINDOW = "price_window";
 	public final static String WTS = "wts";
+	public final static String PREV_DEMAND_WINDOW = "prev_demand_window";
+	public final static String FUT_DEMAND_WINDOW = "fut_demand_window";
 
 	/**
 	 * Error messages
@@ -107,5 +109,16 @@ public class RCCLConstants {
 	public final static String FORBIDDEN_MSG = "FORBIDDEN";
 	public final static String NOT_FOUND_MSG = "NOT_FOUND";
 	public final static String SERVER_ERROR_MSG = "SERVER_ERROR";
+	
+	
+	/**
+	 * Query builder constatnts
+	 */
+	
+	public final static String EQUALS = "=";
+	public final static String COMMA = ",";
+	public final static String SINGLE_QUOTE = "'";
+	public final static String IN = " in (";
+	public final static String AND = ") and ";
 
 }

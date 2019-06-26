@@ -27,7 +27,7 @@ public class RollingWindowRepo {
 		QueryExecutor queryExecutor = new QueryExecutor();
 		List<RollingWindowDTO> list = new ArrayList<RollingWindowDTO>();
 		try {
-			String getRollingWindowQuery = rollingWindowDBUtil.getRollingWindowQuery(request);
+			String getRollingWindowQuery = rollingWindowDBUtil.getRollingWindowQuery(request, logger);
 			RollingWindowResultProcessor processor = new RollingWindowResultProcessor();
 			processor.setResult(list);
 			queryExecutor.execute(getRollingWindowQuery, logger, processor);
@@ -50,7 +50,7 @@ public class RollingWindowRepo {
 		QueryExecutor queryExecutor = new QueryExecutor();
 		Integer status = 0;
 		try {
-			String updateRollingWindowQuery = dbUtils.updateRollingWindowDataQuery(request);
+			String updateRollingWindowQuery = dbUtils.updateRollingWindowDataQuery(request, logger);
 			status = queryExecutor.executeUpdate(updateRollingWindowQuery, null, logger);
 		} catch (Exception e) {
 			e.printStackTrace();

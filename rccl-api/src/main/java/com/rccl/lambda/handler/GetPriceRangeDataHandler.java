@@ -45,7 +45,8 @@ public class GetPriceRangeDataHandler
 			// validating request data
 			RequestDataValidator priceRangeValidator = new RequestDataValidator();
 			response = priceRangeValidator.validateGetRequest(request);
-			if (response == null) { // if response is null denotes validation executed with no errors
+			if (response == null) { // response null denotes validation executed with no errors
+				
 				PriceRangeService priceRangeService = new PriceRangeService();
 				priceRangeList = priceRangeService.getPriceRangeData(request, logger);
 

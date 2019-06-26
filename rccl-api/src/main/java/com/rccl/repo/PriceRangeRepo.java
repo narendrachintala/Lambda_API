@@ -1,20 +1,16 @@
 package com.rccl.repo;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.rccl.dbutils.PriceRangeDBUtil;
-import com.rccl.dbutils.RevorioConnect;
 import com.rccl.dto.PriceRangeDTO;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PriceRange;
 import com.rccl.processor.PriceRangeResultProcessor;
 import com.rccl.processor.QueryExecutor;
-import com.rccl.utils.RCCLConstants;
+import com.rccl.utils.helper.RCCLException;
 
 /**
  * 
@@ -26,8 +22,8 @@ public class PriceRangeRepo {
 	/**
 	 * Gets the price range data.
 	 * 
-	 * @param filterData
-	 * @param context
+	 * @param filterData   contains end user chosen filter criteria
+	 * @param lambdaLogger
 	 * @return the price range data
 	 */
 	public List<PriceRangeDTO> getPriceRangeData(ParameterFiltersData filterData, LambdaLogger logger) {
@@ -55,27 +51,24 @@ public class PriceRangeRepo {
 	 * Update price range data.
 	 * 
 	 * @param priceRangeReq the price range req
+	 * @param logger
 	 * @return true, if successful
 	 */
-	public boolean updatePriceRangeData(PriceRange priceRangeReq) {
-		Connection conn = RevorioConnect.getInstance().getConnection();
+	public boolean updatePriceRangeData(PriceRange priceRangeReq, LambdaLogger logger) {
 		PriceRangeDBUtil priceRangeDBUtil = PriceRangeDBUtil.getInstance();
 		Integer status = 0;
+		QueryExecutor queryExecutor = new QueryExecutor();
 		try {
-			String updatePriceRangeQuery = priceRangeDBUtil.updatePriceRangeDataQuery(priceRangeReq);
+			/* generates update query for price range table */
+			String updatePriceRangeQuery = priceRangeDBUtil.generateUpdatePriceRangeDataQuery(priceRangeReq);
 			System.out.println("updatePriceRangeQuery: " + updatePriceRangeQuery);
-			PreparedStatement pstmt = conn.prepareStatement(updatePriceRangeQuery);
-			pstmt.setFetchSize(RCCLConstants.MIN_FETCH_ROWS);
-			status = pstmt.executeUpdate();
+			status = queryExecutor.executeUpdate(updatePriceRangeQuery, null, logger);
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		} catch (Exception e) {
+			// logger.log("Error occured while executing updatePriceRangeData: " + e);
+			throw new RCCLException(
+					"Error while executing SQL query in com.rccl.repo.PriceRangeRepo.updatePriceRangeData(PriceRange, LambdaLogger): ",
+					e);
 		}
 		if (status == 0) {
 			return false;

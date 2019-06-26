@@ -5,32 +5,37 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
 import org.apache.logging.log4j.Logger;
-
 import com.amazonaws.util.CollectionUtils;
 import com.rccl.dbutils.RevorioConnect;
 import com.rccl.utils.helper.RCCLException;
-
+/**
+ * The Class QueryExecutor.
+ */
 public class QueryExecutor {
 
+	/**
+	 * Execute.
+	 * @param 'query' final input query
+	 * @param 'logger' is used to generate the output logs
+	 * @param resultProcessor the result processor
+	 */
 	public void execute(String query, Logger logger, ResultProcessor<?> resultProcessor) {
-
 		if (resultProcessor == null) {
 			throw new RCCLException("Please add resultProcessor", null);
 		}
-		
+		// connect to oracle revoreo schema
 		Connection con = RevorioConnect.getInstance().getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-
+		// Executes the input query else will throw exception
 		try {
 			logger.info("executing query : " + query);
 			stmt = con.prepareStatement(query);
 		} catch (SQLException e) {
 			throw new RCCLException("Error while initializing the database connection", e);
 		}
-
+		// Returns the result else will throw the exception
 		try {
 			stmt.setFetchSize(resultProcessor.getFetchSize());
 			rs = stmt.executeQuery();
@@ -41,11 +46,9 @@ public class QueryExecutor {
 			throw new RCCLException("error in querying table", e);
 		} finally {
 			try {
-
 				if (rs != null) {
 					rs.close();
 				}
-
 				if (stmt != null) {
 					stmt.close();
 				}
@@ -58,21 +61,19 @@ public class QueryExecutor {
 		}
 	}
 
-	public int executeUpdate(String query, List<String> params, Logger logger) {
-
+	
+   public int executeUpdate(String query, List<String> params, Logger logger) {
 		Connection con = RevorioConnect.getInstance().getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		int i = 0;
 		int result = 0;
-
 		try {
 			logger.info("executing query : " + query);
 			stmt = con.prepareStatement(query);
 		} catch (SQLException e) {
 			throw new RCCLException("Error while initializing the database connection", e);
 		}
-
 		try {
 			i = 1;
 			if (!CollectionUtils.isNullOrEmpty(params)) {
@@ -88,11 +89,9 @@ public class QueryExecutor {
 			throw new RCCLException("error in querying table", e);
 		} finally {
 			try {
-
 				if (rs != null) {
 					rs.close();
 				}
-
 				if (stmt != null) {
 					stmt.close();
 				}

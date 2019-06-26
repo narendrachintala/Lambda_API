@@ -4,21 +4,23 @@ import com.rccl.model.ParameterFiltersData;
 import com.rccl.utils.CustomFunctions;
 import com.rccl.utils.RCCLConstants;
 
+
 /**
- * 
- * @author narendra.chintala
+ * The Class FilterDataHelper.
  *
+ * @author narendra.chintala
  */
 public class FilterDataHelper {
+	
 
 	/**
-	 * 
-	 * @param filterData  contains end user chosen filter criteria
-	 * @param queryBuffer
-	 * @return returns generated query string
+	 * Generate filter condition.
+	 *
+	 * @param 'filterData' contains chosen filters
+	 * @param 'queryBuffer' is required to append the generated query
+	 * @return returns the final string which is a end query 
 	 */
 	public String generateFilterCondition(ParameterFiltersData filterData, StringBuffer queryBuffer) {
-
 		String IN = RCCLConstants.IN;
 		String AND = RCCLConstants.AND;
 		try {
@@ -85,6 +87,12 @@ public class FilterDataHelper {
 
 	}
 
+	/**
+	 * Join.
+	 *
+	 * @param 'str' 
+	 * @return the string
+	 */
 	private String join(String str) {
 		return new StringBuilder().append('\'').append(str).append('\'').toString();
 	}

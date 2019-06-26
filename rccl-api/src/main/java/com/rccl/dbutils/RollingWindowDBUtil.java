@@ -1,5 +1,6 @@
 package com.rccl.dbutils;
 
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.RollingWindow;
 import com.rccl.utils.ConfigUtil;
@@ -29,10 +30,11 @@ public class RollingWindowDBUtil {
 	 * @return the rolling window query
 	 */
 	// Generate final Rolling Window parameter query
-	public String getRollingWindowQuery(ParameterFiltersData request) {
+	public String getRollingWindowQuery(ParameterFiltersData request, LambdaLogger logger) {
 		StringBuffer queryBuffer = new StringBuffer();
 		String getRollingWindowQuery = new String(configInst.getRollingWindowData());
 		System.out.println("reading query from config:" + getRollingWindowQuery);
+		logger.log("reading query from config:" + getRollingWindowQuery);
 		FilterDataHelper filterDataHelper = new FilterDataHelper();
 		String whereCondition = filterDataHelper.generateFilterCondition(request, queryBuffer);
 		if (whereCondition.equals("")) {
@@ -40,6 +42,7 @@ public class RollingWindowDBUtil {
 		} else {
 			getRollingWindowQuery = getRollingWindowQuery.replace(RCCLConstants.WHERE_CONDITION_Q, whereCondition);
 		}
+		logger.log("Final query for GET API rolling window:" + getRollingWindowQuery);
 		return getRollingWindowQuery;
 	}
 	
@@ -48,23 +51,25 @@ public class RollingWindowDBUtil {
 	 * @param request the request
 	 * @return the string
 	 */
-	public String updateRollingWindowDataQuery(RollingWindow request) {
+	public String updateRollingWindowDataQuery(RollingWindow request, LambdaLogger logger) {
 		StringBuffer queryBuffer = new StringBuffer();
-		StringBuffer queryBuffer1 = new StringBuffer();
-		String getRollingWindowQuery = new String(configInst.updateRollingWindow());
-		System.out.println("reading query from config:" + getRollingWindowQuery);
+		StringBuffer updateBuffer = new StringBuffer();
+		String updateRollingWindowQuery = new String(configInst.updateRollingWindow());
+		System.out.println("reading query from config:" + updateRollingWindowQuery);
+		logger.log("reading query from config:" + updateRollingWindowQuery);
 		FilterDataHelper filterDataHelper = new FilterDataHelper();
 		String finalWhereCondition = filterDataHelper.generateFilterCondition(request.getFiltersData(), queryBuffer);
 		RollingWindowDataHelper rollingWindowDataHelper = new RollingWindowDataHelper();
-		String finalUpdateCondition = rollingWindowDataHelper.generateSetterCondition(request, queryBuffer1);
+		String finalUpdateCondition = rollingWindowDataHelper.generateSetterCondition(request, updateBuffer);
 		if (finalWhereCondition.equals("")) {
-			getRollingWindowQuery = getRollingWindowQuery.replace(RCCLConstants.WHERE_CONDITION_Q, "1=1");
+			updateRollingWindowQuery = updateRollingWindowQuery.replace(RCCLConstants.WHERE_CONDITION_Q, "1=1");
 		} else {
-			getRollingWindowQuery = getRollingWindowQuery.replace(RCCLConstants.WHERE_CONDITION_Q, finalWhereCondition);
+			updateRollingWindowQuery = updateRollingWindowQuery.replace(RCCLConstants.WHERE_CONDITION_Q, finalWhereCondition);
 		}
-		getRollingWindowQuery = getRollingWindowQuery.replace(RCCLConstants.SETTER_COLUMNS_Q, finalUpdateCondition);
-		System.out.println("modified query:" + getRollingWindowQuery);
-		return getRollingWindowQuery;
+		updateRollingWindowQuery = updateRollingWindowQuery.replace(RCCLConstants.SETTER_COLUMNS_Q, finalUpdateCondition);
+		System.out.println("modified query:" + updateRollingWindowQuery);
+		logger.log("Final query for POST API rolling window:" + updateRollingWindowQuery);
+		return updateRollingWindowQuery;
 	}
 
 }

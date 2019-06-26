@@ -6,6 +6,9 @@ import java.util.Properties;
 /**
  * 
  * @author narendra.chintala
+ * 
+ * The Class 'ConfigUtil' consists of queries required to retrieve the filter data.
+ * 
  *
  */
 public class ConfigUtil {

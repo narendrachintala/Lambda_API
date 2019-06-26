@@ -9,14 +9,15 @@ import com.rccl.model.PausePara;
 import com.rccl.repo.PauseParaDataRepo;
 
 /**
- * 
- * @author narendra.chintala
- * 
- * We are Defining a class as service provider with 'get' and 'update' where access to 'repo' is defined
- *
+ * The Class RollingWindowService.
  */
 public class PauseParaDataService {
-
+	/**
+	 * Gets the PausePara Data.
+	 * @param 'request' is used to filter records
+	 * @param 'logger' to capture application activity
+	 * @return returns list of records based on filter condition
+	 */
 	public List<PauseParaDTO> getPauseParaData(ParameterFiltersData request, LambdaLogger logger) {
 		List<PauseParaDTO> PauseParaData = null;
 		try {
@@ -28,7 +29,11 @@ public class PauseParaDataService {
 		}
 		return PauseParaData;
 	}
-
+	/**
+	 * Update PausePara Data.
+	 * @param request the request
+	 * @return true, if successful
+	 */
 	public boolean updatePauseParaData(PausePara pauseParaReq) {
 		PauseParaDataRepo pauseParaRepo = null;
 		boolean status = false;

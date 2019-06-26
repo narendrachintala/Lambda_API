@@ -1,5 +1,8 @@
 package com.rccl.lambda.handler;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.amazonaws.services.lambda.runtime.ClientContext;
 import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
@@ -17,20 +20,26 @@ import com.rccl.utils.helper.RCCLException;
  */
 public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Boolean> {
 
+	static {
+		System.setProperty("log4j.configurationFile", "log4j2.xml");
+	}
+
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(PutPriceRangeDataHandler.class);
+
 	@Override
 	/**
 	 * Post price range data based on applied filters and requested data
 	 */
 	public Boolean handleRequest(PriceRange request, Context context) {
 		Boolean result = false;
-		LambdaLogger logger = context.getLogger();
 
 		try {
 			context.getLogger().log("input: " + request.toString());
 			PriceRangeService priceRangeService = new PriceRangeService();
 			result = priceRangeService.updatePriceRangeData(request, logger);
 		} catch (Exception e) {
-			//logger.log("Error occured while executing PutPriceRangeDataHandler: " + e);
+			// logger.log("Error occured while executing PutPriceRangeDataHandler: " + e);
 			throw new RCCLException("Error occured while executing PutPriceRangeDataHandler: ", e);
 		}
 		return result;

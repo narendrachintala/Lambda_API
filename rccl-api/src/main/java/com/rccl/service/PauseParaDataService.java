@@ -2,7 +2,8 @@ package com.rccl.service;
 
 import java.util.List;
 
-import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import org.apache.logging.log4j.Logger;
+
 import com.rccl.dto.PauseParaDTO;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PausePara;
@@ -18,7 +19,7 @@ public class PauseParaDataService {
 	 * @param 'logger' to capture application activity
 	 * @return returns list of records based on filter condition
 	 */
-	public List<PauseParaDTO> getPauseParaData(ParameterFiltersData request, LambdaLogger logger) {
+	public List<PauseParaDTO> getPauseParaData(ParameterFiltersData request, Logger logger) {
 		List<PauseParaDTO> PauseParaData = null;
 		try {
 			PauseParaDataRepo repo = new PauseParaDataRepo();

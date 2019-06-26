@@ -1,5 +1,6 @@
 package com.rccl.dbutils;
-import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import org.apache.logging.log4j.Logger;
+
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.utils.ConfigUtil;
 import com.rccl.utils.RCCLConstants;
@@ -22,10 +23,10 @@ public class PauseParaDBUtils {
 	 * @param 'filterdata' is requested columns passed to get the pausepara data.
 	 * @return  returns required Pausepara data
 	 */
-	public String getPauseParaDataQuery(ParameterFiltersData filterdata, LambdaLogger logger) {
+	public String getPauseParaDataQuery(ParameterFiltersData filterdata, Logger logger) {
 		StringBuffer querybuffer = new StringBuffer();
 		String getPauseParaData = new String(configInst.getPauseParaData());
-		logger.log("reading query from config file:" + getPauseParaData);
+		logger.debug("reading query from config file:" + getPauseParaData);
 		FilterDataHelper filterDataHelper = new FilterDataHelper();
 		String whereCondition = filterDataHelper.generateFilterCondition(filterdata, querybuffer);
 		// Checks if string exists or not

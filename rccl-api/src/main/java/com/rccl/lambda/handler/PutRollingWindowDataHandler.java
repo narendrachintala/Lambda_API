@@ -1,5 +1,8 @@
 package com.rccl.lambda.handler;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.amazonaws.services.lambda.runtime.ClientContext;
 import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
@@ -16,6 +19,14 @@ import com.rccl.utils.helper.RCCLException;
  * The Class PostRollingWindowDataHandler.
  */
 public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow, Boolean> {
+	
+	static {
+		System.setProperty("log4j.configurationFile", "log4j2.xml");
+	}
+
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(PutPauseParaDataHandler.class);
+
 	/**
 	 * Handle request.
 	 * @param request contains chosen filters as key-value pair
@@ -24,7 +35,6 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 	 */
 	public Boolean handleRequest(RollingWindow request, Context context) {
 		context.getLogger().log("Input: " + request);
-		LambdaLogger logger = context.getLogger();
 		boolean update = false;
 		try {
 			RollingWindowDataValidator rDataValidator = new RollingWindowDataValidator();
@@ -32,7 +42,7 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 			RollingWindowService rollingWindowService = new RollingWindowService();
 			update = rollingWindowService.updateRollingWindowData(request, logger);
 		} catch (Exception ex) {
-			logger.log("Error occured while executing GetRollingWindowHandler: " + ex.getMessage());
+			logger.error("Error occured while executing GetRollingWindowHandler: " + ex.getMessage());
 			throw new RCCLException("Error occured while executing GetRollingWindowHandler", ex);
 		}
 		System.out.println("value of update():" + update);

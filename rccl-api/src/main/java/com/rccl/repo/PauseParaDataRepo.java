@@ -1,7 +1,9 @@
 package com.rccl.repo;
 import java.util.ArrayList;
 import java.util.List;
-import com.amazonaws.services.lambda.runtime.LambdaLogger;
+
+import org.apache.logging.log4j.Logger;
+
 import com.rccl.dbutils.PauseParaDBUtils;
 import com.rccl.dto.PauseParaDTO;
 import com.rccl.model.ParameterFiltersData;
@@ -17,7 +19,7 @@ public class PauseParaDataRepo {
 	 * @return returns list of records based on filter condition
 	 */
 	// This method is used to fetch results from DB
-	public List<PauseParaDTO> getPausePara(ParameterFiltersData filterData,LambdaLogger logger) {
+	public List<PauseParaDTO> getPausePara(ParameterFiltersData filterData,Logger logger) {
 		List<PauseParaDTO> PauseParaData = new ArrayList<PauseParaDTO>();
 		QueryExecutor queryExecutor = new QueryExecutor();
 		PauseParaDBUtils dbUtils = PauseParaDBUtils.getInstance();
@@ -28,7 +30,7 @@ public class PauseParaDataRepo {
 			queryExecutor.execute(getPauseParaQuery, logger, processor);
 			PauseParaData = processor.getResult();
 		} catch (Exception e) {
-			logger.log(e.getMessage());
+			logger.error(e.getMessage());
 			throw e;
 		}
 		return PauseParaData;

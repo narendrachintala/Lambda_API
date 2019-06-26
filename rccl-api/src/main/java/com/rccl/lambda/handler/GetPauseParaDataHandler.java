@@ -1,6 +1,10 @@
 package com.rccl.lambda.handler;
 
 import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.amazonaws.services.lambda.runtime.ClientContext;
 import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
@@ -21,6 +25,15 @@ import com.rccl.utils.helper.RCCLException;
  */
 public class GetPauseParaDataHandler
 		implements RequestHandler<ParameterFiltersData, GatewayResponse<? extends Object>> {
+	
+	static {
+		System.setProperty("log4j.configurationFile", "log4j2.xml");
+	}
+
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(GetPauseParaDataHandler.class);
+
+	
 	/**
 	 * executes on requesting for list of values for PausePara table name.
 	 * @param request contains chosen filters as key-value pair
@@ -28,9 +41,8 @@ public class GetPauseParaDataHandler
 	 * @return the list of column values based on provided PausePara table name.
 	 */
 	public GatewayResponse<? extends Object> handleRequest(ParameterFiltersData request, Context context) {
-		context.getLogger().log("Input: " + request);
+		logger.info("Input: " + request);
 		List<PauseParaDTO> pauseParaList = null;
-		LambdaLogger logger = context.getLogger();
 		GatewayResponse<? extends Object> response = null;
 		ResponseUtil respUtil = ResponseUtil.getInstance();
 		try {
@@ -45,7 +57,7 @@ public class GetPauseParaDataHandler
 			}
 
 		} catch (Exception e) {
-			logger.log("Error occured while executing GetPauseParaDataHandler: " + e.getMessage());
+			logger.error("Error occured while executing GetPauseParaDataHandler: " + e.getMessage());
 			throw new RCCLException("Error occured while executing GetPauseParaDataHandler", e);
 		}
 		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));

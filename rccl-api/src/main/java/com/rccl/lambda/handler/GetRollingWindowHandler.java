@@ -2,6 +2,9 @@ package com.rccl.lambda.handler;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.amazonaws.services.lambda.runtime.ClientContext;
 import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
@@ -24,6 +27,14 @@ import com.rccl.utils.helper.RCCLException;
 public class GetRollingWindowHandler
 		implements RequestHandler<ParameterFiltersData, GatewayResponse<? extends Object>> {
 
+	static {
+		System.setProperty("log4j.configurationFile", "log4j2.xml");
+	}
+
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(GetRollingWindowHandler.class);
+
+	
 	/**
 	 * executes on requesting for list of values for specific table name
 	 * @param request contains chosen filters as key-value pair
@@ -31,8 +42,7 @@ public class GetRollingWindowHandler
 	 * @return the list of column values based on provided tablename
 	 */
 	public GatewayResponse<? extends Object> handleRequest(ParameterFiltersData request, Context context) {
-		context.getLogger().log("Input: " + request);
-		LambdaLogger logger = context.getLogger();
+		logger.info("Input: " + request);
 		
 		GatewayResponse<? extends Object> response = null;
 		ResponseUtil respUtil = ResponseUtil.getInstance();
@@ -49,7 +59,7 @@ public class GetRollingWindowHandler
 			}
 		}
 		catch (Exception ex) {
-			logger.log("Error occured while executing GetRollingWindowHandler: " + ex.getMessage());
+			logger.error("Error occured while executing GetRollingWindowHandler: " + ex.getMessage());
 			throw new RCCLException("Error occured while executing GetRollingWindowHandler", ex);
 		}
 		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));

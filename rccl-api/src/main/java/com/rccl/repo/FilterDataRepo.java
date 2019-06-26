@@ -1,16 +1,13 @@
 package com.rccl.repo;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import org.apache.logging.log4j.Logger;
 
 import com.rccl.dbutils.FiltersDBUtil;
-import com.rccl.dbutils.RevorioConnect;
 import com.rccl.dto.FilterDataDTO;
 import com.rccl.model.FiltersData;
 import com.rccl.processor.FilterDataProcessor;
-import com.rccl.utils.RCCLConstants;
+import com.rccl.processor.QueryExecutor;
+import com.rccl.utils.helper.RCCLException;
 
 /**
  * 
@@ -19,30 +16,17 @@ import com.rccl.utils.RCCLConstants;
  */
 public class FilterDataRepo {
 
-	public FilterDataDTO getFilterData(FiltersData filterData, String filter_column) {
-		Connection conn = RevorioConnect.getInstance().getConnection();
+	public FilterDataDTO getFilterData(FiltersData filterData, String filter_column, Logger logger) {
 		FilterDataDTO results = new FilterDataDTO();
 		FiltersDBUtil dbUtils = FiltersDBUtil.getInstance();
+		QueryExecutor executor = new QueryExecutor();
 		try {
 			String filterQuery = dbUtils.generateFilterQuery(filterData, filter_column);
-			System.out.println("filterQuery: " + filterQuery);
-			PreparedStatement pstmt = conn.prepareStatement(filterQuery);
-			pstmt.setFetchSize(RCCLConstants.MAX_FETCH_ROWS);
-			ResultSet rs = pstmt.executeQuery();
-
 			FilterDataProcessor dataProcessor = new FilterDataProcessor();
-			while (rs.next()) {
-				dataProcessor.processResult(rs);
-			}
+			executor.execute(filterQuery, logger, dataProcessor);
 			results.setFilterData(dataProcessor.getResult());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		} catch (Exception e) {
+			throw new RCCLException("Exception occured while executing getFilterData", e);
 		}
 		return results;
 

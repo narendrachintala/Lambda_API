@@ -3,14 +3,14 @@ package com.rccl.repo;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import org.apache.logging.log4j.Logger;
+
 import com.rccl.dbutils.PriceRangeDBUtil;
 import com.rccl.dto.PriceRangeDTO;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PriceRange;
 import com.rccl.processor.PriceRangeResultProcessor;
 import com.rccl.processor.QueryExecutor;
-import com.rccl.utils.helper.RCCLException;
 
 /**
  * 
@@ -26,7 +26,7 @@ public class PriceRangeRepo {
 	 * @param lambdaLogger
 	 * @return the price range data
 	 */
-	public List<PriceRangeDTO> getPriceRangeData(ParameterFiltersData filterData, LambdaLogger logger) {
+	public List<PriceRangeDTO> getPriceRangeData(ParameterFiltersData filterData, Logger logger) {
 
 		PriceRangeDBUtil priceRangeDBUtil = PriceRangeDBUtil.getInstance();
 		QueryExecutor queryExecutor = new QueryExecutor();
@@ -39,7 +39,6 @@ public class PriceRangeRepo {
 			queryExecutor.execute(getPriceRangeQuery, logger, processor);
 			priceData = processor.getResult();
 		} catch (Exception e) {
-			logger.log(e.getMessage());
 			throw e;
 		}
 
@@ -54,21 +53,19 @@ public class PriceRangeRepo {
 	 * @param logger
 	 * @return true, if successful
 	 */
-	public boolean updatePriceRangeData(PriceRange priceRangeReq, LambdaLogger logger) {
+	public boolean updatePriceRangeData(PriceRange priceRangeReq, Logger logger) {
 		PriceRangeDBUtil priceRangeDBUtil = PriceRangeDBUtil.getInstance();
 		Integer status = 0;
 		QueryExecutor queryExecutor = new QueryExecutor();
 		try {
 			/* generates update query for price range table */
 			String updatePriceRangeQuery = priceRangeDBUtil.generateUpdatePriceRangeDataQuery(priceRangeReq);
-			System.out.println("updatePriceRangeQuery: " + updatePriceRangeQuery);
+			logger.debug("updatePriceRangeQuery: " + updatePriceRangeQuery);
 			status = queryExecutor.executeUpdate(updatePriceRangeQuery, null, logger);
 
 		} catch (Exception e) {
 			// logger.log("Error occured while executing updatePriceRangeData: " + e);
-			throw new RCCLException(
-					"Error while executing SQL query in com.rccl.repo.PriceRangeRepo.updatePriceRangeData(PriceRange, LambdaLogger): ",
-					e);
+			throw e;
 		}
 		if (status == 0) {
 			return false;

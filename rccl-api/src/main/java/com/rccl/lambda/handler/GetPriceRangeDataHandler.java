@@ -2,12 +2,14 @@ package com.rccl.lambda.handler;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.amazonaws.services.lambda.runtime.ClientContext;
 import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.google.gson.GsonBuilder;
 import com.rccl.dto.PriceRangeDTO;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
@@ -24,6 +26,14 @@ import com.rccl.utils.helper.RCCLException;
  */
 public class GetPriceRangeDataHandler
 		implements RequestHandler<ParameterFiltersData, GatewayResponse<? extends Object>> {
+
+	static {
+		System.setProperty("log4j.configurationFile", "log4j2.xml");
+	}
+
+	// Initialize the Log4j logger.
+		static final Logger logger = LogManager.getLogger(GetPriceRangeDataHandler.class);
+
 	/*
 	 * This method will be invoked from AWS Lambda function to fetch price range
 	 * parameter data based on provided filter criteria
@@ -34,19 +44,21 @@ public class GetPriceRangeDataHandler
 	 * 
 	 */
 	public GatewayResponse<? extends Object> handleRequest(ParameterFiltersData request, Context context) {
+		// LambdaLogger logger = context.getLogger();
+		logger.info("Input: " + request.toString());
+		
+		System.exit(0);
 
-		context.getLogger().log("Input: " + request.toString());
 		List<PriceRangeDTO> priceRangeList = null;
 		GatewayResponse<? extends Object> response = null;
 		ResponseUtil respUtil = ResponseUtil.getInstance();
 
-		LambdaLogger logger = context.getLogger();
 		try {
 			// validating request data
 			RequestDataValidator priceRangeValidator = new RequestDataValidator();
 			response = priceRangeValidator.validateGetRequest(request);
 			if (response == null) { // response null denotes validation executed with no errors
-				
+
 				PriceRangeService priceRangeService = new PriceRangeService();
 				priceRangeList = priceRangeService.getPriceRangeData(request, logger);
 
@@ -55,10 +67,11 @@ public class GetPriceRangeDataHandler
 			}
 
 		} catch (Exception e) {
-			logger.log("Error occured while executing GetPriceRangeDataHandler: " + e.getMessage());
+			logger.error("Error occured while executing GetPriceRangeDataHandler: " + e.getMessage());
 			throw new RCCLException("Error occured while executing GetPriceRangeDataHandler", e);
 		}
-		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
+		// System.out.println(new
+		// GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
 
 	}

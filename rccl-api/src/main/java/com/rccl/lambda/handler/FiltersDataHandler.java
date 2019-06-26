@@ -1,6 +1,7 @@
 package com.rccl.lambda.handler;
 
 import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.rccl.dto.FilterDataDTO;
 import com.rccl.model.FiltersData;
@@ -28,13 +29,14 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, FilterDat
 	@Override
 	public FilterDataDTO handleRequest(FiltersData request, Context context) {
 		context.getLogger().log("input: " + request);
+		LambdaLogger logger = context.getLogger();
 		FilterDataService dataService = null;
 		FilterDataDTO response = null;
 		try {
 			dataService = new FilterDataService();
-			response = dataService.getFilterData(request, RCCLConstants.METAPRODUCT_F);
+			response = dataService.getFilterData(request, RCCLConstants.METAPRODUCT_F, logger);
 		} catch (Exception e) {
-			context.getLogger().log("Error occurred while invoking rev_pre_getMetaProducts API: " + e.getMessage());
+			logger.log("Error occurred while invoking rev_pre_getMetaProducts API: " + e.getMessage());
 			throw new RCCLException("Error occurred while invoking rev_pre_getMetaProducts API: ", e.getCause());
 		}
 
@@ -51,15 +53,17 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, FilterDat
 	 *         name
 	 */
 	public FilterDataDTO getProductCodes(FiltersData request, Context context) {
-		context.getLogger().log("input: " + request);
+		LambdaLogger logger = context.getLogger();
+		logger.log("input: " + request);
 
 		FilterDataService dataService = null;
 		FilterDataDTO response = null;
 		try {
 			dataService = new FilterDataService();
-			response = dataService.getFilterData(request, RCCLConstants.PRODUCT_CODE_F);
+			response = dataService.getFilterData(request, RCCLConstants.PRODUCT_CODE_F, logger);
 		} catch (Exception e) {
-			context.getLogger().log("Error occurred while invoking rev_pre_getProductCodes API: " + e.getMessage());
+			logger.log("Error occurred while invoking rev_pre_getProductCodes API: " + e.getMessage());
+			throw new RCCLException("Error occurred while invoking rev_pre_getProductCodes API: ", e.getCause());
 		}
 
 		return response;
@@ -74,13 +78,16 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, FilterDat
 	 * @return returns list of ship_code column values based on provided table name
 	 */
 	public FilterDataDTO getShipCodes(FiltersData request, Context context) {
+		LambdaLogger logger = context.getLogger();
+		logger.log("input: " + request);
 		FilterDataService dataService = null;
 		FilterDataDTO response = null;
 		try {
 			dataService = new FilterDataService();
-			response = dataService.getFilterData(request, RCCLConstants.SHIP_CODE_F);
+			response = dataService.getFilterData(request, RCCLConstants.SHIP_CODE_F, logger);
 		} catch (Exception e) {
-			context.getLogger().log("Error occurred while invoking rev_pre_getShipCodes API: " + e.getMessage());
+			logger.log("Error occurred while invoking rev_pre_getShipCodes API: " + e.getMessage());
+			throw new RCCLException("Error occurred while invoking rev_pre_getShipCodes API: ", e.getCause());
 		}
 		return response;
 	}
@@ -94,13 +101,16 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, FilterDat
 	 * @return returns list of sail_month column values based on provided table name
 	 */
 	public FilterDataDTO getSailMonths(FiltersData request, Context context) {
+		LambdaLogger logger = context.getLogger();
+		logger.log("input: " + request);
 		FilterDataService dataService = null;
 		FilterDataDTO response = null;
 		try {
 			dataService = new FilterDataService();
-			response = dataService.getFilterData(request, RCCLConstants.SAIL_MONTH_F);
+			response = dataService.getFilterData(request, RCCLConstants.SAIL_MONTH_F, logger);
 		} catch (Exception e) {
-			context.getLogger().log("Error occurred while invoking rev_pre_getSailMonths API: " + e.getMessage());
+			logger.log("Error occurred while invoking rev_pre_getSailMonths API: " + e.getMessage());
+			throw new RCCLException("Error occurred while invoking rev_pre_getSailMonths API: ", e.getCause());
 		}
 		return response;
 	}
@@ -115,13 +125,16 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, FilterDat
 	 */
 
 	public FilterDataDTO getCatClasses(FiltersData request, Context context) {
+		LambdaLogger logger = context.getLogger();
+		logger.log("input: " + request);
 		FilterDataService dataService = null;
 		FilterDataDTO response = null;
 		try {
 			dataService = new FilterDataService();
-			response = dataService.getFilterData(request, RCCLConstants.CAT_CLASS_F);
+			response = dataService.getFilterData(request, RCCLConstants.CAT_CLASS_F, logger);
 		} catch (Exception e) {
-			context.getLogger().log("Error occurred while invoking rev_pre_getCatClasses API: " + e.getMessage());
+			logger.log("Error occurred while invoking rev_pre_getCatClasses API: " + e.getMessage());
+			throw new RCCLException("Error occurred while invoking rev_pre_getCatClasses API: ", e.getCause());
 		}
 		return response;
 	}
@@ -135,13 +148,16 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, FilterDat
 	 * @return returns list of category column values based on provided table name
 	 */
 	public FilterDataDTO getCategories(FiltersData request, Context context) {
+		LambdaLogger logger = context.getLogger();
+		logger.log("input: " + request);
 		FilterDataService dataService = null;
 		FilterDataDTO response = null;
 		try {
 			dataService = new FilterDataService();
-			response = dataService.getFilterData(request, RCCLConstants.CATEGORY_F);
+			response = dataService.getFilterData(request, RCCLConstants.CATEGORY_F, logger);
 		} catch (Exception e) {
-			context.getLogger().log("Error occurred while invoking rev_pre_getCategory API: " + e.getMessage());
+			logger.log("Error occurred while invoking rev_pre_getCategory API: " + e.getMessage());
+			throw new RCCLException("Error occurred while invoking rev_pre_getCategory API: ", e.getCause());
 		}
 		return response;
 	}
@@ -155,13 +171,16 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, FilterDat
 	 * @return returns list of occupancy column values based on provided table name
 	 */
 	public FilterDataDTO getOccupancy(FiltersData request, Context context) {
+		LambdaLogger logger = context.getLogger();
+		logger.log("input: " + request);
 		FilterDataService dataService = null;
 		FilterDataDTO response = null;
 		try {
 			dataService = new FilterDataService();
-			response = dataService.getFilterData(request, RCCLConstants.OCCUPANCY_F);
+			response = dataService.getFilterData(request, RCCLConstants.OCCUPANCY_F, logger);
 		} catch (Exception e) {
-			context.getLogger().log("Error occurred while invoking rev_pre_getOccupancies API: " + e.getMessage());
+			logger.log("Error occurred while invoking rev_pre_getOccupancies API: " + e.getMessage());
+			throw new RCCLException("Error occurred while invoking rev_pre_getOccupancies API: ", e.getCause());
 		}
 		return response;
 	}

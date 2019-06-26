@@ -6,14 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import org.apache.logging.log4j.Logger;
+
 import com.amazonaws.util.CollectionUtils;
 import com.rccl.dbutils.RevorioConnect;
 import com.rccl.utils.helper.RCCLException;
 
 public class QueryExecutor {
 
-	public void execute(String query, LambdaLogger logger, ResultProcessor<?> resultProcessor) {
+	public void execute(String query, Logger logger, ResultProcessor<?> resultProcessor) {
 
 		if (resultProcessor == null) {
 			throw new RCCLException("Please add resultProcessor", null);
@@ -24,7 +25,7 @@ public class QueryExecutor {
 		ResultSet rs = null;
 
 		try {
-			System.out.println("executing query : " + query);
+			logger.info("executing query : " + query);
 			stmt = con.prepareStatement(query);
 		} catch (SQLException e) {
 			throw new RCCLException("Error while initializing the database connection", e);
@@ -57,7 +58,7 @@ public class QueryExecutor {
 		}
 	}
 
-	public int executeUpdate(String query, List<String> params, LambdaLogger logger) {
+	public int executeUpdate(String query, List<String> params, Logger logger) {
 
 		Connection con = RevorioConnect.getInstance().getConnection();
 		PreparedStatement stmt = null;
@@ -66,7 +67,7 @@ public class QueryExecutor {
 		int result = 0;
 
 		try {
-			logger.log("executing query : " + query);
+			logger.info("executing query : " + query);
 			stmt = con.prepareStatement(query);
 		} catch (SQLException e) {
 			throw new RCCLException("Error while initializing the database connection", e);
@@ -76,11 +77,11 @@ public class QueryExecutor {
 			i = 1;
 			if (!CollectionUtils.isNullOrEmpty(params)) {
 				for (String p : params) {
-					logger.log("param" + i + ":" + p);
+					logger.debug("param" + i + ":" + p);
 					stmt.setString(i++, p);
 				}
 			}
-			logger.log("statement object :" + stmt);
+			logger.debug("statement object :" + stmt);
 			result = stmt.executeUpdate();
 			return result;
 		} catch (Exception e) {

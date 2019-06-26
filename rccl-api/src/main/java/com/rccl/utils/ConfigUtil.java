@@ -9,6 +9,14 @@ import java.util.Properties;
  *
  */
 public class ConfigUtil {
+	
+	/*
+	 * static { System.setProperty("java.util.logging.manager",
+	 * "org.apache.logging.log4j.jul.LogManager");
+	 * System.setProperty("log4j.configurationFile", "resources/lambda-log4j2.xml");
+	 * }
+	 */
+
 	private static final String RCCL_CONFIG_PROPERTY_FILE = "rccl_config.properties";
 	private static Properties conf = new Properties();
 
@@ -46,7 +54,7 @@ public class ConfigUtil {
 	public String getPauseParaData() {
 		return conf.getProperty("get_pause_para_data");
 	}
-	
+
 	public String getRollingWindowData() {
 		return conf.getProperty("get_rolling_window_data");
 	}
@@ -54,15 +62,15 @@ public class ConfigUtil {
 	public String getSecretManagemerName() {
 		return conf.getProperty("secret-manager");
 	}
-	
+
 	public String getEndPoint() {
 		return conf.getProperty("endpoint");
 	}
-	
+
 	public String getRegion() {
 		return conf.getProperty("region");
 	}
-	
+
 	public String updateRollingWindow() {
 		return conf.getProperty("update_rolling_window_para");
 	}

@@ -9,7 +9,9 @@ import com.rccl.utils.RCCLConstants;
  * 
  * @author narendra.chintala
  *
- * @param <T>
+ * The Class 'ResultProcessor' is used set,get the result.
+ * 
+ * And to fetch the required size of data
  */
 public abstract class ResultProcessor<T> extends Object {
 

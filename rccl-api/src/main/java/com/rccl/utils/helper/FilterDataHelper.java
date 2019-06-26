@@ -4,26 +4,30 @@ import com.rccl.model.ParameterFiltersData;
 import com.rccl.utils.CustomFunctions;
 import com.rccl.utils.RCCLConstants;
 
+
 /**
- * 
- * @author narendra.chintala
+ * The Class FilterDataHelper.
  *
+ * @author narendra.chintala
  */
 public class FilterDataHelper {
-	/*
-	 * public static FilterDataHelper _instance;
-	 * 
-	 * public static FilterDataHelper getInstance() { if (_instance == null) {
-	 * _instance = new FilterDataHelper(); } return _instance; }
-	 */
+	
 
+	/**
+	 * Generate filter condition.
+	 *
+	 * @param 'filterData' contains chosen filters
+	 * @param 'queryBuffer' is required to append the generated query
+	 * @return returns the final string which is a end query 
+	 */
 	public String generateFilterCondition(ParameterFiltersData filterData, StringBuffer queryBuffer) {
 
 		String IN = " in (";
 		String AND = ") and ";
 
 		if (filterData != null) {
-
+				
+			//'Metaproduct' is Mandatory field
 			if (!CustomFunctions.isNullOrEmpty(filterData.getMetaproduct())) {
 
 				queryBuffer.append(RCCLConstants.METAPRODUCT_F).append(IN);
@@ -82,6 +86,12 @@ public class FilterDataHelper {
 
 	}
 
+	/**
+	 * Join.
+	 *
+	 * @param 'str' 
+	 * @return the string
+	 */
 	private String join(String str) {
 		return new StringBuilder().append('\'').append(str).append('\'').toString();
 	}

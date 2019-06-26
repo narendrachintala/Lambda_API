@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 
 public class RevorioConnect {
 
-	private Connection connection = null;
+	private static Connection connection = null;
 	private static RevorioConnect _instance;
 
 	public static RevorioConnect getInstance() {
@@ -15,9 +15,9 @@ public class RevorioConnect {
 			try {
 				Class.forName("oracle.jdbc.driver.OracleDriver");
 				System.out.println("Oracle driver loaded");
-				  _instance.setConnection(DriverManager.getConnection(
-				  "jdbc:oracle:thin:@//<host>:<port>/<service_name>", "<schema>",
-				  "<password>"));
+				_instance.setConnection(DriverManager.getConnection(
+						  "jdbc:oracle:thin:@//<host>:<port>/<service_name>", "<schema>",
+						  "<password>"));
 				System.out.println("oracle connection established");
 			} catch (Exception ioe) {
 				System.out.println("Error while establishing oracle connection: "+ioe.getMessage());
@@ -45,11 +45,11 @@ public class RevorioConnect {
 	}
 
 	public Connection getConnection() {
-		return this.connection;
+		return connection;
 	}
 
-	public void setConnection(Connection connection) {
-		this.connection = connection;
+	public void setConnection(Connection connections) {
+		connection = connections;
 	}
 
 	public static void main(String[] args) {

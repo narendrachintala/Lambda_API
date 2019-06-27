@@ -5,10 +5,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.amazonaws.services.lambda.runtime.ClientContext;
-import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.rccl.dto.PriceRangeDTO;
 import com.rccl.model.GatewayResponse;
@@ -55,7 +52,7 @@ public class GetPriceRangeDataHandler
 			// validating request data
 			RequestDataValidator priceRangeValidator = new RequestDataValidator();
 			response = priceRangeValidator.validateGetRequest(request);
-			if (response == null) { // response null denotes validation executed with no errors
+			if (response == null) { // response null denotes request is valid
 
 				PriceRangeService priceRangeService = new PriceRangeService();
 				priceRangeList = priceRangeService.getPriceRangeData(request, logger);
@@ -87,80 +84,6 @@ public class GetPriceRangeDataHandler
 		 * GsonBuilder().serializeNulls().create().toJson(data)); System.exit(0);
 		 */
 
-		new GetPriceRangeDataHandler().handleRequest(FiltersData.getRequestData(), new Context() {
-
-			@Override
-			public int getRemainingTimeInMillis() {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-
-			@Override
-			public int getMemoryLimitInMB() {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-
-			@Override
-			public LambdaLogger getLogger() {
-				// TODO Auto-generated method stub
-				return new LambdaLogger() {
-
-					@Override
-					public void log(String string) {
-						// TODO Auto-generated method stub
-
-					}
-				};
-			}
-
-			@Override
-			public String getLogStreamName() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public String getLogGroupName() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public String getInvokedFunctionArn() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public CognitoIdentity getIdentity() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public String getFunctionVersion() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public String getFunctionName() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public ClientContext getClientContext() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public String getAwsRequestId() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		});
+		new GetPriceRangeDataHandler().handleRequest(FiltersData.getRequestData(), null);
 	}
 }

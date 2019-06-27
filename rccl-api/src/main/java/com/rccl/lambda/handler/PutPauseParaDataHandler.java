@@ -9,16 +9,19 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
+import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PausePara;
 import com.rccl.model.validator.PauseParaDataValidator;
 import com.rccl.service.PauseParaDataService;
+import com.rccl.utils.RCCLConstants;
+import com.rccl.utils.ResponseUtil;
 import com.rccl.utils.helper.RCCLException;
 
 /**
  * The Class PutPauseParaDataHandler.
  */
-public class PutPauseParaDataHandler implements RequestHandler<PausePara, Boolean> {
+public class PutPauseParaDataHandler implements RequestHandler<PausePara, GatewayResponse<? extends Object>> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
@@ -33,20 +36,25 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Boolea
 	 * @param context lambda context object
 	 * @return true if update is successful
 	 */
-	public Boolean handleRequest(PausePara request, Context context) {
+	public GatewayResponse<? extends Object> handleRequest(PausePara request, Context context) {
 		context.getLogger().log("Input request: " + request);
 		boolean update = false;
+		GatewayResponse<? extends Object> response = null;
+		ResponseUtil respUtil = ResponseUtil.getInstance();
 		try {
 			PauseParaDataValidator rDataValidator = new PauseParaDataValidator();
-			rDataValidator.validatePutRequest(request);
+			response = rDataValidator.validatePutRequest(request);
 			PauseParaDataService PauseParaService = new PauseParaDataService();
 			update = PauseParaService.updatePauseParaData(request, logger);
+			response = new GatewayResponse<Boolean>(update, respUtil.getHeaders(),
+					RCCLConstants.SC_OK);
+			
 		} catch (Exception ex) {
 			 logger.error("Error occured while executing PauseParaDataHandler: " + ex.getMessage());
 			throw new RCCLException("Error occured while executing PauseParaDataHandler", ex);
 		}
 		System.out.println("value of update():" + update);
-		return update;
+		return response;
 	}
 
 	public static void main(String[] args) {

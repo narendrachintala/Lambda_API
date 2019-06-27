@@ -59,7 +59,7 @@ public class PauseParaDBUtils {
 		System.out.println("reading query from config:" + updatePauseParaQuery);
 		logger.debug("reading query from config:" + updatePauseParaQuery);
 		FilterDataHelper filterDataHelper = new FilterDataHelper();
-		String finalWhereCondition = filterDataHelper.generateFilterCondition(request.getFilterData(), queryBuffer);
+		String finalWhereCondition = filterDataHelper.generateFilterCondition(request.getFiltersData(), queryBuffer);
 		System.out.println("generated where clause:" +finalWhereCondition);
 		PauseParaDataHelper PauseParaDataHelper = new PauseParaDataHelper();
 		String finalUpdateCondition = PauseParaDataHelper.generateSetterCondition(request, updateBuffer);

@@ -44,17 +44,17 @@ public class PauseParaDataValidator {
 	 * @param request the request
 	 * @return the gateway response<? extends object>
 	 */
-	public GatewayResponse<? extends Object> validatePutRequest(PausePara request) {
+	public GatewayResponse<? extends Object> validatePutRequest(PausePara request) throws RCCLException {
 		try {
 			if (request == null) {
 				return new GatewayResponse<ErrorMessage>(REQUEST_WAS_NULL_ERROR, respUtil.getHeaders(),
 						RCCLConstants.SC_BAD_REQUEST);
 			}
-			if (request.getFilterData() == null) {
+			if (request.getFiltersData() == null) {
 				return new GatewayResponse<ErrorMessage>(FILTERS_DATA_NOT_SET, respUtil.getHeaders(),
 						RCCLConstants.SC_BAD_REQUEST);
 			}
-			if (CustomFunctions.isNullOrEmpty(request.getFilterData().getMetaproduct())) {
+			if (CustomFunctions.isNullOrEmpty(request.getFiltersData().getMetaproduct())) {
 				return new GatewayResponse<ErrorMessage>(METAPRODUCT_WAS_NOT_SET, respUtil.getHeaders(),
 						RCCLConstants.SC_NOT_FOUND);
 			}

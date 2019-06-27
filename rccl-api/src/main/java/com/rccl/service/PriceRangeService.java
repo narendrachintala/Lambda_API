@@ -29,7 +29,7 @@ public class PriceRangeService {
 			priceRangeData = repo.getPriceRangeData(request, logger);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw e;
 		}
 		return priceRangeData;
 	}

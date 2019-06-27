@@ -26,7 +26,7 @@ public class ResponseUtil {
 	public Map<String, String> getHeaders() {
 		Map<String, String> headers = new HashMap<>();
 		headers.put("Content-Type", "application/json");
-		headers.put("X-Custom-Header", "application/json");
+		//headers.put("X-Custom-Header", "application/json");
 
 		return headers;
 	}

@@ -47,8 +47,6 @@ public class GetPriceRangeDataHandler
 		// LambdaLogger logger = context.getLogger();
 		logger.info("Input: " + request.toString());
 		
-		System.exit(0);
-
 		List<PriceRangeDTO> priceRangeList = null;
 		GatewayResponse<? extends Object> response = null;
 		ResponseUtil respUtil = ResponseUtil.getInstance();

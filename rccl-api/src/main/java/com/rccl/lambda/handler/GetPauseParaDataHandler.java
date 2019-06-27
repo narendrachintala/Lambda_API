@@ -10,7 +10,6 @@ import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.google.gson.GsonBuilder;
 import com.rccl.dto.PauseParaDTO;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
@@ -60,7 +59,7 @@ public class GetPauseParaDataHandler
 			logger.error("Error occured while executing GetPauseParaDataHandler: " + e.getMessage());
 			throw new RCCLException("Error occured while executing GetPauseParaDataHandler", e);
 		}
-		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
+		//System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
 	}
 	/**

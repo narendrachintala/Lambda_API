@@ -1,146 +1,325 @@
 package com.rccl.dto;
 
 /**
- * 
- * @author narendra.chintala
+ * The Class PriceRangeDTO.
  *
+ * @author narendra.chintala
  */
 public class PriceRangeDTO {
 
-	private String CURRENCY;
-	private String METAPRODUCT;
-	private String PRODUCT_CODE;
-	private String SHIP_CODE;
-	private Integer SAIL_MONTH;
-	private String SAIL_DATE;
-	private String CAT_CLASS;
-	private String OCCUPANCY;
-	private Double L1_RANGE_MIN;
-	private Double L1_RANGE_MAX;
-	private String L1_INSERT_DATE;
-	private Double L2_RANGE_MIN;
-	private Double L2_RANGE_MAX;
-	private String L2_INSERT_DATE;
-	private String USER_ID;
+	/** The currency. */
+	private String currency;
+	
+	/** The metaproduct. */
+	private String metaproduct;
+	
+	/** The product code. */
+	private String product_code;
+	
+	/** The ship code. */
+	private String ship_code;
+	
+	/** The sail month. */
+	private Integer sail_month;
+	
+	/** The sail date. */
+	private String sail_date;
+	
+	/** The cat class. */
+	private String cat_class;
+	
+	/** The occupancy. */
+	private String occupancy;
+	
+	/** The l 1 range min. */
+	private Double l1_range_min;
+	
+	/** The l 1 range max. */
+	private Double l1_range_max;
+	
+	/** The l 1 insert date. */
+	private String l1_insert_date;
+	
+	/** The l 2 range min. */
+	private Double l2_range_min;
+	
+	/** The l 2 range max. */
+	private Double l2_range_max;
+	
+	/** The l 2 insert date. */
+	private String l2_insert_date;
+	
+	/** The user id. */
+	private String user_id;
 
-	public String getCURRENCY() {
-		return CURRENCY;
+	/**
+	 * Gets the currency.
+	 *
+	 * @return the currency
+	 */
+	public String getCurrency() {
+		return currency;
 	}
 
-	public void setCURRENCY(String cURRENCY) {
-		CURRENCY = cURRENCY;
+	/**
+	 * Sets the currency.
+	 *
+	 * @param currency the new currency
+	 */
+	public void setCurrency(String currency) {
+		this.currency = currency;
 	}
 
-	public String getMETAPRODUCT() {
-		return METAPRODUCT;
+	/**
+	 * Gets the metaproduct.
+	 *
+	 * @return the metaproduct
+	 */
+	public String getMetaproduct() {
+		return metaproduct;
 	}
 
-	public void setMETAPRODUCT(String mETAPRODUCT) {
-		METAPRODUCT = mETAPRODUCT;
+	/**
+	 * Sets the metaproduct.
+	 *
+	 * @param metaproduct the new metaproduct
+	 */
+	public void setMetaproduct(String metaproduct) {
+		this.metaproduct = metaproduct;
 	}
 
-	public String getPRODUCT_CODE() {
-		return PRODUCT_CODE;
+	/**
+	 * Gets the product code.
+	 *
+	 * @return the product code
+	 */
+	public String getProduct_code() {
+		return product_code;
 	}
 
-	public void setPRODUCT_CODE(String pRODUCT_CODE) {
-		PRODUCT_CODE = pRODUCT_CODE;
+	/**
+	 * Sets the product code.
+	 *
+	 * @param product_code the new product code
+	 */
+	public void setProduct_code(String product_code) {
+		this.product_code = product_code;
 	}
 
-	public String getSHIP_CODE() {
-		return SHIP_CODE;
+	/**
+	 * Gets the ship code.
+	 *
+	 * @return the ship code
+	 */
+	public String getShip_code() {
+		return ship_code;
 	}
 
-	public void setSHIP_CODE(String sHIP_CODE) {
-		SHIP_CODE = sHIP_CODE;
+	/**
+	 * Sets the ship code.
+	 *
+	 * @param ship_code the new ship code
+	 */
+	public void setShip_code(String ship_code) {
+		this.ship_code = ship_code;
 	}
 
-	public Integer getSAIL_MONTH() {
-		return SAIL_MONTH;
+	/**
+	 * Gets the sail month.
+	 *
+	 * @return the sail month
+	 */
+	public Integer getSail_month() {
+		return sail_month;
 	}
 
-	public void setSAIL_MONTH(Integer sAIL_MONTH) {
-		SAIL_MONTH = sAIL_MONTH;
+	/**
+	 * Sets the sail month.
+	 *
+	 * @param sail_month the new sail month
+	 */
+	public void setSail_month(Integer sail_month) {
+		this.sail_month = sail_month;
 	}
 
-	public String getSAIL_DATE() {
-		return SAIL_DATE;
+	/**
+	 * Gets the sail date.
+	 *
+	 * @return the sail date
+	 */
+	public String getSail_date() {
+		return sail_date;
 	}
 
-	public void setSAIL_DATE(String sAIL_DATE) {
-		SAIL_DATE = sAIL_DATE;
+	/**
+	 * Sets the sail date.
+	 *
+	 * @param sail_date the new sail date
+	 */
+	public void setSail_date(String sail_date) {
+		this.sail_date = sail_date;
 	}
 
-	public String getCAT_CLASS() {
-		return CAT_CLASS;
+	/**
+	 * Gets the cat class.
+	 *
+	 * @return the cat class
+	 */
+	public String getCat_class() {
+		return cat_class;
 	}
 
-	public void setCAT_CLASS(String cAT_CLASS) {
-		CAT_CLASS = cAT_CLASS;
+	/**
+	 * Sets the cat class.
+	 *
+	 * @param cat_class the new cat class
+	 */
+	public void setCat_class(String cat_class) {
+		this.cat_class = cat_class;
 	}
 
-	public String getOCCUPANCY() {
-		return OCCUPANCY;
+	/**
+	 * Gets the occupancy.
+	 *
+	 * @return the occupancy
+	 */
+	public String getOccupancy() {
+		return occupancy;
 	}
 
-	public void setOCCUPANCY(String oCCUPANCY) {
-		OCCUPANCY = oCCUPANCY;
+	/**
+	 * Sets the occupancy.
+	 *
+	 * @param occupancy the new occupancy
+	 */
+	public void setOccupancy(String occupancy) {
+		this.occupancy = occupancy;
 	}
 
-	public Double getL1_RANGE_MIN() {
-		return L1_RANGE_MIN;
+	/**
+	 * Gets the l 1 range min.
+	 *
+	 * @return the l 1 range min
+	 */
+	public Double getL1_range_min() {
+		return l1_range_min;
 	}
 
-	public void setL1_RANGE_MIN(Double l1_RANGE_MIN) {
-		L1_RANGE_MIN = l1_RANGE_MIN;
+	/**
+	 * Sets the l 1 range min.
+	 *
+	 * @param l1_range_min the new l 1 range min
+	 */
+	public void setL1_range_min(Double l1_range_min) {
+		this.l1_range_min = l1_range_min;
 	}
 
-	public Double getL1_RANGE_MAX() {
-		return L1_RANGE_MAX;
+	/**
+	 * Gets the l 1 range max.
+	 *
+	 * @return the l 1 range max
+	 */
+	public Double getL1_range_max() {
+		return l1_range_max;
 	}
 
-	public void setL1_RANGE_MAX(Double l1_RANGE_MAX) {
-		L1_RANGE_MAX = l1_RANGE_MAX;
+	/**
+	 * Sets the l 1 range max.
+	 *
+	 * @param l1_range_max the new l 1 range max
+	 */
+	public void setL1_range_max(Double l1_range_max) {
+		this.l1_range_max = l1_range_max;
 	}
 
-	public String getL1_INSERT_DATE() {
-		return L1_INSERT_DATE;
+	/**
+	 * Gets the l 1 insert date.
+	 *
+	 * @return the l 1 insert date
+	 */
+	public String getL1_insert_date() {
+		return l1_insert_date;
 	}
 
-	public void setL1_INSERT_DATE(String l1_INSERT_DATE) {
-		L1_INSERT_DATE = l1_INSERT_DATE;
+	/**
+	 * Sets the l 1 insert date.
+	 *
+	 * @param l1_insert_date the new l 1 insert date
+	 */
+	public void setL1_insert_date(String l1_insert_date) {
+		this.l1_insert_date = l1_insert_date;
 	}
 
-	public Double getL2_RANGE_MIN() {
-		return L2_RANGE_MIN;
+	/**
+	 * Gets the l 2 range min.
+	 *
+	 * @return the l 2 range min
+	 */
+	public Double getL2_range_min() {
+		return l2_range_min;
 	}
 
-	public void setL2_RANGE_MIN(Double l2_RANGE_MIN) {
-		L2_RANGE_MIN = l2_RANGE_MIN;
+	/**
+	 * Sets the l 2 range min.
+	 *
+	 * @param l2_range_min the new l 2 range min
+	 */
+	public void setL2_range_min(Double l2_range_min) {
+		this.l2_range_min = l2_range_min;
 	}
 
-	public Double getL2_RANGE_MAX() {
-		return L2_RANGE_MAX;
+	/**
+	 * Gets the l 2 range max.
+	 *
+	 * @return the l 2 range max
+	 */
+	public Double getL2_range_max() {
+		return l2_range_max;
 	}
 
-	public void setL2_RANGE_MAX(Double l2_RANGE_MAX) {
-		L2_RANGE_MAX = l2_RANGE_MAX;
+	/**
+	 * Sets the l 2 range max.
+	 *
+	 * @param l2_range_max the new l 2 range max
+	 */
+	public void setL2_range_max(Double l2_range_max) {
+		this.l2_range_max = l2_range_max;
 	}
 
-	public String getL2_INSERT_DATE() {
-		return L2_INSERT_DATE;
+	/**
+	 * Gets the l 2 insert date.
+	 *
+	 * @return the l 2 insert date
+	 */
+	public String getL2_insert_date() {
+		return l2_insert_date;
 	}
 
-	public void setL2_INSERT_DATE(String l2_INSERT_DATE) {
-		L2_INSERT_DATE = l2_INSERT_DATE;
+	/**
+	 * Sets the l 2 insert date.
+	 *
+	 * @param l2_insert_date the new l 2 insert date
+	 */
+	public void setL2_insert_date(String l2_insert_date) {
+		this.l2_insert_date = l2_insert_date;
 	}
 
-	public String getUSER_ID() {
-		return USER_ID;
+	/**
+	 * Gets the user id.
+	 *
+	 * @return the user id
+	 */
+	public String getUser_id() {
+		return user_id;
 	}
 
-	public void setUSER_ID(String uSER_ID) {
-		USER_ID = uSER_ID;
+	/**
+	 * Sets the user id.
+	 *
+	 * @param user_id the new user id
+	 */
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
 
 }

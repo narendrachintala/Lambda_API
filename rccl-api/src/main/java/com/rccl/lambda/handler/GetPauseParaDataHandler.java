@@ -57,7 +57,8 @@ public class GetPauseParaDataHandler
 
 		} catch (Exception e) {
 			logger.error("Error occured while executing GetPauseParaDataHandler: " + e.getMessage());
-			throw new RCCLException("Error occured while executing GetPauseParaDataHandler", e);
+			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
+					RCCLConstants.SC_BAD_REQUEST); 
 		}
 		//System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;

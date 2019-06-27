@@ -8,6 +8,7 @@ import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.google.gson.GsonBuilder;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.PriceRange;
 import com.rccl.model.validator.PriceRangeDataValidator;
@@ -59,7 +60,7 @@ public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Gate
 		} catch (Exception e) {
 			logger.error("Error occured while executing PutPriceRangeDataHandler: " + e);
 			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
-					RCCLConstants.SC_BAD_REQUEST); 
+					RCCLConstants.SC_BAD_REQUEST);
 		}
 		return response;
 	}
@@ -76,7 +77,11 @@ public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Gate
 		priceRangeReq.setL1_range_min(-0.2);
 		priceRangeReq.setL1_range_max(0.2);
 
-		priceRangeReq.setFiltersData(FiltersData.getRequestData());
+		priceRangeReq.setFiltersData(FiltersData.getParamRequestData());
+
+		System.out.println(new GsonBuilder().serializeNulls().create().toJson(
+				new GatewayResponse<Boolean>(true, ResponseUtil.getInstance().getHeaders(), RCCLConstants.SC_OK)));
+		System.exit(0);
 
 		new PutPriceRangeDataHandler().handleRequest(priceRangeReq, new Context() {
 

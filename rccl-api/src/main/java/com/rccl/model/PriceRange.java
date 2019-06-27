@@ -1,11 +1,14 @@
 package com.rccl.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class PriceRange.
  *
  * @author narendra.chintala
  */
+@JsonPOJOBuilder
 public class PriceRange {
 
 	/** The filter data. */

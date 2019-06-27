@@ -51,6 +51,11 @@ public class FilterDataHelper {
 					queryBuffer.append(join(filterData.getCat_class()));
 					queryBuffer.append(AND);
 				}
+				if (!CustomFunctions.isNullOrEmpty(filterData.getCategory())) {
+					queryBuffer.append(RCCLConstants.CATEGORY_F).append(IN);
+					queryBuffer.append(join(filterData.getCategory()));
+					queryBuffer.append(AND);
+				}
 				if (!CustomFunctions.isNullOrEmpty(filterData.getOccupancy())) {
 					queryBuffer.append(RCCLConstants.OCCUPANCY_F).append(IN);
 					queryBuffer.append(join(filterData.getOccupancy()));

@@ -7,20 +7,20 @@ import java.sql.Timestamp;
  */
 public class PausePara {
 
-	private ParameterFiltersData filterData;
+	private ParameterFiltersData filtersData;
 	private Integer l1_pause;
 	private Timestamp l1_insert_date;
 	/**
 	 * @return the filterData
 	 */
-	public ParameterFiltersData getFilterData() {
-		return filterData;
+	public ParameterFiltersData getFiltersData() {
+		return filtersData;
 	}
 	/**
 	 * @param filterData the filterData to set
 	 */
 	public void setFilterData(ParameterFiltersData filterData) {
-		this.filterData = filterData;
+		this.filtersData = filterData;
 	}
 	/**
 	 * @return the l1_pause

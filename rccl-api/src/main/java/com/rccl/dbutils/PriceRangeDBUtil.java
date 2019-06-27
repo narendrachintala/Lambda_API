@@ -58,7 +58,7 @@ public class PriceRangeDBUtil {
 		String getPriceRangeQuery = new String(configInst.updatePriceRangeData());
 		FilterDataHelper filterDataHelper = new FilterDataHelper();
 
-		String filterWhereCondition = filterDataHelper.generateFilterCondition(priceRangeReq.getFilterData(),
+		String filterWhereCondition = filterDataHelper.generateFilterCondition(priceRangeReq.getFiltersData(),
 				queryBuffer);
 
 		PriceRangeDataHelper priceRangeDataHelper = new PriceRangeDataHelper();

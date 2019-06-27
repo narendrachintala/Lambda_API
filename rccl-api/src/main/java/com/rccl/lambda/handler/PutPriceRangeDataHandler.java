@@ -8,44 +8,70 @@ import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.rccl.model.GatewayResponse;
 import com.rccl.model.PriceRange;
+import com.rccl.model.validator.PriceRangeDataValidator;
 import com.rccl.service.PriceRangeService;
 import com.rccl.testdata.FiltersData;
+import com.rccl.utils.RCCLConstants;
+import com.rccl.utils.ResponseUtil;
 import com.rccl.utils.helper.RCCLException;
 
 /**
- * 
- * @author narendra.chintala
+ * The Class PutPriceRangeDataHandler.
  *
+ * @author narendra.chintala
  */
-public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Boolean> {
+public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, GatewayResponse<? extends Object>> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
 	}
 
+	/** The Constant logger. */
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(PutPriceRangeDataHandler.class);
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java.lang.
+	 * Object, com.amazonaws.services.lambda.runtime.Context)
+	 */
 	@Override
 	/**
 	 * Post price range data based on applied filters and requested data
 	 */
-	public Boolean handleRequest(PriceRange request, Context context) {
+	public GatewayResponse<? extends Object> handleRequest(PriceRange request, Context context) {
+		logger.info("input: " + request.toString());
 		Boolean result = false;
+		PriceRangeDataValidator dataValidator = null;
+		GatewayResponse<? extends Object> response = null;
+		ResponseUtil respUtil = ResponseUtil.getInstance();
 
 		try {
-			context.getLogger().log("input: " + request.toString());
-			PriceRangeService priceRangeService = new PriceRangeService();
-			result = priceRangeService.updatePriceRangeData(request, logger);
+
+			dataValidator = PriceRangeDataValidator.getInstance();
+			response = dataValidator.validatePutRequest(request);
+			if (response == null) { // response null denotes request is valid
+				PriceRangeService priceRangeService = new PriceRangeService();
+				result = priceRangeService.updatePriceRangeData(request, logger);
+				response = new GatewayResponse<Boolean>(result, respUtil.getHeaders(), RCCLConstants.SC_OK);
+			}
 		} catch (Exception e) {
-			// logger.log("Error occured while executing PutPriceRangeDataHandler: " + e);
+			logger.error("Error occured while executing PutPriceRangeDataHandler: " + e);
 			throw new RCCLException("Error occured while executing PutPriceRangeDataHandler: ", e);
 		}
-		return result;
+		return response;
 
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 
 		PriceRange priceRangeReq = new PriceRange();
@@ -53,7 +79,7 @@ public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Bool
 		priceRangeReq.setL1_range_min(-0.2);
 		priceRangeReq.setL1_range_max(0.2);
 
-		priceRangeReq.setFilterData(FiltersData.getRequestData());
+		priceRangeReq.setFiltersData(FiltersData.getRequestData());
 
 		new PutPriceRangeDataHandler().handleRequest(priceRangeReq, new Context() {
 

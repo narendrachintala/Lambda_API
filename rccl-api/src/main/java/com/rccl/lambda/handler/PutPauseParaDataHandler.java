@@ -16,7 +16,6 @@ import com.rccl.model.validator.PauseParaDataValidator;
 import com.rccl.service.PauseParaDataService;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResponseUtil;
-import com.rccl.utils.helper.RCCLException;
 
 /**
  * The Class PutPauseParaDataHandler.
@@ -28,7 +27,7 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 	}
 
 	// Initialize the Log4j logger.
-	 static final Logger logger = LogManager.getLogger(PutPauseParaDataHandler.class);
+	static final Logger logger = LogManager.getLogger(PutPauseParaDataHandler.class);
 
 	/**
 	 * Handle request.
@@ -44,14 +43,16 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 		try {
 			PauseParaDataValidator rDataValidator = new PauseParaDataValidator();
 			response = rDataValidator.validatePutRequest(request);
+			if (response == null) { 
 			PauseParaDataService PauseParaService = new PauseParaDataService();
 			update = PauseParaService.updatePauseParaData(request, logger);
 			response = new GatewayResponse<Boolean>(update, respUtil.getHeaders(),
 					RCCLConstants.SC_OK);
-			
+			}
 		} catch (Exception ex) {
 			 logger.error("Error occured while executing PauseParaDataHandler: " + ex.getMessage());
-			throw new RCCLException("Error occured while executing PauseParaDataHandler", ex);
+			 response = new GatewayResponse<String>(ex.getLocalizedMessage(), respUtil.getHeaders(),
+						RCCLConstants.SC_BAD_REQUEST); 
 		}
 		System.out.println("value of update():" + update);
 		return response;
@@ -73,7 +74,7 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 		parameterFiltersData.setShip_code("AL");
 		parameterFiltersData.setCategory("A1");
 
-		pausePara.setFilterData(parameterFiltersData);
+		pausePara.setFiltersData(parameterFiltersData);
 		Gson gson = new Gson();
 		String json = gson.toJson(pausePara);
 

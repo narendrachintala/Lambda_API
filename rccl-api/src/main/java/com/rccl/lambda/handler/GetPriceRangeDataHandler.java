@@ -15,7 +15,6 @@ import com.rccl.service.PriceRangeService;
 import com.rccl.testdata.FiltersData;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResponseUtil;
-import com.rccl.utils.helper.RCCLException;
 
 /**
  * @author narendra.chintala
@@ -56,14 +55,15 @@ public class GetPriceRangeDataHandler
 
 				PriceRangeService priceRangeService = new PriceRangeService();
 				priceRangeList = priceRangeService.getPriceRangeData(request, logger);
-
 				response = new GatewayResponse<List<PriceRangeDTO>>(priceRangeList, respUtil.getHeaders(),
 						RCCLConstants.SC_OK);
 			}
 
 		} catch (Exception e) {
 			logger.error("Error occured while executing GetPriceRangeDataHandler: " + e.getMessage());
-			throw new RCCLException("Error occured while executing GetPriceRangeDataHandler", e);
+			//throw new RCCLException("Error occured while executing GetPriceRangeDataHandler", e);
+			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
+					RCCLConstants.SC_BAD_REQUEST); 
 		}
 		// System.out.println(new
 		// GsonBuilder().serializeNulls().create().toJson(response));

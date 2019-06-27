@@ -15,7 +15,6 @@ import com.rccl.service.PriceRangeService;
 import com.rccl.testdata.FiltersData;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResponseUtil;
-import com.rccl.utils.helper.RCCLException;
 
 /**
  * The Class PutPriceRangeDataHandler.
@@ -49,9 +48,7 @@ public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Gate
 		PriceRangeDataValidator dataValidator = null;
 		GatewayResponse<? extends Object> response = null;
 		ResponseUtil respUtil = ResponseUtil.getInstance();
-
 		try {
-
 			dataValidator = PriceRangeDataValidator.getInstance();
 			response = dataValidator.validatePutRequest(request);
 			if (response == null) { // response null denotes request is valid
@@ -61,10 +58,10 @@ public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Gate
 			}
 		} catch (Exception e) {
 			logger.error("Error occured while executing PutPriceRangeDataHandler: " + e);
-			throw new RCCLException("Error occured while executing PutPriceRangeDataHandler: ", e);
+			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
+					RCCLConstants.SC_BAD_REQUEST); 
 		}
 		return response;
-
 	}
 
 	/**

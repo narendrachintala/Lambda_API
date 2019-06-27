@@ -61,8 +61,14 @@ public class QueryExecutor {
 		}
 	}
 
-	
-   public int executeUpdate(String query, List<String> params, Logger logger) {
+	/**
+	 * Execute update.
+	 * @param query the query
+	 * @param params the params
+	 * @param logger the logger
+	 * @return the int
+	 */
+	public int executeUpdate(String query, List<String> params, Logger logger ) {
 		Connection con = RevorioConnect.getInstance().getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -103,5 +109,4 @@ public class QueryExecutor {
 			}
 		}
 	}
-
 }

@@ -23,24 +23,25 @@ public class PauseParaDataService {
 		List<PauseParaDTO> PauseParaData = null;
 		try {
 			PauseParaDataRepo repo = new PauseParaDataRepo();
-			PauseParaData = repo.getPausePara(request,logger);
+			PauseParaData = repo.getPausePara(request, logger);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return PauseParaData;
 	}
+
 	/**
 	 * Update PausePara Data.
 	 * @param request the request
 	 * @return true, if successful
 	 */
-	public boolean updatePauseParaData(PausePara pauseParaReq) {
+	public boolean updatePauseParaData(PausePara request, Logger logger) {
 		PauseParaDataRepo pauseParaRepo = null;
 		boolean status = false;
 		try {
 			pauseParaRepo = new PauseParaDataRepo();
-			//status = pauseParaRepo.updatePauseParaData(pauseParaReq);
+			status = pauseParaRepo.updatePauseParaData(request , logger );
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

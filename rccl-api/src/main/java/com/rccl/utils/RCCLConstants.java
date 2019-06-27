@@ -121,4 +121,8 @@ public class RCCLConstants {
 	public final static String IN = " in (";
 	public final static String AND = ") and ";
 
+	/**
+	 * pause para table update columns
+	 */
+	public final static String L1_PAUSE = "l1_pause";
 }

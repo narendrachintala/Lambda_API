@@ -4,21 +4,52 @@ package com.rccl.dto;
  * The Class RollingWindowDTO.
  */
 public class RollingWindowDTO {
+	
+	/** The currency. */
 	private String currency;
+	
+	/** The metaproduct. */
 	private String metaproduct;
+	
+	/** The product code. */
 	private String product_code;
+	
+	/** The ship code. */
 	private String ship_code;
+	
+	/** The sail date. */
 	private String sail_date;
+	
+	/** The sail month. */
 	private Integer sail_month;
+	
+	/** The cat class. */
 	private String cat_class;
+	
+	/** The occupancy. */
 	private String occupancy;
+	
+	/** The wts. */
 	private Integer wts;
+	
+	/** The price window. */
 	private Integer price_window;
+	
+	/** The prev demand window. */
 	private Integer prev_demand_window;
+	
+	/** The fut demand window. */
 	private Integer fut_demand_window;
+	
+	/** The prev forecast. */
 	private Integer prev_forecast;
+	
+	/** The fut forecast. */
 	private Integer fut_forecast;
+	
+	/** The l 1 insert date. */
 	private String l1_insert_date;
+	
 	/**
 	 * @return the currency
 	 */

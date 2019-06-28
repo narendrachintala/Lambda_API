@@ -7,45 +7,67 @@ import java.sql.Timestamp;
  */
 public class PausePara {
 
+	/** The filters data. */
 	private ParameterFiltersData filtersData;
+	
+	/** The l 1 pause. */
 	private Integer l1_pause;
+	
+	/** The l 1 insert date. */
 	private Timestamp l1_insert_date;
+	
 	/**
-	 * @return the filtersData
+	 * Gets the filters data.
+	 * @return the filters data
 	 */
 	public ParameterFiltersData getFiltersData() {
 		return filtersData;
 	}
+
 	/**
-	 * @param filtersData the filtersData to set
+	 * Sets the filters data.
+	 * @param filtersData the new filters data
 	 */
 	public void setFiltersData(ParameterFiltersData filtersData) {
 		this.filtersData = filtersData;
 	}
+
 	/**
-	 * @return the l1_pause
+	 * Gets the l 1 pause.
+	 * @return the l 1 pause
 	 */
 	public Integer getL1_pause() {
 		return l1_pause;
 	}
+
 	/**
-	 * @param l1_pause the l1_pause to set
+	 * Sets the l 1 pause.
+	 * @param l1_pause the new l 1 pause
 	 */
 	public void setL1_pause(Integer l1_pause) {
 		this.l1_pause = l1_pause;
 	}
+
 	/**
-	 * @return the l1_insert_date
+	 * Gets the l 1 insert date.
+	 * @return the l 1 insert date
 	 */
 	public Timestamp getL1_insert_date() {
 		return l1_insert_date;
 	}
+
 	/**
-	 * @param l1_insert_date the l1_insert_date to set
+	 * Sets the l 1 insert date.
+	 * @param l1_insert_date the new l 1 insert date
 	 */
 	public void setL1_insert_date(Timestamp l1_insert_date) {
 		this.l1_insert_date = l1_insert_date;
 	}
+
+	/**
+	 * To string.
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
 		return "PausePara [filtersData=" + filtersData + ", l1_pause=" + l1_pause + ", l1_insert_date=" + l1_insert_date

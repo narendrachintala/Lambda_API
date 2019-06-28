@@ -12,7 +12,6 @@ import com.rccl.model.validator.FilterDataValidator;
 import com.rccl.service.FilterDataService;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResponseUtil;
-import com.rccl.utils.helper.RCCLException;
 
 /**
  * @author narendra.chintala
@@ -56,7 +55,9 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getMetaProducts API: " + e.getMessage());
-			throw new RCCLException("Error occurred while invoking rev_pre_getMetaProducts API: ", e.getCause());
+			//throw new RCCLException("Error occurred while invoking rev_pre_getMetaProducts API: ", e.getCause());
+			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
+					RCCLConstants.SC_BAD_REQUEST);
 		}
 
 		return response;
@@ -89,7 +90,9 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getProductCodes API: " + e.getMessage());
-			throw new RCCLException("Error occurred while invoking rev_pre_getProductCodes API: ", e.getCause());
+			//throw new RCCLException("Error occurred while invoking rev_pre_getProductCodes API: ", e.getCause());
+			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
+					RCCLConstants.SC_BAD_REQUEST);
 		}
 
 		return response;
@@ -120,7 +123,9 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getShipCodes API: " + e.getMessage());
-			throw new RCCLException("Error occurred while invoking rev_pre_getShipCodes API: ", e.getCause());
+			//throw new RCCLException("Error occurred while invoking rev_pre_getShipCodes API: ", e.getCause());
+			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
+					RCCLConstants.SC_BAD_REQUEST);
 		}
 		return response;
 	}
@@ -150,7 +155,9 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getSailMonths API: " + e.getMessage());
-			throw new RCCLException("Error occurred while invoking rev_pre_getSailMonths API: ", e.getCause());
+			//throw new RCCLException("Error occurred while invoking rev_pre_getSailMonths API: ", e.getCause());
+			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
+					RCCLConstants.SC_BAD_REQUEST);
 		}
 		return response;
 	}
@@ -181,7 +188,9 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getCatClasses API: " + e.getMessage());
-			throw new RCCLException("Error occurred while invoking rev_pre_getCatClasses API: ", e.getCause());
+			//throw new RCCLException("Error occurred while invoking rev_pre_getCatClasses API: ", e.getCause());
+			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
+					RCCLConstants.SC_BAD_REQUEST);
 		}
 		return response;
 	}
@@ -211,7 +220,9 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getCategory API: " + e.getMessage());
-			throw new RCCLException("Error occurred while invoking rev_pre_getCategory API: ", e.getCause());
+			//throw new RCCLException("Error occurred while invoking rev_pre_getCategory API: ", e.getCause());
+			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
+					RCCLConstants.SC_BAD_REQUEST);
 		}
 		return response;
 	}
@@ -241,7 +252,9 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getOccupancies API: " + e.getMessage());
-			throw new RCCLException("Error occurred while invoking rev_pre_getOccupancies API: ", e.getCause());
+			//throw new RCCLException("Error occurred while invoking rev_pre_getOccupancies API: ", e.getCause());
+			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
+					RCCLConstants.SC_BAD_REQUEST);
 		}
 		return response;
 	}

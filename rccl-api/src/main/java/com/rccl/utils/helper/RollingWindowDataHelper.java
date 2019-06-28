@@ -11,7 +11,7 @@ public class RollingWindowDataHelper {
 	 * Generate filter condition.
 	 * @param request the request
 	 * @param queryBuffer the query buffer
-	 * @return the string
+	 * @return the final set condition
 	 */
 	public String generateSetterCondition(RollingWindow request, StringBuffer queryBuffer) {
 		String EQUALS = " = ";

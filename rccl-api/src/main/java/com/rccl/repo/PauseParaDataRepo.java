@@ -10,13 +10,16 @@ import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PausePara;
 import com.rccl.processor.PauseParaResultProcessor;
 import com.rccl.processor.QueryExecutor;
+
 /**
  * The Class PauseParaDataRepo.
  */
 public class PauseParaDataRepo {
+	
 	/**
-	 * Gets the PausePara data.
-	 * @param request the input request
+	 * Gets the pause para.
+	 * @param filterData the filter data
+	 * @param logger the logger
 	 * @return returns list of records based on filter condition
 	 */
 	// This method is used to fetch results from DB
@@ -31,7 +34,6 @@ public class PauseParaDataRepo {
 			queryExecutor.execute(getPauseParaQuery, logger, processor);
 			PauseParaData = processor.getResult();
 		} catch (Exception e) {
-			//logger.error(e.getMessage());
 			throw e;
 		}
 		return PauseParaData;

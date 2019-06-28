@@ -10,6 +10,7 @@ import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.google.gson.GsonBuilder;
 import com.rccl.dto.PauseParaDTO;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
@@ -18,7 +19,7 @@ import com.rccl.service.PauseParaDataService;
 import com.rccl.testdata.FiltersData;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResponseUtil;
-import com.rccl.utils.helper.RCCLException;
+
 /**
  * The Class PauseParaDataHandler.
  */
@@ -31,7 +32,6 @@ public class GetPauseParaDataHandler
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(GetPauseParaDataHandler.class);
-
 	
 	/**
 	 * executes on requesting for list of values for PausePara table name.
@@ -44,23 +44,23 @@ public class GetPauseParaDataHandler
 		List<PauseParaDTO> pauseParaList = null;
 		GatewayResponse<? extends Object> response = null;
 		ResponseUtil respUtil = ResponseUtil.getInstance();
+		RequestDataValidator pauseParaValidator = null;
 		try {
 			// Validate input request if any error occurred throw custom exception.
-			RequestDataValidator pauseParaValidator = new RequestDataValidator();
+			pauseParaValidator = new RequestDataValidator();
 			response = pauseParaValidator.validateGetRequest(request);
-			if (response == null) {
+			if (response == null) { // response null denotes request is valid
 				PauseParaDataService pauseParaService = new PauseParaDataService();
 				pauseParaList = pauseParaService.getPauseParaData(request, logger);
 				response = new GatewayResponse<List<PauseParaDTO>>(pauseParaList, respUtil.getHeaders(),
 						RCCLConstants.SC_OK);
 			}
-
 		} catch (Exception e) {
 			logger.error("Error occured while executing GetPauseParaDataHandler: " + e.getMessage());
 			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
 					RCCLConstants.SC_BAD_REQUEST); 
 		}
-		//System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
+		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
 	}
 	/**

@@ -18,7 +18,6 @@ import com.rccl.model.validator.RequestDataValidator;
 import com.rccl.service.RollingWindowService;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResponseUtil;
-import com.rccl.utils.helper.RCCLException;
 
 /**
  * The Class RollingWindowHandler.
@@ -42,16 +41,16 @@ public class GetRollingWindowHandler
 	 * @return the list of column values based on provided tablename
 	 */
 	public GatewayResponse<? extends Object> handleRequest(ParameterFiltersData request, Context context) {
-		logger.info("Input: " + request);
-		
+		logger.info("Input request: " + request);
 		GatewayResponse<? extends Object> response = null;
 		ResponseUtil respUtil = ResponseUtil.getInstance();
-		
 		List<RollingWindowDTO> rollingWindowList = null;
+		RequestDataValidator requestDataValidator = null;
 		try {
-			RequestDataValidator requestDataValidator = new RequestDataValidator();
+			// Validate input request
+			requestDataValidator = new RequestDataValidator();
 			response = requestDataValidator.validateGetRequest(request);
-			if (response == null) {
+			if (response == null) { // response null denotes request is valid
 				RollingWindowService rollingWindowService = new RollingWindowService();
 				rollingWindowList = rollingWindowService.getRollingWindowData(request, logger);
 				response = new GatewayResponse<List<RollingWindowDTO>>(rollingWindowList, respUtil.getHeaders(),
@@ -60,7 +59,8 @@ public class GetRollingWindowHandler
 		}
 		catch (Exception ex) {
 			logger.error("Error occured while executing GetRollingWindowHandler: " + ex.getMessage());
-			throw new RCCLException("Error occured while executing GetRollingWindowHandler", ex);
+			response = new GatewayResponse<String>(ex.getLocalizedMessage(), respUtil.getHeaders(),
+					RCCLConstants.SC_BAD_REQUEST);
 		}
 		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;

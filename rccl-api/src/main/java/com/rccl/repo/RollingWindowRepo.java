@@ -20,6 +20,7 @@ public class RollingWindowRepo {
 	/**
 	 * Gets the rolling window data.
 	 * @param request the request
+	 * @param logger the logger
 	 * @return the rolling window data
 	 */
 	// This method is used to fetch results from DB
@@ -37,13 +38,13 @@ public class RollingWindowRepo {
 			logger.error(e.getMessage());
 			throw e;
 		}
-
 		return list;
 	}
 	
 	/**
 	 * Update rolling window data.
 	 * @param request the request
+	 * @param logger the logger
 	 * @return true, if successful
 	 */
 	public boolean updateRollingWindowData(RollingWindow request, Logger logger) {
@@ -62,5 +63,4 @@ public class RollingWindowRepo {
 			return true;
 		}
 	}
-
 }

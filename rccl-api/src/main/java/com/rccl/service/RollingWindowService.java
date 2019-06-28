@@ -13,9 +13,11 @@ import com.rccl.repo.RollingWindowRepo;
  * The Class RollingWindowService.
  */
 public class RollingWindowService {
+	
 	/**
 	 * Gets the rolling window data.
 	 * @param request the request
+	 * @param logger the logger
 	 * @return the rolling window data
 	 */
 	public List<RollingWindowDTO> getRollingWindowData(ParameterFiltersData request, Logger logger) {
@@ -32,6 +34,7 @@ public class RollingWindowService {
 	/**
 	 * Update rolling window data.
 	 * @param request the request
+	 * @param logger the logger
 	 * @return true, if successful
 	 */
 	public boolean updateRollingWindowData(RollingWindow request, Logger logger) {

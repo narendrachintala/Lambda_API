@@ -14,10 +14,16 @@ import com.rccl.utils.helper.RollingWindowDataHelper;
  */
 public class RollingWindowDBUtil {
 	
+	//Creates instance
 	public static RollingWindowDBUtil _instance = null;
 
+	// Read properties from configuration file
 	ConfigUtil configInst = ConfigUtil.getInstance();
 
+	/**
+	 * Gets the single instance of RollingWindowDBUtil.
+	 * @return single instance of RollingWindowDBUtil
+	 */
 	public static RollingWindowDBUtil getInstance() {
 		if (_instance == null) {
 			_instance = new RollingWindowDBUtil();
@@ -27,10 +33,11 @@ public class RollingWindowDBUtil {
 	
 	/**
 	 * Gets the rolling window query.
-	 * @param request the filter data
-	 * @return the rolling window query
+	 * @param request the request
+	 * @param logger the logger
+	 * @return the final query for get API
 	 */
-	// Generate final Rolling Window parameter query
+	// Generate final Rolling Window parameter query for GET API
 	public String getRollingWindowQuery(ParameterFiltersData request, Logger logger) {
 		StringBuffer queryBuffer = new StringBuffer();
 		String getRollingWindowQuery = new String(configInst.getRollingWindowData());
@@ -50,8 +57,10 @@ public class RollingWindowDBUtil {
 	/**
 	 * Update rolling window data query.
 	 * @param request the request
-	 * @return the string
+	 * @param logger the logger
+	 * @return the final query for update API
 	 */
+	// Generate final Rolling Window parameter query for POST API
 	public String updateRollingWindowDataQuery(RollingWindow request, Logger logger) {
 		StringBuffer queryBuffer = new StringBuffer();
 		StringBuffer updateBuffer = new StringBuffer();
@@ -72,5 +81,4 @@ public class RollingWindowDBUtil {
 		logger.debug("Final query for POST API rolling window:" + updateRollingWindowQuery);
 		return updateRollingWindowQuery;
 	}
-
 }

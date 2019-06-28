@@ -14,11 +14,17 @@ import com.rccl.utils.helper.RCCLException;
  */
 public class RollingWindowDataValidator {
 	
+	// creating instance of class
 	public static RollingWindowDataValidator _instance = null;
 
+	// Read error messages from property file
 	ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 	ResponseUtil respUtil = ResponseUtil.getInstance();
 	
+	/**
+	 * Gets the single instance of RollingWindowDataValidator.
+	 * @return single instance of RollingWindowDataValidator
+	 */
 	public static RollingWindowDataValidator getInstance() {
 		if (_instance == null) {
 			_instance = new RollingWindowDataValidator();

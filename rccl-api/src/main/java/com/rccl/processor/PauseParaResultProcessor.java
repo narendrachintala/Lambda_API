@@ -8,6 +8,7 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import com.rccl.dto.PauseParaDTO;
 import com.rccl.utils.RCCLConstants;
+
 /**
  * The Class PauseParaResultProcessor.
  * 

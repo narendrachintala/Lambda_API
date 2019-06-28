@@ -32,8 +32,9 @@ public class PauseParaDataService {
 	}
 
 	/**
-	 * Update PausePara Data.
+	 * Update pause para data.
 	 * @param request the request
+	 * @param logger the logger
 	 * @return true, if successful
 	 */
 	public boolean updatePauseParaData(PausePara request, Logger logger) {
@@ -47,5 +48,4 @@ public class PauseParaDataService {
 		}
 		return status;
 	}
-
 }

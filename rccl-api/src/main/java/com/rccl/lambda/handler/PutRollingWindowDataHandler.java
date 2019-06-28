@@ -9,17 +9,19 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
+import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.RollingWindow;
 import com.rccl.model.validator.RollingWindowDataValidator;
 import com.rccl.service.RollingWindowService;
-import com.rccl.utils.helper.RCCLException;
+import com.rccl.utils.RCCLConstants;
+import com.rccl.utils.ResponseUtil;
 
 /**
  * The Class PostRollingWindowDataHandler.
  */
-public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow, Boolean> {
-	
+public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow, GatewayResponse<? extends Object>> {
+
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
 	}
@@ -33,20 +35,27 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 	 * @param context lambda context object
 	 * @return true if update is successful
 	 */
-	public Boolean handleRequest(RollingWindow request, Context context) {
-		context.getLogger().log("Input: " + request);
+	public GatewayResponse<? extends Object> handleRequest(RollingWindow request, Context context) {
+		context.getLogger().log("Input request: " + request);
 		boolean update = false;
+		GatewayResponse<? extends Object> response = null;
+		ResponseUtil respUtil = ResponseUtil.getInstance();
+		RollingWindowDataValidator rDataValidator = null;
 		try {
-			RollingWindowDataValidator rDataValidator = new RollingWindowDataValidator();
-			rDataValidator.validatePutRequest(request);
-			RollingWindowService rollingWindowService = new RollingWindowService();
-			update = rollingWindowService.updateRollingWindowData(request, logger);
+			rDataValidator = new RollingWindowDataValidator();
+			response = rDataValidator.validatePutRequest(request);
+			if (response == null) {
+				RollingWindowService rollingWindowService = new RollingWindowService();
+				update = rollingWindowService.updateRollingWindowData(request, logger);
+				response = new GatewayResponse<Boolean>(update, respUtil.getHeaders(), RCCLConstants.SC_OK);
+			}
 		} catch (Exception ex) {
 			logger.error("Error occured while executing GetRollingWindowHandler: " + ex.getMessage());
-			throw new RCCLException("Error occured while executing GetRollingWindowHandler", ex);
+			response = new GatewayResponse<String>(ex.getLocalizedMessage(), respUtil.getHeaders(),
+					RCCLConstants.SC_BAD_REQUEST);
 		}
 		System.out.println("value of update():" + update);
-		return update;
+		return response;
 	}
 	
 	/**

@@ -40,8 +40,9 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 		boolean update = false;
 		GatewayResponse<? extends Object> response = null;
 		ResponseUtil respUtil = ResponseUtil.getInstance();
+		PauseParaDataValidator rDataValidator = null;
 		try {
-			PauseParaDataValidator rDataValidator = new PauseParaDataValidator();
+			rDataValidator = new PauseParaDataValidator();
 			response = rDataValidator.validatePutRequest(request);
 			if (response == null) { 
 			PauseParaDataService PauseParaService = new PauseParaDataService();

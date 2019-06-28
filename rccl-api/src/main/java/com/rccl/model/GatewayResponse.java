@@ -23,10 +23,10 @@ public class GatewayResponse<T> {
 	private final int statusCode;
 
 	/**
-	 * Creates a GatewayResponse object.
-	 * @param body       body of the response
-	 * @param headers    headers of the response
-	 * @param statusCode status code of the response
+	 * Instantiates a new gateway response.
+	 * @param body the body
+	 * @param headers the headers
+	 * @param statusCode the status code
 	 */
 	public GatewayResponse(final T body, final Map<String, String> headers, final int statusCode) {
 		this.statusCode = statusCode;

@@ -14,8 +14,14 @@ import com.rccl.utils.helper.PauseParaDataHelper;
 public class PauseParaDBUtils {
 	//Creates instance
 	public static PauseParaDBUtils _instance = null;
+	
+	// Read properties from configuration file
 	ConfigUtil configInst = ConfigUtil.getInstance();
 	
+	/**
+	 * Gets the single instance of PauseParaDBUtils.
+	 * @return single instance of PauseParaDBUtils
+	 */
 	public static PauseParaDBUtils getInstance() {
 		if (_instance == null) {
 			_instance = new PauseParaDBUtils();
@@ -24,17 +30,18 @@ public class PauseParaDBUtils {
 	}
 	
 	/**
-	 * Pause para data query maker.
-	 * @param 'filterdata' is requested columns passed to get the pausepara data.
-	 * @return required Pausepara data
+	 * Gets the pause para data query.
+	 * @param filterdata the filterdata
+	 * @param logger the logger
+	 * @return the final query for get API
 	 */
+	// Generate final Pause para query for GET API
 	public String getPauseParaDataQuery(ParameterFiltersData filterdata, Logger logger) {
 		StringBuffer querybuffer = new StringBuffer();
 		String getPauseParaData = new String(configInst.getPauseParaData());
 		logger.debug("reading query from config file:" + getPauseParaData);
 		FilterDataHelper filterDataHelper = new FilterDataHelper();
 		String whereCondition = filterDataHelper.generateFilterCondition(filterdata, querybuffer);
-		// Checks if string exists or not
 		if (whereCondition.equals("")) {
 			// If filterdata is null then where clause is not executed
 			getPauseParaData = getPauseParaData.replace(RCCLConstants.WHERE_CONDITION_Q, "1=1");
@@ -50,7 +57,7 @@ public class PauseParaDBUtils {
 	 * Update pause para data query.
 	 * @param request the request
 	 * @param logger the logger
-	 * @return the string
+	 * @return the final query for update API
 	 */
 	public String updatePauseParaDataQuery(PausePara request, Logger logger ) {
 		StringBuffer queryBuffer = new StringBuffer();

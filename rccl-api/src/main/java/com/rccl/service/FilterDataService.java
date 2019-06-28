@@ -7,13 +7,22 @@ import com.rccl.model.FiltersData;
 import com.rccl.repo.FilterDataRepo;
 import com.rccl.utils.helper.RCCLException;
 
+// TODO: Auto-generated Javadoc
 /**
- * 
- * @author narendra.chintala
+ * The Class FilterDataService.
  *
+ * @author narendra.chintala
  */
 public class FilterDataService {
 
+	/**
+	 * Gets the filter data.
+	 *
+	 * @param request the request
+	 * @param filter_column the filter column
+	 * @param logger the logger
+	 * @return the filter data
+	 */
 	public FilterDataDTO getFilterData(FiltersData request, String filter_column, Logger logger) {
 		FilterDataDTO filterData = null;
 

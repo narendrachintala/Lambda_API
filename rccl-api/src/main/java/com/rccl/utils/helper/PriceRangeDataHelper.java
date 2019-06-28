@@ -3,8 +3,18 @@ package com.rccl.utils.helper;
 import com.rccl.model.PriceRange;
 import com.rccl.utils.RCCLConstants;
 
+/**
+ * The Class PriceRangeDataHelper.
+ */
 public class PriceRangeDataHelper {
 
+	/**
+	 * Generate setter condition.
+	 *
+	 * @param priceRangeReq the price range req
+	 * @param queryBuffer the query buffer
+	 * @return the string
+	 */
 	public String generateSetterCondition(PriceRange priceRangeReq, StringBuffer queryBuffer) {
 
 		String EQUALS = RCCLConstants.EQUALS;

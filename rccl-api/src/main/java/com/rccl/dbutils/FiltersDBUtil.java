@@ -8,15 +8,23 @@ import com.rccl.utils.helper.FilterDataHelper;
 import com.rccl.utils.helper.RCCLException;
 
 /**
- * 
- * @author narendra.chintala
+ * The Class FiltersDBUtil.
  *
+ * @author narendra.chintala
  */
 public class FiltersDBUtil {
 
+	/** The instance. */
 	public static FiltersDBUtil _instance = null;
+	
+	/** The config inst. */
 	ConfigUtil configInst = ConfigUtil.getInstance();
 
+	/**
+	 * Gets the single instance of FiltersDBUtil.
+	 *
+	 * @return single instance of FiltersDBUtil
+	 */
 	public static FiltersDBUtil getInstance() {
 		if (_instance == null) {
 			_instance = new FiltersDBUtil();

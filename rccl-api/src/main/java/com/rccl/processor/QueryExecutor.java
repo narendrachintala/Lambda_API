@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 import org.apache.logging.log4j.Logger;
 import com.amazonaws.util.CollectionUtils;
-import com.rccl.dbutils.RevorioConnect;
+import com.rccl.dbutils.RevoreoConnect;
 import com.rccl.utils.helper.RCCLException;
 /**
  * The Class QueryExecutor.
@@ -25,7 +25,7 @@ public class QueryExecutor {
 			throw new RCCLException("Please add resultProcessor", null);
 		}
 		// connect to oracle revoreo schema
-		Connection con = RevorioConnect.getInstance().getConnection();
+		Connection con = RevoreoConnect.getInstance().getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		// Executes the input query else will throw exception
@@ -69,7 +69,7 @@ public class QueryExecutor {
 	 * @return the int
 	 */
 	public int executeUpdate(String query, List<String> params, Logger logger ) {
-		Connection con = RevorioConnect.getInstance().getConnection();
+		Connection con = RevoreoConnect.getInstance().getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		int i = 0;

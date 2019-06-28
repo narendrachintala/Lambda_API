@@ -9,13 +9,22 @@ import com.rccl.processor.FilterDataProcessor;
 import com.rccl.processor.QueryExecutor;
 import com.rccl.utils.helper.RCCLException;
 
+// TODO: Auto-generated Javadoc
 /**
- * 
- * @author narendra.chintala
+ * The Class FilterDataRepo.
  *
+ * @author narendra.chintala
  */
 public class FilterDataRepo {
 
+	/**
+	 * Gets the filter data.
+	 *
+	 * @param filterData the filter data
+	 * @param filter_column the filter column
+	 * @param logger the logger
+	 * @return the filter data
+	 */
 	public FilterDataDTO getFilterData(FiltersData filterData, String filter_column, Logger logger) {
 		FilterDataDTO results = new FilterDataDTO();
 		FiltersDBUtil dbUtils = FiltersDBUtil.getInstance();

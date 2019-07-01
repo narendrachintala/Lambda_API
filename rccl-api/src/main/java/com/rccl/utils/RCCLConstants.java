@@ -19,6 +19,14 @@ public class RCCLConstants {
 	 * 
 	 */
 	public static final String FILTER_DATA_COLUMN = "filterData";
+	
+	
+	/**
+	 * Named query filed prefix
+	 */
+	
+	public static final String NAMED_QRY_PREFIX = ":";
+	public static final String LOCKED_CTRL_TBL_STS_FLAG = "Y";
 
 	/*
 	 * Filter names
@@ -30,6 +38,14 @@ public class RCCLConstants {
 	 * final static String SAIL_DATE = "Sail Date"; public final static String
 	 * CAT_CLASS = "Cat Class"; public final static String OCCUPANCY = "Occupancy";
 	 */
+	
+	/**
+	 * Table names
+	 */
+	
+	public final static String PRICE_RANGE_PARA="price_range_para";
+	public final static String PAUSE_PARA="pause_para";
+	public final static String ROLLING_WINDOW="rolling_window";
 
 	/**
 	 * Filters data fields

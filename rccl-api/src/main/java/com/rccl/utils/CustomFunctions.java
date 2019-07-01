@@ -19,6 +19,11 @@ public class CustomFunctions {
 		return (val == null || val.isEmpty());
 	}
 
+	public static String getNamedQuery(String constant) {
+		String named_query = new StringBuffer(RCCLConstants.NAMED_QRY_PREFIX).append(constant).toString();
+		return named_query;
+	}
+
 	/**
 	 * Gets the current date.
 	 *

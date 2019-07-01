@@ -8,10 +8,11 @@ import java.util.Properties;
  *
  * @author narendra.chintala
  * 
- * The Class 'ConfigUtil' consists of queries required to retrieve the filter data.
+ *         The Class 'ConfigUtil' consists of queries required to retrieve the
+ *         filter data.
  */
 public class ConfigUtil {
-	
+
 	/*
 	 * static { System.setProperty("java.util.logging.manager",
 	 * "org.apache.logging.log4j.jul.LogManager");
@@ -21,7 +22,7 @@ public class ConfigUtil {
 
 	/** The Constant RCCL_CONFIG_PROPERTY_FILE. */
 	private static final String RCCL_CONFIG_PROPERTY_FILE = "rccl_config.properties";
-	
+
 	/** The conf. */
 	private static Properties conf = new Properties();
 
@@ -46,6 +47,10 @@ public class ConfigUtil {
 		return _instance;
 	}
 
+	public String getTableName(String tableKey) {
+		return conf.getProperty(tableKey);
+	}
+
 	/**
 	 * Gets the filter data query.
 	 *
@@ -61,7 +66,9 @@ public class ConfigUtil {
 	 * @return the price range data
 	 */
 	public String getPriceRangeData() {
-		return conf.getProperty("get_price_range_data");
+		return conf.getProperty("get_price_range_data").replace(
+				CustomFunctions.getNamedQuery(RCCLConstants.PRICE_RANGE_PARA),
+				conf.getProperty(RCCLConstants.PRICE_RANGE_PARA));
 	}
 
 	/**
@@ -70,7 +77,9 @@ public class ConfigUtil {
 	 * @return the string
 	 */
 	public String updatePriceRangeData() {
-		return conf.getProperty("update_price_range_para");
+		return conf.getProperty("update_price_range_para").replace(
+				CustomFunctions.getNamedQuery(RCCLConstants.PRICE_RANGE_PARA),
+				conf.getProperty(RCCLConstants.PRICE_RANGE_PARA));
 	}
 
 	/**
@@ -79,7 +88,8 @@ public class ConfigUtil {
 	 * @return the string
 	 */
 	public String updatePauseParaData() {
-		return conf.getProperty("update_pause_para");
+		return conf.getProperty("update_pause_para").replace(CustomFunctions.getNamedQuery(RCCLConstants.PAUSE_PARA),
+				conf.getProperty(RCCLConstants.PAUSE_PARA));
 	}
 
 	/**
@@ -88,7 +98,8 @@ public class ConfigUtil {
 	 * @return the pause para data
 	 */
 	public String getPauseParaData() {
-		return conf.getProperty("get_pause_para_data");
+		return conf.getProperty("get_pause_para_data").replace(CustomFunctions.getNamedQuery(RCCLConstants.PAUSE_PARA),
+				conf.getProperty(RCCLConstants.PAUSE_PARA));
 	}
 
 	/**
@@ -97,7 +108,20 @@ public class ConfigUtil {
 	 * @return the rolling window data
 	 */
 	public String getRollingWindowData() {
-		return conf.getProperty("get_rolling_window_data");
+		return conf.getProperty("get_rolling_window_data").replace(
+				CustomFunctions.getNamedQuery(RCCLConstants.ROLLING_WINDOW),
+				conf.getProperty(RCCLConstants.ROLLING_WINDOW));
+	}
+
+	/**
+	 * Update rolling window.
+	 *
+	 * @return the string
+	 */
+	public String updateRollingWindow() {
+		return conf.getProperty("update_rolling_window_para").replace(
+				CustomFunctions.getNamedQuery(RCCLConstants.ROLLING_WINDOW),
+				conf.getProperty(RCCLConstants.ROLLING_WINDOW));
 	}
 
 	/**
@@ -127,13 +151,8 @@ public class ConfigUtil {
 		return conf.getProperty("region");
 	}
 
-	/**
-	 * Update rolling window.
-	 *
-	 * @return the string
-	 */
-	public String updateRollingWindow() {
-		return conf.getProperty("update_rolling_window_para");
+	public static void main(String[] args) {
+		System.out.println(getInstance().getPriceRangeData());
 	}
 
 }

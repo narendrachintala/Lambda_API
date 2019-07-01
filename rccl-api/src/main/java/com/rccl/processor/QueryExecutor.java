@@ -8,7 +8,9 @@ import java.util.List;
 import org.apache.logging.log4j.Logger;
 import com.amazonaws.util.CollectionUtils;
 import com.rccl.dbutils.RevoreoConnect;
+import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.helper.RCCLException;
+
 /**
  * The Class QueryExecutor.
  */
@@ -16,8 +18,9 @@ public class QueryExecutor {
 
 	/**
 	 * Execute.
-	 * @param 'query' final input query
-	 * @param 'logger' is used to generate the output logs
+	 * 
+	 * @param                 'query' final input query
+	 * @param                 'logger' is used to generate the output logs
 	 * @param resultProcessor the result processor
 	 */
 	public void execute(String query, Logger logger, ResultProcessor<?> resultProcessor) {
@@ -63,12 +66,17 @@ public class QueryExecutor {
 
 	/**
 	 * Execute update.
-	 * @param query the query
+	 * 
+	 * @param query  the query
 	 * @param params the params
 	 * @param logger the logger
 	 * @return the int
 	 */
-	public int executeUpdate(String query, List<String> params, Logger logger ) {
+	public int executeUpdate(String query, List<String> params, Logger logger, String table_name) {
+
+		if (checkAccessControl(table_name).equalsIgnoreCase(RCCLConstants.LOCKED_CTRL_TBL_STS_FLAG)) {
+			throw new RCCLException("Table has been locked by PRE process. Please try after some time.", null);
+		}
 		Connection con = RevoreoConnect.getInstance().getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -108,5 +116,9 @@ public class QueryExecutor {
 				throw new RCCLException("error in querying table", e);
 			}
 		}
+	}
+
+	private String checkAccessControl(String table_name) {
+		return "N";
 	}
 }

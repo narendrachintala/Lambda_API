@@ -15,13 +15,14 @@ import com.rccl.utils.RCCLConstants;
  */
 public class PauseParaResultProcessor extends ResultProcessor<List<PauseParaDTO>> {
 	/**
-	 *  @param 'result' is used to stored the requested PausePara data
-	 *  @param 'fetchSize' indicates the size of data in each request
+	 * @param 'result' is used to stored the requested PausePara data
+	 * @param 'fetchSize' indicates the size of data in each request
 	 */
 	public PauseParaResultProcessor() {
 		result = null;
 		fetchSize = RCCLConstants.MID_FETCH_ROWS;
 	}
+
 	/**
 	 * processResult() is used to convert ResultSet rows to list
 	 */
@@ -29,5 +30,5 @@ public class PauseParaResultProcessor extends ResultProcessor<List<PauseParaDTO>
 	public void processResult(ResultSet rs) throws SQLException {
 		BeanListHandler<PauseParaDTO> handle = new BeanListHandler<PauseParaDTO>(PauseParaDTO.class);
 		result = handle.handle(rs);
-	}	
+	}
 }

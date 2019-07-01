@@ -11,6 +11,8 @@ import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.RollingWindow;
 import com.rccl.processor.QueryExecutor;
 import com.rccl.processor.RollingWindowResultProcessor;
+import com.rccl.utils.ConfigUtil;
+import com.rccl.utils.RCCLConstants;
 
 /**
  * The Class RollingWindowRepo.
@@ -19,8 +21,9 @@ public class RollingWindowRepo {
 
 	/**
 	 * Gets the rolling window data.
+	 * 
 	 * @param request the request
-	 * @param logger the logger
+	 * @param logger  the logger
 	 * @return the rolling window data
 	 */
 	// This method is used to fetch results from DB
@@ -40,11 +43,12 @@ public class RollingWindowRepo {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * Update rolling window data.
+	 * 
 	 * @param request the request
-	 * @param logger the logger
+	 * @param logger  the logger
 	 * @return true, if successful
 	 */
 	public boolean updateRollingWindowData(RollingWindow request, Logger logger) {
@@ -53,10 +57,11 @@ public class RollingWindowRepo {
 		Integer status = 0;
 		try {
 			String updateRollingWindowQuery = dbUtils.updateRollingWindowDataQuery(request, logger);
-			status = queryExecutor.executeUpdate(updateRollingWindowQuery, null, logger);
+			String table_name = ConfigUtil.getInstance().getTableName(RCCLConstants.ROLLING_WINDOW);
+			status = queryExecutor.executeUpdate(updateRollingWindowQuery, null, logger, table_name);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
 		if (status == 0) {
 			return false;
 		} else {

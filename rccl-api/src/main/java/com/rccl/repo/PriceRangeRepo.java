@@ -11,6 +11,8 @@ import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PriceRange;
 import com.rccl.processor.PriceRangeResultProcessor;
 import com.rccl.processor.QueryExecutor;
+import com.rccl.utils.ConfigUtil;
+import com.rccl.utils.RCCLConstants;
 
 /**
  * 
@@ -61,7 +63,8 @@ public class PriceRangeRepo {
 			/* generates update query for price range table */
 			String updatePriceRangeQuery = priceRangeDBUtil.generateUpdatePriceRangeDataQuery(priceRangeReq);
 			logger.debug("updatePriceRangeQuery: " + updatePriceRangeQuery);
-			status = queryExecutor.executeUpdate(updatePriceRangeQuery, null, logger);
+			String table_name = ConfigUtil.getInstance().getTableName(RCCLConstants.PRICE_RANGE_PARA);
+			status = queryExecutor.executeUpdate(updatePriceRangeQuery, null, logger,table_name);
 
 		} catch (Exception e) {
 			// logger.log("Error occured while executing updatePriceRangeData: " + e);

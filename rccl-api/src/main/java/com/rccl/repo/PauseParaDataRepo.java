@@ -10,6 +10,8 @@ import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PausePara;
 import com.rccl.processor.PauseParaResultProcessor;
 import com.rccl.processor.QueryExecutor;
+import com.rccl.utils.ConfigUtil;
+import com.rccl.utils.RCCLConstants;
 
 /**
  * The Class PauseParaDataRepo.
@@ -51,7 +53,8 @@ public class PauseParaDataRepo {
 		Integer status = 0;
 		try {
 			String updatePauseParaQuery = dbUtils.updatePauseParaDataQuery(request, logger );
-			status = queryExecutor.executeUpdate(updatePauseParaQuery, null, logger );
+			String table_name = ConfigUtil.getInstance().getTableName(RCCLConstants.PAUSE_PARA);
+			status = queryExecutor.executeUpdate(updatePauseParaQuery, null, logger,table_name );
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 

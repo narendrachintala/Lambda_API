@@ -6,19 +6,27 @@ package com.rccl.utils;
  *
  */
 public class RCCLConstants {
-	
+
 	/**
 	 * DB Keys
 	 */
-	
+
 	public final static Integer MIN_FETCH_ROWS = 100;
 	public final static Integer MID_FETCH_ROWS = 250;
 	public final static Integer MAX_FETCH_ROWS = 500;
-	
+
 	/**
 	 * 
 	 */
 	public static final String FILTER_DATA_COLUMN = "filterData";
+	
+	
+	/**
+	 * Named query filed prefix
+	 */
+	
+	public static final String NAMED_QRY_PREFIX = ":";
+	public static final String LOCKED_CTRL_TBL_STS_FLAG = "Y";
 
 	/*
 	 * Filter names
@@ -30,6 +38,14 @@ public class RCCLConstants {
 	 * final static String SAIL_DATE = "Sail Date"; public final static String
 	 * CAT_CLASS = "Cat Class"; public final static String OCCUPANCY = "Occupancy";
 	 */
+	
+	/**
+	 * Table names
+	 */
+	
+	public final static String PRICE_RANGE_PARA="price_range_para";
+	public final static String PAUSE_PARA="pause_para";
+	public final static String ROLLING_WINDOW="rolling_window";
 
 	/**
 	 * Filters data fields
@@ -42,17 +58,17 @@ public class RCCLConstants {
 	public final static String CAT_CLASS_F = "cat_class";
 	public final static String CATEGORY_F = "category";
 	public final static String OCCUPANCY_F = "occupancy";
-	
+
 	/**
 	 * PriceRangePara table updatable columns
 	 */
-	
-	public final static String L1_RANGE_MIN="l1_range_min";
-	public final static String L1_RANGE_MAX="l1_range_max";
-	public final static String L1_INSERT_DATE="l1_insert_date";
-	public final static String L2_RANGE_MIN="l2_range_min";
-	public final static String L2_RANGE_MAX="l2_range_max";
-	
+
+	public final static String L1_RANGE_MIN = "l1_range_min";
+	public final static String L1_RANGE_MAX = "l1_range_max";
+	public final static String L1_INSERT_DATE = "l1_insert_date";
+	public final static String L2_RANGE_MIN = "l2_range_min";
+	public final static String L2_RANGE_MAX = "l2_range_max";
+
 	/**
 	 * UI keys
 	 */
@@ -60,13 +76,70 @@ public class RCCLConstants {
 	public static final String PRICE_RANGE_MAX = "price_range_max";
 	public static final String FILTER_DATA = "filter_criteria";
 	public static final String TABLE_NAME = "table_name";
-	
-	
+
 	/**
 	 * Named queries
 	 */
 	public static final String TABLE_NAME_Q = ":TABLE_NAME";
 	public static final String FILTER_COLUMN_Q = ":FILTER_COLUMN";
 	public static final String WHERE_CONDITION_Q = ":WHERE_CONDITION";
+	public static final String SETTER_COLUMNS_Q = ":SETTER_COLUMNS";
 
+	/**
+	 * Rolling window table update columns
+	 */
+	public final static String PREV_FORECAST = "prev_forecast";
+	public final static String FUT_FORECAST = "fut_forecast";
+	public final static String PRICE_WINDOW = "price_window";
+	public final static String WTS = "wts";
+	public final static String PREV_DEMAND_WINDOW = "prev_demand_window";
+	public final static String FUT_DEMAND_WINDOW = "fut_demand_window";
+
+	/**
+	 * Error messages
+	 */
+	public final static String ERROR_JSON = "error_json";
+	public final static String ERROR_METAPRODUCT="error_metaproduct";
+	public final static String ERROR_TABLE_NAME="error_table_name";
+	public final static String EX_GET_REQUEST="ex_get_request";
+	public final static String ERROR_FILTERS_DATA="filters_data";
+	public final static String ERROR_UPDATE_FIELDS="update_fields";
+	
+	/**
+	 * Status codes
+	 */
+
+	public final static int SC_OK = 200;
+	public final static int SC_CREATED = 201;
+	public final static int SC_BAD_REQUEST = 400;
+	public final static int UN_AUTHORIZED = 401;
+	public final static int FORBIDDEN = 403;
+	public final static int SC_NOT_FOUND = 404;
+	public final static int SC_INTERNAL_SERVER_ERROR = 500;
+
+	/**
+	 * Status Messages
+	 */
+	public final static String SUCCESS_MSG = "SUCCESS";
+	public final static String BAD_REQUEST_MSG = "BAD_REQUEST";
+	public final static String UN_AUTHORIZED_MSG = "UN_AUTHORIZED";
+	public final static String FORBIDDEN_MSG = "FORBIDDEN";
+	public final static String NOT_FOUND_MSG = "NOT_FOUND";
+	public final static String SERVER_ERROR_MSG = "SERVER_ERROR";
+	
+	
+	/**
+	 * Query builder constatnts
+	 */
+	
+	public final static String EQUALS = "=";
+	public final static String COMMA = ",";
+	public final static String SINGLE_QUOTE = "'";
+	public final static String IN = " in (";
+	public final static String AND = ") and ";
+
+	/**
+	 * pause para table update columns
+	 */
+	public final static String L1_PAUSE = "l1_pause";
 }

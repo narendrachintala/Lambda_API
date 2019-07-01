@@ -1,18 +1,17 @@
 package com.rccl.repo;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.logging.log4j.Logger;
 
-import com.rccl.dbutils.RevorioConnect;
+import com.rccl.dbutils.PriceRangeDBUtil;
 import com.rccl.dto.PriceRangeDTO;
+import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PriceRange;
-import com.rccl.utils.DBUtils;
+import com.rccl.processor.PriceRangeResultProcessor;
+import com.rccl.processor.QueryExecutor;
+import com.rccl.utils.ConfigUtil;
 import com.rccl.utils.RCCLConstants;
 
 /**
@@ -22,51 +21,54 @@ import com.rccl.utils.RCCLConstants;
  */
 public class PriceRangeRepo {
 
-	public List<PriceRangeDTO> getPriceRangeData(Map<String, List<String>> filterData) {
-		Connection conn = RevorioConnect.getInstance().getConnection();
-		List<PriceRangeDTO> priceData = null;
-		DBUtils dbUtils = DBUtils.getInstance();
-		try {
-			String getPriceRangeQuery = dbUtils.getPriceRangeDataQuery(filterData);
-			System.out.println("getPriceRangeQuery: " + getPriceRangeQuery);
-			PreparedStatement pstmt = conn.prepareStatement(getPriceRangeQuery);
-			pstmt.setFetchSize(RCCLConstants.MID_FETCH_ROWS);
-			ResultSet rs = pstmt.executeQuery();
+	/**
+	 * Gets the price range data.
+	 * 
+	 * @param filterData   contains end user chosen filter criteria
+	 * @param lambdaLogger
+	 * @return the price range data
+	 */
+	public List<PriceRangeDTO> getPriceRangeData(ParameterFiltersData filterData, Logger logger) {
 
-			BeanListHandler<PriceRangeDTO> handle = new BeanListHandler<PriceRangeDTO>(PriceRangeDTO.class);
-			priceData = handle.handle(rs);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		PriceRangeDBUtil priceRangeDBUtil = PriceRangeDBUtil.getInstance();
+		QueryExecutor queryExecutor = new QueryExecutor();
+		List<PriceRangeDTO> priceData = new ArrayList<PriceRangeDTO>();
+
+		try {
+			String getPriceRangeQuery = priceRangeDBUtil.getPriceRangeDataQuery(filterData);
+			PriceRangeResultProcessor processor = new PriceRangeResultProcessor();
+			processor.setResult(priceData);
+			queryExecutor.execute(getPriceRangeQuery, logger, processor);
+			priceData = processor.getResult();
+		} catch (Exception e) {
+			throw e;
 		}
+
 		return priceData;
 
 	}
 
-	public boolean updatePriceRangeData(PriceRange priceRangeReq) {
-		Connection conn = RevorioConnect.getInstance().getConnection();
-		DBUtils dbUtils = DBUtils.getInstance();
+	/**
+	 * Update price range data.
+	 * 
+	 * @param priceRangeReq the price range req
+	 * @param logger
+	 * @return true, if successful
+	 */
+	public boolean updatePriceRangeData(PriceRange priceRangeReq, Logger logger) {
+		PriceRangeDBUtil priceRangeDBUtil = PriceRangeDBUtil.getInstance();
 		Integer status = 0;
+		QueryExecutor queryExecutor = new QueryExecutor();
 		try {
-			String updatePriceRangeQuery = dbUtils.updatePriceRangeDataQuery(priceRangeReq);
-			System.out.println("updatePriceRangeQuery: " + updatePriceRangeQuery);
-			PreparedStatement pstmt = conn.prepareStatement(updatePriceRangeQuery);
-			pstmt.setFetchSize(RCCLConstants.MIN_FETCH_ROWS);
-			status = pstmt.executeUpdate();
+			/* generates update query for price range table */
+			String updatePriceRangeQuery = priceRangeDBUtil.generateUpdatePriceRangeDataQuery(priceRangeReq);
+			logger.debug("updatePriceRangeQuery: " + updatePriceRangeQuery);
+			String table_name = ConfigUtil.getInstance().getTableName(RCCLConstants.PRICE_RANGE_PARA);
+			status = queryExecutor.executeUpdate(updatePriceRangeQuery, null, logger,table_name);
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		} catch (Exception e) {
+			// logger.log("Error occured while executing updatePriceRangeData: " + e);
+			throw e;
 		}
 		if (status == 0) {
 			return false;

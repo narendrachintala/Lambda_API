@@ -1,18 +1,31 @@
 package com.rccl.model;
 
-import java.util.List;
-import java.util.Map;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-public class FiltersData {
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FiltersData.
+ */
+@JsonPOJOBuilder
+public class FiltersData extends ParameterFiltersData {
 
-	private Map<String, List<String>> filters;
+	/** The table name. */
+	private String table_name;
 
-	public Map<String, List<String>> getFilters() {
-		return filters;
+	/**
+	 * Gets the table name.
+	 * @return the table name
+	 */
+	public String getTable_name() {
+		return table_name;
 	}
 
-	public void setFilters(Map<String, List<String>> filters) {
-		this.filters = filters;
+	/**
+	 * Sets the table name.
+	 * @param table_name the new table name
+	 */
+	public void setTable_name(String table_name) {
+		this.table_name = table_name;
 	}
 
 }

@@ -1,46 +1,68 @@
 package com.rccl.repo;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.logging.log4j.Logger;
 
-import com.rccl.dbutils.RevorioConnect;
+import com.rccl.dbutils.PauseParaDBUtils;
 import com.rccl.dto.PauseParaDTO;
+import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PausePara;
-import com.rccl.utils.PauseParaDBUtils;
+import com.rccl.processor.PauseParaResultProcessor;
+import com.rccl.processor.QueryExecutor;
+import com.rccl.utils.ConfigUtil;
 import com.rccl.utils.RCCLConstants;
 
+/**
+ * The Class PauseParaDataRepo.
+ */
 public class PauseParaDataRepo {
-	public List<PauseParaDTO> getPausePara(Map<String, List<String>> filterData) {
-		Connection conn = RevorioConnect.getInstance().getConnection();
-		List<PauseParaDTO> PauseParaData = null;
+	
+	/**
+	 * Gets the pause para.
+	 * @param filterData the filter data
+	 * @param logger the logger
+	 * @return returns list of records based on filter condition
+	 */
+	// This method is used to fetch results from DB
+	public List<PauseParaDTO> getPausePara(ParameterFiltersData filterData,Logger logger) {
+		List<PauseParaDTO> PauseParaData = new ArrayList<PauseParaDTO>();
+		QueryExecutor queryExecutor = new QueryExecutor();
 		PauseParaDBUtils dbUtils = PauseParaDBUtils.getInstance();
 		try {
-			String getPauseParaQuery = dbUtils.getPauseParaDataQuery(filterData);
-			System.out.println("getPauseParaQuery: " + getPauseParaQuery);
-			PreparedStatement pstmt = conn.prepareStatement(getPauseParaQuery);
-			pstmt.setFetchSize(RCCLConstants.MID_FETCH_ROWS);
-			ResultSet rs = pstmt.executeQuery();
-
-			BeanListHandler<PauseParaDTO> handle = new BeanListHandler<PauseParaDTO>(PauseParaDTO.class);
-			PauseParaData = handle.handle(rs);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			String getPauseParaQuery = dbUtils.getPauseParaDataQuery(filterData, logger);
+			PauseParaResultProcessor processor = new PauseParaResultProcessor();
+			processor.setResult(PauseParaData);
+			queryExecutor.execute(getPauseParaQuery, logger, processor);
+			PauseParaData = processor.getResult();
+		} catch (Exception e) {
+			throw e;
 		}
 		return PauseParaData;
-
 	}
-
+	
+	/**
+	 * Update pause para data.
+	 * @param request the request
+	 * @param logger the logger
+	 * @return true, if successful
+	 */
+	public boolean updatePauseParaData(PausePara request, Logger logger ) {
+		PauseParaDBUtils dbUtils = PauseParaDBUtils.getInstance();
+		QueryExecutor queryExecutor = new QueryExecutor();
+		Integer status = 0;
+		try {
+			String updatePauseParaQuery = dbUtils.updatePauseParaDataQuery(request, logger );
+			String table_name = ConfigUtil.getInstance().getTableName(RCCLConstants.PAUSE_PARA);
+			status = queryExecutor.executeUpdate(updatePauseParaQuery, null, logger,table_name );
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		if (status == 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }
 	

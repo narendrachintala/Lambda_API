@@ -125,6 +125,28 @@ public class ConfigUtil {
 	}
 
 	/**
+	 * Gets the rolling window data.
+	 *
+	 * @return the currency_price_para data
+	 */
+	public String getCurrentPriceData() {
+		return conf.getProperty("get_current_price_para").replace(
+				CustomFunctions.getNamedQuery(RCCLConstants.CURRENT_PRICE_PARA),
+				conf.getProperty(RCCLConstants.CURRENT_PRICE_PARA));
+	}
+	
+	/**
+	 * Update rolling window.
+	 *
+	 * @return the string
+	 */
+	public String updateCurrentPriceData() {
+		return conf.getProperty("update_current_price_para").replace(
+				CustomFunctions.getNamedQuery(RCCLConstants.CURRENT_PRICE_PARA),
+				conf.getProperty(RCCLConstants.CURRENT_PRICE_PARA));
+	}
+	
+	/**
 	 * Gets the secret managemer name.
 	 *
 	 * @return the secret managemer name
@@ -154,5 +176,9 @@ public class ConfigUtil {
 	public static void main(String[] args) {
 		System.out.println(getInstance().getPriceRangeData());
 	}
+
+	
+
+	
 
 }

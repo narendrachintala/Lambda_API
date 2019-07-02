@@ -1,11 +1,14 @@
 package com.rccl.service;
 
-import java.util.List;
-import java.util.Map;
 
-import com.rccl.dto.CurrencyPriceParaDTO;
-import com.rccl.model.CurrencyPricePara;
-import com.rccl.repo.CurrencyPriceParaRepo;
+import java.util.List;
+
+import org.apache.logging.log4j.Logger;
+
+import com.rccl.dto.CurrentPriceParaDTO;
+import com.rccl.model.CurrentPricePara;
+import com.rccl.model.ParameterFiltersData;
+import com.rccl.repo.CurrentPriceParaRepo;
 
 /**
  * 
@@ -17,30 +20,32 @@ public class CurrentPriceParaService {
 	
 	/**
 	 * @param request contains end user chosen filter criteria
-	 * @return returns final currency price parameter data with applied criteria
+	 * @param lambdaLogger
+	 * @return returns final current price parameter data with applied criteria
 	 */
-	public List<CurrencyPriceParaDTO> getCurrencyPriceParaData(Map<String, List<String>> request) {
-		List<CurrencyPriceParaDTO> currencyPriceParaData = null;
+	public List<CurrentPriceParaDTO> getCurrentPriceParaData(ParameterFiltersData request, Logger logger) {
+		List<CurrentPriceParaDTO> currentPriceParaData = null;
 		try {
-			CurrencyPriceParaRepo repo = new CurrencyPriceParaRepo();
-			currencyPriceParaData = repo.getCurrencyPriceParaData(request);
+			CurrentPriceParaRepo repo = new CurrentPriceParaRepo();
+			currentPriceParaData = repo.getCurrentPriceData(request,logger);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return currencyPriceParaData;
+		return currentPriceParaData;
 	}
 
 	/**
-	 * @param currencyPriceParaReq
+	 * @param currentPriceParaReq
+	 * @param logger
 	 * @return
 	 */
-	public boolean updateCurrencyPriceParaData(CurrencyPricePara currencyPriceParaReq) {
-		CurrencyPriceParaRepo currencyPriceParaRepo = null;
+	public boolean updateCurrentPriceParaData(CurrentPricePara currentPriceParaReq, Logger logger) {
+		CurrentPriceParaRepo currentPriceParaRepo = null;
 		boolean status = false;
 		try {
-			currencyPriceParaRepo = new CurrencyPriceParaRepo();
-			status = currencyPriceParaRepo.updateCurrencyPriceParaData(currencyPriceParaReq);
+			currentPriceParaRepo = new CurrentPriceParaRepo();
+			status = currentPriceParaRepo.updateCurrentPriceData(currentPriceParaReq, logger);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

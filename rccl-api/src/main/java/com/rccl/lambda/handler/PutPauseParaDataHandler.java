@@ -14,6 +14,7 @@ import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PausePara;
 import com.rccl.model.validator.PauseParaDataValidator;
 import com.rccl.service.PauseParaDataService;
+import com.rccl.utils.ConfigUtil;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResponseUtil;
 
@@ -40,9 +41,11 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 		boolean update = false;
 		GatewayResponse<? extends Object> response = null;
 		PauseParaDataValidator rDataValidator = null;
+		ConfigUtil configInst = ConfigUtil.getInstance();
+		String jobName = configInst.getTableName(RCCLConstants.PAUSE_PARA);
 		try {
 			rDataValidator = new PauseParaDataValidator();
-			response = rDataValidator.validatePutRequest(request);
+			response = rDataValidator.validatePutRequest(request,jobName);
 			if (response == null) { 
 			PauseParaDataService PauseParaService = new PauseParaDataService();
 			update = PauseParaService.updatePauseParaData(request);

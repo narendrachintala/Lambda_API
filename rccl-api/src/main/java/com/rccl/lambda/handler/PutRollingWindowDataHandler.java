@@ -28,7 +28,7 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 	}
 
 	// Initialize the Log4j logger.
-	static final Logger logger = LogManager.getLogger(PutPauseParaDataHandler.class);
+	static final Logger logger = LogManager.getLogger(PutRollingWindowDataHandler.class);
 
 	/**
 	 * Handle request.
@@ -56,10 +56,6 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 			return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST);
 
 		}
-		System.out.println("value of update():" + update);
-		Gson gson = new Gson();
-		String json = gson.toJson(response);
-		System.out.println(json);
 		return response;
 	}
 	

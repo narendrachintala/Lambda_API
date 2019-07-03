@@ -1,2 +1,4 @@
 # LAMBDA_API
-List of lambda functions for REST API's
+List of lambda functions for API's
+
+Source code And lamda Handlers

@@ -54,7 +54,8 @@ public class RCCLConstants {
 	
 	public final static String PRICE_RANGE_PARA="price_range_para";
 	public final static String PAUSE_PARA="pause_para";
-	public final static String ROLLING_WINDOW="rolling_window";
+	public final static String ROLLING_WINDOW="rolling_window_para";
+	public static final String CURRENT_PRICE_PARA = "current_price_para";
 
 	/**
 	 * Filters data fields
@@ -78,6 +79,18 @@ public class RCCLConstants {
 	public final static String L2_RANGE_MIN = "l2_range_min";
 	public final static String L2_RANGE_MAX = "l2_range_max";
 
+	/**
+	 * CurrentPricePara table update columns
+	 */
+	public static final  String CURRENCY = "currency";
+	public static final  String METAPRODUCT = "metaproduct";
+	public static final  String PRODUCT_CODE = "product_code";
+	public static final  String SHIP_CODE = "ship_code";
+	public static final  String SAIL_DATE = "sail_date";
+	public static final  String SAIL_MONTH = "sail_month";
+	public static final  String CAT_CLASS = "cat_class";
+	public static final  String OCCUPANCY = "occupancy";
+	
 	/**
 	 * UI keys
 	 */
@@ -151,4 +164,5 @@ public class RCCLConstants {
 	 * pause para table update columns
 	 */
 	public final static String L1_PAUSE = "l1_pause";
+	
 }

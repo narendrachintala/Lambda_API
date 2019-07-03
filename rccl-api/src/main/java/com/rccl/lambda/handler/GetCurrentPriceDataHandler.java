@@ -30,7 +30,7 @@ public class GetCurrentPriceDataHandler
 	// Initialize the Log4j logger.
 		static final Logger logger = LogManager.getLogger(GetCurrentPriceDataHandler.class);
 
-	/*
+	/**
 	 * This method will be invoked by AWS Lambda function to fetch current_price_para
 	 * parameter table data based on provided filter criteria
 	 *
@@ -45,7 +45,6 @@ public class GetCurrentPriceDataHandler
 		
 		List<CurrentPriceParaDTO> currentPriceParaList = null;
 		GatewayResponse<? extends Object> response = null;
-		ResponseUtil respUtil = ResponseUtil.getInstance();
 
 		try {
 			// validating request data
@@ -55,15 +54,13 @@ public class GetCurrentPriceDataHandler
 
 				CurrentPriceParaService currrentPriceService = new CurrentPriceParaService();
 				currentPriceParaList = currrentPriceService.getCurrentPriceParaData(request, logger);
-				response = new GatewayResponse<List<CurrentPriceParaDTO>>(currentPriceParaList, respUtil.getHeaders(),
+				response = new GatewayResponse<List<CurrentPriceParaDTO>>(currentPriceParaList, ResponseUtil.getHeaders(),
 						RCCLConstants.SC_OK);
 			}
 
 		} catch (Exception e) {
 			logger.error("Error occured while executing GetCurrentPriceDataHandler: " + e.getMessage());
-			//throw new RCCLException("Error occured while executing GetPriceRangeDataHandler", e);
-			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
-					RCCLConstants.SC_BAD_REQUEST); 
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
 		}
 		// System.out.println(new
 		// GsonBuilder().serializeNulls().create().toJson(response));
@@ -84,6 +81,16 @@ public class GetCurrentPriceDataHandler
 		 * GsonBuilder().serializeNulls().create().toJson(data)); System.exit(0);
 		 */
 
-		new GetCurrentPriceDataHandler().handleRequest(FiltersData.getRequestData(), null);
+		ParameterFiltersData currentPricedata = new ParameterFiltersData();
+		currentPricedata.setMetaproduct("OASIS");
+		currentPricedata.setProduct_code("7N CARIBBEAN");
+		currentPricedata.setCat_class("B");
+		currentPricedata.setCategory("TEST");
+		currentPricedata.setOccupancy("quad");
+		currentPricedata.setSail_date("23-NOV-19 12.00.00.000000000 AM");
+		currentPricedata.setSail_month("11");
+		
+		
+		new GetCurrentPriceDataHandler().handleRequest(currentPricedata, null);
 	}
 }

@@ -42,7 +42,7 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 		GatewayResponse<? extends Object> response = null;
 		RollingWindowDataValidator rDataValidator = null;
 		ConfigUtil configInst = ConfigUtil.getInstance();
-		String jobName = configInst.getTableName(RCCLConstants.REFUNDABLE_PREMIUM);
+		String jobName = configInst.getTableName(RCCLConstants.ROLLING_WINDOW);
 		try {
 			rDataValidator = new RollingWindowDataValidator();
 			response = rDataValidator.validatePutRequest(request, jobName);

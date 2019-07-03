@@ -56,6 +56,7 @@ public class RCCLConstants {
 	public final static String PAUSE_PARA="pause_para";
 	public final static String ROLLING_WINDOW="rolling_window_para";
 	public static final String CURRENT_PRICE_PARA = "current_price_para";
+	public static final String REFUNDABLE_PREMIUM = "refundable_premium_para";
 
 	/**
 	 * Filters data fields

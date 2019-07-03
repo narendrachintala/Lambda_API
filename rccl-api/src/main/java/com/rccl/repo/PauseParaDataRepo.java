@@ -50,7 +50,6 @@ public class PauseParaDataRepo {
 	 * Update pause para data.
 	 * 
 	 * @param request the request
-	 * @param logger  the logger
 	 * @return true, if successful
 	 */
 	public boolean updatePauseParaData(PausePara request) {
@@ -58,7 +57,7 @@ public class PauseParaDataRepo {
 		QueryExecutor queryExecutor = new QueryExecutor();
 		Integer status = 0;
 		try {
-			String updatePauseParaQuery = dbUtils.updatePauseParaDataQuery(request, logger);
+			String updatePauseParaQuery = dbUtils.updatePauseParaDataQuery(request);
 			status = queryExecutor.executeUpdate(updatePauseParaQuery, null);
 		} catch (Exception e) {
 			logger.error("Error occured in updatePauseParaData: " + e);

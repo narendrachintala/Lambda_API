@@ -10,6 +10,7 @@ import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.google.gson.GsonBuilder;
 import com.rccl.dto.PauseParaDTO;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
@@ -55,10 +56,10 @@ public class GetPauseParaDataHandler
 						RCCLConstants.SC_OK);
 			}
 		} catch (Exception e) {
-			logger.error("Error occured while executing GetPauseParaDataHandler: " + e.getMessage());
+			//logger.error("Error occured while executing GetPauseParaDataHandler: " + e.getMessage());
 			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
 		}
-		//System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
+		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
 	}
 
@@ -68,7 +69,8 @@ public class GetPauseParaDataHandler
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-		new GetPauseParaDataHandler().handleRequest(FiltersData.getRequestData(), new Context() {
+		new GetPauseParaDataHandler().handleRequest(FiltersData.getRequestData(),
+				new Context() {
 			@Override
 			public int getRemainingTimeInMillis() {
 				// TODO Auto-generated method stub
@@ -139,7 +141,8 @@ public class GetPauseParaDataHandler
 				// TODO Auto-generated method stub
 				return null;
 			}
-		});
+		})
+		;
 	}
 
 }

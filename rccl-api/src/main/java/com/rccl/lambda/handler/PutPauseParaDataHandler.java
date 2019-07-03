@@ -14,6 +14,7 @@ import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PausePara;
 import com.rccl.model.validator.PauseParaDataValidator;
 import com.rccl.service.PauseParaDataService;
+import com.rccl.utils.ConfigUtil;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResponseUtil;
 
@@ -40,9 +41,11 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 		boolean update = false;
 		GatewayResponse<? extends Object> response = null;
 		PauseParaDataValidator rDataValidator = null;
+		ConfigUtil configInst = ConfigUtil.getInstance();
+		String jobName = configInst.getTableName(RCCLConstants.PAUSE_PARA);
 		try {
 			rDataValidator = new PauseParaDataValidator();
-			response = rDataValidator.validatePutRequest(request);
+			response = rDataValidator.validatePutRequest(request,jobName);
 			if (response == null) { 
 			PauseParaDataService PauseParaService = new PauseParaDataService();
 			update = PauseParaService.updatePauseParaData(request);
@@ -61,7 +64,7 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 
 		PausePara pausePara = new PausePara();
 		// values to be updated
-		pausePara.setL1_pause(1);
+		pausePara.setL1_pause(0);
 
 		// filter criteria
 		ParameterFiltersData parameterFiltersData = new ParameterFiltersData();
@@ -79,7 +82,7 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 
 		System.out.println("Sample Input data:" + json);
 
-		new PutPauseParaDataHandler().handleRequest(pausePara, new Context() {
+		new PutPauseParaDataHandler().handleRequest(pausePara,new Context() {
 			@Override
 			public int getRemainingTimeInMillis() {
 				// TODO Auto-generated method stub
@@ -152,6 +155,7 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 				// TODO Auto-generated method stub
 				return null;
 			}
-		});
+		})
+		;
 	}
 }

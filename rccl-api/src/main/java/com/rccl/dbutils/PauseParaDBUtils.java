@@ -72,10 +72,9 @@ public class PauseParaDBUtils {
 	 * Update pause para data query.
 	 * 
 	 * @param request the request
-	 * @param logger  the logger
 	 * @return the final query for update API
 	 */
-	public String updatePauseParaDataQuery(PausePara request, Logger logger) {
+	public String updatePauseParaDataQuery(PausePara request) {
 		String updatePauseParaQuery = null;
 		StringBuffer queryBuffer = new StringBuffer();
 		StringBuffer updateBuffer = new StringBuffer();

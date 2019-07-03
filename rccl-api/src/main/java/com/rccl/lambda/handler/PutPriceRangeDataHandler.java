@@ -50,7 +50,7 @@ public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Gate
 		PriceRangeDataValidator dataValidator = null;
 		GatewayResponse<? extends Object> response = null;
 		ConfigUtil configInst = ConfigUtil.getInstance();
-		String jobName = configInst.getTableName("price_range_para");
+		String jobName = configInst.getTableName(RCCLConstants.PRICE_RANGE_PARA);
 		try {
 			dataValidator = PriceRangeDataValidator.getInstance();
 			response = dataValidator.validatePutRequest(request, jobName);

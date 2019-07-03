@@ -14,6 +14,7 @@ import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.RollingWindow;
 import com.rccl.model.validator.RollingWindowDataValidator;
 import com.rccl.service.RollingWindowService;
+import com.rccl.utils.ConfigUtil;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResponseUtil;
 
@@ -40,9 +41,11 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 		boolean update = false;
 		GatewayResponse<? extends Object> response = null;
 		RollingWindowDataValidator rDataValidator = null;
+		ConfigUtil configInst = ConfigUtil.getInstance();
+		String jobName = configInst.getTableName("rolling_window_para");
 		try {
 			rDataValidator = new RollingWindowDataValidator();
-			response = rDataValidator.validatePutRequest(request);
+			response = rDataValidator.validatePutRequest(request, jobName);
 			if (response == null) {
 				RollingWindowService rollingWindowService = new RollingWindowService();
 				update = rollingWindowService.updateRollingWindowData(request);
@@ -54,6 +57,9 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 
 		}
 		System.out.println("value of update():" + update);
+		Gson gson = new Gson();
+		String json = gson.toJson(response);
+		System.out.println(json);
 		return response;
 	}
 	
@@ -66,18 +72,18 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 		RollingWindow roWindow = new RollingWindow();
 		// values to be updated
 		roWindow.setPrev_forecast(9);
-		roWindow.setFut_forecast(6);
-		roWindow.setPrice_window(3);
+		roWindow.setFut_forecast(7);
+		roWindow.setPrice_window(2);
 		roWindow.setWts(59);
 		
 		// filter criteria
 		ParameterFiltersData parameterFiltersData = new ParameterFiltersData();
-		parameterFiltersData.setCat_class("N");
-		parameterFiltersData.setMetaproduct("CANADA");
-		parameterFiltersData.setOccupancy("double");
-		parameterFiltersData.setProduct_code("CANADA");
-		parameterFiltersData.setSail_month("6");
-		parameterFiltersData.setShip_code("OA");
+		parameterFiltersData.setCat_class("O");
+		parameterFiltersData.setMetaproduct("SHORT CARIBBEAN");
+		parameterFiltersData.setOccupancy("quad");
+		parameterFiltersData.setProduct_code("BAHAMA4");
+		parameterFiltersData.setSail_month("3");
+		parameterFiltersData.setShip_code("MJ");
 		
 		roWindow.setFiltersData(parameterFiltersData);
 		Gson gson = new Gson();

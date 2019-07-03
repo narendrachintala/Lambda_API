@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.RollingWindow;
+import com.rccl.repo.AccessControlRepo;
 import com.rccl.utils.CustomFunctions;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResponseUtil;
@@ -35,9 +36,11 @@ public class RollingWindowDataValidator {
 	/**
 	 * Validate put request.
 	 * @param request the request
+	 * @param jobName the job name
 	 * @return the gateway response<? extends object>
 	 */
-	public GatewayResponse<? extends Object> validatePutRequest(RollingWindow request) {
+	public GatewayResponse<? extends Object> validatePutRequest(RollingWindow request, String jobName) {
+		AccessControlRepo accessControlRepo = new AccessControlRepo();
 		try {
 			if (request == null) {
 				return ResponseUtil.error_json();
@@ -52,6 +55,13 @@ public class RollingWindowDataValidator {
 					&& request.getPrev_demand_window() == null && request.getPrev_forecast() == null
 					&& request.getPrice_window() == null && request.getWts() == null) {
 				return ResponseUtil.error_update_fields();
+			}
+			String lockStatus = accessControlRepo.getLockStatus(jobName);
+			System.out.println("lockStatus:" + lockStatus);
+			if (lockStatus.equalsIgnoreCase(RCCLConstants.LOCKED_CTRL_TBL_STS_FLAG)) {
+				return new ResponseUtil.error_locked();
+			} else {
+				System.out.println("lock is disabled");
 			}
 		} catch (Exception e) {
 			logger.error(e);

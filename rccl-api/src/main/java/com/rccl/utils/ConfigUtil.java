@@ -172,6 +172,15 @@ public class ConfigUtil {
 	public String getRegion() {
 		return conf.getProperty("region");
 	}
+	
+	/**
+	 * Gets the lock status.
+	 *
+	 * @return the lock status
+	 */
+	public String getLockStatus() {
+		return conf.getProperty("lock_status");
+	}
 
 	/**
 	 * Gets the value.

@@ -3,6 +3,7 @@ package com.rccl.model.validator;
 import com.rccl.model.ErrorMessage;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.PriceRange;
+import com.rccl.repo.AccessControlRepo;
 import com.rccl.utils.CustomFunctions;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResourceBundleUtility;
@@ -39,14 +40,17 @@ public class PriceRangeDataValidator {
 			RCCLConstants.SC_NOT_FOUND);
 	ErrorMessage UPDATE_COL_WAS_NOT_SET = new ErrorMessage(rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_FIELDS),
 			RCCLConstants.SC_NOT_FOUND);
+	ErrorMessage LOCK_SET = new ErrorMessage(rBundleUtility.getValue(RCCLConstants.LOCK_SET),
+			RCCLConstants.SC_NOT_FOUND);
 
 	/**
 	 * Validate put request.
-	 * 
 	 * @param request the request
+	 * @param jobName the job name
 	 * @return the gateway response<? extends object>
 	 */
-	public GatewayResponse<? extends Object> validatePutRequest(PriceRange request) {
+	public GatewayResponse<? extends Object> validatePutRequest(PriceRange request, String jobName) {
+		AccessControlRepo accessControlRepo = new AccessControlRepo();
 		try {
 			if (request == null) {
 				return new GatewayResponse<ErrorMessage>(REQUEST_WAS_NULL_ERROR, respUtil.getHeaders(),
@@ -64,6 +68,12 @@ public class PriceRangeDataValidator {
 					&& request.getL2_range_max() == null && request.getL2_range_min() == null) {
 				return new GatewayResponse<ErrorMessage>(UPDATE_COL_WAS_NOT_SET, respUtil.getHeaders(),
 						RCCLConstants.SC_NOT_FOUND);
+			}
+			String lockStatus = accessControlRepo.getLockStatus(jobName);
+			if (lockStatus.equalsIgnoreCase(RCCLConstants.LOCKED_CTRL_TBL_STS_FLAG)) {
+				return new GatewayResponse<ErrorMessage>(LOCK_SET, respUtil.getHeaders(), RCCLConstants.SC_NOT_FOUND);
+			} else {
+				System.out.println("lock is disabled");
 			}
 		} catch (Exception e) {
 			throw new RCCLException("Error occured in validating request body", e);

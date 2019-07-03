@@ -14,6 +14,7 @@ import com.rccl.model.PriceRange;
 import com.rccl.model.validator.PriceRangeDataValidator;
 import com.rccl.service.PriceRangeService;
 import com.rccl.testdata.FiltersData;
+import com.rccl.utils.ConfigUtil;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResponseUtil;
 
@@ -49,9 +50,11 @@ public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Gate
 		PriceRangeDataValidator dataValidator = null;
 		GatewayResponse<? extends Object> response = null;
 		ResponseUtil respUtil = ResponseUtil.getInstance();
+		ConfigUtil configInst = ConfigUtil.getInstance();
+		String jobName = configInst.getTableName("price_range_para");
 		try {
 			dataValidator = PriceRangeDataValidator.getInstance();
-			response = dataValidator.validatePutRequest(request);
+			response = dataValidator.validatePutRequest(request, jobName);
 			if (response == null) { // response null denotes request is valid
 				PriceRangeService priceRangeService = new PriceRangeService();
 				result = priceRangeService.updatePriceRangeData(request, logger);

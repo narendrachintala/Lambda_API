@@ -117,6 +117,7 @@ public class RCCLConstants {
 	public final static String EX_GET_REQUEST="ex_get_request";
 	public final static String ERROR_FILTERS_DATA="filters_data";
 	public final static String ERROR_UPDATE_FIELDS="update_fields";
+	public final static String LOCK_SET="lock_status";
 	
 	/**
 	 * Status codes

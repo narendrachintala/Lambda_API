@@ -172,6 +172,15 @@ public class ConfigUtil {
 	public String getRegion() {
 		return conf.getProperty("region");
 	}
+	
+	/**
+	 * Gets the lock status.
+	 *
+	 * @return the lock status
+	 */
+	public String getLockStatus() {
+		return conf.getProperty("lock_status");
+	}
 
 	public static void main(String[] args) {
 		System.out.println(getInstance().getPriceRangeData());

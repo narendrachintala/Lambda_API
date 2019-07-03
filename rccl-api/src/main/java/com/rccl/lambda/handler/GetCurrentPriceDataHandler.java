@@ -30,7 +30,7 @@ public class GetCurrentPriceDataHandler
 	// Initialize the Log4j logger.
 		static final Logger logger = LogManager.getLogger(GetCurrentPriceDataHandler.class);
 
-	/*
+	/**
 	 * This method will be invoked by AWS Lambda function to fetch current_price_para
 	 * parameter table data based on provided filter criteria
 	 *
@@ -60,9 +60,7 @@ public class GetCurrentPriceDataHandler
 
 		} catch (Exception e) {
 			logger.error("Error occured while executing GetCurrentPriceDataHandler: " + e.getMessage());
-			//throw new RCCLException("Error occured while executing GetPriceRangeDataHandler", e);
-			response = new GatewayResponse<String>(e.getLocalizedMessage(), ResponseUtil.getHeaders(),
-					RCCLConstants.SC_BAD_REQUEST); 
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
 		}
 		// System.out.println(new
 		// GsonBuilder().serializeNulls().create().toJson(response));
@@ -93,8 +91,6 @@ public class GetCurrentPriceDataHandler
 		currentPricedata.setSail_month("11");
 		
 		
-		
-		
-		new GetCurrentPriceDataHandler().handleRequest(FiltersData.getRequestData(), null);
+		new GetCurrentPriceDataHandler().handleRequest(currentPricedata, null);
 	}
 }

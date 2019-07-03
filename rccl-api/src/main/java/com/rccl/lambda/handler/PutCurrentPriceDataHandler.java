@@ -58,8 +58,7 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 			}
 		} catch (Exception e) {
 			logger.error("Error occured while executing PutCurrentPriceDataHandler: " + e);
-			response = new GatewayResponse<String>(e.getLocalizedMessage(), ResponseUtil.getHeaders(),
-					RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
 		}
 		return response;
 	}

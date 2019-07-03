@@ -14,6 +14,7 @@ import com.rccl.model.GatewayResponse;
 import com.rccl.model.validator.CurrentPriceDataValidator;
 import com.rccl.service.CurrentPriceParaService;
 import com.rccl.testdata.FiltersData;
+import com.rccl.utils.ConfigUtil;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResponseUtil;
 
@@ -47,10 +48,12 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 		logger.info("input: " + request.toString());
 		Boolean result = false;
 		CurrentPriceDataValidator dataValidator = null;
+		ConfigUtil configInst = ConfigUtil.getInstance();
+		String jobName = configInst.getTableName(RCCLConstants.CURRENT_PRICE_PARA);
 		GatewayResponse<? extends Object> response = null;
 		try {
 			dataValidator = CurrentPriceDataValidator.getInstance();
-			response = dataValidator.validatePutRequest(request);
+			response = dataValidator.validatePutRequest(request,jobName);
 			if (response == null) { // response null denotes request is valid
 				CurrentPriceParaService currentPriceService = new CurrentPriceParaService();
 				result = currentPriceService.updateCurrentPriceParaData(request, logger);

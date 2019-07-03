@@ -39,7 +39,6 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 		context.getLogger().log("Input request: " + request);
 		boolean update = false;
 		GatewayResponse<? extends Object> response = null;
-		ResponseUtil respUtil = ResponseUtil.getInstance();
 		RollingWindowDataValidator rDataValidator = null;
 		try {
 			rDataValidator = new RollingWindowDataValidator();
@@ -47,12 +46,12 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 			if (response == null) {
 				RollingWindowService rollingWindowService = new RollingWindowService();
 				update = rollingWindowService.updateRollingWindowData(request);
-				response = new GatewayResponse<Boolean>(update, respUtil.getHeaders(), RCCLConstants.SC_OK);
+				response = new GatewayResponse<Boolean>(update, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
 			}
 		} catch (Exception ex) {
 			logger.error("Error occured while executing GetRollingWindowHandler: " + ex.getMessage());
-			response = new GatewayResponse<String>(ex.getLocalizedMessage(), respUtil.getHeaders(),
-					RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST);
+
 		}
 		System.out.println("value of update():" + update);
 		return response;

@@ -28,24 +28,22 @@ public class GetPriceRangeDataHandler
 	}
 
 	// Initialize the Log4j logger.
-		static final Logger logger = LogManager.getLogger(GetPriceRangeDataHandler.class);
+	static final Logger logger = LogManager.getLogger(GetPriceRangeDataHandler.class);
 
-	/*
+	/**
 	 * This method will be invoked from AWS Lambda function to fetch price range
 	 * parameter data based on provided filter criteria
 	 *
-	 * @see
-	 * com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java.lang.
-	 * Object, com.amazonaws.services.lambda.runtime.Context)
+	 * @see com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java.lang.
+	 *      Object, com.amazonaws.services.lambda.runtime.Context)
 	 * 
 	 */
 	public GatewayResponse<? extends Object> handleRequest(ParameterFiltersData request, Context context) {
 		// LambdaLogger logger = context.getLogger();
 		logger.info("Input: " + request.toString());
-		
+
 		List<PriceRangeDTO> priceRangeList = null;
 		GatewayResponse<? extends Object> response = null;
-		ResponseUtil respUtil = ResponseUtil.getInstance();
 
 		try {
 			// validating request data
@@ -55,15 +53,13 @@ public class GetPriceRangeDataHandler
 
 				PriceRangeService priceRangeService = new PriceRangeService();
 				priceRangeList = priceRangeService.getPriceRangeData(request);
-				response = new GatewayResponse<List<PriceRangeDTO>>(priceRangeList, respUtil.getHeaders(),
+				response = new GatewayResponse<List<PriceRangeDTO>>(priceRangeList, ResponseUtil.getHeaders(),
 						RCCLConstants.SC_OK);
 			}
 
 		} catch (Exception e) {
 			logger.error("Error occured while executing GetPriceRangeDataHandler: " + e.getMessage());
-			//throw new RCCLException("Error occured while executing GetPriceRangeDataHandler", e);
-			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
-					RCCLConstants.SC_BAD_REQUEST); 
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
 		}
 		// System.out.println(new
 		// GsonBuilder().serializeNulls().create().toJson(response));

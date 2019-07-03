@@ -43,7 +43,6 @@ public class GetRollingWindowHandler
 	public GatewayResponse<? extends Object> handleRequest(ParameterFiltersData request, Context context) {
 		logger.info("Input request: " + request);
 		GatewayResponse<? extends Object> response = null;
-		ResponseUtil respUtil = ResponseUtil.getInstance();
 		List<RollingWindowDTO> rollingWindowList = null;
 		RequestDataValidator requestDataValidator = null;
 		try {
@@ -53,14 +52,13 @@ public class GetRollingWindowHandler
 			if (response == null) { // response null denotes request is valid
 				RollingWindowService rollingWindowService = new RollingWindowService();
 				rollingWindowList = rollingWindowService.getRollingWindowData(request);
-				response = new GatewayResponse<List<RollingWindowDTO>>(rollingWindowList, respUtil.getHeaders(),
+				response = new GatewayResponse<List<RollingWindowDTO>>(rollingWindowList, ResponseUtil.getHeaders(),
 						RCCLConstants.SC_OK);
 			}
 		}
 		catch (Exception ex) {
 			logger.error("Error occured while executing GetRollingWindowHandler: " + ex.getMessage());
-			response = new GatewayResponse<String>(ex.getLocalizedMessage(), respUtil.getHeaders(),
-					RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST);
 		}
 		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;

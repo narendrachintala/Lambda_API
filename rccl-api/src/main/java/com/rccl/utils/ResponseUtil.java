@@ -3,10 +3,13 @@ package com.rccl.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.rccl.model.ErrorMessage;
+import com.rccl.model.GatewayResponse;
+
 /**
  * The Class ResponseUtil.
  */
-public class ResponseUtil {
+public class ResponseUtil extends CustomErrors{
 
 	/** The instance. */
 	private static ResponseUtil _instance;
@@ -28,9 +31,30 @@ public class ResponseUtil {
 	 * 
 	 * @return the headers
 	 */
-	public Map<String, String> getHeaders() {
+	public static Map<String, String> getHeaders() {
 		Map<String, String> headers = new HashMap<>();
 		headers.put("Content-Type", "application/json");
 		return headers;
 	}
+
+	public static GatewayResponse<ErrorMessage> getErrorMessage(Exception e, Integer statusCode) {
+		String errorMsg = e.getCause().getLocalizedMessage();
+		if (errorMsg != null) {
+			errorMsg.substring(errorMsg.indexOf(RCCLConstants.NAMED_QRY_PREFIX));
+		}
+		ErrorMessage errorMessage = new ErrorMessage(errorMsg, statusCode);
+		GatewayResponse<ErrorMessage> error = new GatewayResponse<ErrorMessage>(errorMessage, getHeaders(),
+				RCCLConstants.SC_BAD_REQUEST);
+
+		return error;
+	}
+
+	public static GatewayResponse<ErrorMessage> getCustErrorMessage(String errorMsg, Integer statusCode) {
+		ErrorMessage errorMessage = new ErrorMessage(errorMsg, statusCode);
+		GatewayResponse<ErrorMessage> error = new GatewayResponse<ErrorMessage>(errorMessage, getHeaders(),
+				RCCLConstants.SC_BAD_REQUEST);
+
+		return error;
+	}
+
 }

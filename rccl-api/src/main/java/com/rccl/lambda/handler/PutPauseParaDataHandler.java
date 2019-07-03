@@ -39,7 +39,6 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 		context.getLogger().log("Input request: " + request);
 		boolean update = false;
 		GatewayResponse<? extends Object> response = null;
-		ResponseUtil respUtil = ResponseUtil.getInstance();
 		PauseParaDataValidator rDataValidator = null;
 		try {
 			rDataValidator = new PauseParaDataValidator();
@@ -47,13 +46,12 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 			if (response == null) { 
 			PauseParaDataService PauseParaService = new PauseParaDataService();
 			update = PauseParaService.updatePauseParaData(request);
-			response = new GatewayResponse<Boolean>(update, respUtil.getHeaders(),
+			response = new GatewayResponse<Boolean>(update, ResponseUtil.getHeaders(),
 					RCCLConstants.SC_OK);
 			}
 		} catch (Exception ex) {
 			 logger.error("Error occured while executing PauseParaDataHandler: " + ex.getMessage());
-			 response = new GatewayResponse<String>(ex.getLocalizedMessage(), respUtil.getHeaders(),
-						RCCLConstants.SC_BAD_REQUEST); 
+			 return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST);
 		}
 		System.out.println("value of update():" + update);
 		return response;

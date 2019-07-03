@@ -73,14 +73,14 @@ public class GetRollingWindowHandler
 	public static void main(String[] args) {
 		// prepares sample input data for handler class
 		ParameterFiltersData parameterFiltersData = new ParameterFiltersData();
-		parameterFiltersData.setCat_class("N");
-		parameterFiltersData.setCategory("double");
-		parameterFiltersData.setMetaproduct("OASIS");
+		parameterFiltersData.setCat_class("O");
+		parameterFiltersData.setMetaproduct("SHORT CARIBBEAN");
 		parameterFiltersData.setOccupancy("quad");
-		parameterFiltersData.setProduct_code("7N CARIBBEAN");
-		parameterFiltersData.setSail_month("10");
-		parameterFiltersData.setShip_code("HM");
-		new GetRollingWindowHandler().handleRequest(null, new Context() {
+		parameterFiltersData.setProduct_code("BAHAMA4");
+		parameterFiltersData.setSail_month("3");
+		parameterFiltersData.setShip_code("MJ");
+		
+		new GetRollingWindowHandler().handleRequest(parameterFiltersData, new Context() {
 			
 			@Override
 			public int getRemainingTimeInMillis() {

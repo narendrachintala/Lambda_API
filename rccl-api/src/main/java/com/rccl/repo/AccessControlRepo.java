@@ -28,7 +28,7 @@ public class AccessControlRepo {
 		String query = configInst.getLockStatus();
 		
 		String finalQuery = query.replace(":value", SINGLE_QUOTE + jobName + SINGLE_QUOTE);
-		System.out.println("final query" + finalQuery);
+		System.out.println("query for access control:" + finalQuery);
 		
 		Connection con = RevoreoConnect.getInstance().getConnection();
 		PreparedStatement stmt = null;

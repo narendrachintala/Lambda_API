@@ -151,6 +151,16 @@ public class ConfigUtil {
 		return conf.getProperty("region");
 	}
 
+	/**
+	 * Gets the value.
+	 *
+	 * @param key the key
+	 * @return the value
+	 */
+	public String getValue(String key) {
+		return conf.getProperty(key);
+	}
+
 	public static void main(String[] args) {
 		System.out.println(getInstance().getPriceRangeData());
 	}

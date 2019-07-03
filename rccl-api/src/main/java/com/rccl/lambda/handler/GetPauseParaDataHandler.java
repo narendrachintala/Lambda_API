@@ -51,7 +51,7 @@ public class GetPauseParaDataHandler
 			response = pauseParaValidator.validateGetRequest(request);
 			if (response == null) { // response null denotes request is valid
 				PauseParaDataService pauseParaService = new PauseParaDataService();
-				pauseParaList = pauseParaService.getPauseParaData(request, logger);
+				pauseParaList = pauseParaService.getPauseParaData(request);
 				response = new GatewayResponse<List<PauseParaDTO>>(pauseParaList, respUtil.getHeaders(),
 						RCCLConstants.SC_OK);
 			}

@@ -1,5 +1,8 @@
 package com.rccl.dbutils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PriceRange;
 import com.rccl.utils.ConfigUtil;
@@ -13,6 +16,9 @@ import com.rccl.utils.helper.PriceRangeDataHelper;
  *
  */
 public class PriceRangeDBUtil {
+
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(PriceRangeDBUtil.class);
 
 	public static PriceRangeDBUtil _instance = null;
 	ConfigUtil configInst = ConfigUtil.getInstance();
@@ -37,12 +43,17 @@ public class PriceRangeDBUtil {
 	public String getPriceRangeDataQuery(ParameterFiltersData filterData) {
 		StringBuffer queryBuffer = new StringBuffer();
 		String getPriceRangeQuery = new String(configInst.getPriceRangeData());
-		FilterDataHelper filterDataHelper = new FilterDataHelper();
-		String whereCondition = filterDataHelper.generateFilterCondition(filterData, queryBuffer);
-		if (whereCondition.equals("")) {
-			getPriceRangeQuery = getPriceRangeQuery.replace(RCCLConstants.WHERE_CONDITION_Q, "1=1");
-		} else {
-			getPriceRangeQuery = getPriceRangeQuery.replace(RCCLConstants.WHERE_CONDITION_Q, whereCondition);
+		try {
+			FilterDataHelper filterDataHelper = new FilterDataHelper();
+			String whereCondition = filterDataHelper.generateFilterCondition(filterData, queryBuffer);
+			if (whereCondition.equals("")) {
+				getPriceRangeQuery = getPriceRangeQuery.replace(RCCLConstants.WHERE_CONDITION_Q, "1=1");
+			} else {
+				getPriceRangeQuery = getPriceRangeQuery.replace(RCCLConstants.WHERE_CONDITION_Q, whereCondition);
+			}
+		} catch (Exception e) {
+			logger.error("Error occured in getPriceRangeDataQuery: " + e);
+			throw e;
 		}
 		return getPriceRangeQuery;
 	}
@@ -56,23 +67,28 @@ public class PriceRangeDBUtil {
 	public String generateUpdatePriceRangeDataQuery(PriceRange priceRangeReq) {
 		StringBuffer queryBuffer = new StringBuffer();
 		String getPriceRangeQuery = new String(configInst.updatePriceRangeData());
-		FilterDataHelper filterDataHelper = new FilterDataHelper();
+		try {
+			FilterDataHelper filterDataHelper = new FilterDataHelper();
 
-		String filterWhereCondition = filterDataHelper.generateFilterCondition(priceRangeReq.getFiltersData(),
-				queryBuffer);
+			String filterWhereCondition = filterDataHelper.generateFilterCondition(priceRangeReq.getFiltersData(),
+					queryBuffer);
 
-		PriceRangeDataHelper priceRangeDataHelper = new PriceRangeDataHelper();
-		// queryBuffer.append(" and ");
-		String setterCondition = priceRangeDataHelper.generateSetterCondition(priceRangeReq, new StringBuffer());
+			PriceRangeDataHelper priceRangeDataHelper = new PriceRangeDataHelper();
+			// queryBuffer.append(" and ");
+			String setterCondition = priceRangeDataHelper.generateSetterCondition(priceRangeReq, new StringBuffer());
 
-		if (setterCondition != "") {
-			getPriceRangeQuery = getPriceRangeQuery.replace(RCCLConstants.SETTER_COLUMNS_Q, setterCondition);
-		}
+			if (setterCondition != "") {
+				getPriceRangeQuery = getPriceRangeQuery.replace(RCCLConstants.SETTER_COLUMNS_Q, setterCondition);
+			}
 
-		if (filterWhereCondition.equals("")) {
-			getPriceRangeQuery = getPriceRangeQuery.replace(RCCLConstants.WHERE_CONDITION_Q, "1=1");
-		} else {
-			getPriceRangeQuery = getPriceRangeQuery.replace(RCCLConstants.WHERE_CONDITION_Q, filterWhereCondition);
+			if (filterWhereCondition.equals("")) {
+				getPriceRangeQuery = getPriceRangeQuery.replace(RCCLConstants.WHERE_CONDITION_Q, "1=1");
+			} else {
+				getPriceRangeQuery = getPriceRangeQuery.replace(RCCLConstants.WHERE_CONDITION_Q, filterWhereCondition);
+			}
+		} catch (Exception e) {
+			logger.error("Error occured in generateUpdatePriceRangeDataQuery: " + e);
+			throw e;
 		}
 		return getPriceRangeQuery;
 	}

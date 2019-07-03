@@ -54,7 +54,7 @@ public class GetPriceRangeDataHandler
 			if (response == null) { // response null denotes request is valid
 
 				PriceRangeService priceRangeService = new PriceRangeService();
-				priceRangeList = priceRangeService.getPriceRangeData(request, logger);
+				priceRangeList = priceRangeService.getPriceRangeData(request);
 				response = new GatewayResponse<List<PriceRangeDTO>>(priceRangeList, respUtil.getHeaders(),
 						RCCLConstants.SC_OK);
 			}

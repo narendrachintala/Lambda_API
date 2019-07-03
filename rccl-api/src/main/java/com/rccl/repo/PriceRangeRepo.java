@@ -3,16 +3,15 @@ package com.rccl.repo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.rccl.dbutils.PriceRangeDBUtil;
+import com.rccl.dbutils.QueryExecutor;
 import com.rccl.dto.PriceRangeDTO;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PriceRange;
 import com.rccl.processor.PriceRangeResultProcessor;
-import com.rccl.processor.QueryExecutor;
-import com.rccl.utils.ConfigUtil;
-import com.rccl.utils.RCCLConstants;
 
 /**
  * 
@@ -21,6 +20,9 @@ import com.rccl.utils.RCCLConstants;
  */
 public class PriceRangeRepo {
 
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(PriceRangeRepo.class);
+
 	/**
 	 * Gets the price range data.
 	 * 
@@ -28,7 +30,7 @@ public class PriceRangeRepo {
 	 * @param lambdaLogger
 	 * @return the price range data
 	 */
-	public List<PriceRangeDTO> getPriceRangeData(ParameterFiltersData filterData, Logger logger) {
+	public List<PriceRangeDTO> getPriceRangeData(ParameterFiltersData filterData) {
 
 		PriceRangeDBUtil priceRangeDBUtil = PriceRangeDBUtil.getInstance();
 		QueryExecutor queryExecutor = new QueryExecutor();
@@ -38,9 +40,10 @@ public class PriceRangeRepo {
 			String getPriceRangeQuery = priceRangeDBUtil.getPriceRangeDataQuery(filterData);
 			PriceRangeResultProcessor processor = new PriceRangeResultProcessor();
 			processor.setResult(priceData);
-			queryExecutor.execute(getPriceRangeQuery, logger, processor);
+			queryExecutor.execute(getPriceRangeQuery, processor);
 			priceData = processor.getResult();
 		} catch (Exception e) {
+			logger.error("Error occured in getPriceRangeData: " + e);
 			throw e;
 		}
 
@@ -55,7 +58,7 @@ public class PriceRangeRepo {
 	 * @param logger
 	 * @return true, if successful
 	 */
-	public boolean updatePriceRangeData(PriceRange priceRangeReq, Logger logger) {
+	public boolean updatePriceRangeData(PriceRange priceRangeReq) {
 		PriceRangeDBUtil priceRangeDBUtil = PriceRangeDBUtil.getInstance();
 		Integer status = 0;
 		QueryExecutor queryExecutor = new QueryExecutor();
@@ -63,11 +66,10 @@ public class PriceRangeRepo {
 			/* generates update query for price range table */
 			String updatePriceRangeQuery = priceRangeDBUtil.generateUpdatePriceRangeDataQuery(priceRangeReq);
 			logger.debug("updatePriceRangeQuery: " + updatePriceRangeQuery);
-			String table_name = ConfigUtil.getInstance().getTableName(RCCLConstants.PRICE_RANGE_PARA);
-			status = queryExecutor.executeUpdate(updatePriceRangeQuery, null, logger,table_name);
+			status = queryExecutor.executeUpdate(updatePriceRangeQuery, null);
 
 		} catch (Exception e) {
-			// logger.log("Error occured while executing updatePriceRangeData: " + e);
+			logger.error("Error occured while executing updatePriceRangeData: " + e);
 			throw e;
 		}
 		if (status == 0) {

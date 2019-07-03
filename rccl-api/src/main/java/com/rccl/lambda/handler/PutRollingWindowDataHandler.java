@@ -46,7 +46,7 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 			response = rDataValidator.validatePutRequest(request);
 			if (response == null) {
 				RollingWindowService rollingWindowService = new RollingWindowService();
-				update = rollingWindowService.updateRollingWindowData(request, logger);
+				update = rollingWindowService.updateRollingWindowData(request);
 				response = new GatewayResponse<Boolean>(update, respUtil.getHeaders(), RCCLConstants.SC_OK);
 			}
 		} catch (Exception ex) {

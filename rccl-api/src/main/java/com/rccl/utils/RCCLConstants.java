@@ -135,6 +135,7 @@ public class RCCLConstants {
 	public final static int SC_OK = 200;
 	public final static int SC_CREATED = 201;
 	public final static int SC_BAD_REQUEST = 400;
+	public final static int SC_LOCKED = 423;
 	public final static int UN_AUTHORIZED = 401;
 	public final static int FORBIDDEN = 403;
 	public final static int SC_NOT_FOUND = 404;

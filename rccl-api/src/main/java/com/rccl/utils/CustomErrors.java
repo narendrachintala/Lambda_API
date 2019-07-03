@@ -32,5 +32,10 @@ public class CustomErrors {
 		return ResponseUtil.getCustErrorMessage(rBundleUtility.getValue(RCCLConstants.ERROR_TABLE_NAME),
 				RCCLConstants.SC_BAD_REQUEST);
 	}
-
+	
+	public static GatewayResponse<ErrorMessage> error_locked() {
+		return ResponseUtil.getCustErrorMessage(rBundleUtility.getValue(RCCLConstants.LOCK_SET),
+				RCCLConstants.SC_LOCKED);
+	}
+	
 }

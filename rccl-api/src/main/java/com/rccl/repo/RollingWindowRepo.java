@@ -59,9 +59,11 @@ public class RollingWindowRepo {
 		Integer status = 0;
 		try {
 			String updateRollingWindowQuery = dbUtils.updateRollingWindowDataQuery(request);
+			logger.debug("updatePriceRangeQuery: " + updateRollingWindowQuery);
 			status = queryExecutor.executeUpdate(updateRollingWindowQuery, null);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Error occured while executing updateRollingWindowData: " + e);
+			throw e;
 		}
 		if (status == 0) {
 			return false;

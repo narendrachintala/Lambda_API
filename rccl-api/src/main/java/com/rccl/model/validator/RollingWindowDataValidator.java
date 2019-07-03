@@ -59,7 +59,7 @@ public class RollingWindowDataValidator {
 			String lockStatus = accessControlRepo.getLockStatus(jobName);
 			System.out.println("lockStatus:" + lockStatus);
 			if (lockStatus.equalsIgnoreCase(RCCLConstants.LOCKED_CTRL_TBL_STS_FLAG)) {
-				return new ResponseUtil.error_locked();
+				return ResponseUtil.error_locked();
 			} else {
 				System.out.println("lock is disabled");
 			}

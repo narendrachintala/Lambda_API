@@ -46,7 +46,7 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 			response = rDataValidator.validatePutRequest(request);
 			if (response == null) { 
 			PauseParaDataService PauseParaService = new PauseParaDataService();
-			update = PauseParaService.updatePauseParaData(request, logger);
+			update = PauseParaService.updatePauseParaData(request);
 			response = new GatewayResponse<Boolean>(update, respUtil.getHeaders(),
 					RCCLConstants.SC_OK);
 			}

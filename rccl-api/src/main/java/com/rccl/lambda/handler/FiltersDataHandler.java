@@ -50,13 +50,13 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 			if (response == null) {
 				respUtil = ResponseUtil.getInstance();
 				dataService = new FilterDataService();
-				dataDTO = dataService.getFilterData(request, RCCLConstants.METAPRODUCT_F, logger);
+				dataDTO = dataService.getFilterData(request, RCCLConstants.METAPRODUCT_F);
 				response = new GatewayResponse<FilterDataDTO>(dataDTO, respUtil.getHeaders(), RCCLConstants.SC_OK);
 			}
 		} catch (Exception e) {
-			logger.error("Error occurred while invoking rev_pre_getMetaProducts API: " + e.getMessage());
+			logger.error("Error occurred while invoking rev_pre_getMetaProducts API: " + e.getCause());
 			//throw new RCCLException("Error occurred while invoking rev_pre_getMetaProducts API: ", e.getCause());
-			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
+			response = new GatewayResponse<String>(e.getCause().getLocalizedMessage(), respUtil.getHeaders(),
 					RCCLConstants.SC_BAD_REQUEST);
 		}
 
@@ -85,13 +85,13 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 			if (response == null) {
 				respUtil = ResponseUtil.getInstance();
 				dataService = new FilterDataService();
-				dataDTO = dataService.getFilterData(request, RCCLConstants.PRODUCT_CODE_F, logger);
+				dataDTO = dataService.getFilterData(request, RCCLConstants.PRODUCT_CODE_F);
 				response = new GatewayResponse<FilterDataDTO>(dataDTO, respUtil.getHeaders(), RCCLConstants.SC_OK);
 			}
 		} catch (Exception e) {
-			logger.error("Error occurred while invoking rev_pre_getProductCodes API: " + e.getMessage());
+			logger.error("Error occurred while invoking rev_pre_getProductCodes API: " + e.getCause());
 			//throw new RCCLException("Error occurred while invoking rev_pre_getProductCodes API: ", e.getCause());
-			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
+			response = new GatewayResponse<String>(e.getCause().getLocalizedMessage(), respUtil.getHeaders(),
 					RCCLConstants.SC_BAD_REQUEST);
 		}
 
@@ -118,7 +118,7 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 			if (response == null) {
 				respUtil = ResponseUtil.getInstance();
 				dataService = new FilterDataService();
-				dataDTO = dataService.getFilterData(request, RCCLConstants.SHIP_CODE_F, logger);
+				dataDTO = dataService.getFilterData(request, RCCLConstants.SHIP_CODE_F);
 				response = new GatewayResponse<FilterDataDTO>(dataDTO, respUtil.getHeaders(), RCCLConstants.SC_OK);
 			}
 		} catch (Exception e) {
@@ -150,7 +150,7 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 			if (response == null) {
 				respUtil = ResponseUtil.getInstance();
 				dataService = new FilterDataService();
-				dataDTO = dataService.getFilterData(request, RCCLConstants.SAIL_MONTH_F, logger);
+				dataDTO = dataService.getFilterData(request, RCCLConstants.SAIL_MONTH_F);
 				response = new GatewayResponse<FilterDataDTO>(dataDTO, respUtil.getHeaders(), RCCLConstants.SC_OK);
 			}
 		} catch (Exception e) {
@@ -183,7 +183,7 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 			if (response == null) {
 				respUtil = ResponseUtil.getInstance();
 				dataService = new FilterDataService();
-				dataDTO = dataService.getFilterData(request, RCCLConstants.CAT_CLASS_F, logger);
+				dataDTO = dataService.getFilterData(request, RCCLConstants.CAT_CLASS_F);
 				response = new GatewayResponse<FilterDataDTO>(dataDTO, respUtil.getHeaders(), RCCLConstants.SC_OK);
 			}
 		} catch (Exception e) {
@@ -215,7 +215,7 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 			if (response == null) {
 				respUtil = ResponseUtil.getInstance();
 				dataService = new FilterDataService();
-				dataDTO = dataService.getFilterData(request, RCCLConstants.CATEGORY_F, logger);
+				dataDTO = dataService.getFilterData(request, RCCLConstants.CATEGORY_F);
 				response = new GatewayResponse<FilterDataDTO>(dataDTO, respUtil.getHeaders(), RCCLConstants.SC_OK);
 			}
 		} catch (Exception e) {
@@ -247,7 +247,7 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 			if (response == null) {
 				respUtil = ResponseUtil.getInstance();
 				dataService = new FilterDataService();
-				dataDTO = dataService.getFilterData(request, RCCLConstants.OCCUPANCY_F, logger);
+				dataDTO = dataService.getFilterData(request, RCCLConstants.OCCUPANCY_F);
 				response = new GatewayResponse<FilterDataDTO>(dataDTO, respUtil.getHeaders(), RCCLConstants.SC_OK);
 			}
 		} catch (Exception e) {

@@ -1,11 +1,11 @@
 package com.rccl.service;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.rccl.dto.FilterDataDTO;
 import com.rccl.model.FiltersData;
 import com.rccl.repo.FilterDataRepo;
-import com.rccl.utils.helper.RCCLException;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -14,6 +14,9 @@ import com.rccl.utils.helper.RCCLException;
  * @author narendra.chintala
  */
 public class FilterDataService {
+	
+	// Initialize the Log4j logger.
+		static final Logger logger = LogManager.getLogger(FilterDataService.class);
 
 	/**
 	 * Gets the filter data.
@@ -23,15 +26,16 @@ public class FilterDataService {
 	 * @param logger the logger
 	 * @return the filter data
 	 */
-	public FilterDataDTO getFilterData(FiltersData request, String filter_column, Logger logger) {
+	public FilterDataDTO getFilterData(FiltersData request, String filter_column) {
 		FilterDataDTO filterData = null;
 
 		try {
 			FilterDataRepo repo = new FilterDataRepo();
-			filterData = repo.getFilterData(request, filter_column, logger);
+			filterData = repo.getFilterData(request, filter_column);
 
 		} catch (Exception e) {
-			throw new RCCLException("Error occured while executing getFilterData", e);
+			logger.error("Error occurred while invoking getFilterData: " + e);
+			throw e;
 		}
 
 		return filterData;

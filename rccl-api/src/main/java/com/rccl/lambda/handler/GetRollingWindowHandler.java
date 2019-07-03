@@ -52,7 +52,7 @@ public class GetRollingWindowHandler
 			response = requestDataValidator.validateGetRequest(request);
 			if (response == null) { // response null denotes request is valid
 				RollingWindowService rollingWindowService = new RollingWindowService();
-				rollingWindowList = rollingWindowService.getRollingWindowData(request, logger);
+				rollingWindowList = rollingWindowService.getRollingWindowData(request);
 				response = new GatewayResponse<List<RollingWindowDTO>>(rollingWindowList, respUtil.getHeaders(),
 						RCCLConstants.SC_OK);
 			}

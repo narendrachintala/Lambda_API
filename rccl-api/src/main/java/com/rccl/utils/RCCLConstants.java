@@ -20,6 +20,15 @@ public class RCCLConstants {
 	 */
 	public static final String FILTER_DATA_COLUMN = "filterData";
 	
+	/**
+	 * DB configuration constants
+	 */
+	public static final String HOST = "revoreo_host";
+	public static final String REVOREO_PORT="revoreo_port";
+	public static final String REVOREO_SERVICE="revoreo_service";
+	public static final String REVOREO_UNAME="revoreo_uname";
+	public static final String REVOREO_PWD="revoreo_pwd";
+	
 	
 	/**
 	 * Named query filed prefix

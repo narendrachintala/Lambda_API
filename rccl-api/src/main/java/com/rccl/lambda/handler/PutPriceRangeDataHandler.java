@@ -57,7 +57,7 @@ public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Gate
 			response = dataValidator.validatePutRequest(request, jobName);
 			if (response == null) { // response null denotes request is valid
 				PriceRangeService priceRangeService = new PriceRangeService();
-				result = priceRangeService.updatePriceRangeData(request, logger);
+				result = priceRangeService.updatePriceRangeData(request);
 				response = new GatewayResponse<Boolean>(result, respUtil.getHeaders(), RCCLConstants.SC_OK);
 			}
 		} catch (Exception e) {

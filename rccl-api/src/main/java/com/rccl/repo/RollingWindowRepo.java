@@ -3,21 +3,23 @@ package com.rccl.repo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.rccl.dbutils.QueryExecutor;
 import com.rccl.dbutils.RollingWindowDBUtil;
 import com.rccl.dto.RollingWindowDTO;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.RollingWindow;
-import com.rccl.processor.QueryExecutor;
 import com.rccl.processor.RollingWindowResultProcessor;
-import com.rccl.utils.ConfigUtil;
-import com.rccl.utils.RCCLConstants;
 
 /**
  * The Class RollingWindowRepo.
  */
 public class RollingWindowRepo {
+
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(RollingWindowRepo.class);
 
 	/**
 	 * Gets the rolling window data.
@@ -27,18 +29,18 @@ public class RollingWindowRepo {
 	 * @return the rolling window data
 	 */
 	// This method is used to fetch results from DB
-	public List<RollingWindowDTO> getRollingWindowData(ParameterFiltersData request, Logger logger) {
+	public List<RollingWindowDTO> getRollingWindowData(ParameterFiltersData request) {
 		RollingWindowDBUtil rollingWindowDBUtil = RollingWindowDBUtil.getInstance();
 		QueryExecutor queryExecutor = new QueryExecutor();
 		List<RollingWindowDTO> list = new ArrayList<RollingWindowDTO>();
 		try {
-			String getRollingWindowQuery = rollingWindowDBUtil.getRollingWindowQuery(request, logger);
+			String getRollingWindowQuery = rollingWindowDBUtil.getRollingWindowQuery(request);
 			RollingWindowResultProcessor processor = new RollingWindowResultProcessor();
 			processor.setResult(list);
-			queryExecutor.execute(getRollingWindowQuery, logger, processor);
+			queryExecutor.execute(getRollingWindowQuery, processor);
 			list = processor.getResult();
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error("Error occured in getRollingWindowData: " + e);
 			throw e;
 		}
 		return list;
@@ -51,14 +53,13 @@ public class RollingWindowRepo {
 	 * @param logger  the logger
 	 * @return true, if successful
 	 */
-	public boolean updateRollingWindowData(RollingWindow request, Logger logger) {
+	public boolean updateRollingWindowData(RollingWindow request) {
 		RollingWindowDBUtil dbUtils = RollingWindowDBUtil.getInstance();
 		QueryExecutor queryExecutor = new QueryExecutor();
 		Integer status = 0;
 		try {
-			String updateRollingWindowQuery = dbUtils.updateRollingWindowDataQuery(request, logger);
-			String table_name = ConfigUtil.getInstance().getTableName(RCCLConstants.ROLLING_WINDOW);
-			status = queryExecutor.executeUpdate(updateRollingWindowQuery, null, logger, table_name);
+			String updateRollingWindowQuery = dbUtils.updateRollingWindowDataQuery(request);
+			status = queryExecutor.executeUpdate(updateRollingWindowQuery, null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -4,14 +4,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.rccl.model.CurrentPricePara;
-import com.rccl.model.ErrorMessage;
 import com.rccl.model.GatewayResponse;
 import com.rccl.repo.AccessControlRepo;
 import com.rccl.utils.CustomFunctions;
 import com.rccl.utils.RCCLConstants;
-import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.ResponseUtil;
-import com.rccl.utils.helper.RCCLException;
 
 /**
  * The Class CurrentPriceDataValidator.

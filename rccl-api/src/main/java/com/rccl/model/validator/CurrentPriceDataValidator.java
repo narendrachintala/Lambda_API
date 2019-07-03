@@ -49,19 +49,19 @@ public class CurrentPriceDataValidator {
 	public GatewayResponse<? extends Object> validatePutRequest(CurrentPricePara request) {
 		try {
 			if (request == null) {
-				return new GatewayResponse<ErrorMessage>(REQUEST_WAS_NULL_ERROR, respUtil.getHeaders(),
+				return new GatewayResponse<ErrorMessage>(REQUEST_WAS_NULL_ERROR, ResponseUtil.getHeaders(),
 						RCCLConstants.SC_BAD_REQUEST);
 			}
 			if (request.getFiltersData() == null) {
-				return new GatewayResponse<ErrorMessage>(FILTERS_DATA_NOT_SET, respUtil.getHeaders(),
+				return new GatewayResponse<ErrorMessage>(FILTERS_DATA_NOT_SET, ResponseUtil.getHeaders(),
 						RCCLConstants.SC_BAD_REQUEST);
 			}
 			if (CustomFunctions.isNullOrEmpty(request.getFiltersData().getMetaproduct())) {
-				return new GatewayResponse<ErrorMessage>(METAPRODUCT_WAS_NOT_SET, respUtil.getHeaders(),
+				return new GatewayResponse<ErrorMessage>(METAPRODUCT_WAS_NOT_SET, ResponseUtil.getHeaders(),
 						RCCLConstants.SC_NOT_FOUND);
 			}
 			if (request.getL1_range_max() == null && request.getL1_range_min() == null) {
-				return new GatewayResponse<ErrorMessage>(UPDATE_COL_WAS_NOT_SET, respUtil.getHeaders(),
+				return new GatewayResponse<ErrorMessage>(UPDATE_COL_WAS_NOT_SET, ResponseUtil.getHeaders(),
 						RCCLConstants.SC_NOT_FOUND);
 			}
 		} catch (Exception e) {

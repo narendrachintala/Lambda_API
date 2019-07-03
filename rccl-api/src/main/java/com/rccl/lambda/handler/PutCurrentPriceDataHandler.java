@@ -48,18 +48,17 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 		Boolean result = false;
 		CurrentPriceDataValidator dataValidator = null;
 		GatewayResponse<? extends Object> response = null;
-		ResponseUtil respUtil = ResponseUtil.getInstance();
 		try {
 			dataValidator = CurrentPriceDataValidator.getInstance();
 			response = dataValidator.validatePutRequest(request);
 			if (response == null) { // response null denotes request is valid
 				CurrentPriceParaService currentPriceService = new CurrentPriceParaService();
 				result = currentPriceService.updateCurrentPriceParaData(request, logger);
-				response = new GatewayResponse<Boolean>(result, respUtil.getHeaders(), RCCLConstants.SC_OK);
+				response = new GatewayResponse<Boolean>(result, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
 			}
 		} catch (Exception e) {
 			logger.error("Error occured while executing PutCurrentPriceDataHandler: " + e);
-			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
+			response = new GatewayResponse<String>(e.getLocalizedMessage(), ResponseUtil.getHeaders(),
 					RCCLConstants.SC_BAD_REQUEST);
 		}
 		return response;
@@ -79,8 +78,9 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 
 		currentPriceReq.setFiltersData(FiltersData.getParamRequestData());
 
+		ResponseUtil.getInstance();
 		System.out.println(new GsonBuilder().serializeNulls().create().toJson(
-				new GatewayResponse<Boolean>(true, ResponseUtil.getInstance().getHeaders(), RCCLConstants.SC_OK)));
+				new GatewayResponse<Boolean>(true, ResponseUtil.getHeaders(), RCCLConstants.SC_OK)));
 		System.exit(0);
 
 		new PutCurrentPriceDataHandler().handleRequest(currentPriceReq, new Context() {

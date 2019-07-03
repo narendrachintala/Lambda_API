@@ -11,8 +11,6 @@ import com.rccl.dto.CurrentPriceParaDTO;
 import com.rccl.model.CurrentPricePara;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.processor.CurrentPriceResultProcessor;
-import com.rccl.utils.ConfigUtil;
-import com.rccl.utils.RCCLConstants;
 
 /**
  * 
@@ -64,7 +62,6 @@ public class CurrentPriceParaRepo {
 			/* generates update query for price range table */
 			String updateCurrentPriceQuery = currentPriceParaDBUtil.generateUpdateCurrentPriceDataQuery(currentPriceParaReq);
 			logger.debug("updateCurrentPriceQuery: " + updateCurrentPriceQuery);
-			String table_name = ConfigUtil.getInstance().getTableName(RCCLConstants.CURRENT_PRICE_PARA);
 			status = queryExecutor.executeUpdate(updateCurrentPriceQuery, null);
 
 		} catch (Exception e) {

@@ -6,11 +6,11 @@ import java.util.List;
 import org.apache.logging.log4j.Logger;
 
 import com.rccl.dbutils.CurrentPriceParaDBUtil;
+import com.rccl.dbutils.QueryExecutor;
 import com.rccl.dto.CurrentPriceParaDTO;
 import com.rccl.model.CurrentPricePara;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.processor.CurrentPriceResultProcessor;
-import com.rccl.processor.QueryExecutor;
 import com.rccl.utils.ConfigUtil;
 import com.rccl.utils.RCCLConstants;
 
@@ -39,7 +39,7 @@ public class CurrentPriceParaRepo {
 			String getCurrentPriceParaQuery = currentPriceParaDBUtil.getCurrentPriceDataQuery(filterData);
 			CurrentPriceResultProcessor processor = new CurrentPriceResultProcessor();
 			processor.setResult(currentPriceParaData);
-			queryExecutor.execute(getCurrentPriceParaQuery, logger, processor);
+			queryExecutor.execute(getCurrentPriceParaQuery, processor);
 			currentPriceParaData = processor.getResult();
 		} catch (Exception e) {
 			throw e;
@@ -65,7 +65,7 @@ public class CurrentPriceParaRepo {
 			String updateCurrentPriceQuery = currentPriceParaDBUtil.generateUpdateCurrentPriceDataQuery(currentPriceParaReq);
 			logger.debug("updateCurrentPriceQuery: " + updateCurrentPriceQuery);
 			String table_name = ConfigUtil.getInstance().getTableName(RCCLConstants.CURRENT_PRICE_PARA);
-			status = queryExecutor.executeUpdate(updateCurrentPriceQuery, null, logger,table_name);
+			status = queryExecutor.executeUpdate(updateCurrentPriceQuery, null);
 
 		} catch (Exception e) {
 			// logger.log("Error occured while executing updatePriceRangeData: " + e);

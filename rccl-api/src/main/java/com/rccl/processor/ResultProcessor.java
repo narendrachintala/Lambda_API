@@ -2,7 +2,6 @@ package com.rccl.processor;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import com.rccl.utils.RCCLConstants;
 
 /**

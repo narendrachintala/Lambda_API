@@ -1,11 +1,12 @@
 package com.rccl.model.validator;
 
-import com.rccl.model.ErrorMessage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.utils.CustomFunctions;
 import com.rccl.utils.RCCLConstants;
-import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.ResponseUtil;
 import com.rccl.utils.helper.RCCLException;
 
@@ -14,18 +15,11 @@ import com.rccl.utils.helper.RCCLException;
  */
 public class RequestDataValidator {
 
+	/** The Constant logger. */
+	static final Logger logger = LogManager.getLogger(RequestDataValidator.class);
+
 	// creating instance of class
 	public static RequestDataValidator _instance = null;
-
-	// Read error messages from property file
-	ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
-	ResponseUtil respUtil = ResponseUtil.getInstance();
-
-	// Set custom error message and status code
-	ErrorMessage REQUEST_WAS_NULL_ERROR = new ErrorMessage(rBundleUtility.getValue(RCCLConstants.ERROR_JSON),
-			RCCLConstants.SC_BAD_REQUEST);
-	ErrorMessage METAPRODUCT_WAS_NOT_SET = new ErrorMessage(rBundleUtility.getValue(RCCLConstants.ERROR_METAPRODUCT),
-			RCCLConstants.SC_NOT_FOUND);
 
 	public static RequestDataValidator getInstance() {
 		if (_instance == null) {
@@ -36,6 +30,7 @@ public class RequestDataValidator {
 
 	/**
 	 * Validate Input-request.
+	 * 
 	 * @param requestData the request data
 	 * @return the gateway response<? extends object>
 	 * @throws RCCLException the RCCL exception
@@ -43,15 +38,14 @@ public class RequestDataValidator {
 	public GatewayResponse<? extends Object> validateGetRequest(ParameterFiltersData requestData) throws RCCLException {
 		try {
 			if (requestData == null) {
-				return new GatewayResponse<ErrorMessage>(REQUEST_WAS_NULL_ERROR, respUtil.getHeaders(),
-						RCCLConstants.SC_BAD_REQUEST);
+				return ResponseUtil.error_json();
 			}
 			if (CustomFunctions.isNullOrEmpty(requestData.getMetaproduct())) {
-				return new GatewayResponse<ErrorMessage>(METAPRODUCT_WAS_NOT_SET, respUtil.getHeaders(),
-						RCCLConstants.SC_NOT_FOUND);
+				return ResponseUtil.error_metaproduct();
 			}
 		} catch (Exception e) {
-			throw new RCCLException("Error occured in validating request body", e);
+			logger.error(e);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
 		}
 		return null;
 	}

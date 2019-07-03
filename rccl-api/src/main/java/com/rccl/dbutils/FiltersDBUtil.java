@@ -1,11 +1,13 @@
 package com.rccl.dbutils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.rccl.model.FiltersData;
 import com.rccl.utils.ConfigUtil;
 import com.rccl.utils.CustomFunctions;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.helper.FilterDataHelper;
-import com.rccl.utils.helper.RCCLException;
 
 /**
  * The Class FiltersDBUtil.
@@ -13,6 +15,9 @@ import com.rccl.utils.helper.RCCLException;
  * @author narendra.chintala
  */
 public class FiltersDBUtil {
+	
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(FiltersDBUtil.class);
 
 	/** The instance. */
 	public static FiltersDBUtil _instance = null;
@@ -63,7 +68,8 @@ public class FiltersDBUtil {
 				}
 			}
 		} catch (Exception e) {
-			throw new RCCLException("Error occured whil executing generateFilterQuery", e);
+			logger.error("Error occured whil executing generateFilterQuery", e);
+			throw e;
 		}
 		return filterQuery;
 	}

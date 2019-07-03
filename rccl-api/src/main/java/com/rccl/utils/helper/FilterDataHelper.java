@@ -1,17 +1,25 @@
 package com.rccl.utils.helper;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.utils.CustomFunctions;
 import com.rccl.utils.RCCLConstants;
 
 /**
  * The Class FilterDataHelper.
+ * 
  * @author narendra.chintala
  */
 public class FilterDataHelper {
 
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(FilterDataHelper.class);
+
 	/**
 	 * Generate filter condition.
+	 * 
 	 * @param 'filterData' contains chosen filters
 	 * @param 'queryBuffer' is required to append the generated query
 	 * @return returns the final string which is a end query
@@ -65,13 +73,17 @@ public class FilterDataHelper {
 			// removing last appended extra AND
 			queryBuffer.replace(queryBuffer.lastIndexOf(AND) + 1, queryBuffer.length(), "");
 		} catch (Exception e) {
-			throw new RCCLException("Error occured while executing generateFilterCondition", e);
+			logger.error(e);
+			throw e;
+			// throw new RCCLException("Error occured while executing
+			// generateFilterCondition", e);
 		}
 		return queryBuffer.toString();
 	}
 
 	/**
 	 * Join.
+	 * 
 	 * @param 'str'
 	 * @return the string
 	 */

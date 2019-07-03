@@ -20,6 +20,15 @@ public class RCCLConstants {
 	 */
 	public static final String FILTER_DATA_COLUMN = "filterData";
 	
+	/**
+	 * DB configuration constants
+	 */
+	public static final String HOST = "revoreo_host";
+	public static final String REVOREO_PORT="revoreo_port";
+	public static final String REVOREO_SERVICE="revoreo_service";
+	public static final String REVOREO_UNAME="revoreo_uname";
+	public static final String REVOREO_PWD="revoreo_pwd";
+	
 	
 	/**
 	 * Named query filed prefix
@@ -117,6 +126,7 @@ public class RCCLConstants {
 	public final static String EX_GET_REQUEST="ex_get_request";
 	public final static String ERROR_FILTERS_DATA="filters_data";
 	public final static String ERROR_UPDATE_FIELDS="update_fields";
+	public final static String LOCK_SET="lock_status";
 	
 	/**
 	 * Status codes
@@ -125,6 +135,7 @@ public class RCCLConstants {
 	public final static int SC_OK = 200;
 	public final static int SC_CREATED = 201;
 	public final static int SC_BAD_REQUEST = 400;
+	public final static int SC_LOCKED = 423;
 	public final static int UN_AUTHORIZED = 401;
 	public final static int FORBIDDEN = 403;
 	public final static int SC_NOT_FOUND = 404;

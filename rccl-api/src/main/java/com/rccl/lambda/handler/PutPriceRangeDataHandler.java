@@ -14,6 +14,7 @@ import com.rccl.model.PriceRange;
 import com.rccl.model.validator.PriceRangeDataValidator;
 import com.rccl.service.PriceRangeService;
 import com.rccl.testdata.FiltersData;
+import com.rccl.utils.ConfigUtil;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResponseUtil;
 
@@ -48,19 +49,19 @@ public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Gate
 		Boolean result = false;
 		PriceRangeDataValidator dataValidator = null;
 		GatewayResponse<? extends Object> response = null;
-		ResponseUtil respUtil = ResponseUtil.getInstance();
+		ConfigUtil configInst = ConfigUtil.getInstance();
+		String jobName = configInst.getTableName("price_range_para");
 		try {
 			dataValidator = PriceRangeDataValidator.getInstance();
-			response = dataValidator.validatePutRequest(request);
+			response = dataValidator.validatePutRequest(request, jobName);
 			if (response == null) { // response null denotes request is valid
 				PriceRangeService priceRangeService = new PriceRangeService();
-				result = priceRangeService.updatePriceRangeData(request, logger);
-				response = new GatewayResponse<Boolean>(result, respUtil.getHeaders(), RCCLConstants.SC_OK);
+				result = priceRangeService.updatePriceRangeData(request);
+				response = new GatewayResponse<Boolean>(result, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
 			}
 		} catch (Exception e) {
 			logger.error("Error occured while executing PutPriceRangeDataHandler: " + e);
-			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
-					RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
 		}
 		return response;
 	}
@@ -80,7 +81,7 @@ public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Gate
 		priceRangeReq.setFiltersData(FiltersData.getParamRequestData());
 
 		System.out.println(new GsonBuilder().serializeNulls().create().toJson(
-				new GatewayResponse<Boolean>(true, ResponseUtil.getInstance().getHeaders(), RCCLConstants.SC_OK)));
+				new GatewayResponse<Boolean>(true, ResponseUtil.getHeaders(), RCCLConstants.SC_OK)));
 		System.exit(0);
 
 		new PutPriceRangeDataHandler().handleRequest(priceRangeReq, new Context() {

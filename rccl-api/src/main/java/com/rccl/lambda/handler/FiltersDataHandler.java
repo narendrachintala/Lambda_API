@@ -42,22 +42,18 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 		logger.info("input: " + request);
 		FilterDataService dataService = null;
 		FilterDataDTO dataDTO = null;
-		ResponseUtil respUtil = null;
 		GatewayResponse<? extends Object> response = null;
 		FilterDataValidator dataValidator = new FilterDataValidator();
 		try {
 			response = dataValidator.validateGetRequest(request);
 			if (response == null) {
-				respUtil = ResponseUtil.getInstance();
 				dataService = new FilterDataService();
-				dataDTO = dataService.getFilterData(request, RCCLConstants.METAPRODUCT_F, logger);
-				response = new GatewayResponse<FilterDataDTO>(dataDTO, respUtil.getHeaders(), RCCLConstants.SC_OK);
+				dataDTO = dataService.getFilterData(request, RCCLConstants.METAPRODUCT_F);
+				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
 			}
 		} catch (Exception e) {
-			logger.error("Error occurred while invoking rev_pre_getMetaProducts API: " + e.getMessage());
-			//throw new RCCLException("Error occurred while invoking rev_pre_getMetaProducts API: ", e.getCause());
-			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
-					RCCLConstants.SC_BAD_REQUEST);
+			logger.error("Error occurred while invoking rev_pre_getMetaProducts API: " + e.getCause());
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
 		}
 
 		return response;
@@ -77,22 +73,18 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 
 		FilterDataService dataService = null;
 		FilterDataDTO dataDTO = null;
-		ResponseUtil respUtil = null;
 		GatewayResponse<? extends Object> response = null;
 		FilterDataValidator dataValidator = new FilterDataValidator();
 		try {
 			response = dataValidator.validateGetRequest(request);
 			if (response == null) {
-				respUtil = ResponseUtil.getInstance();
 				dataService = new FilterDataService();
-				dataDTO = dataService.getFilterData(request, RCCLConstants.PRODUCT_CODE_F, logger);
-				response = new GatewayResponse<FilterDataDTO>(dataDTO, respUtil.getHeaders(), RCCLConstants.SC_OK);
+				dataDTO = dataService.getFilterData(request, RCCLConstants.PRODUCT_CODE_F);
+				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
 			}
 		} catch (Exception e) {
-			logger.error("Error occurred while invoking rev_pre_getProductCodes API: " + e.getMessage());
-			//throw new RCCLException("Error occurred while invoking rev_pre_getProductCodes API: ", e.getCause());
-			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
-					RCCLConstants.SC_BAD_REQUEST);
+			logger.error("Error occurred while invoking rev_pre_getProductCodes API: " + e.getCause());
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
 		}
 
 		return response;
@@ -110,22 +102,18 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 		logger.info("input: " + request);
 		FilterDataService dataService = null;
 		FilterDataDTO dataDTO = null;
-		ResponseUtil respUtil = null;
 		GatewayResponse<? extends Object> response = null;
 		FilterDataValidator dataValidator = new FilterDataValidator();
 		try {
 			response = dataValidator.validateGetRequest(request);
 			if (response == null) {
-				respUtil = ResponseUtil.getInstance();
 				dataService = new FilterDataService();
-				dataDTO = dataService.getFilterData(request, RCCLConstants.SHIP_CODE_F, logger);
-				response = new GatewayResponse<FilterDataDTO>(dataDTO, respUtil.getHeaders(), RCCLConstants.SC_OK);
+				dataDTO = dataService.getFilterData(request, RCCLConstants.SHIP_CODE_F);
+				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getShipCodes API: " + e.getMessage());
-			//throw new RCCLException("Error occurred while invoking rev_pre_getShipCodes API: ", e.getCause());
-			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
-					RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
 		}
 		return response;
 	}
@@ -142,22 +130,18 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 		logger.info("input: " + request);
 		FilterDataService dataService = null;
 		FilterDataDTO dataDTO = null;
-		ResponseUtil respUtil = null;
 		GatewayResponse<? extends Object> response = null;
 		FilterDataValidator dataValidator = new FilterDataValidator();
 		try {
 			response = dataValidator.validateGetRequest(request);
 			if (response == null) {
-				respUtil = ResponseUtil.getInstance();
 				dataService = new FilterDataService();
-				dataDTO = dataService.getFilterData(request, RCCLConstants.SAIL_MONTH_F, logger);
-				response = new GatewayResponse<FilterDataDTO>(dataDTO, respUtil.getHeaders(), RCCLConstants.SC_OK);
+				dataDTO = dataService.getFilterData(request, RCCLConstants.SAIL_MONTH_F);
+				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getSailMonths API: " + e.getMessage());
-			//throw new RCCLException("Error occurred while invoking rev_pre_getSailMonths API: ", e.getCause());
-			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
-					RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
 		}
 		return response;
 	}
@@ -175,22 +159,18 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 		logger.info("input: " + request);
 		FilterDataService dataService = null;
 		FilterDataDTO dataDTO = null;
-		ResponseUtil respUtil = null;
 		GatewayResponse<? extends Object> response = null;
 		FilterDataValidator dataValidator = new FilterDataValidator();
 		try {
 			response = dataValidator.validateGetRequest(request);
 			if (response == null) {
-				respUtil = ResponseUtil.getInstance();
 				dataService = new FilterDataService();
-				dataDTO = dataService.getFilterData(request, RCCLConstants.CAT_CLASS_F, logger);
-				response = new GatewayResponse<FilterDataDTO>(dataDTO, respUtil.getHeaders(), RCCLConstants.SC_OK);
+				dataDTO = dataService.getFilterData(request, RCCLConstants.CAT_CLASS_F);
+				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getCatClasses API: " + e.getMessage());
-			//throw new RCCLException("Error occurred while invoking rev_pre_getCatClasses API: ", e.getCause());
-			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
-					RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
 		}
 		return response;
 	}
@@ -207,22 +187,18 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 		logger.info("input: " + request);
 		FilterDataService dataService = null;
 		FilterDataDTO dataDTO = null;
-		ResponseUtil respUtil = null;
 		GatewayResponse<? extends Object> response = null;
 		FilterDataValidator dataValidator = new FilterDataValidator();
 		try {
 			response = dataValidator.validateGetRequest(request);
 			if (response == null) {
-				respUtil = ResponseUtil.getInstance();
 				dataService = new FilterDataService();
-				dataDTO = dataService.getFilterData(request, RCCLConstants.CATEGORY_F, logger);
-				response = new GatewayResponse<FilterDataDTO>(dataDTO, respUtil.getHeaders(), RCCLConstants.SC_OK);
+				dataDTO = dataService.getFilterData(request, RCCLConstants.CATEGORY_F);
+				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getCategory API: " + e.getMessage());
-			//throw new RCCLException("Error occurred while invoking rev_pre_getCategory API: ", e.getCause());
-			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
-					RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
 		}
 		return response;
 	}
@@ -239,22 +215,18 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 		logger.info("input: " + request);
 		FilterDataService dataService = null;
 		FilterDataDTO dataDTO = null;
-		ResponseUtil respUtil = null;
 		GatewayResponse<? extends Object> response = null;
 		FilterDataValidator dataValidator = new FilterDataValidator();
 		try {
 			response = dataValidator.validateGetRequest(request);
 			if (response == null) {
-				respUtil = ResponseUtil.getInstance();
 				dataService = new FilterDataService();
-				dataDTO = dataService.getFilterData(request, RCCLConstants.OCCUPANCY_F, logger);
-				response = new GatewayResponse<FilterDataDTO>(dataDTO, respUtil.getHeaders(), RCCLConstants.SC_OK);
+				dataDTO = dataService.getFilterData(request, RCCLConstants.OCCUPANCY_F);
+				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getOccupancies API: " + e.getMessage());
-			//throw new RCCLException("Error occurred while invoking rev_pre_getOccupancies API: ", e.getCause());
-			response = new GatewayResponse<String>(e.getLocalizedMessage(), respUtil.getHeaders(),
-					RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
 		}
 		return response;
 	}

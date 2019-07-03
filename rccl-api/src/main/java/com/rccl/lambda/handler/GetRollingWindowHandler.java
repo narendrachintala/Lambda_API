@@ -43,7 +43,6 @@ public class GetRollingWindowHandler
 	public GatewayResponse<? extends Object> handleRequest(ParameterFiltersData request, Context context) {
 		logger.info("Input request: " + request);
 		GatewayResponse<? extends Object> response = null;
-		ResponseUtil respUtil = ResponseUtil.getInstance();
 		List<RollingWindowDTO> rollingWindowList = null;
 		RequestDataValidator requestDataValidator = null;
 		try {
@@ -52,15 +51,14 @@ public class GetRollingWindowHandler
 			response = requestDataValidator.validateGetRequest(request);
 			if (response == null) { // response null denotes request is valid
 				RollingWindowService rollingWindowService = new RollingWindowService();
-				rollingWindowList = rollingWindowService.getRollingWindowData(request, logger);
-				response = new GatewayResponse<List<RollingWindowDTO>>(rollingWindowList, respUtil.getHeaders(),
+				rollingWindowList = rollingWindowService.getRollingWindowData(request);
+				response = new GatewayResponse<List<RollingWindowDTO>>(rollingWindowList, ResponseUtil.getHeaders(),
 						RCCLConstants.SC_OK);
 			}
 		}
 		catch (Exception ex) {
 			logger.error("Error occured while executing GetRollingWindowHandler: " + ex.getMessage());
-			response = new GatewayResponse<String>(ex.getLocalizedMessage(), respUtil.getHeaders(),
-					RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST);
 		}
 		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
@@ -73,14 +71,14 @@ public class GetRollingWindowHandler
 	public static void main(String[] args) {
 		// prepares sample input data for handler class
 		ParameterFiltersData parameterFiltersData = new ParameterFiltersData();
-		parameterFiltersData.setCat_class("N");
-		parameterFiltersData.setCategory("double");
-		parameterFiltersData.setMetaproduct("OASIS");
+		parameterFiltersData.setCat_class("O");
+		parameterFiltersData.setMetaproduct("SHORT CARIBBEAN");
 		parameterFiltersData.setOccupancy("quad");
-		parameterFiltersData.setProduct_code("7N CARIBBEAN");
-		parameterFiltersData.setSail_month("10");
-		parameterFiltersData.setShip_code("HM");
-		new GetRollingWindowHandler().handleRequest(null, new Context() {
+		parameterFiltersData.setProduct_code("BAHAMA4");
+		parameterFiltersData.setSail_month("3");
+		parameterFiltersData.setShip_code("MJ");
+		
+		new GetRollingWindowHandler().handleRequest(parameterFiltersData, new Context() {
 			
 			@Override
 			public int getRemainingTimeInMillis() {

@@ -2,6 +2,7 @@ package com.rccl.service;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.rccl.dto.PriceRangeDTO;
@@ -17,16 +18,19 @@ import com.rccl.repo.PriceRangeRepo;
  */
 public class PriceRangeService {
 
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(PriceRangeService.class);
+
 	/**
 	 * @param request      contains end user chosen filter criteria
 	 * @param lambdaLogger
 	 * @return returns final price range parameter data with applied criteria
 	 */
-	public List<PriceRangeDTO> getPriceRangeData(ParameterFiltersData request, Logger logger) {
+	public List<PriceRangeDTO> getPriceRangeData(ParameterFiltersData request) {
 		List<PriceRangeDTO> priceRangeData = null;
 		try {
 			PriceRangeRepo repo = new PriceRangeRepo();
-			priceRangeData = repo.getPriceRangeData(request, logger);
+			priceRangeData = repo.getPriceRangeData(request);
 
 		} catch (Exception e) {
 			throw e;
@@ -39,12 +43,12 @@ public class PriceRangeService {
 	 * @param logger
 	 * @return
 	 */
-	public boolean updatePriceRangeData(PriceRange priceRangeReq, Logger logger) {
+	public boolean updatePriceRangeData(PriceRange priceRangeReq) {
 		PriceRangeRepo priceRangeRepo = null;
 		boolean status = false;
 		try {
 			priceRangeRepo = new PriceRangeRepo();
-			status = priceRangeRepo.updatePriceRangeData(priceRangeReq, logger);
+			status = priceRangeRepo.updatePriceRangeData(priceRangeReq);
 		} catch (Exception e) {
 			// logger.error("Error occured while executing updatePriceRangeData: " + e);
 			throw e;

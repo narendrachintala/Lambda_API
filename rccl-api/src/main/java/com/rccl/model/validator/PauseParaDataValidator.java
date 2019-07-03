@@ -1,11 +1,12 @@
 package com.rccl.model.validator;
 
-import com.rccl.model.ErrorMessage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.PausePara;
 import com.rccl.utils.CustomFunctions;
 import com.rccl.utils.RCCLConstants;
-import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.ResponseUtil;
 import com.rccl.utils.helper.RCCLException;
 
@@ -14,56 +15,31 @@ import com.rccl.utils.helper.RCCLException;
  */
 public class PauseParaDataValidator {
 
-	// creating instance of class
-	public static PauseParaDataValidator _instance = null;
-
-	// Read error messages from property file
-	ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
-	ResponseUtil respUtil = ResponseUtil.getInstance();
-
-	public static PauseParaDataValidator getInstance() {
-		if (_instance == null) {
-			_instance = new PauseParaDataValidator();
-		}
-		return _instance;
-
-	}
-
-	// setting custom error messages
-	ErrorMessage REQUEST_WAS_NULL_ERROR = new ErrorMessage(rBundleUtility.getValue(RCCLConstants.ERROR_JSON),
-			RCCLConstants.SC_BAD_REQUEST);
-	ErrorMessage FILTERS_DATA_NOT_SET = new ErrorMessage(rBundleUtility.getValue(RCCLConstants.ERROR_FILTERS_DATA),
-			RCCLConstants.SC_BAD_REQUEST);
-	ErrorMessage METAPRODUCT_WAS_NOT_SET = new ErrorMessage(rBundleUtility.getValue(RCCLConstants.ERROR_METAPRODUCT),
-			RCCLConstants.SC_NOT_FOUND);
-	ErrorMessage UPDATE_COL_WAS_NOT_SET = new ErrorMessage(rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_FIELDS),
-			RCCLConstants.SC_NOT_FOUND);
+	static final Logger logger = LogManager.getLogger(PauseParaDataValidator.class);
 
 	/**
 	 * Validate input request.
+	 * 
 	 * @param request the request
 	 * @return the gateway response<? extends object>
 	 */
 	public GatewayResponse<? extends Object> validatePutRequest(PausePara request) throws RCCLException {
 		try {
 			if (request == null) {
-				return new GatewayResponse<ErrorMessage>(REQUEST_WAS_NULL_ERROR, respUtil.getHeaders(),
-						RCCLConstants.SC_BAD_REQUEST);
+				return ResponseUtil.error_json();
 			}
 			if (request.getFiltersData() == null) {
-				return new GatewayResponse<ErrorMessage>(FILTERS_DATA_NOT_SET, respUtil.getHeaders(),
-						RCCLConstants.SC_BAD_REQUEST);
+				ResponseUtil.error_filters_data();
 			}
 			if (CustomFunctions.isNullOrEmpty(request.getFiltersData().getMetaproduct())) {
-				return new GatewayResponse<ErrorMessage>(METAPRODUCT_WAS_NOT_SET, respUtil.getHeaders(),
-						RCCLConstants.SC_NOT_FOUND);
+				ResponseUtil.error_metaproduct();
 			}
 			if (request.getL1_pause() == null) {
-				return new GatewayResponse<ErrorMessage>(UPDATE_COL_WAS_NOT_SET, respUtil.getHeaders(),
-						RCCLConstants.SC_NOT_FOUND);
+				ResponseUtil.error_update_fields();
 			}
 		} catch (Exception e) {
-			throw new RCCLException("Error occured in validating request body", e);
+			logger.error(e);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
 		}
 		return null;
 	}

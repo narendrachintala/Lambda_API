@@ -31,7 +31,8 @@ public class RollingWindowService {
 			RollingWindowRepo repo = new RollingWindowRepo();
 			rollingWindowData = repo.getRollingWindowData(request);
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			throw e;
 		}
 		return rollingWindowData;
 	}
@@ -50,7 +51,8 @@ public class RollingWindowService {
 			rollingWindowRepo = new RollingWindowRepo();
 			status = rollingWindowRepo.updateRollingWindowData(request);
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			throw e;
 		}
 		return status;
 	}

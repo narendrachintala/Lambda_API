@@ -39,6 +39,7 @@ public class CurrentPriceDataValidator {
 
 	/**
 	 * Validate put request.
+	 * 
 	 * @param request the request
 	 * @param jobName the job name
 	 * @return the gateway response<? extends object>
@@ -55,7 +56,8 @@ public class CurrentPriceDataValidator {
 			if (CustomFunctions.isNullOrEmpty(request.getFiltersData().getMetaproduct())) {
 				return ResponseUtil.error_metaproduct();
 			}
-			if (request.getL1_range_max() == null && request.getL1_range_min() == null) {
+			if (request.getL1_range_max() == null && request.getL1_range_min() == null
+					&& request.getPrice_window() == null) {
 				return ResponseUtil.error_update_fields();
 			}
 			String lockStatus = accessControlRepo.getLockStatus(jobName);

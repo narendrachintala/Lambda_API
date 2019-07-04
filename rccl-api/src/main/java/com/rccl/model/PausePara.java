@@ -16,6 +16,12 @@ public class PausePara {
 	/** The l 1 insert date. */
 	private Timestamp l1_insert_date;
 	
+	/** The RESUME_PUSH_WTS. */
+	private Integer resume_push_wts;
+	
+	/** The STOP_PUSH_WTS. */
+	private Integer stop_push_wts;
+	
 	/**
 	 * Gets the filters data.
 	 * @return the filters data
@@ -32,6 +38,36 @@ public class PausePara {
 		this.filtersData = filtersData;
 	}
 
+	/**
+	 * Gets the resume_push_wts.
+	 * @return the resume_push_wts
+	 */
+	public Integer getresume_push_wts() {
+		return resume_push_wts;
+	}
+	
+	/**
+	 * Sets the resume_push_wts.
+	 * @param resume_push_wts the new resume_push_wts
+	 */
+	public void setresume_push_wts(Integer resume_push_wts) {
+		this.resume_push_wts=resume_push_wts;
+	}
+	/**
+	 * Gets the stop_push_wts.
+	 * @return the stop_push_wts
+	 */
+	public Integer getstop_push_wts() {
+		return stop_push_wts;
+	}
+	
+	/**
+	 * Sets the stop_push_wts.
+	 * @param stop_push_wts the new stop_push_wts
+	 */
+	public void setstop_push_wts(Integer stop_push_wts) {
+		this.stop_push_wts=stop_push_wts;
+	}
 	/**
 	 * Gets the l 1 pause.
 	 * @return the l 1 pause
@@ -63,16 +99,17 @@ public class PausePara {
 	public void setL1_insert_date(Timestamp l1_insert_date) {
 		this.l1_insert_date = l1_insert_date;
 	}
-
 	/**
 	 * To string.
 	 * @return the string
 	 */
-	@Override
+	
+@Override
 	public String toString() {
-		return "PausePara [filtersData=" + filtersData + ", l1_pause=" + l1_pause + ", l1_insert_date=" + l1_insert_date
-				+ ", getFiltersData()=" + getFiltersData() + ", getL1_pause()=" + getL1_pause()
-				+ ", getL1_insert_date()=" + getL1_insert_date() + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + ", toString()=" + super.toString() + "]";
+	return "PausePara [filtersData=" + filtersData + ", resume_push_wts=" + resume_push_wts +", stop_push_wts=" + stop_push_wts +", l1_pause=" + l1_pause + ", l1_insert_date=" + l1_insert_date+ 
+			", getresume_push_wts()=" + getresume_push_wts() +", getstop_push_wts()=" + getstop_push_wts() +", getFiltersData()=" + getFiltersData() + ", getL1_pause()=" + getL1_pause()
+	+ ", getL1_insert_date()=" + getL1_insert_date() + ", getClass()=" + getClass() + ", hashCode()="
+	+ hashCode() + ", toString()=" + super.toString() + "]";
 	}
+	
 }

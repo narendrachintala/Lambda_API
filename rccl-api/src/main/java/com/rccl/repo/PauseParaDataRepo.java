@@ -60,7 +60,7 @@ public class PauseParaDataRepo {
 			String updatePauseParaQuery = dbUtils.updatePauseParaDataQuery(request);
 			status = queryExecutor.executeUpdate(updatePauseParaQuery, null);
 		} catch (Exception e) {
-			logger.error("Error occured in updatePauseParaData: " + e);
+			//logger.error("Error occured in updatePauseParaData: " + e);
 			throw e;
 		}
 		if (status == 0) {

@@ -11,68 +11,71 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
-import com.rccl.model.RollingWindow;
-import com.rccl.model.validator.RollingWindowDataValidator;
-import com.rccl.service.RollingWindowService;
+import com.rccl.model.RefundablePremium;
+import com.rccl.model.validator.RefundablePremiumDataValidator;
+import com.rccl.service.RefundablePremiumService;
 import com.rccl.utils.ConfigUtil;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResponseUtil;
 
 /**
- * The Class PostRollingWindowDataHandler.
+ * The Class PutRefundablePremiumDataHandler.
  */
-public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow, GatewayResponse<? extends Object>> {
-
+public class PutRefundablePremiumDataHandler
+		implements RequestHandler<RefundablePremium, GatewayResponse<? extends Object>> {
+	
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
 	}
 
 	// Initialize the Log4j logger.
-	static final Logger logger = LogManager.getLogger(PutRollingWindowDataHandler.class);
-
+	static final Logger logger = LogManager.getLogger(PutRefundablePremiumDataHandler.class);
+	
 	/**
 	 * Handle request.
 	 * @param request contains chosen filters as key-value pair
 	 * @param context lambda context object
 	 * @return true if update is successful
 	 */
-	public GatewayResponse<? extends Object> handleRequest(RollingWindow request, Context context) {
+	public GatewayResponse<? extends Object> handleRequest(RefundablePremium request, Context context) {
 		context.getLogger().log("Input request: " + request);
 		boolean update = false;
 		GatewayResponse<? extends Object> response = null;
-		RollingWindowDataValidator rDataValidator = null;
+		RefundablePremiumDataValidator rDataValidator = null;
 		ConfigUtil configInst = ConfigUtil.getInstance();
-		String jobName = configInst.getTableName(RCCLConstants.ROLLING_WINDOW);
+		String jobName = configInst.getTableName(RCCLConstants.REFUNDABLE_PREMIUM);
 		try {
-			rDataValidator = new RollingWindowDataValidator();
+			rDataValidator = new RefundablePremiumDataValidator();
 			response = rDataValidator.validatePutRequest(request, jobName);
 			if (response == null) {
-				RollingWindowService rollingWindowService = new RollingWindowService();
-				update = rollingWindowService.updateRollingWindowData(request);
+				RefundablePremiumService refundablePremiumService = new RefundablePremiumService();
+				update = refundablePremiumService.updateRefundablePremiumData(request);
 				response = new GatewayResponse<Boolean>(update, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
 			}
 		} catch (Exception ex) {
-			logger.error("Error occured while executing PutRollingWindowDataHandler: " + ex.getMessage());
+			logger.error("Error occured while executing PutRefundablePremium: " + ex.getMessage());
 			return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST);
 
 		}
+		Gson gson = new Gson();
+		String json = gson.toJson(response);
+		
+		System.out.println("Response:" + json);
 		return response;
 	}
 	
 	/**
 	 * The main method.
+	 *
 	 * @param args the arguments
 	 */
-	public static void main(String[] args) {
+	public static void main(String args[]) {
 		
-		RollingWindow roWindow = new RollingWindow();
-		// values to be updated
-		roWindow.setPrev_forecast(9);
-		roWindow.setFut_forecast(7);
-		roWindow.setPrice_window(2);
-		roWindow.setWts(59);
+		RefundablePremium refundablePremium = new RefundablePremium();
+		refundablePremium.setGap_type("Standard");
+		refundablePremium.setCurrent_gap_pct(10.0);
+		refundablePremium.setStandard_gap_pct(20.0);
 		
-		// filter criteria
 		ParameterFiltersData parameterFiltersData = new ParameterFiltersData();
 		parameterFiltersData.setCat_class("O");
 		parameterFiltersData.setMetaproduct("SHORT CARIBBEAN");
@@ -81,26 +84,75 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 		parameterFiltersData.setSail_month("3");
 		parameterFiltersData.setShip_code("MJ");
 		
-		roWindow.setFiltersData(parameterFiltersData);
+		refundablePremium.setFiltersData(parameterFiltersData);
+		
 		Gson gson = new Gson();
-		String json = gson.toJson(roWindow);
+		String json = gson.toJson(refundablePremium);
 		
 		System.out.println("Sample Input data:" + json);
 		
-		new PutRollingWindowDataHandler().handleRequest(roWindow, new Context() {
-			
+		new PutRefundablePremiumDataHandler().handleRequest(refundablePremium, new Context() {
+
+			@Override
+			public String getAwsRequestId() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public String getLogGroupName() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public String getLogStreamName() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public String getFunctionName() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public String getFunctionVersion() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public String getInvokedFunctionArn() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public CognitoIdentity getIdentity() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public ClientContext getClientContext() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
 			@Override
 			public int getRemainingTimeInMillis() {
 				// TODO Auto-generated method stub
 				return 0;
 			}
-			
+
 			@Override
 			public int getMemoryLimitInMB() {
 				// TODO Auto-generated method stub
 				return 0;
 			}
-			
+
 			@Override
 			public LambdaLogger getLogger() {
 				// TODO Auto-generated method stub
@@ -114,53 +166,7 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 				};
 			}
 			
-			@Override
-			public String getLogStreamName() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public String getLogGroupName() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public String getInvokedFunctionArn() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public CognitoIdentity getIdentity() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public String getFunctionVersion() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public String getFunctionName() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public ClientContext getClientContext() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public String getAwsRequestId() {
-				// TODO Auto-generated method stub
-				return null;
-			}
 		});
 	}
+
 }

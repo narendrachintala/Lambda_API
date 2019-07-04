@@ -22,8 +22,8 @@ public class RollingWindowDataHelper {
 	 * @return the final set condition
 	 */
 	public String generateSetterCondition(RollingWindow request, StringBuffer queryBuffer) {
-		String EQUALS = " = ";
-		String COMMA = ",";
+		String EQUALS = RCCLConstants.EQUALS;
+		String COMMA = RCCLConstants.COMMA;
 		String finalQuery = "";
 		try {
 			if (request.getFut_forecast() != null) {

@@ -10,6 +10,7 @@ import com.rccl.dbutils.QueryExecutor;
 import com.rccl.dbutils.RefundablePremiumDBUtil;
 import com.rccl.dto.RefundablePremiumDTO;
 import com.rccl.model.ParameterFiltersData;
+import com.rccl.model.RefundablePremium;
 import com.rccl.processor.RefundablePremiumResultProcessor;
 
 /**
@@ -40,6 +41,25 @@ public class RefundablePremiumRepo {
 			throw e;
 		}
 		return list;
+	}
+	
+	public boolean updateRefundablePremiumData(RefundablePremium request) {
+		RefundablePremiumDBUtil dbUtils = RefundablePremiumDBUtil.getInstance();
+		QueryExecutor queryExecutor = new QueryExecutor();
+		Integer status = 0;
+		try {
+			String updateRefundablePremiumQuery = dbUtils.updateRefundablePremiumDataQuery(request);
+			logger.debug("updateRefundablePremiumData: " + updateRefundablePremiumQuery);
+			status = queryExecutor.executeUpdate(updateRefundablePremiumQuery, null);
+		} catch (Exception e) {
+			logger.error("Error occured while executing updateRefundablePremiumQuery: " + e);
+			throw e;
+		}
+		if (status == 0) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 }

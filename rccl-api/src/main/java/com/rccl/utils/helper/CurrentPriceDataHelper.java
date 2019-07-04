@@ -1,5 +1,8 @@
 package com.rccl.utils.helper;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.rccl.model.CurrentPricePara;
 import com.rccl.utils.RCCLConstants;
 
@@ -8,11 +11,14 @@ import com.rccl.utils.RCCLConstants;
  */
 public class CurrentPriceDataHelper {
 
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(CurrentPriceDataHelper.class);
+
 	/**
 	 * Generate setter condition.
 	 *
 	 * @param currentPriceReq the current_price_para req
-	 * @param queryBuffer the query buffer
+	 * @param queryBuffer     the query buffer
 	 * @return the string
 	 */
 	public String generateSetterCondition(CurrentPricePara currentPriceReq, StringBuffer queryBuffer) {
@@ -21,32 +27,36 @@ public class CurrentPriceDataHelper {
 		String COMMA = RCCLConstants.COMMA;
 		String SINGLE_QUOTE = RCCLConstants.SINGLE_QUOTE;
 
-		if (currentPriceReq.getL1_range_max() != null) {
+		try {
+			if (currentPriceReq.getL1_range_max() != null) {
 
-			queryBuffer.append(RCCLConstants.L1_RANGE_MAX).append(EQUALS);
-			queryBuffer.append(SINGLE_QUOTE).append(currentPriceReq.getL1_range_max()).append(SINGLE_QUOTE);
-			queryBuffer.append(COMMA);
+				queryBuffer.append(RCCLConstants.L1_RANGE_MAX).append(EQUALS);
+				queryBuffer.append(SINGLE_QUOTE).append(currentPriceReq.getL1_range_max()).append(SINGLE_QUOTE);
+				queryBuffer.append(COMMA);
 
+			}
+			if (currentPriceReq.getL1_range_min() != null) {
+
+				queryBuffer.append(RCCLConstants.L1_RANGE_MIN).append(EQUALS);
+				queryBuffer.append(SINGLE_QUOTE).append(currentPriceReq.getL1_range_min()).append(SINGLE_QUOTE);
+				queryBuffer.append(COMMA);
+
+			}
+			if (currentPriceReq.getPrice_window() != null) {
+
+				queryBuffer.append(RCCLConstants.PRICE_WINDOW).append(EQUALS);
+				queryBuffer.append(SINGLE_QUOTE).append(currentPriceReq.getPrice_window()).append(SINGLE_QUOTE);
+				queryBuffer.append(COMMA);
+
+			}
+			// removing last appended extra COMMA
+			queryBuffer.replace(queryBuffer.lastIndexOf(COMMA), queryBuffer.length(), "");
+
+			System.out.println("queryBuffer.toString(): " + queryBuffer.toString());
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
 		}
-		if (currentPriceReq.getL1_range_min() != null) {
-
-			queryBuffer.append(RCCLConstants.L1_RANGE_MIN).append(EQUALS);
-			queryBuffer.append(SINGLE_QUOTE).append(currentPriceReq.getL1_range_min()).append(SINGLE_QUOTE);
-			queryBuffer.append(COMMA);
-
-		}
-		if (currentPriceReq.getPrice_window() != null) {
-
-			queryBuffer.append(RCCLConstants.PRICE_WINDOW).append(EQUALS);
-			queryBuffer.append(SINGLE_QUOTE).append(currentPriceReq.getPrice_window()).append(SINGLE_QUOTE);
-			queryBuffer.append(COMMA);
-
-		}
-		// removing last appended extra COMMA
-		queryBuffer.replace(queryBuffer.lastIndexOf(COMMA), queryBuffer.length(), "");
-
-		System.out.println("queryBuffer.toString(): " + queryBuffer.toString());
-
 		return queryBuffer.toString();
 
 	}

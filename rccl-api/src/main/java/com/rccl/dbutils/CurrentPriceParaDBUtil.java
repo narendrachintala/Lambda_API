@@ -1,5 +1,7 @@
 package com.rccl.dbutils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.rccl.model.CurrentPricePara;
 import com.rccl.model.ParameterFiltersData;
@@ -14,6 +16,10 @@ import com.rccl.utils.helper.FilterDataHelper;
  *
  */
 public class CurrentPriceParaDBUtil {
+
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(CurrentPriceParaDBUtil.class);
+
 	public static CurrentPriceParaDBUtil _instance = null;
 	ConfigUtil configInst = ConfigUtil.getInstance();
 
@@ -35,15 +41,22 @@ public class CurrentPriceParaDBUtil {
 	 * @return the price range data query
 	 */
 	public String getCurrentPriceDataQuery(ParameterFiltersData filterData) {
+
 		StringBuffer queryBuffer = new StringBuffer();
 		String getCurrentPriceQuery = new String(configInst.getCurrentPriceData());
-		FilterDataHelper filterDataHelper = new FilterDataHelper();
-		String whereCondition = filterDataHelper.generateFilterCondition(filterData, queryBuffer);
-		if (whereCondition.equals("")) {
-			getCurrentPriceQuery = getCurrentPriceQuery.replace(RCCLConstants.WHERE_CONDITION_Q, "1=1");
-		} else {
-			getCurrentPriceQuery = getCurrentPriceQuery.replace(RCCLConstants.WHERE_CONDITION_Q, whereCondition);
+		try {
+			FilterDataHelper filterDataHelper = new FilterDataHelper();
+			String whereCondition = filterDataHelper.generateFilterCondition(filterData, queryBuffer);
+			if (whereCondition.equals("")) {
+				getCurrentPriceQuery = getCurrentPriceQuery.replace(RCCLConstants.WHERE_CONDITION_Q, "1=1");
+			} else {
+				getCurrentPriceQuery = getCurrentPriceQuery.replace(RCCLConstants.WHERE_CONDITION_Q, whereCondition);
+			}
+		} catch (Exception e) {
+			logger.error("Error occured in getCurrentPriceDataQuery: " + e);
+			throw e;
 		}
+
 		return getCurrentPriceQuery;
 	}
 
@@ -54,26 +67,37 @@ public class CurrentPriceParaDBUtil {
 	 * @return the string
 	 */
 	public String generateUpdateCurrentPriceDataQuery(CurrentPricePara currentPriceReq) {
+
 		StringBuffer queryBuffer = new StringBuffer();
 		String getCurrentPriceQuery = new String(configInst.updateCurrentPriceData());
-		FilterDataHelper filterDataHelper = new FilterDataHelper();
 
-		String filterWhereCondition = filterDataHelper.generateFilterCondition(currentPriceReq.getFiltersData(),
-				queryBuffer);
+		try {
+			FilterDataHelper filterDataHelper = new FilterDataHelper();
 
-		CurrentPriceDataHelper currentPriceDataHelper = new CurrentPriceDataHelper();
-		// queryBuffer.append(" and ");
-		String setterCondition = currentPriceDataHelper.generateSetterCondition(currentPriceReq, new StringBuffer());
+			String filterWhereCondition = filterDataHelper.generateFilterCondition(currentPriceReq.getFiltersData(),
+					queryBuffer);
 
-		if (setterCondition != "") {
-			getCurrentPriceQuery = getCurrentPriceQuery.replace(RCCLConstants.SETTER_COLUMNS_Q, setterCondition);
+			CurrentPriceDataHelper currentPriceDataHelper = new CurrentPriceDataHelper();
+
+			String setterCondition = currentPriceDataHelper.generateSetterCondition(currentPriceReq,
+					new StringBuffer());
+
+			if (setterCondition != "") {
+				getCurrentPriceQuery = getCurrentPriceQuery.replace(RCCLConstants.SETTER_COLUMNS_Q, setterCondition);
+			}
+
+			if (filterWhereCondition.equals("")) {
+				getCurrentPriceQuery = getCurrentPriceQuery.replace(RCCLConstants.WHERE_CONDITION_Q, "1=1");
+			} else {
+				getCurrentPriceQuery = getCurrentPriceQuery.replace(RCCLConstants.WHERE_CONDITION_Q,
+						filterWhereCondition);
+			}
+
+		} catch (Exception e) {
+			logger.error("Error occured in generateUpdateCurrentPriceDataQuery: " + e);
+			throw e;
 		}
 
-		if (filterWhereCondition.equals("")) {
-			getCurrentPriceQuery = getCurrentPriceQuery.replace(RCCLConstants.WHERE_CONDITION_Q, "1=1");
-		} else {
-			getCurrentPriceQuery = getCurrentPriceQuery.replace(RCCLConstants.WHERE_CONDITION_Q, filterWhereCondition);
-		}
 		return getCurrentPriceQuery;
 	}
 }

@@ -81,7 +81,7 @@ public class PauseParaDBUtils {
 		try {
 			updatePauseParaQuery = new String(configInst.updatePauseParaData());
 			System.out.println("reading query from config:" + updatePauseParaQuery);
-			logger.debug("reading query from config:" + updatePauseParaQuery);
+			 logger.debug("reading query from config:" + updatePauseParaQuery);
 			FilterDataHelper filterDataHelper = new FilterDataHelper();
 			String finalWhereCondition = filterDataHelper.generateFilterCondition(request.getFiltersData(),
 					queryBuffer);
@@ -96,10 +96,10 @@ public class PauseParaDBUtils {
 			}
 			updatePauseParaQuery = updatePauseParaQuery.replace(RCCLConstants.SETTER_COLUMNS_Q, finalUpdateCondition);
 			System.out.println("modified query:" + updatePauseParaQuery);
-			logger.debug("Final query for POST API rolling window:" + updatePauseParaQuery);
-
+			logger.debug("Final query for POST API rolling window:" +
+			 updatePauseParaQuery);
 		} catch (Exception e) {
-			logger.error("Error occured in updatePauseParaDataQuery: " + e);
+			 logger.error("Error occured in updatePauseParaDataQuery: " + e);
 			throw e;
 		}
 		return updatePauseParaQuery;

@@ -3,6 +3,7 @@ package com.rccl.repo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.rccl.dbutils.CurrentPriceParaDBUtil;
@@ -19,6 +20,9 @@ import com.rccl.processor.CurrentPriceResultProcessor;
  */
 
 public class CurrentPriceParaRepo {
+
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(CurrentPriceParaRepo.class);
 
 	/**
 	 * Gets the current price para.
@@ -40,6 +44,7 @@ public class CurrentPriceParaRepo {
 			queryExecutor.execute(getCurrentPriceParaQuery, processor);
 			currentPriceParaData = processor.getResult();
 		} catch (Exception e) {
+			logger.error("Error occured in getCurrentPriceData: " + e);
 			throw e;
 		}
 
@@ -60,7 +65,8 @@ public class CurrentPriceParaRepo {
 		QueryExecutor queryExecutor = new QueryExecutor();
 		try {
 			/* generates update query for price range table */
-			String updateCurrentPriceQuery = currentPriceParaDBUtil.generateUpdateCurrentPriceDataQuery(currentPriceParaReq);
+			String updateCurrentPriceQuery = currentPriceParaDBUtil
+					.generateUpdateCurrentPriceDataQuery(currentPriceParaReq);
 			logger.debug("updateCurrentPriceQuery: " + updateCurrentPriceQuery);
 			status = queryExecutor.executeUpdate(updateCurrentPriceQuery, null);
 

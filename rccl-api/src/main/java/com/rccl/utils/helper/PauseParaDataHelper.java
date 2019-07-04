@@ -31,6 +31,16 @@ public class PauseParaDataHelper {
 				queryBuffer.append(request.getL1_pause());
 				queryBuffer.append(COMMA);
 			}
+			if (request.getresume_push_wts() != null) {
+				queryBuffer.append(RCCLConstants.RESUME_PUSH_WTS).append(EQUALS);
+				queryBuffer.append(request.getresume_push_wts());
+				queryBuffer.append(COMMA);
+			}
+			if (request.getstop_push_wts() != null) {
+				queryBuffer.append(RCCLConstants.STOP_PUSH_WTS).append(EQUALS);
+				queryBuffer.append(request.getstop_push_wts());
+				queryBuffer.append(COMMA);
+			}
 			// removing last appended extra ,
 			if (queryBuffer.toString().endsWith(",")) {
 				finalQuery = queryBuffer.substring(0, queryBuffer.length() - 1);

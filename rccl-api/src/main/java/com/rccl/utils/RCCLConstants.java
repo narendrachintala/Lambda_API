@@ -174,5 +174,7 @@ public class RCCLConstants {
 	 * pause para table update columns
 	 */
 	public final static String L1_PAUSE = "l1_pause";
+	public final static String RESUME_PUSH_WTS="resume_push_wts";
+	public final static String STOP_PUSH_WTS="stop_push_wts";
 	
 }

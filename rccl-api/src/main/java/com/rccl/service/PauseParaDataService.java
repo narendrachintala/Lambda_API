@@ -32,7 +32,7 @@ public class PauseParaDataService {
 			PauseParaData = repo.getPausePara(request);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw e;
 		}
 		return PauseParaData;
 	}
@@ -51,7 +51,7 @@ public class PauseParaDataService {
 			pauseParaRepo = new PauseParaDataRepo();
 			status = pauseParaRepo.updatePauseParaData(request);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw e;
 		}
 		return status;
 	}

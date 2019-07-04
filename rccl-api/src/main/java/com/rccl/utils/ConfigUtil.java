@@ -181,6 +181,16 @@ public class ConfigUtil {
 	public String getLockStatus() {
 		return conf.getProperty("lock_status");
 	}
+	
+	/**
+	 * Gets the refundable premium data.
+	 * @return the refundable premium data
+	 */
+	public String getRefundablePremiumData() {
+		return conf.getProperty("get_refundable_premium_data").replace(
+				CustomFunctions.getNamedQuery(RCCLConstants.REFUNDABLE_PREMIUM),
+				conf.getProperty(RCCLConstants.REFUNDABLE_PREMIUM));
+	}
 
 	/**
 	 * Gets the value.

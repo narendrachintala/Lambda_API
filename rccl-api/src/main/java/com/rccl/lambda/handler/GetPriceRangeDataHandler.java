@@ -20,6 +20,11 @@ import com.rccl.utils.ResponseUtil;
  * @author narendra.chintala
  *
  */
+
+/**
+ * The Class GetPriceRangeDataHandler.
+ */
+
 public class GetPriceRangeDataHandler
 		implements RequestHandler<ParameterFiltersData, GatewayResponse<? extends Object>> {
 
@@ -27,16 +32,19 @@ public class GetPriceRangeDataHandler
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
 	}
 
+	/** The Constant logger. */
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(GetPriceRangeDataHandler.class);
 
 	/**
 	 * This method will be invoked from AWS Lambda function to fetch price range
-	 * parameter data based on provided filter criteria
+	 * parameter data based on provided filter criteria.
 	 *
+	 * @param request the request
+	 * @param context the context
+	 * @return the gateway response<? extends object>
 	 * @see com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java.lang.
 	 *      Object, com.amazonaws.services.lambda.runtime.Context)
-	 * 
 	 */
 	public GatewayResponse<? extends Object> handleRequest(ParameterFiltersData request, Context context) {
 		// LambdaLogger logger = context.getLogger();

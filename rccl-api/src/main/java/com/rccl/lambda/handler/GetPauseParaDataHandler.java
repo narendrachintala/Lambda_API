@@ -56,7 +56,7 @@ public class GetPauseParaDataHandler
 						RCCLConstants.SC_OK);
 			}
 		} catch (Exception e) {
-			//logger.error("Error occured while executing GetPauseParaDataHandler: " + e.getMessage());
+			logger.error("Error occured while executing GetPauseParaDataHandler: " + e.getMessage());
 			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
 		}
 		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));

@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.rccl.dto.RefundablePremiumDTO;
 import com.rccl.model.ParameterFiltersData;
+import com.rccl.model.RefundablePremium;
 import com.rccl.repo.RefundablePremiumRepo;
 
 /**
@@ -31,5 +32,22 @@ public class RefundablePremiumService {
 			e.printStackTrace();
 		}
 		return refundablePremiumData;
+	}
+	
+	/**
+	 * Update refundable premium data.
+	 * @param request the request
+	 * @return true, if successful
+	 */
+	public boolean updateRefundablePremiumData(RefundablePremium request) {
+		RefundablePremiumRepo refundablePremiumRepo = null;
+		boolean status = false;
+		try {
+			refundablePremiumRepo = new RefundablePremiumRepo();
+			status = refundablePremiumRepo.updateRefundablePremiumData(request);
+		} catch (Exception e) {
+			throw e;
+		}
+		return status;
 	}
 }

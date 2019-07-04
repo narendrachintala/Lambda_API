@@ -123,17 +123,6 @@ public class ConfigUtil {
 				CustomFunctions.getNamedQuery(RCCLConstants.ROLLING_WINDOW),
 				conf.getProperty(RCCLConstants.ROLLING_WINDOW));
 	}
-
-	/**
-	 * Gets the rolling window data.
-	 *
-	 * @return the currency_price_para data
-	 */
-	public String getCurrentPriceData() {
-		return conf.getProperty("get_current_price_para").replace(
-				CustomFunctions.getNamedQuery(RCCLConstants.CURRENT_PRICE_PARA),
-				conf.getProperty(RCCLConstants.CURRENT_PRICE_PARA));
-	}
 	
 	/**
 	 * Update rolling window.
@@ -197,7 +186,16 @@ public class ConfigUtil {
 				CustomFunctions.getNamedQuery(RCCLConstants.REFUNDABLE_PREMIUM),
 				conf.getProperty(RCCLConstants.REFUNDABLE_PREMIUM));
 	}
-
+	/**
+	 * Gets the inversionGapPara data.
+	 *
+	 * @return the inversionGapPara data
+	 */
+	public String getinversionGapPara() {
+		return conf.getProperty("get_inversion_gap_para").replace(
+				CustomFunctions.getNamedQuery(RCCLConstants.INVERSION_GAP_PARA),
+				conf.getProperty(RCCLConstants.INVERSION_GAP_PARA));
+	}
 	/**
 	 * Gets the value.
 	 *

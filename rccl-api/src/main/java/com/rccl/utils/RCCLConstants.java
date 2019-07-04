@@ -19,21 +19,20 @@ public class RCCLConstants {
 	 * 
 	 */
 	public static final String FILTER_DATA_COLUMN = "filterData";
-	
+
 	/**
 	 * DB configuration constants
 	 */
 	public static final String HOST = "revoreo_host";
-	public static final String REVOREO_PORT="revoreo_port";
-	public static final String REVOREO_SERVICE="revoreo_service";
-	public static final String REVOREO_UNAME="revoreo_uname";
-	public static final String REVOREO_PWD="revoreo_pwd";
-	
-	
+	public static final String REVOREO_PORT = "revoreo_port";
+	public static final String REVOREO_SERVICE = "revoreo_service";
+	public static final String REVOREO_UNAME = "revoreo_uname";
+	public static final String REVOREO_PWD = "revoreo_pwd";
+
 	/**
 	 * Named query filed prefix
 	 */
-	
+
 	public static final String NAMED_QRY_PREFIX = ":";
 	public static final String LOCKED_CTRL_TBL_STS_FLAG = "Y";
 
@@ -47,14 +46,14 @@ public class RCCLConstants {
 	 * final static String SAIL_DATE = "Sail Date"; public final static String
 	 * CAT_CLASS = "Cat Class"; public final static String OCCUPANCY = "Occupancy";
 	 */
-	
+
 	/**
 	 * Table names
 	 */
-	
-	public final static String PRICE_RANGE_PARA="price_range_para";
-	public final static String PAUSE_PARA="pause_para";
-	public final static String ROLLING_WINDOW="rolling_window_para";
+
+	public final static String PRICE_RANGE_PARA = "price_range_para";
+	public final static String PAUSE_PARA = "pause_para";
+	public final static String ROLLING_WINDOW = "rolling_window_para";
 	public static final String CURRENT_PRICE_PARA = "current_price_para";
 	public static final String REFUNDABLE_PREMIUM = "refundable_premium_para";
 
@@ -83,15 +82,15 @@ public class RCCLConstants {
 	/**
 	 * CurrentPricePara table update columns
 	 */
-	public static final  String CURRENCY = "currency";
-	public static final  String METAPRODUCT = "metaproduct";
-	public static final  String PRODUCT_CODE = "product_code";
-	public static final  String SHIP_CODE = "ship_code";
-	public static final  String SAIL_DATE = "sail_date";
-	public static final  String SAIL_MONTH = "sail_month";
-	public static final  String CAT_CLASS = "cat_class";
-	public static final  String OCCUPANCY = "occupancy";
-	
+	public static final String CURRENCY = "currency";
+	public static final String METAPRODUCT = "metaproduct";
+	public static final String PRODUCT_CODE = "product_code";
+	public static final String SHIP_CODE = "ship_code";
+	public static final String SAIL_DATE = "sail_date";
+	public static final String SAIL_MONTH = "sail_month";
+	public static final String CAT_CLASS = "cat_class";
+	public static final String OCCUPANCY = "occupancy";
+
 	/**
 	 * UI keys
 	 */
@@ -122,13 +121,16 @@ public class RCCLConstants {
 	 * Error messages
 	 */
 	public final static String ERROR_JSON = "error_json";
-	public final static String ERROR_METAPRODUCT="error_metaproduct";
-	public final static String ERROR_TABLE_NAME="error_table_name";
-	public final static String EX_GET_REQUEST="ex_get_request";
-	public final static String ERROR_FILTERS_DATA="filters_data";
-	public final static String ERROR_UPDATE_FIELDS="update_fields";
-	public final static String LOCK_SET="lock_status";
-	
+	public final static String ERROR_METAPRODUCT = "error_metaproduct";
+	public final static String ERROR_TABLE_NAME = "error_table_name";
+	public final static String EX_GET_REQUEST = "ex_get_request";
+	public final static String ERROR_FILTERS_DATA = "filters_data";
+	public final static String ERROR_UPDATE_FIELDS = "update_fields";
+	public final static String LOCK_SET = "lock_status";
+	public final static String ERROR_IN_L1_RANGE = "error_in_l1_range";
+	public final static String ERROR_IN_L2_RANGE = "error_in_l2_range";
+	public final static String ERROR_MAX_VS_MIN_RANGE = "error_max_vs_min_range";
+
 	/**
 	 * Status codes
 	 */
@@ -151,12 +153,11 @@ public class RCCLConstants {
 	public final static String FORBIDDEN_MSG = "FORBIDDEN";
 	public final static String NOT_FOUND_MSG = "NOT_FOUND";
 	public final static String SERVER_ERROR_MSG = "SERVER_ERROR";
-	
-	
+
 	/**
-	 * Query builder constatnts
+	 * Query builder constants
 	 */
-	
+
 	public final static String EQUALS = "=";
 	public final static String COMMA = ",";
 	public final static String SINGLE_QUOTE = "'";
@@ -164,8 +165,21 @@ public class RCCLConstants {
 	public final static String AND = ") and ";
 
 	/**
+	 * Data validation constants
+	 */
+
+	/**Price range data*/
+	
+	public final static String price_range_l1_min_no = "-0.05";
+	
+	public final static String price_range_l1_min = "price_range_l1_min";
+	public final static String price_range_l1_max = "price_range_l1_max";
+	public final static String price_range_l2_min = "price_range_l2_min";
+	public final static String price_range_l2_max = "price_range_l2_max";
+
+	/**
 	 * pause para table update columns
 	 */
 	public final static String L1_PAUSE = "l1_pause";
-	
+
 }

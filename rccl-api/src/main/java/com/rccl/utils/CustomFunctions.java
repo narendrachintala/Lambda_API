@@ -3,10 +3,16 @@ package com.rccl.utils;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * The Class CustomFunctions.
  */
 public class CustomFunctions {
+
+	/** The Constant logger. */
+	static final Logger logger = LogManager.getLogger(CustomFunctions.class);
 
 	/**
 	 * Checks if is null or empty.
@@ -38,7 +44,7 @@ public class CustomFunctions {
 		return formattedTimeStamp;
 	}
 
-	/**
+		/**
 	 * The main method.
 	 *
 	 * @param args the arguments

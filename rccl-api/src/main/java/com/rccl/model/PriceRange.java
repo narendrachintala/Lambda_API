@@ -13,19 +13,19 @@ public class PriceRange {
 
 	/** The filter data. */
 	private ParameterFiltersData filtersData;
-	
+
 	/** The l 1 range min. */
 	private Double l1_range_min;
-	
+
 	/** The l 1 range max. */
 	private Double l1_range_max;
-	
+
 	/** The l 1 insert date. */
 	private Double l1_insert_date;
-	
+
 	/** The l 2 range min. */
 	private Double l2_range_min;
-	
+
 	/** The l 2 range max. */
 	private Double l2_range_max;
 
@@ -137,7 +137,9 @@ public class PriceRange {
 		this.l2_range_max = l2_range_max;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -146,5 +148,14 @@ public class PriceRange {
 				+ l1_range_max + ", l1_insert_date=" + l1_insert_date + ", l2_range_min=" + l2_range_min
 				+ ", l2_range_max=" + l2_range_max + "]";
 	}
+
+	/*
+	 * public static void main(String[] args) { PriceRange p = new PriceRange();
+	 * p.setL1_range_min(-0.06); ValidatorFactory factory =
+	 * Validation.buildDefaultValidatorFactory(); Validator validator =
+	 * factory.getValidator(); Set<ConstraintViolation<PriceRange>> validations =
+	 * validator.validate(p); for(ConstraintViolation<PriceRange> t : validations) {
+	 * System.out.println(t.getMessage()); } }
+	 */
 
 }

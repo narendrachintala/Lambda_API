@@ -1,11 +1,13 @@
 package com.rccl.utils;
 
+import java.text.MessageFormat;
+
 import com.rccl.model.ErrorMessage;
 import com.rccl.model.GatewayResponse;
 
 /**
- * @author narendra.chintala
  *
+ * @author narendra.chintala
  */
 
 /**
@@ -75,6 +77,43 @@ public class CustomErrors {
 	public static GatewayResponse<ErrorMessage> error_locked() {
 		return ResponseUtil.getCustErrorMessage(rBundleUtility.getValue(RCCLConstants.LOCK_SET),
 				RCCLConstants.SC_LOCKED);
+	}
+
+	/**
+	 * Error in l 1 range.
+	 *
+	 * @param l1min the l 1 minval
+	 * @param l1max the l 1 maxval
+	 * @return the gateway response
+	 */
+	public static GatewayResponse<ErrorMessage> error_in_l1_range(double l1min, double l1max) {
+
+		String message = MessageFormat.format(rBundleUtility.getValue(RCCLConstants.ERROR_IN_L1_RANGE), l1min, l1max);
+		return ResponseUtil.getCustErrorMessage(message, RCCLConstants.SC_BAD_REQUEST);
+	}
+
+	/**
+	 * Error in l 2 range.
+	 *
+	 * @param l2min the l 2 min
+	 * @param l2max the l 2 max
+	 * @return the gateway response
+	 */
+	public static GatewayResponse<ErrorMessage> error_in_l2_range(double l2min, double l2max) {
+
+		String message = MessageFormat.format(rBundleUtility.getValue(RCCLConstants.ERROR_IN_L2_RANGE), l2min, l2max);
+		return ResponseUtil.getCustErrorMessage(message, RCCLConstants.SC_BAD_REQUEST);
+	}
+
+	/**
+	 * Error max vs min range.
+	 *
+	 * @return the gateway response
+	 */
+	public static GatewayResponse<ErrorMessage> error_max_vs_min_range() {
+
+		return ResponseUtil.getCustErrorMessage(rBundleUtility.getValue(RCCLConstants.ERROR_MAX_VS_MIN_RANGE),
+				RCCLConstants.SC_BAD_REQUEST);
 	}
 
 }

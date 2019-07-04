@@ -31,21 +31,20 @@ public class PauseParaDataValidator {
 				return ResponseUtil.error_json();
 			}
 			if (request.getFiltersData() == null) {
-				ResponseUtil.error_filters_data();
+				return ResponseUtil.error_filters_data();
 			}
 			if (CustomFunctions.isNullOrEmpty(request.getFiltersData().getMetaproduct())) {
-				ResponseUtil.error_metaproduct();
+				return ResponseUtil.error_metaproduct();
 			}
-			if (request.getL1_pause() == null) {
-				ResponseUtil.error_update_fields();
+			if (request.getL1_pause() == null && request.getresume_push_wts() == null
+					&& request.getstop_push_wts() == null) {
+				return ResponseUtil.error_update_fields();
 			}
 			String lockStatus = accessControlRepo.getLockStatus(jobName);
 			if (lockStatus.equalsIgnoreCase(RCCLConstants.LOCKED_CTRL_TBL_STS_FLAG)) {
 				return ResponseUtil.error_locked();
 				
-			} else {
-				System.out.println("lock is disabled");
-			}
+			} 
 		} catch (Exception e) {
 			logger.error(e);
 			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);

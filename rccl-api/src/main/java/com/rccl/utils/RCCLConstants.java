@@ -117,6 +117,13 @@ public class RCCLConstants {
 	public final static String WTS = "wts";
 	public final static String PREV_DEMAND_WINDOW = "prev_demand_window";
 	public final static String FUT_DEMAND_WINDOW = "fut_demand_window";
+	
+	/**
+	 * Refundable Premium table update columns
+	 */
+	public final static String GAP_TYPE = "gap_type";
+	public final static String CURRENT_GAP_PCT = "current_gap_pct";
+	public final static String STANDARD_GAP_PCT = "standard_gap_pct";
 
 	/**
 	 * Error messages

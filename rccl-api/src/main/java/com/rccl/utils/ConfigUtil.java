@@ -191,6 +191,12 @@ public class ConfigUtil {
 				CustomFunctions.getNamedQuery(RCCLConstants.REFUNDABLE_PREMIUM),
 				conf.getProperty(RCCLConstants.REFUNDABLE_PREMIUM));
 	}
+	
+	public String updateRefundablePremium() {
+		return conf.getProperty("update_refundable_premium_para").replace(
+				CustomFunctions.getNamedQuery(RCCLConstants.REFUNDABLE_PREMIUM),
+				conf.getProperty(RCCLConstants.REFUNDABLE_PREMIUM));
+	}
 
 	/**
 	 * Gets the value.

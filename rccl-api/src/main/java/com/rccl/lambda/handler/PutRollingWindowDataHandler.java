@@ -52,7 +52,7 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 				response = new GatewayResponse<Boolean>(update, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
 			}
 		} catch (Exception ex) {
-			logger.error("Error occured while executing GetRollingWindowHandler: " + ex.getMessage());
+			logger.error("Error occured while executing PutRollingWindowDataHandler: " + ex.getMessage());
 			return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST);
 
 		}

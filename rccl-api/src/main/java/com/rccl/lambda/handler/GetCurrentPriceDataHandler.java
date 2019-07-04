@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.google.gson.GsonBuilder;
 import com.rccl.dto.CurrentPriceParaDTO;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
@@ -27,21 +28,22 @@ public class GetCurrentPriceDataHandler
 	}
 
 	// Initialize the Log4j logger.
-		static final Logger logger = LogManager.getLogger(GetCurrentPriceDataHandler.class);
+	static final Logger logger = LogManager.getLogger(GetCurrentPriceDataHandler.class);
 
 	/**
-	 * This method will be invoked by AWS Lambda function to fetch current_price_para
-	 * parameter table data based on provided filter criteria
+	 * This method will be invoked from AWS Lambda function to fetch price range
+	 * parameter data based on provided filter criteria.
 	 *
-	 * @see
-	 * com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java.lang.
-	 * Object, com.amazonaws.services.lambda.runtime.Context)
-	 * 
+	 * @param request the request
+	 * @param context the context
+	 * @return the gateway response<? extends object>
+	 * @see com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java.lang.
+	 *      Object, com.amazonaws.services.lambda.runtime.Context)
 	 */
 	public GatewayResponse<? extends Object> handleRequest(ParameterFiltersData request, Context context) {
-		// LambdaLogger logger = context.getLogger();
+
 		logger.info("Input: " + request.toString());
-		
+
 		List<CurrentPriceParaDTO> currentPriceParaList = null;
 		GatewayResponse<? extends Object> response = null;
 
@@ -53,8 +55,8 @@ public class GetCurrentPriceDataHandler
 
 				CurrentPriceParaService currrentPriceService = new CurrentPriceParaService();
 				currentPriceParaList = currrentPriceService.getCurrentPriceParaData(request, logger);
-				response = new GatewayResponse<List<CurrentPriceParaDTO>>(currentPriceParaList, ResponseUtil.getHeaders(),
-						RCCLConstants.SC_OK);
+				response = new GatewayResponse<List<CurrentPriceParaDTO>>(currentPriceParaList,
+						ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
 			}
 
 		} catch (Exception e) {
@@ -84,12 +86,15 @@ public class GetCurrentPriceDataHandler
 		currentPricedata.setMetaproduct("OASIS");
 		currentPricedata.setProduct_code("7N CARIBBEAN");
 		currentPricedata.setCat_class("B");
-		currentPricedata.setCategory("TEST");
+		// currentPricedata.setCategory("TEST");
 		currentPricedata.setOccupancy("quad");
 		currentPricedata.setSail_date("23-NOV-19 12.00.00.000000000 AM");
 		currentPricedata.setSail_month("11");
-		
-		
-		new GetCurrentPriceDataHandler().handleRequest(currentPricedata, null);
+
+		GatewayResponse<? extends Object> rcode = new GetCurrentPriceDataHandler().handleRequest(currentPricedata,
+				null);
+		System.out.println(new GsonBuilder().serializeNulls().create().toJson(rcode));
+		System.out.println(rcode.getStatusCode());
+		System.out.println(rcode.getBody());
 	}
 }

@@ -53,7 +53,7 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 		GatewayResponse<? extends Object> response = null;
 		try {
 			dataValidator = CurrentPriceDataValidator.getInstance();
-			response = dataValidator.validatePutRequest(request,jobName);
+			response = dataValidator.validatePutRequest(request, jobName);
 			if (response == null) { // response null denotes request is valid
 				CurrentPriceParaService currentPriceService = new CurrentPriceParaService();
 				result = currentPriceService.updateCurrentPriceParaData(request, logger);
@@ -81,8 +81,8 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 		currentPriceReq.setFiltersData(FiltersData.getParamRequestData());
 
 		ResponseUtil.getInstance();
-		System.out.println(new GsonBuilder().serializeNulls().create().toJson(
-				new GatewayResponse<Boolean>(true, ResponseUtil.getHeaders(), RCCLConstants.SC_OK)));
+		System.out.println(new GsonBuilder().serializeNulls().create()
+				.toJson(new GatewayResponse<Boolean>(true, ResponseUtil.getHeaders(), RCCLConstants.SC_OK)));
 		System.exit(0);
 
 		new PutCurrentPriceDataHandler().handleRequest(currentPriceReq, new Context() {

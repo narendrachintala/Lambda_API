@@ -65,6 +65,8 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 		PausePara pausePara = new PausePara();
 		// values to be updated
 		pausePara.setL1_pause(0);
+		pausePara.setresume_push_wts(2);
+		pausePara.setstop_push_wts(51);
 
 		// filter criteria
 		ParameterFiltersData parameterFiltersData = new ParameterFiltersData();
@@ -82,7 +84,8 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 
 		System.out.println("Sample Input data:" + json);
 
-		new PutPauseParaDataHandler().handleRequest(pausePara,new Context() {
+		new PutPauseParaDataHandler().handleRequest(pausePara
+				,new Context() {
 			@Override
 			public int getRemainingTimeInMillis() {
 				// TODO Auto-generated method stub

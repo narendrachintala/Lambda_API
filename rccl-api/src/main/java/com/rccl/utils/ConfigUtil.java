@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.rccl.utils;
 
 import java.io.IOException;
@@ -123,7 +126,18 @@ public class ConfigUtil {
 				CustomFunctions.getNamedQuery(RCCLConstants.ROLLING_WINDOW),
 				conf.getProperty(RCCLConstants.ROLLING_WINDOW));
 	}
-	
+
+	/**
+	 * Gets the current price data.
+	 *
+	 * @return the current price data
+	 */
+	public String getCurrentPriceData() {
+		return conf.getProperty("get_current_price_para").replace(
+				CustomFunctions.getNamedQuery(RCCLConstants.CURRENT_PRICE_PARA),
+				conf.getProperty(RCCLConstants.CURRENT_PRICE_PARA));
+	}
+
 	/**
 	 * Update rolling window.
 	 *
@@ -134,7 +148,35 @@ public class ConfigUtil {
 				CustomFunctions.getNamedQuery(RCCLConstants.CURRENT_PRICE_PARA),
 				conf.getProperty(RCCLConstants.CURRENT_PRICE_PARA));
 	}
-	
+
+	/**
+	 * Gets the refundable premium data.
+	 * 
+	 * @return the refundable premium data
+	 */
+	public String getRefundablePremiumData() {
+		return conf.getProperty("get_refundable_premium_data").replace(
+				CustomFunctions.getNamedQuery(RCCLConstants.REFUNDABLE_PREMIUM),
+				conf.getProperty(RCCLConstants.REFUNDABLE_PREMIUM));
+	}
+
+	public String updateRefundablePremium() {
+		return conf.getProperty("update_refundable_premium_para").replace(
+				CustomFunctions.getNamedQuery(RCCLConstants.REFUNDABLE_PREMIUM),
+				conf.getProperty(RCCLConstants.REFUNDABLE_PREMIUM));
+	}
+
+	/**
+	 * Gets the inversionGapPara data.
+	 *
+	 * @return the inversionGapPara data
+	 */
+	public String getinversionGapPara() {
+		return conf.getProperty("get_inversion_gap_para").replace(
+				CustomFunctions.getNamedQuery(RCCLConstants.INVERSION_GAP_PARA),
+				conf.getProperty(RCCLConstants.INVERSION_GAP_PARA));
+	}
+
 	/**
 	 * Gets the secret managemer name.
 	 *
@@ -161,7 +203,7 @@ public class ConfigUtil {
 	public String getRegion() {
 		return conf.getProperty("region");
 	}
-	
+
 	/**
 	 * Gets the lock status.
 	 *
@@ -170,32 +212,7 @@ public class ConfigUtil {
 	public String getLockStatus() {
 		return conf.getProperty("lock_status");
 	}
-	
-	/**
-	 * Gets the refundable premium data.
-	 * @return the refundable premium data
-	 */
-	public String getRefundablePremiumData() {
-		return conf.getProperty("get_refundable_premium_data").replace(
-				CustomFunctions.getNamedQuery(RCCLConstants.REFUNDABLE_PREMIUM),
-				conf.getProperty(RCCLConstants.REFUNDABLE_PREMIUM));
-	}
-	
-	public String updateRefundablePremium() {
-		return conf.getProperty("update_refundable_premium_para").replace(
-				CustomFunctions.getNamedQuery(RCCLConstants.REFUNDABLE_PREMIUM),
-				conf.getProperty(RCCLConstants.REFUNDABLE_PREMIUM));
-	}
-	/**
-	 * Gets the inversionGapPara data.
-	 *
-	 * @return the inversionGapPara data
-	 */
-	public String getinversionGapPara() {
-		return conf.getProperty("get_inversion_gap_para").replace(
-				CustomFunctions.getNamedQuery(RCCLConstants.INVERSION_GAP_PARA),
-				conf.getProperty(RCCLConstants.INVERSION_GAP_PARA));
-	}
+
 	/**
 	 * Gets the value.
 	 *
@@ -209,9 +226,5 @@ public class ConfigUtil {
 	public static void main(String[] args) {
 		System.out.println(getInstance().getPriceRangeData());
 	}
-
-	
-
-	
 
 }

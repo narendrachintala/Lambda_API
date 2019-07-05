@@ -17,6 +17,21 @@ public class FilterDataValidator {
 
 	/** The Constant logger. */
 	static final Logger logger = LogManager.getLogger(FilterDataValidator.class);
+	
+	/** The instance. */
+	public static FilterDataValidator _instance = null;
+	
+	/**
+	 * Gets the single instance of FilterDataValidator.
+	 *
+	 * @return single instance of FilterDataValidator
+	 */
+	public static FilterDataValidator getInstance() {
+		if (_instance == null) {
+			_instance = new FilterDataValidator();
+		}
+		return _instance;
+	}
 
 	/**
 	 * Validate Input-request.

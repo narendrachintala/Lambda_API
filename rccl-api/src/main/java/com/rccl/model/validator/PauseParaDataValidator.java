@@ -16,7 +16,23 @@ import com.rccl.utils.helper.RCCLException;
  */
 public class PauseParaDataValidator {
 
+	/** The Constant logger. */
 	static final Logger logger = LogManager.getLogger(PauseParaDataValidator.class);
+	
+	/** The instance. */
+	public static PauseParaDataValidator _instance = null;
+	
+	/**
+	 * Gets the single instance of PauseParaDataValidator.
+	 *
+	 * @return single instance of PauseParaDataValidator
+	 */
+	public static PauseParaDataValidator getInstance() {
+		if (_instance == null) {
+			_instance = new PauseParaDataValidator();
+		}
+		return _instance;
+	}
 
 	/**
 	 * Validate input request.

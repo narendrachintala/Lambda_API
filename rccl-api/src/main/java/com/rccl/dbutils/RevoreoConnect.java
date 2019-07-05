@@ -3,6 +3,7 @@ package com.rccl.dbutils;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+
 /**
  * The Class RevoreoConnect.
  */
@@ -13,6 +14,7 @@ public class RevoreoConnect {
 	
 	/** The instance. */
 	private static RevoreoConnect _instance;
+	
 
 	/**
 	 * Gets the single instance of RevoreoConnect.
@@ -28,8 +30,8 @@ public class RevoreoConnect {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			System.out.println("Oracle driver loaded");
 			_instance.setConnection(DriverManager.getConnection(
-					"jdbc:oracle:thin:@//<host>:<port>/<service_name>", "<uname>",
-					"<pwd>"));
+					"jdbc:oracle:thin:@//edssp-exa.rccl.com:1689/srvc_dss_rptg_edss.rccl.com", "revoreo",
+					"B222330EE3+00D65A"));
 			System.out.println("oracle connection established");
 		} catch (Exception ioe) {
 			System.out.println("Error while establishing oracle connection: " + ioe.getMessage());

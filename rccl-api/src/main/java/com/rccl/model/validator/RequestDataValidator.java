@@ -21,6 +21,10 @@ public class RequestDataValidator {
 	// creating instance of class
 	public static RequestDataValidator _instance = null;
 
+	/**
+	 * Gets the single instance of RequestDataValidator.
+	 * @return single instance of RequestDataValidator
+	 */
 	public static RequestDataValidator getInstance() {
 		if (_instance == null) {
 			_instance = new RequestDataValidator();
@@ -30,7 +34,6 @@ public class RequestDataValidator {
 
 	/**
 	 * Validate Input-request.
-	 * 
 	 * @param requestData the request data
 	 * @return the gateway response<? extends object>
 	 * @throws RCCLException the RCCL exception

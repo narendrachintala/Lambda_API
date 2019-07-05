@@ -11,16 +11,21 @@ import com.rccl.dto.InversionGapsParaDTO;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.processor.InversionGapResultProcessor;
 
+/**
+ * The Class InversionGapParaRepo.
+ */
 public class InversionGapParaRepo {
+	
+	/** The Constant logger. */
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(InversionGapParaRepo.class);
 
+	
 	/**
-	 * Gets the price range data.
-	 * 
-	 * @param filterData   contains end user chosen filter criteria
-	 * @param lambdaLogger
-	 * @return the price range data
+	 * Gets the invesion gap para.
+	 *
+	 * @param filterData the filter data
+	 * @return the invesion gap para
 	 */
 	public List<InversionGapsParaDTO> getInvesionGapPara(ParameterFiltersData filterData) {
 
@@ -35,7 +40,7 @@ public class InversionGapParaRepo {
 			queryExecutor.execute(getinversionQuery, processor);
 			inversionData = processor.getResult();
 		} catch (Exception e) {
-			//logger.error("Error occured in getPriceRangeData: " + e);
+			logger.error("Error occured in getinversionQuery: " + e);
 			throw e;
 		}
 

@@ -22,8 +22,8 @@ public class PauseParaDataHelper {
 	 * @return the final set condition
 	 */
 	public String generateSetterCondition(PausePara request, StringBuffer queryBuffer) {
-		String EQUALS = " = ";
-		String COMMA = ",";
+		String EQUALS = RCCLConstants.EQUALS;
+		String COMMA = RCCLConstants.COMMA;
 		String finalQuery = "";
 		try {
 			if (request.getL1_pause() != null) {

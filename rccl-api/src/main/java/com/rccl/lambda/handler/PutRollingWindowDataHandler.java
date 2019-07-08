@@ -9,6 +9,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.RollingWindow;
@@ -16,6 +17,7 @@ import com.rccl.model.validator.RollingWindowDataValidator;
 import com.rccl.service.RollingWindowService;
 import com.rccl.utils.ConfigUtil;
 import com.rccl.utils.RCCLConstants;
+import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.ResponseUtil;
 
 /**
@@ -29,6 +31,9 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(PutRollingWindowDataHandler.class);
+	
+	// Read error messages from property file
+	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 
 	/**
 	 * Handle request.
@@ -49,13 +54,20 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 			if (response == null) {
 				RollingWindowService rollingWindowService = new RollingWindowService();
 				update = rollingWindowService.updateRollingWindowData(request);
-				response = new GatewayResponse<Boolean>(update, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
+				if (update == true) {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_SUCCESS), RCCLConstants.SC_OK);
+				} else {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_FAILURE), RCCLConstants.SC_OK);
+				}
 			}
 		} catch (Exception ex) {
 			logger.error("Error occured while executing PutRollingWindowDataHandler: " + ex.getMessage());
 			return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST);
 
 		}
+		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
 	}
 	

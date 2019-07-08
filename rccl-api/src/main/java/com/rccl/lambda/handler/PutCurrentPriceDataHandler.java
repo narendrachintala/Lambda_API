@@ -16,6 +16,7 @@ import com.rccl.service.CurrentPriceParaService;
 import com.rccl.testdata.FiltersData;
 import com.rccl.utils.ConfigUtil;
 import com.rccl.utils.RCCLConstants;
+import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.ResponseUtil;
 
 /**
@@ -32,6 +33,9 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 	/** The Constant logger. */
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(PutCurrentPriceDataHandler.class);
+	
+	// Read error messages from property file
+	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 
 	/*
 	 * (non-Javadoc)
@@ -57,7 +61,13 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 			if (response == null) { // response null denotes request is valid
 				CurrentPriceParaService currentPriceService = new CurrentPriceParaService();
 				result = currentPriceService.updateCurrentPriceParaData(request, logger);
-				response = new GatewayResponse<Boolean>(result, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
+				if (result == true) {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_SUCCESS), RCCLConstants.SC_OK);
+				} else {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_FAILURE), RCCLConstants.SC_OK);
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Error occured while executing PutCurrentPriceDataHandler: " + e);

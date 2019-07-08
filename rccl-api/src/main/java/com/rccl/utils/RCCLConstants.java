@@ -139,6 +139,8 @@ public class RCCLConstants {
 	public final static String ERROR_IN_L2_RANGE = "error_in_l2_range";
 	public final static String ERROR_MAX_VS_MIN_RANGE = "error_max_vs_min_range";
 	public final static String ERROR_NO_RECORDS_FOUND = "no_records_found";
+	public final static String ERROR_UPDATE_RECORDS_SUCCESS = "update_records_success";
+	public final static String ERROR_UPDATE_RECORDS_FAILURE = "update_records_failure";
 
 	/**
 	 * Status codes

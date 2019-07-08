@@ -17,6 +17,7 @@ import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.validator.RequestDataValidator;
 import com.rccl.service.RollingWindowService;
 import com.rccl.utils.RCCLConstants;
+import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.ResponseUtil;
 
 /**
@@ -32,6 +33,10 @@ public class GetRollingWindowHandler
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(GetRollingWindowHandler.class);
+	
+	// Read error messages from property file
+		private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+
 
 	
 	/**
@@ -58,7 +63,12 @@ public class GetRollingWindowHandler
 		}
 		catch (Exception ex) {
 			logger.error("Error occured while executing GetRollingWindowHandler: " + ex.getMessage());
-			return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST);
+			if (ex.getCause().getMessage().equals(rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND))) {
+				response =  ResponseUtil.getCustErrorMessage(rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND),
+						RCCLConstants.SC_OK);
+			} else {
+				response = ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST);
+			}
 		}
 		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;

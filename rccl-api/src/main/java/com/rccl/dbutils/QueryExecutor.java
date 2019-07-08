@@ -12,8 +12,6 @@ import org.apache.logging.log4j.Logger;
 import com.amazonaws.util.CollectionUtils;
 import com.rccl.processor.ResultProcessor;
 import com.rccl.repo.FilterDataRepo;
-import com.rccl.utils.RCCLConstants;
-import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.helper.RCCLException;
 
 /**
@@ -23,10 +21,6 @@ public class QueryExecutor {
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(FilterDataRepo.class);
-
-	/** The r bundle utility. */
-	// Read error messages from property file
-	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 
 	/**
 	 * Execute.
@@ -54,13 +48,7 @@ public class QueryExecutor {
 		try {
 			stmt.setFetchSize(resultProcessor.getFetchSize());
 			rs = stmt.executeQuery();
-			System.out.println("rs: " + rs);
 			if (rs != null) {
-				if (rs.next() == false) {
-					throw new RCCLException(rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), null);
-				} else {
-					rs.previous();
-				}
 				resultProcessor.processResult(rs);
 			}
 		} catch (Exception e) {

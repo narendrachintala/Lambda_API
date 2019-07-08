@@ -14,6 +14,7 @@ import com.rccl.model.validator.RequestDataValidator;
 import com.rccl.service.PriceRangeService;
 import com.rccl.testdata.FiltersData;
 import com.rccl.utils.RCCLConstants;
+import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.ResponseUtil;
 
 /**
@@ -35,6 +36,9 @@ public class GetPriceRangeDataHandler
 	/** The Constant logger. */
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(GetPriceRangeDataHandler.class);
+	
+	// Read error messages from property file
+	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 
 	/**
 	 * This method will be invoked from AWS Lambda function to fetch price range
@@ -61,8 +65,13 @@ public class GetPriceRangeDataHandler
 
 				PriceRangeService priceRangeService = new PriceRangeService();
 				priceRangeList = priceRangeService.getPriceRangeData(request);
-				response = new GatewayResponse<List<PriceRangeDTO>>(priceRangeList, ResponseUtil.getHeaders(),
-						RCCLConstants.SC_OK);
+				if (priceRangeList != null && priceRangeList.size() == 0) {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_NO_CONTENT);
+				} else {
+					response = new GatewayResponse<List<PriceRangeDTO>>(priceRangeList, ResponseUtil.getHeaders(),
+							RCCLConstants.SC_OK);
+				}
 			}
 
 		} catch (Exception e) {

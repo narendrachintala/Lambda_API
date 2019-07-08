@@ -72,7 +72,6 @@ public class ResponseUtil extends CustomErrors {
 		ErrorMessage errorMessage = new ErrorMessage(errorMsg, statusCode);
 		GatewayResponse<ErrorMessage> error = new GatewayResponse<ErrorMessage>(errorMessage, getHeaders(),
 				statusCode);
-
 		return error;
 	}
 

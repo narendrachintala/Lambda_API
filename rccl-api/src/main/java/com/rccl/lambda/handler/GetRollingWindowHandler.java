@@ -35,10 +35,8 @@ public class GetRollingWindowHandler
 	static final Logger logger = LogManager.getLogger(GetRollingWindowHandler.class);
 	
 	// Read error messages from property file
-		private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 
-
-	
 	/**
 	 * executes on requesting for list of values for specific table name
 	 * @param request contains chosen filters as key-value pair
@@ -57,18 +55,18 @@ public class GetRollingWindowHandler
 			if (response == null) { // response null denotes request is valid
 				RollingWindowService rollingWindowService = new RollingWindowService();
 				rollingWindowList = rollingWindowService.getRollingWindowData(request);
-				response = new GatewayResponse<List<RollingWindowDTO>>(rollingWindowList, ResponseUtil.getHeaders(),
-						RCCLConstants.SC_OK);
+				if (rollingWindowList != null && rollingWindowList.size() == 0) {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_NO_CONTENT);
+				} else {
+					response = new GatewayResponse<List<RollingWindowDTO>>(rollingWindowList, ResponseUtil.getHeaders(),
+							RCCLConstants.SC_OK);
+				}
 			}
 		}
 		catch (Exception ex) {
 			logger.error("Error occured while executing GetRollingWindowHandler: " + ex.getMessage());
-			if (ex.getCause().getMessage().equals(rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND))) {
-				response =  ResponseUtil.getCustErrorMessage(rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND),
-						RCCLConstants.SC_OK);
-			} else {
-				response = ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST);
-			}
+			response = ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST);
 		}
 		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
@@ -82,7 +80,7 @@ public class GetRollingWindowHandler
 		// prepares sample input data for handler class
 		ParameterFiltersData parameterFiltersData = new ParameterFiltersData();
 		parameterFiltersData.setCat_class("O");
-		parameterFiltersData.setMetaproduct("SHORT CARIBBEAN");
+		parameterFiltersData.setMetaproduct("SHORT CARIBBEAN123");
 		parameterFiltersData.setOccupancy("quad");
 		parameterFiltersData.setProduct_code("BAHAMA4");
 		parameterFiltersData.setSail_month("3");

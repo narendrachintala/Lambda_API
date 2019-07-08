@@ -14,6 +14,7 @@ import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.validator.RequestDataValidator;
 import com.rccl.service.CurrentPriceParaService;
 import com.rccl.utils.RCCLConstants;
+import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.ResponseUtil;
 
 /**
@@ -29,6 +30,9 @@ public class GetCurrentPriceDataHandler
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(GetCurrentPriceDataHandler.class);
+	
+	// Read error messages from property file
+	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 
 	/**
 	 * This method will be invoked from AWS Lambda function to fetch price range
@@ -55,8 +59,13 @@ public class GetCurrentPriceDataHandler
 
 				CurrentPriceParaService currrentPriceService = new CurrentPriceParaService();
 				currentPriceParaList = currrentPriceService.getCurrentPriceParaData(request, logger);
-				response = new GatewayResponse<List<CurrentPriceParaDTO>>(currentPriceParaList,
-						ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
+				if (currentPriceParaList != null && currentPriceParaList.size() == 0) {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_NO_CONTENT);
+				} else {
+					response = new GatewayResponse<List<CurrentPriceParaDTO>>(currentPriceParaList,
+							ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
+				}
 			}
 
 		} catch (Exception e) {

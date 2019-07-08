@@ -44,12 +44,12 @@ public class FilterDataHelper {
 					queryBuffer.append(join(filterData.getShip_code()));
 					queryBuffer.append(AND);
 				}
-				if (filterData.getSail_month() != null) {
+				if (!CustomFunctions.isNullOrEmpty(filterData.getSail_month())) {
 					queryBuffer.append(RCCLConstants.SAIL_MONTH_F).append(IN);
 					queryBuffer.append(filterData.getSail_month());
 					queryBuffer.append(AND);
 				}
-				if (filterData.getSail_date() != null) {
+				if (!CustomFunctions.isNullOrEmpty(filterData.getSail_date())) {
 					queryBuffer.append(RCCLConstants.SAIL_DATE_F).append(IN);
 					queryBuffer.append(join(filterData.getSail_date().toString()));
 					queryBuffer.append(AND);

@@ -3,6 +3,9 @@ package com.rccl.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.rccl.model.ErrorMessage;
 import com.rccl.model.GatewayResponse;
 
@@ -18,6 +21,9 @@ public class ResponseUtil extends CustomErrors {
 
 	/** The instance. */
 	private static ResponseUtil _instance;
+
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(ResponseUtil.class);
 
 	/**
 	 * Gets the single instance of ResponseUtil.
@@ -44,8 +50,7 @@ public class ResponseUtil extends CustomErrors {
 
 	/**
 	 * Gets the error message.
-	 *
-	 * @param e          the e
+	 * @param e the e
 	 * @param statusCode the status code
 	 * @return the error message
 	 */
@@ -54,10 +59,15 @@ public class ResponseUtil extends CustomErrors {
 		if (errorMsg != null) {
 			errorMsg.substring(errorMsg.indexOf(RCCLConstants.NAMED_QRY_PREFIX));
 		}
-		ErrorMessage errorMessage = new ErrorMessage(errorMsg, statusCode);
-		GatewayResponse<ErrorMessage> error = new GatewayResponse<ErrorMessage>(errorMessage, getHeaders(),
-				RCCLConstants.SC_BAD_REQUEST);
+		GatewayResponse<ErrorMessage> error = null;
+		try {
+			ErrorMessage errorMessage = new ErrorMessage(errorMsg, statusCode);
+			error = new GatewayResponse<ErrorMessage>(errorMessage, getHeaders(), RCCLConstants.SC_BAD_REQUEST);
+		} catch (Exception ex) {
+			logger.error(ex);
+			throw ex;
 
+		}
 		return error;
 	}
 
@@ -69,10 +79,16 @@ public class ResponseUtil extends CustomErrors {
 	 * @return the cust error message
 	 */
 	public static GatewayResponse<ErrorMessage> getCustErrorMessage(String errorMsg, Integer statusCode) {
-		ErrorMessage errorMessage = new ErrorMessage(errorMsg, statusCode);
-		GatewayResponse<ErrorMessage> error = new GatewayResponse<ErrorMessage>(errorMessage, getHeaders(),
-				statusCode);
-		return error;
+		GatewayResponse<ErrorMessage> message = null;
+		try {
+			ErrorMessage errorMessage = new ErrorMessage(errorMsg, statusCode);
+			message = new GatewayResponse<ErrorMessage>(errorMessage, getHeaders(), statusCode);
+		} catch (Exception e) {
+			logger.error(e);
+			throw e;
+
+		}
+		return message;
 	}
 
 }

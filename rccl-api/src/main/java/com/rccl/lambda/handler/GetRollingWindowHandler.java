@@ -57,7 +57,7 @@ public class GetRollingWindowHandler
 				rollingWindowList = rollingWindowService.getRollingWindowData(request);
 				if (rollingWindowList != null && rollingWindowList.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(
-							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_NO_CONTENT);
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK);
 				} else {
 					response = new GatewayResponse<List<RollingWindowDTO>>(rollingWindowList, ResponseUtil.getHeaders(),
 							RCCLConstants.SC_OK);

@@ -58,7 +58,7 @@ public class GetPauseParaDataHandler
 				pauseParaList = pauseParaService.getPauseParaData(request);
 				if (pauseParaList != null && pauseParaList.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(
-							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_NO_CONTENT);
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK);
 				} else {
 					response = new GatewayResponse<List<PauseParaDTO>>(pauseParaList, ResponseUtil.getHeaders(),
 							RCCLConstants.SC_OK);

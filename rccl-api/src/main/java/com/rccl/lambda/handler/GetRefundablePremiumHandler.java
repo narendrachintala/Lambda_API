@@ -58,7 +58,7 @@ public class GetRefundablePremiumHandler
 				refundablePremiumList = refundablePremiumService.getRefundablePremiumData(request);
 				if (refundablePremiumList != null && refundablePremiumList.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(
-							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_NO_CONTENT);
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK);
 				} else {
 					response = new GatewayResponse<List<RefundablePremiumDTO>>(refundablePremiumList,
 							ResponseUtil.getHeaders(), RCCLConstants.SC_OK);

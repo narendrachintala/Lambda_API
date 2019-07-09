@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.google.gson.GsonBuilder;
 import com.rccl.dto.PriceRangeDTO;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
@@ -67,7 +68,7 @@ public class GetPriceRangeDataHandler
 				priceRangeList = priceRangeService.getPriceRangeData(request);
 				if (priceRangeList != null && priceRangeList.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(
-							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_NO_CONTENT);
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK);
 				} else {
 					response = new GatewayResponse<List<PriceRangeDTO>>(priceRangeList, ResponseUtil.getHeaders(),
 							RCCLConstants.SC_OK);
@@ -76,10 +77,11 @@ public class GetPriceRangeDataHandler
 
 		} catch (Exception e) {
 			logger.error("Error occured while executing GetPriceRangeDataHandler: " + e.getMessage());
+			e.printStackTrace();
 			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
 		}
-		// System.out.println(new
-		// GsonBuilder().serializeNulls().create().toJson(response));
+		System.out.println(new
+		 GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
 
 	}

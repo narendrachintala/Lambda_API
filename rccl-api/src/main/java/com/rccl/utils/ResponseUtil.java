@@ -45,6 +45,7 @@ public class ResponseUtil extends CustomErrors {
 	public static Map<String, String> getHeaders() {
 		Map<String, String> headers = new HashMap<>();
 		headers.put("Content-Type", "application/json");
+		//headers.put("X-Powered-By", "AWS Lambda & serverless");
 		return headers;
 	}
 

@@ -46,7 +46,11 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 	 */
 	@Override
 	/**
-	 * Post price range data based on applied filters and requested data
+	 * Post current price data based on applied filters and requested data
+	 * Handle request.
+	 * @param request contains chosen filters as key-value pair
+	 * @param context lambda context object
+	 * @return true if update is successful
 	 */
 	public GatewayResponse<? extends Object> handleRequest(CurrentPricePara request, Context context) {
 		logger.info("input: " + request.toString());

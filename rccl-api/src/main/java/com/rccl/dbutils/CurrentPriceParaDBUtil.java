@@ -20,10 +20,14 @@ public class CurrentPriceParaDBUtil {
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(CurrentPriceParaDBUtil.class);
 
+	// Creates instance
 	public static CurrentPriceParaDBUtil _instance = null;
+	
+	// Read properties from configuration file
 	ConfigUtil configInst = ConfigUtil.getInstance();
 
 	/**
+	 * Gets the single instance of CurrentPriceParaDBUtil.
 	 * 
 	 * @return CurrentPriceParaDBUtil instance for utilizing class methods
 	 */
@@ -45,6 +49,7 @@ public class CurrentPriceParaDBUtil {
 		StringBuffer queryBuffer = new StringBuffer();
 		String getCurrentPriceQuery = new String(configInst.getCurrentPriceData());
 		try {
+			logger.debug("Reading query from config:" + getCurrentPriceQuery);
 			FilterDataHelper filterDataHelper = new FilterDataHelper();
 			String whereCondition = filterDataHelper.generateFilterCondition(filterData, queryBuffer);
 			if (whereCondition.equals("")) {
@@ -52,6 +57,7 @@ public class CurrentPriceParaDBUtil {
 			} else {
 				getCurrentPriceQuery = getCurrentPriceQuery.replace(RCCLConstants.WHERE_CONDITION_Q, whereCondition);
 			}
+			logger.debug("Final query for GET API current price para :" + getCurrentPriceQuery);
 		} catch (Exception e) {
 			logger.error("Error occured in getCurrentPriceDataQuery: " + e);
 			throw e;
@@ -69,9 +75,10 @@ public class CurrentPriceParaDBUtil {
 	public String generateUpdateCurrentPriceDataQuery(CurrentPricePara currentPriceReq) {
 
 		StringBuffer queryBuffer = new StringBuffer();
-		String getCurrentPriceQuery = new String(configInst.updateCurrentPriceData());
+		String updateCurrentPriceQuery = new String(configInst.updateCurrentPriceData());
 
 		try {
+			logger.debug("reading query from config:" + updateCurrentPriceQuery);
 			FilterDataHelper filterDataHelper = new FilterDataHelper();
 
 			String filterWhereCondition = filterDataHelper.generateFilterCondition(currentPriceReq.getFiltersData(),
@@ -83,21 +90,22 @@ public class CurrentPriceParaDBUtil {
 					new StringBuffer());
 
 			if (setterCondition != "") {
-				getCurrentPriceQuery = getCurrentPriceQuery.replace(RCCLConstants.SETTER_COLUMNS_Q, setterCondition);
+				updateCurrentPriceQuery = updateCurrentPriceQuery.replace(RCCLConstants.SETTER_COLUMNS_Q, setterCondition);
 			}
 
 			if (filterWhereCondition.equals("")) {
-				getCurrentPriceQuery = getCurrentPriceQuery.replace(RCCLConstants.WHERE_CONDITION_Q, "1=1");
+				updateCurrentPriceQuery = updateCurrentPriceQuery.replace(RCCLConstants.WHERE_CONDITION_Q, "1=1");
 			} else {
-				getCurrentPriceQuery = getCurrentPriceQuery.replace(RCCLConstants.WHERE_CONDITION_Q,
+				updateCurrentPriceQuery = updateCurrentPriceQuery.replace(RCCLConstants.WHERE_CONDITION_Q,
 						filterWhereCondition);
 			}
 
+			logger.debug("Final query for POST API current price para :" + updateCurrentPriceQuery);
 		} catch (Exception e) {
 			logger.error("Error occured in generateUpdateCurrentPriceDataQuery: " + e);
 			throw e;
 		}
 
-		return getCurrentPriceQuery;
+		return updateCurrentPriceQuery;
 	}
 }

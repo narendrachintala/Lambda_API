@@ -27,7 +27,6 @@ public class CurrentPriceDataValidator {
 
 	/**
 	 * Gets the single instance of CurrentPriceDataValidator.
-	 *
 	 * @return single instance of CurrentPriceDataValidator
 	 */
 	public static CurrentPriceDataValidator getInstance() {
@@ -64,7 +63,7 @@ public class CurrentPriceDataValidator {
 			if (lockStatus.equalsIgnoreCase(RCCLConstants.LOCKED_CTRL_TBL_STS_FLAG)) {
 				return ResponseUtil.error_locked();
 			} else {
-				System.out.println("lock is disabled");
+				logger.debug("Table Locked status id false/disabled");
 			}
 		} catch (Exception e) {
 			logger.error(e);

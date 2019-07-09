@@ -14,7 +14,7 @@ import com.rccl.model.ParameterFiltersData;
 import com.rccl.processor.CurrentPriceResultProcessor;
 
 /**
- * 
+ * The Class CurrentPriceParaRepo.
  * @author chandrabhan.birla
  *
  */
@@ -41,6 +41,8 @@ public class CurrentPriceParaRepo {
 			String getCurrentPriceParaQuery = currentPriceParaDBUtil.getCurrentPriceDataQuery(filterData);
 			CurrentPriceResultProcessor processor = new CurrentPriceResultProcessor();
 			processor.setResult(currentPriceParaData);
+			
+			logger.debug("Query to GET current price data : "+ getCurrentPriceParaQuery);
 			queryExecutor.execute(getCurrentPriceParaQuery, processor);
 			currentPriceParaData = processor.getResult();
 		} catch (Exception e) {
@@ -71,7 +73,7 @@ public class CurrentPriceParaRepo {
 			status = queryExecutor.executeUpdate(updateCurrentPriceQuery, null);
 
 		} catch (Exception e) {
-			// logger.log("Error occured while executing updatePriceRangeData: " + e);
+			logger.error("Error occured while executing updateCurrentPriceData : " + e);
 			throw e;
 		}
 		if (status == 0) {

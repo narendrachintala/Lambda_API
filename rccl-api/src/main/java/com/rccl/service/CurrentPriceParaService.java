@@ -31,7 +31,7 @@ public class CurrentPriceParaService {
 			currentPriceParaData = repo.getCurrentPriceData(request, logger);
 
 		} catch (Exception e) {
-			// logger.error("Error occurred while executing getCurrentPriceParaData: " + e);
+			logger.error("Error occurred while executing getCurrentPriceParaData: " + e);
 			throw e;
 		}
 		return currentPriceParaData;
@@ -49,7 +49,7 @@ public class CurrentPriceParaService {
 			currentPriceParaRepo = new CurrentPriceParaRepo();
 			status = currentPriceParaRepo.updateCurrentPriceData(currentPriceParaReq, logger);
 		} catch (Exception e) {
-			// logger.error("Error occurred while executing updateCurrentPriceParaData: " + e);
+			logger.error("Error occurred while executing updateCurrentPriceParaData: " + e);
 			throw e;
 		}
 		return status;

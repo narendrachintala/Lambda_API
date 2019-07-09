@@ -154,7 +154,6 @@ public class RCCLConstants {
 	public final static int FORBIDDEN = 403;
 	public final static int SC_NOT_FOUND = 404;
 	public final static int SC_INTERNAL_SERVER_ERROR = 500;
-	public final static int SC_NO_CONTENT= 204;
 
 	/**
 	 * Status Messages

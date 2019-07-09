@@ -16,6 +16,7 @@ import com.rccl.model.validator.PauseParaDataValidator;
 import com.rccl.service.PauseParaDataService;
 import com.rccl.utils.ConfigUtil;
 import com.rccl.utils.RCCLConstants;
+import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.ResponseUtil;
 
 /**
@@ -29,6 +30,9 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(PutPauseParaDataHandler.class);
+	
+	// Read error messages from property file
+	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 
 	/**
 	 * Handle request.
@@ -45,12 +49,17 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 		String jobName = configInst.getTableName(RCCLConstants.PAUSE_PARA);
 		try {
 			rDataValidator = new PauseParaDataValidator();
-			response = rDataValidator.validatePutRequest(request,jobName);
-			if (response == null) { 
-			PauseParaDataService PauseParaService = new PauseParaDataService();
-			update = PauseParaService.updatePauseParaData(request);
-			response = new GatewayResponse<Boolean>(update, ResponseUtil.getHeaders(),
-					RCCLConstants.SC_OK);
+			response = rDataValidator.validatePutRequest(request, jobName);
+			if (response == null) {
+				PauseParaDataService PauseParaService = new PauseParaDataService();
+				update = PauseParaService.updatePauseParaData(request);
+				if (update == true) {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_SUCCESS), RCCLConstants.SC_OK);
+				} else {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_FAILURE), RCCLConstants.SC_OK);
+				}
 			}
 		} catch (Exception ex) {
 			 logger.error("Error occured while executing PauseParaDataHandler: " + ex.getMessage());

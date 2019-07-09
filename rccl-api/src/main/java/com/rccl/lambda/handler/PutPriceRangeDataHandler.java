@@ -16,6 +16,7 @@ import com.rccl.service.PriceRangeService;
 import com.rccl.testdata.FiltersData;
 import com.rccl.utils.ConfigUtil;
 import com.rccl.utils.RCCLConstants;
+import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.ResponseUtil;
 
 /**
@@ -32,6 +33,9 @@ public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Gate
 	/** The Constant logger. */
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(PutPriceRangeDataHandler.class);
+	
+	// Read error messages from property file
+	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 
 	/*
 	 * (non-Javadoc)
@@ -57,7 +61,13 @@ public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Gate
 			if (response == null) { // response null denotes request is valid
 				PriceRangeService priceRangeService = new PriceRangeService();
 				result = priceRangeService.updatePriceRangeData(request);
-				response = new GatewayResponse<Boolean>(result, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
+				if (result == true) {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_SUCCESS), RCCLConstants.SC_OK);
+				} else {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_FAILURE), RCCLConstants.SC_OK);
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Error occured while executing PutPriceRangeDataHandler: " + e);

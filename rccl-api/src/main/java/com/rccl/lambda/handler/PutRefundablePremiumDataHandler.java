@@ -16,6 +16,7 @@ import com.rccl.model.validator.RefundablePremiumDataValidator;
 import com.rccl.service.RefundablePremiumService;
 import com.rccl.utils.ConfigUtil;
 import com.rccl.utils.RCCLConstants;
+import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.ResponseUtil;
 
 /**
@@ -30,6 +31,9 @@ public class PutRefundablePremiumDataHandler
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(PutRefundablePremiumDataHandler.class);
+	
+	// Read error messages from property file
+	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 	
 	/**
 	 * Handle request.
@@ -50,7 +54,13 @@ public class PutRefundablePremiumDataHandler
 			if (response == null) {
 				RefundablePremiumService refundablePremiumService = new RefundablePremiumService();
 				update = refundablePremiumService.updateRefundablePremiumData(request);
-				response = new GatewayResponse<Boolean>(update, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
+				if (update == true) {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_SUCCESS), RCCLConstants.SC_OK);
+				} else {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_FAILURE), RCCLConstants.SC_OK);
+				}
 			}
 		} catch (Exception ex) {
 			logger.error("Error occured while executing PutRefundablePremium: " + ex.getMessage());

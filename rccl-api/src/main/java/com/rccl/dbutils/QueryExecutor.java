@@ -25,8 +25,8 @@ public class QueryExecutor {
 	/**
 	 * Execute.
 	 * 
-	 * @param                 'query' final input query
-	 * @param                 'logger' is used to generate the output logs
+	 * @param 'query'         final input query
+	 * @param 'logger'        is used to generate the output logs
 	 * @param resultProcessor the result processor
 	 */
 	public void execute(String query, ResultProcessor<?> resultProcessor) {
@@ -39,7 +39,7 @@ public class QueryExecutor {
 		ResultSet rs = null;
 		// Executes the input query else will throw exception
 		try {
-			//logger.info("executing query : " + query);
+			logger.info("executing query : " + query);
 			stmt = con.prepareStatement(query);
 		} catch (SQLException e) {
 			throw new RCCLException("Error while initializing the database connection", e);

@@ -18,6 +18,7 @@ import com.rccl.model.validator.RequestDataValidator;
 import com.rccl.service.InversionGapParaService;
 import com.rccl.testdata.FiltersData;
 import com.rccl.utils.RCCLConstants;
+import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.ResponseUtil;
 
 /**
@@ -32,6 +33,9 @@ public class GetInversionGapsParaDataHandler
 	/** The Constant logger. */
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(GetInversionGapsParaDataHandler.class);
+	
+	// Read error messages from property file
+	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 
 	/**
 	 * This method will be invoked from AWS Lambda function to fetch price range
@@ -54,8 +58,13 @@ public class GetInversionGapsParaDataHandler
 			if (response == null) { // response null denotes request is valid
 				InversionGapParaService inversionGapParaService = new InversionGapParaService();
 				inversionGapsParaList = inversionGapParaService.getinversionGapParaData(request);
-				response = new GatewayResponse<List<InversionGapsParaDTO>>(inversionGapsParaList,
-						ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
+				if (inversionGapsParaList != null && inversionGapsParaList.size() == 0) {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK);
+				} else {
+					response = new GatewayResponse<List<InversionGapsParaDTO>>(inversionGapsParaList,
+							ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Error occured while executing GetInversionGapsParaDataHandler: " + e.getMessage());

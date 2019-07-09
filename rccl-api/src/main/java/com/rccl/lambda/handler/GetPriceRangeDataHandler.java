@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.google.gson.GsonBuilder;
 import com.rccl.dto.PriceRangeDTO;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
@@ -14,6 +15,7 @@ import com.rccl.model.validator.RequestDataValidator;
 import com.rccl.service.PriceRangeService;
 import com.rccl.testdata.FiltersData;
 import com.rccl.utils.RCCLConstants;
+import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.ResponseUtil;
 
 /**
@@ -35,6 +37,9 @@ public class GetPriceRangeDataHandler
 	/** The Constant logger. */
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(GetPriceRangeDataHandler.class);
+	
+	// Read error messages from property file
+	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 
 	/**
 	 * This method will be invoked from AWS Lambda function to fetch price range
@@ -61,16 +66,22 @@ public class GetPriceRangeDataHandler
 
 				PriceRangeService priceRangeService = new PriceRangeService();
 				priceRangeList = priceRangeService.getPriceRangeData(request);
-				response = new GatewayResponse<List<PriceRangeDTO>>(priceRangeList, ResponseUtil.getHeaders(),
-						RCCLConstants.SC_OK);
+				if (priceRangeList != null && priceRangeList.size() == 0) {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK);
+				} else {
+					response = new GatewayResponse<List<PriceRangeDTO>>(priceRangeList, ResponseUtil.getHeaders(),
+							RCCLConstants.SC_OK);
+				}
 			}
 
 		} catch (Exception e) {
 			logger.error("Error occured while executing GetPriceRangeDataHandler: " + e.getMessage());
+			e.printStackTrace();
 			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
 		}
-		// System.out.println(new
-		// GsonBuilder().serializeNulls().create().toJson(response));
+		System.out.println(new
+		 GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
 
 	}

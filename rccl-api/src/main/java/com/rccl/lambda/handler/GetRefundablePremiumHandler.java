@@ -17,6 +17,7 @@ import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.validator.RequestDataValidator;
 import com.rccl.service.RefundablePremiumService;
 import com.rccl.utils.RCCLConstants;
+import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.ResponseUtil;
 
 /**
@@ -31,6 +32,9 @@ public class GetRefundablePremiumHandler
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(GetRefundablePremiumHandler.class);
+	
+	// Read error messages from property file
+	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 	
 	/**
 	 * This method will be invoked from AWS Lambda function to fetch refundable premium
@@ -52,8 +56,13 @@ public class GetRefundablePremiumHandler
 			if (response == null) { // response null denotes request is valid
 				RefundablePremiumService refundablePremiumService = new RefundablePremiumService();
 				refundablePremiumList = refundablePremiumService.getRefundablePremiumData(request);
-				response = new GatewayResponse<List<RefundablePremiumDTO>>(refundablePremiumList, ResponseUtil.getHeaders(),
-						RCCLConstants.SC_OK);
+				if (refundablePremiumList != null && refundablePremiumList.size() == 0) {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK);
+				} else {
+					response = new GatewayResponse<List<RefundablePremiumDTO>>(refundablePremiumList,
+							ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
+				}
 			}
 		}
 		catch (Exception ex) {

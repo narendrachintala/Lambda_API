@@ -18,6 +18,7 @@ import com.rccl.model.validator.RequestDataValidator;
 import com.rccl.service.PauseParaDataService;
 import com.rccl.testdata.FiltersData;
 import com.rccl.utils.RCCLConstants;
+import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.ResponseUtil;
 
 /**
@@ -32,6 +33,9 @@ public class GetPauseParaDataHandler
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(GetPauseParaDataHandler.class);
+	
+	// Read error messages from property file
+	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 
 	/**
 	 * executes on requesting for list of values for PausePara table name.
@@ -52,8 +56,13 @@ public class GetPauseParaDataHandler
 			if (response == null) { // response null denotes request is valid
 				PauseParaDataService pauseParaService = new PauseParaDataService();
 				pauseParaList = pauseParaService.getPauseParaData(request);
-				response = new GatewayResponse<List<PauseParaDTO>>(pauseParaList, ResponseUtil.getHeaders(),
-						RCCLConstants.SC_OK);
+				if (pauseParaList != null && pauseParaList.size() == 0) {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK);
+				} else {
+					response = new GatewayResponse<List<PauseParaDTO>>(pauseParaList, ResponseUtil.getHeaders(),
+							RCCLConstants.SC_OK);
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Error occured while executing GetPauseParaDataHandler: " + e.getMessage());

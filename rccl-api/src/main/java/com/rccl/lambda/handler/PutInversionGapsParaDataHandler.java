@@ -20,6 +20,9 @@ import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.ResponseUtil;
 
+/**
+ * The Class PutInversionGapsParaDataHandler.
+ */
 public class PutInversionGapsParaDataHandler
 		implements RequestHandler<InversionGapPara, GatewayResponse<? extends Object>> {
 

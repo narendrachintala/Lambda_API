@@ -80,6 +80,7 @@ public class QueryExecutor {
 	 */
 	public int executeUpdate(String query, List<String> params) {
 
+		System.out.println("in execute update:" + query);
 		Connection con = RevoreoConnect.getInstance().getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;

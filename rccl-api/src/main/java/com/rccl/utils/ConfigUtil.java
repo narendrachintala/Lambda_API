@@ -176,7 +176,16 @@ public class ConfigUtil {
 				CustomFunctions.getNamedQuery(RCCLConstants.INVERSION_GAP_PARA),
 				conf.getProperty(RCCLConstants.INVERSION_GAP_PARA));
 	}
-
+	/**
+	 * Update inversionGapPara.
+	 *
+	 * @return the string
+	 */
+	public String updateInversionGapsPara() {
+		return conf.getProperty("update_inversionGapsPara").replace(
+				CustomFunctions.getNamedQuery(RCCLConstants.INVERSION_GAP_PARA),
+				conf.getProperty(RCCLConstants.INVERSION_GAP_PARA));
+	}
 	/**
 	 * Gets the secret managemer name.
 	 *

@@ -8,19 +8,20 @@ import org.apache.logging.log4j.Logger;
 import com.rccl.dbutils.InversionGapParaUtils;
 import com.rccl.dbutils.QueryExecutor;
 import com.rccl.dto.InversionGapsParaDTO;
+import com.rccl.model.InversionGapPara;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.processor.InversionGapResultProcessor;
+
 
 /**
  * The Class InversionGapParaRepo.
  */
 public class InversionGapParaRepo {
-	
+
 	/** The Constant logger. */
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(InversionGapParaRepo.class);
 
-	
 	/**
 	 * Gets the invesion gap para.
 	 *
@@ -48,4 +49,30 @@ public class InversionGapParaRepo {
 
 	}
 
+	/**
+	 * Update InversionGapsPara data.
+	 * 
+	 * @param request the request
+	 * @return true, if successful
+	 */
+	public boolean updateInversionGapsParaData(InversionGapPara request) {
+		InversionGapParaUtils dbUtils = InversionGapParaUtils.getInstance();
+		QueryExecutor queryExecutor = new QueryExecutor();
+		Integer status = 0;
+		try {
+			String updateInversionGapsParaQuery = dbUtils.updateInversionGapsPara(request);
+			 logger.debug("updateInversionGapsParaQuery: " +
+			 updateInversionGapsParaQuery);
+			status = queryExecutor.executeUpdate(updateInversionGapsParaQuery, null);
+		} catch (Exception e) {
+			logger.error("Error occured while executing updateInversionGapsParaQuery: " +
+			 e);
+			throw e;
+		}
+		if (status == 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }

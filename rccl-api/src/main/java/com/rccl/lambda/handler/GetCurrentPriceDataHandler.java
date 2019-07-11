@@ -58,7 +58,7 @@ public class GetCurrentPriceDataHandler
 			if (response == null) { // response null denotes request is valid
 
 				CurrentPriceParaService currrentPriceService = new CurrentPriceParaService();
-				currentPriceParaList = currrentPriceService.getCurrentPriceParaData(request, logger);
+				currentPriceParaList = currrentPriceService.getCurrentPriceParaData(request);
 				if (currentPriceParaList != null && currentPriceParaList.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(
 							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK);

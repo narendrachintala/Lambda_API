@@ -64,7 +64,7 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 			response = dataValidator.validatePutRequest(request, jobName);
 			if (response == null) { // response null denotes request is valid
 				CurrentPriceParaService currentPriceService = new CurrentPriceParaService();
-				result = currentPriceService.updateCurrentPriceParaData(request, logger);
+				result = currentPriceService.updateCurrentPriceParaData(request);
 				if (result == true) {
 					response = ResponseUtil.getCustErrorMessage(
 							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_SUCCESS), RCCLConstants.SC_OK);

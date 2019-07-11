@@ -5,7 +5,6 @@ package com.rccl.dto;
  * @author chandrabhan.birla
  *
  */
-
 public class CurrentPriceParaDTO { 
 	private String currency;
 	private String metaproduct;

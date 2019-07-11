@@ -11,11 +11,8 @@ import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResponseUtil;
 
 /**
- * The Class CurrentPriceDataValidator.
- */
-/**
  * @author chandrabhan.birla
- *
+ * The Class CurrentPriceDataValidator.
  */
 public class CurrentPriceDataValidator {
 

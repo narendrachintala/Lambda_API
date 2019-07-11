@@ -17,14 +17,14 @@ import com.rccl.repo.CurrentPriceParaRepo;
  */
 public class CurrentPriceParaService {
 	// Initialize the Log4j logger.
-	static final Logger logger = LogManager.getLogger(PriceRangeService.class);
+	static final Logger logger = LogManager.getLogger(CurrentPriceParaService.class);
 
 	/**
 	 * @param request  contains end user chosen filter criteria
 	 * @param lambdaLogger
 	 * @return returns final current price parameter data with applied criteria
 	 */
-	public List<CurrentPriceParaDTO> getCurrentPriceParaData(ParameterFiltersData request, Logger logger) {
+	public List<CurrentPriceParaDTO> getCurrentPriceParaData(ParameterFiltersData request) {
 		List<CurrentPriceParaDTO> currentPriceParaData = null;
 		try {
 			CurrentPriceParaRepo repo = new CurrentPriceParaRepo();
@@ -42,7 +42,7 @@ public class CurrentPriceParaService {
 	 * @param logger
 	 * @return
 	 */
-	public boolean updateCurrentPriceParaData(CurrentPricePara currentPriceParaReq, Logger logger) {
+	public boolean updateCurrentPriceParaData(CurrentPricePara currentPriceParaReq) {
 		CurrentPriceParaRepo currentPriceParaRepo = null;
 		boolean status = false;
 		try {

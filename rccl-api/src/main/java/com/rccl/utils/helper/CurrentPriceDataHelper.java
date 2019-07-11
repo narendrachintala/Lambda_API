@@ -8,6 +8,7 @@ import com.rccl.utils.RCCLConstants;
 
 /**
  * The Class CurrentPriceDataHelper.
+ * author: chandrabhan.birla
  */
 public class CurrentPriceDataHelper {
 
@@ -52,7 +53,7 @@ public class CurrentPriceDataHelper {
 			// removing last appended extra COMMA
 			queryBuffer.replace(queryBuffer.lastIndexOf(COMMA), queryBuffer.length(), "");
 
-			System.out.println("queryBuffer.toString(): " + queryBuffer.toString());
+			logger.debug("queryBuffer.toString(): " + queryBuffer.toString());
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;

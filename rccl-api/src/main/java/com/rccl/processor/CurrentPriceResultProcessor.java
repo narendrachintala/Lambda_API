@@ -15,14 +15,13 @@ import com.rccl.utils.RCCLConstants;
  *
  */
 
-public class CurrentPriceResultProcessor  extends ResultProcessor<List<CurrentPriceParaDTO>> {
-
+public class CurrentPriceResultProcessor  extends ResultProcessor<List<CurrentPriceParaDTO>> { 
 	/**
 	 * Instantiates a new Current Price result processor.
 	 */
 		public CurrentPriceResultProcessor() {
 			result = null;
-			fetchSize = RCCLConstants.MID_FETCH_ROWS;
+			fetchSize = RCCLConstants.MAX_FETCH_ROWS;
 		}
 
 		/**

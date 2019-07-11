@@ -1,5 +1,7 @@
 package com.rccl.model;
 
+import java.sql.Timestamp;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class InversionGapPara.
@@ -28,25 +30,25 @@ public class InversionGapPara {
 	private String order_6;
 	
 	/** The gap 1. */
-	private String gap1;
+	private Integer gap1;
 	
 	/** The gap 2. */
-	private String gap2;
+	private Integer gap2;
 	
 	/** The gap 3. */
-	private String gap3;
+	private Integer gap3;
 	
 	/** The gap 4. */
-	private String gap4;
+	private Integer gap4;
 	
 	/** The gap 5. */
-	private String gap5;
+	private Integer gap5;
 	
 	/** The gap 6. */
-	private String gap6;
+	private Integer gap6;
 	
 	/** The gap 6. */
-	private Double insert_date;
+	private Timestamp insert_date;
 	
 	/**
 	 * Gets the filters data.
@@ -179,7 +181,7 @@ public class InversionGapPara {
 	 *
 	 * @return the gap 1
 	 */
-	public String getGap1() {
+	public Integer getGap1() {
 		return gap1;
 	}
 	
@@ -188,7 +190,7 @@ public class InversionGapPara {
 	 *
 	 * @param gap1 the new gap 1
 	 */
-	public void setGap1(String gap1) {
+	public void setGap1(Integer gap1) {
 		this.gap1 = gap1;
 	}
 	
@@ -197,7 +199,7 @@ public class InversionGapPara {
 	 *
 	 * @return the gap 2
 	 */
-	public String getGap2() {
+	public Integer getGap2() {
 		return gap2;
 	}
 	
@@ -206,7 +208,7 @@ public class InversionGapPara {
 	 *
 	 * @param gap2 the new gap 2
 	 */
-	public void setGap2(String gap2) {
+	public void setGap2(Integer gap2) {
 		this.gap2 = gap2;
 	}
 	
@@ -215,7 +217,7 @@ public class InversionGapPara {
 	 *
 	 * @return the gap 3
 	 */
-	public String getGap3() {
+	public Integer getGap3() {
 		return gap3;
 	}
 	
@@ -224,7 +226,7 @@ public class InversionGapPara {
 	 *
 	 * @param gap3 the new gap 3
 	 */
-	public void setGap3(String gap3) {
+	public void setGap3(Integer gap3) {
 		this.gap3 = gap3;
 	}
 	
@@ -233,7 +235,7 @@ public class InversionGapPara {
 	 *
 	 * @return the gap 4
 	 */
-	public String getGap4() {
+	public Integer getGap4() {
 		return gap4;
 	}
 	
@@ -242,7 +244,7 @@ public class InversionGapPara {
 	 *
 	 * @param gap4 the new gap 4
 	 */
-	public void setGap4(String gap4) {
+	public void setGap4(Integer gap4) {
 		this.gap4 = gap4;
 	}
 	
@@ -251,7 +253,7 @@ public class InversionGapPara {
 	 *
 	 * @return the gap 5
 	 */
-	public String getGap5() {
+	public Integer getGap5() {
 		return gap5;
 	}
 	
@@ -260,7 +262,7 @@ public class InversionGapPara {
 	 *
 	 * @param gap5 the new gap 5
 	 */
-	public void setGap5(String gap5) {
+	public void setGap5(Integer gap5) {
 		this.gap5 = gap5;
 	}
 	
@@ -269,7 +271,7 @@ public class InversionGapPara {
 	 *
 	 * @return the gap 6
 	 */
-	public String getGap6() {
+	public Integer getGap6() {
 		return gap6;
 	}
 	
@@ -278,7 +280,7 @@ public class InversionGapPara {
 	 *
 	 * @param gap6 the new gap 6
 	 */
-	public void setGap6(String gap6) {
+	public void setGap6(Integer gap6) {
 		this.gap6 = gap6;
 	}
 	/**
@@ -286,7 +288,7 @@ public class InversionGapPara {
 	 *
 	 * @return the insert_date
 	 */
-	public Double getinsert_date() {
+	public Timestamp getinsert_date() {
 		return insert_date;
 	}
 
@@ -295,7 +297,7 @@ public class InversionGapPara {
 	 *
 	 * @param insert_date the new insert_date date
 	 */
-	public void setL1_insert_date(Double insert_date) {
+	public void setL1_insert_date(Timestamp insert_date) {
 		this.insert_date = insert_date;
 	}
 	/* (non-Javadoc)

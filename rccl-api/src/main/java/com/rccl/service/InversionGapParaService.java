@@ -10,7 +10,6 @@ import com.rccl.model.InversionGapPara;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.repo.InversionGapParaRepo;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class InversionGapParaService.
  */
@@ -19,7 +18,6 @@ public class InversionGapParaService {
 	/** The Constant logger. */
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(PriceRangeService.class);
-
 	/**
 	 * Gets the inversion gap para data.
 	 * @param request the request
@@ -39,18 +37,20 @@ public class InversionGapParaService {
 	
 	
 	/**
-	 * Updateinversion gap para data.
+	 * Update inversion gap para data.
 	 *
-	 * @param inversionGapParaReq the inversion gap para req
+	 * @param inversionGapParaReq the inversion_gap_para req
 	 * @return true, if successful
 	 */
 	public boolean updateinversionGapParaData(InversionGapPara inversionGapParaReq) {
-		//PriceRangeRepo priceRangeRepo = null;
+		InversionGapParaRepo inversionGapParaRepo = null;
 		boolean status = false;
 		try {
+			inversionGapParaRepo = new InversionGapParaRepo();
+			status = inversionGapParaRepo.updateInversionGapsParaData(inversionGapParaReq);
 		
 		} catch (Exception e) {
-			// logger.error("Error occured while executing updatePriceRangeData: " + e);
+			//e.printStackTrace();
 			throw e;
 		}
 		return status;

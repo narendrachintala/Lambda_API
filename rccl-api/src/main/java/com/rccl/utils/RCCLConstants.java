@@ -91,6 +91,22 @@ public class RCCLConstants {
 	public static final String SAIL_MONTH = "sail_month";
 	public static final String CAT_CLASS = "cat_class";
 	public static final String OCCUPANCY = "occupancy";
+	
+	/**
+	 * InversionGapsPara table update columns
+	 */
+	public static final String ORDER1 = "order_1";
+	public static final String ORDER2 = "order_2";
+	public static final String ORDER3 = "order_3";
+	public static final String ORDER4 = "order_4";
+	public static final String ORDER5 = "order_5";
+	public static final String ORDER6 = "order_6";
+	public static final String GAP1 = "gap_1";
+	public static final String GAP2 = "gap_2";
+	public static final String GAP3 = "gap_3";
+	public static final String GAP4 = "gap_4";
+	public static final String GAP5 = "gap_5";
+	public static final String GAP6 = "gap_6";
 
 	/**
 	 * UI keys

@@ -1,5 +1,8 @@
 package com.rccl.utils.helper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -7,8 +10,7 @@ import com.rccl.model.CurrentPricePara;
 import com.rccl.utils.RCCLConstants;
 
 /**
- * The Class CurrentPriceDataHelper.
- * author: chandrabhan.birla
+ * The Class CurrentPriceDataHelper. author: chandrabhan.birla
  */
 public class CurrentPriceDataHelper {
 
@@ -27,6 +29,7 @@ public class CurrentPriceDataHelper {
 		String EQUALS = RCCLConstants.EQUALS;
 		String COMMA = RCCLConstants.COMMA;
 		String SINGLE_QUOTE = RCCLConstants.SINGLE_QUOTE;
+		List<String> insertDateColumns = new ArrayList<String>();
 
 		try {
 			if (currentPriceReq.getL1_range_max() != null) {
@@ -50,8 +53,16 @@ public class CurrentPriceDataHelper {
 				queryBuffer.append(COMMA);
 
 			}
+			if (queryBuffer.toString().endsWith(",")) {
+				insertDateColumns.add(RCCLConstants.L1_INSERT_DATE);
+				new UpdateColumnHelper();
+				queryBuffer = UpdateColumnHelper.setTimeAsColumnValue(queryBuffer, insertDateColumns);
+			}
+
 			// removing last appended extra COMMA
-			queryBuffer.replace(queryBuffer.lastIndexOf(COMMA), queryBuffer.length(), "");
+			if (queryBuffer.toString().endsWith(",")) {
+				queryBuffer.replace(queryBuffer.lastIndexOf(COMMA), queryBuffer.length(), "");
+			}
 
 			logger.debug("queryBuffer.toString(): " + queryBuffer.toString());
 		} catch (Exception e) {

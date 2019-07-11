@@ -39,7 +39,7 @@ public class CustomFunctions {
 
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-		String formattedTimeStamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss:sss a").format(timestamp);
+		String formattedTimeStamp = new SimpleDateFormat("dd-MMM-yy hh:mm:ss.sss a").format(timestamp);
 
 		return formattedTimeStamp;
 	}

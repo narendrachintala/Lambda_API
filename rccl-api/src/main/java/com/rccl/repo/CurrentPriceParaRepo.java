@@ -31,7 +31,7 @@ public class CurrentPriceParaRepo {
 	 * @param lambdaLogger
 	 * @return the current price para
 	 */
-	public List<CurrentPriceParaDTO> getCurrentPriceData(ParameterFiltersData filterData, Logger logger) {
+	public List<CurrentPriceParaDTO> getCurrentPriceData(ParameterFiltersData filterData) {
 
 		CurrentPriceParaDBUtil currentPriceParaDBUtil = CurrentPriceParaDBUtil.getInstance();
 		QueryExecutor queryExecutor = new QueryExecutor();
@@ -61,7 +61,7 @@ public class CurrentPriceParaRepo {
 	 * @param logger
 	 * @return true, if successful
 	 */
-	public boolean updateCurrentPriceData(CurrentPricePara currentPriceParaReq, Logger logger) {
+	public boolean updateCurrentPriceData(CurrentPricePara currentPriceParaReq) {
 		CurrentPriceParaDBUtil currentPriceParaDBUtil = CurrentPriceParaDBUtil.getInstance();
 		Integer status = 0;
 		QueryExecutor queryExecutor = new QueryExecutor();

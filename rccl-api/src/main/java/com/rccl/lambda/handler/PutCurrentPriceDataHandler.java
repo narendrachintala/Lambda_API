@@ -89,15 +89,15 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 
 		CurrentPricePara currentPriceReq = new CurrentPricePara();
 
-		currentPriceReq.setL1_range_min(-0.2);
+		currentPriceReq.setL1_range_min(-0.1);
 		currentPriceReq.setL1_range_max(0.2);
 
 		currentPriceReq.setFiltersData(FiltersData.getParamRequestData());
 
 		ResponseUtil.getInstance();
-		System.out.println(new GsonBuilder().serializeNulls().create()
-				.toJson(new GatewayResponse<Boolean>(true, ResponseUtil.getHeaders(), RCCLConstants.SC_OK)));
-		System.exit(0);
+		//System.out.println(new GsonBuilder().serializeNulls().create()
+		//		.toJson(new GatewayResponse<Boolean>(true, ResponseUtil.getHeaders(), RCCLConstants.SC_OK)));
+	//	System.exit(0);
 
 		new PutCurrentPriceDataHandler().handleRequest(currentPriceReq, new Context() {
 
@@ -174,6 +174,6 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 				return null;
 			}
 		});
-
+		
 	}
 }

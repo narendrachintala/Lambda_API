@@ -7,6 +7,8 @@ package com.rccl.utils;
  */
 public class RCCLConstants {
 
+	public final static String USER_NAME = "pre";
+
 	/**
 	 * DB Keys
 	 */
@@ -79,6 +81,7 @@ public class RCCLConstants {
 	public final static String L1_INSERT_DATE = "l1_insert_date";
 	public final static String L2_RANGE_MIN = "l2_range_min";
 	public final static String L2_RANGE_MAX = "l2_range_max";
+	public final static String USER_ID = "user_id";
 
 	/**
 	 * CurrentPricePara table update columns
@@ -91,7 +94,7 @@ public class RCCLConstants {
 	public static final String SAIL_MONTH = "sail_month";
 	public static final String CAT_CLASS = "cat_class";
 	public static final String OCCUPANCY = "occupancy";
-	
+
 	/**
 	 * InversionGapsPara table update columns
 	 */
@@ -133,7 +136,7 @@ public class RCCLConstants {
 	public final static String WTS = "wts";
 	public final static String PREV_DEMAND_WINDOW = "prev_demand_window";
 	public final static String FUT_DEMAND_WINDOW = "fut_demand_window";
-	
+
 	/**
 	 * Refundable Premium table update columns
 	 */
@@ -195,10 +198,10 @@ public class RCCLConstants {
 	 * Data validation constants
 	 */
 
-	/**Price range data*/
-	
+	/** Price range data */
+
 	public final static String price_range_l1_min_no = "-0.05";
-	
+
 	public final static String price_range_l1_min = "price_range_l1_min";
 	public final static String price_range_l1_max = "price_range_l1_max";
 	public final static String price_range_l2_min = "price_range_l2_min";
@@ -209,6 +212,6 @@ public class RCCLConstants {
 	 */
 	public final static String L1_PAUSE = "l1_pause";
 
-	public final static String RESUME_PUSH_WTS="resume_push_wts";
-	public final static String STOP_PUSH_WTS="stop_push_wts";
+	public final static String RESUME_PUSH_WTS = "resume_push_wts";
+	public final static String STOP_PUSH_WTS = "stop_push_wts";
 }

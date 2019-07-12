@@ -101,7 +101,6 @@ public class QueryExecutor {
 				}
 			}
 			logger.debug("statement object :" + stmt);
-			//System.out.println("Statement :"+stmt);
 			result = stmt.executeUpdate();
 			return result;
 		} catch (Exception e) {

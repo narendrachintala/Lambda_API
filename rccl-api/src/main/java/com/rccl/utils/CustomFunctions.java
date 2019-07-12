@@ -44,7 +44,7 @@ public class CustomFunctions {
 		return formattedTimeStamp;
 	}
 
-		/**
+	/**
 	 * The main method.
 	 *
 	 * @param args the arguments

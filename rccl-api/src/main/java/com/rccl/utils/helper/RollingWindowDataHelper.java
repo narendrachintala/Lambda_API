@@ -24,7 +24,6 @@ public class RollingWindowDataHelper {
 	public String generateSetterCondition(RollingWindow request, StringBuffer queryBuffer) {
 		String EQUALS = RCCLConstants.EQUALS;
 		String COMMA = RCCLConstants.COMMA;
-		String finalQuery = "";
 		try {
 			if (request.getFut_forecast() != null) {
 				queryBuffer.append(RCCLConstants.PREV_FORECAST).append(EQUALS);
@@ -56,14 +55,14 @@ public class RollingWindowDataHelper {
 				queryBuffer.append(request.getPrice_window());
 				queryBuffer.append(COMMA);
 			}
+			
+			queryBuffer = UpdateColumnHelper.updateGenericColumns(queryBuffer);
 			// removing last appended extra ,
-			if (queryBuffer.toString().endsWith(",")) {
-				finalQuery = queryBuffer.substring(0, queryBuffer.length() - 1);
-			}
+			queryBuffer.replace(queryBuffer.lastIndexOf(COMMA), queryBuffer.length(), "");
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
 		}
-		return finalQuery;
+		return queryBuffer.toString();
 	}
 }

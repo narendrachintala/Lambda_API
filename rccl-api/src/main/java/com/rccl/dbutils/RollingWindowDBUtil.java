@@ -80,7 +80,6 @@ public class RollingWindowDBUtil {
 		String updateRollingWindowQuery = null;
 		try {
 			updateRollingWindowQuery = new String(configInst.updateRollingWindow());
-			System.out.println("reading query from config:" + updateRollingWindowQuery);
 			logger.debug("reading query from config:" + updateRollingWindowQuery);
 			FilterDataHelper filterDataHelper = new FilterDataHelper();
 			String finalWhereCondition = filterDataHelper.generateFilterCondition(request.getFiltersData(),
@@ -95,7 +94,6 @@ public class RollingWindowDBUtil {
 			}
 			updateRollingWindowQuery = updateRollingWindowQuery.replace(RCCLConstants.SETTER_COLUMNS_Q,
 					finalUpdateCondition);
-			System.out.println("modified query:" + updateRollingWindowQuery);
 			logger.debug("Final query for POST API rolling window:" + updateRollingWindowQuery);
 
 		} catch (Exception e) {

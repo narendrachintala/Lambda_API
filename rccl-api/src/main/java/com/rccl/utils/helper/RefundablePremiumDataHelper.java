@@ -25,7 +25,6 @@ public class RefundablePremiumDataHelper {
 		String EQUALS = RCCLConstants.EQUALS;
 		String COMMA = RCCLConstants.COMMA;
 		String SINGLE_QUOTE = RCCLConstants.SINGLE_QUOTE;
-		String finalQuery = "";
 		try {
 			if (request.getGap_type() != null) {
 				queryBuffer.append(RCCLConstants.GAP_TYPE).append(EQUALS);
@@ -42,15 +41,16 @@ public class RefundablePremiumDataHelper {
 				queryBuffer.append(request.getStandard_gap_pct());
 				queryBuffer.append(COMMA);
 			}
+			
+			queryBuffer = UpdateColumnHelper.updateGenericColumns(queryBuffer);
+			
 			// removing last appended extra ,
-			if (queryBuffer.toString().endsWith(",")) {
-				finalQuery = queryBuffer.substring(0, queryBuffer.length() - 1);
-			}
+			queryBuffer.replace(queryBuffer.lastIndexOf(COMMA), queryBuffer.length(), "");
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
 		}
-		return finalQuery;
+		return queryBuffer.toString();
 	}
 
 }

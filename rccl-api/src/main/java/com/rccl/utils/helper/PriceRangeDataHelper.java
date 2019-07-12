@@ -57,6 +57,7 @@ public class PriceRangeDataHelper {
 				queryBuffer.append(COMMA);
 
 			}
+			queryBuffer = UpdateColumnHelper.updateGenericColumns(queryBuffer);
 			// removing last appended extra COMMA
 			queryBuffer.replace(queryBuffer.lastIndexOf(COMMA), queryBuffer.length(), "");
 

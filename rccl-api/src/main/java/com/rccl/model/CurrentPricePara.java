@@ -210,6 +210,15 @@ public class CurrentPricePara {
 		this.l1_insert_date = l1_insert_date;
 	}
 
+	@Override
+	public String toString() {
+		return "CurrentPricePara [filtersData=" + filtersData + ", currency=" + currency + ", metaproduct="
+				+ metaproduct + ", product_code=" + product_code + ", ship_code=" + ship_code + ", sail_date="
+				+ sail_date + ", sail_month=" + sail_month + ", cat_class=" + cat_class + ", occupancy=" + occupancy
+				+ ", price_window=" + price_window + ", l1_range_min=" + l1_range_min + ", l1_range_max=" + l1_range_max
+				+ ", l1_insert_date=" + l1_insert_date + "]";
+	}
+
 	
 	
 	

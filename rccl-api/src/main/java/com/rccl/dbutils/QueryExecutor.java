@@ -25,8 +25,8 @@ public class QueryExecutor {
 	/**
 	 * Execute.
 	 * 
-	 * @param 'query'         final input query
-	 * @param 'logger'        is used to generate the output logs
+	 * @param 'query'  final input query
+	 * @param 'logger' is used to generate the output logs
 	 * @param resultProcessor the result processor
 	 */
 	public void execute(String query, ResultProcessor<?> resultProcessor) {

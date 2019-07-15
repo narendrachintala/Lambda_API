@@ -94,7 +94,8 @@ public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Gate
 				new GatewayResponse<Boolean>(true, ResponseUtil.getHeaders(), RCCLConstants.SC_OK)));
 		System.exit(0);
 
-		new PutPriceRangeDataHandler().handleRequest(priceRangeReq, new Context() {
+		new PutPriceRangeDataHandler().handleRequest(priceRangeReq,
+				new Context() {
 
 			@Override
 			public int getRemainingTimeInMillis() {
@@ -168,7 +169,8 @@ public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Gate
 				// TODO Auto-generated method stub
 				return null;
 			}
-		});
+		})
+		;
 
 	}
 }

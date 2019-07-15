@@ -71,7 +71,6 @@ public class RefundablePremiumDBUtil {
 		String updateRefundablePremiumQuery = null;
 		try {
 			updateRefundablePremiumQuery = new String(configInst.updateRefundablePremium());
-			System.out.println("reading query from config:" + updateRefundablePremiumQuery);
 			logger.debug("reading query from config:" + updateRefundablePremiumQuery);
 			FilterDataHelper filterDataHelper = new FilterDataHelper();
 			String finalWhereCondition = filterDataHelper.generateFilterCondition(request.getFiltersData(),
@@ -86,7 +85,6 @@ public class RefundablePremiumDBUtil {
 			}
 			updateRefundablePremiumQuery = updateRefundablePremiumQuery.replace(RCCLConstants.SETTER_COLUMNS_Q,
 					finalUpdateCondition);
-			System.out.println("modified query:" + updateRefundablePremiumQuery);
 			logger.debug("Final query for POST API Refundable Premium:" + updateRefundablePremiumQuery);
 
 		} catch (Exception e) {

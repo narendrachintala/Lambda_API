@@ -104,7 +104,8 @@ public class PutInversionGapsParaDataHandler
 		String json = gson.toJson(inversionGapPara);
 
 		System.out.println("Sample Input data:" + json);
-		new PutInversionGapsParaDataHandler().handleRequest(inversionGapPara,new Context() {
+		new PutInversionGapsParaDataHandler().handleRequest(inversionGapPara
+				,new Context() {
 
 			@Override
 			public int getRemainingTimeInMillis() {

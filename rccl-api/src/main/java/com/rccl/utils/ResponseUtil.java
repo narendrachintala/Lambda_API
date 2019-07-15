@@ -45,17 +45,19 @@ public class ResponseUtil extends CustomErrors {
 	public static Map<String, String> getHeaders() {
 		Map<String, String> headers = new HashMap<>();
 		headers.put("Content-Type", "application/json");
-		//headers.put("X-Powered-By", "AWS Lambda & serverless");
+		// headers.put("X-Powered-By", "AWS Lambda & serverless");
 		return headers;
 	}
 
 	/**
 	 * Gets the error message.
-	 * @param e the e
+	 * 
+	 * @param e          the e
 	 * @param statusCode the status code
+	 * @param requestID
 	 * @return the error message
 	 */
-	public static GatewayResponse<ErrorMessage> getErrorMessage(Exception e, Integer statusCode) {
+	public static GatewayResponse<ErrorMessage> getErrorMessage(Exception e, Integer statusCode, String requestID) {
 		String errorMsg = e.getCause().getLocalizedMessage();
 		if (errorMsg != null) {
 			errorMsg.substring(errorMsg.indexOf(RCCLConstants.NAMED_QRY_PREFIX));
@@ -63,7 +65,8 @@ public class ResponseUtil extends CustomErrors {
 		GatewayResponse<ErrorMessage> error = null;
 		try {
 			ErrorMessage errorMessage = new ErrorMessage(errorMsg, statusCode);
-			error = new GatewayResponse<ErrorMessage>(errorMessage, getHeaders(), RCCLConstants.SC_BAD_REQUEST);
+			error = new GatewayResponse<ErrorMessage>(errorMessage, getHeaders(), RCCLConstants.SC_BAD_REQUEST,
+					requestID);
 		} catch (Exception ex) {
 			logger.error(ex);
 			throw ex;
@@ -79,11 +82,11 @@ public class ResponseUtil extends CustomErrors {
 	 * @param statusCode the status code
 	 * @return the cust error message
 	 */
-	public static GatewayResponse<ErrorMessage> getCustErrorMessage(String errorMsg, Integer statusCode) {
+	public static GatewayResponse<ErrorMessage> getCustErrorMessage(String errorMsg, Integer statusCode,String requestID) {
 		GatewayResponse<ErrorMessage> message = null;
 		try {
 			ErrorMessage errorMessage = new ErrorMessage(errorMsg, statusCode);
-			message = new GatewayResponse<ErrorMessage>(errorMessage, getHeaders(), statusCode);
+			message = new GatewayResponse<ErrorMessage>(errorMessage, getHeaders(), statusCode,requestID);
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;

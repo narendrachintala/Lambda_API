@@ -37,7 +37,7 @@ public class GetPriceRangeDataHandler
 	/** The Constant logger. */
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(GetPriceRangeDataHandler.class);
-	
+
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 
@@ -68,20 +68,20 @@ public class GetPriceRangeDataHandler
 				priceRangeList = priceRangeService.getPriceRangeData(request);
 				if (priceRangeList != null && priceRangeList.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(
-							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK);
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
+							context.getAwsRequestId());
 				} else {
 					response = new GatewayResponse<List<PriceRangeDTO>>(priceRangeList, ResponseUtil.getHeaders(),
-							RCCLConstants.SC_OK);
+							RCCLConstants.SC_OK, context.getAwsRequestId());
 				}
 			}
 
 		} catch (Exception e) {
 			logger.error("Error occured while executing GetPriceRangeDataHandler: " + e.getMessage());
 			e.printStackTrace();
-			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, context.getAwsRequestId());
 		}
-		System.out.println(new
-		 GsonBuilder().serializeNulls().create().toJson(response));
+		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
 
 	}

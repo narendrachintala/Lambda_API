@@ -42,7 +42,14 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 	 * @return true if update is successful
 	 */
 	public GatewayResponse<? extends Object> handleRequest(RollingWindow request, Context context) {
-		context.getLogger().log("Input request: " + request);
+		logger.info("Input request: " + request);
+		
+		/**
+		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
+		 * through out session
+		 */
+		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
+		
 		boolean update = false;
 		GatewayResponse<? extends Object> response = null;
 		RollingWindowDataValidator rDataValidator = null;
@@ -56,15 +63,15 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 				update = rollingWindowService.updateRollingWindowData(request);
 				if (update == true) {
 					response = ResponseUtil.getCustErrorMessage(
-							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_SUCCESS), RCCLConstants.SC_OK);
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_SUCCESS), RCCLConstants.SC_OK,RCCLConstants.REQUEST_ID);
 				} else {
 					response = ResponseUtil.getCustErrorMessage(
-							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_FAILURE), RCCLConstants.SC_OK);
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_FAILURE), RCCLConstants.SC_OK,RCCLConstants.REQUEST_ID);
 				}
 			}
 		} catch (Exception ex) {
 			logger.error("Error occured while executing PutRollingWindowDataHandler: " + ex.getMessage());
-			return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST,RCCLConstants.REQUEST_ID);
 
 		}
 		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));

@@ -24,25 +24,33 @@ import com.rccl.utils.ResponseUtil;
  */
 public class PutRefundablePremiumDataHandler
 		implements RequestHandler<RefundablePremium, GatewayResponse<? extends Object>> {
-	
+
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
 	}
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(PutRefundablePremiumDataHandler.class);
-	
+
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
-	
+
 	/**
 	 * Handle request.
+	 * 
 	 * @param request contains chosen filters as key-value pair
 	 * @param context lambda context object
 	 * @return true if update is successful
 	 */
 	public GatewayResponse<? extends Object> handleRequest(RefundablePremium request, Context context) {
-		context.getLogger().log("Input request: " + request);
+		logger.info("Input request: " + request);
+
+		/**
+		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
+		 * through out session
+		 */
+		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
+
 		boolean update = false;
 		GatewayResponse<? extends Object> response = null;
 		RefundablePremiumDataValidator rDataValidator = null;
@@ -56,36 +64,38 @@ public class PutRefundablePremiumDataHandler
 				update = refundablePremiumService.updateRefundablePremiumData(request);
 				if (update == true) {
 					response = ResponseUtil.getCustErrorMessage(
-							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_SUCCESS), RCCLConstants.SC_OK);
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_SUCCESS), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
 				} else {
 					response = ResponseUtil.getCustErrorMessage(
-							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_FAILURE), RCCLConstants.SC_OK);
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_FAILURE), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
 				}
 			}
 		} catch (Exception ex) {
 			logger.error("Error occured while executing PutRefundablePremium: " + ex.getMessage());
-			return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 
 		}
 		Gson gson = new Gson();
 		String json = gson.toJson(response);
-		
+
 		System.out.println("Response:" + json);
 		return response;
 	}
-	
+
 	/**
 	 * The main method.
 	 *
 	 * @param args the arguments
 	 */
 	public static void main(String args[]) {
-		
+
 		RefundablePremium refundablePremium = new RefundablePremium();
 		refundablePremium.setGap_type("Standard");
 		refundablePremium.setCurrent_gap_pct(10.0);
 		refundablePremium.setStandard_gap_pct(20.0);
-		
+
 		ParameterFiltersData parameterFiltersData = new ParameterFiltersData();
 		parameterFiltersData.setCat_class("O");
 		parameterFiltersData.setMetaproduct("SHORT CARIBBEAN");
@@ -93,14 +103,14 @@ public class PutRefundablePremiumDataHandler
 		parameterFiltersData.setProduct_code("BAHAMA4");
 		parameterFiltersData.setSail_month("3");
 		parameterFiltersData.setShip_code("MJ");
-		
+
 		refundablePremium.setFiltersData(parameterFiltersData);
-		
+
 		Gson gson = new Gson();
 		String json = gson.toJson(refundablePremium);
-		
+
 		System.out.println("Sample Input data:" + json);
-		
+
 		new PutRefundablePremiumDataHandler().handleRequest(refundablePremium, new Context() {
 
 			@Override
@@ -167,15 +177,15 @@ public class PutRefundablePremiumDataHandler
 			public LambdaLogger getLogger() {
 				// TODO Auto-generated method stub
 				return new LambdaLogger() {
-					
+
 					@Override
 					public void log(String string) {
 						// TODO Auto-generated method stub
-						
+
 					}
 				};
 			}
-			
+
 		});
 	}
 

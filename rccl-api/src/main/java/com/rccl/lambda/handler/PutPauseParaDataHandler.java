@@ -42,6 +42,12 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 	 */
 	public GatewayResponse<? extends Object> handleRequest(PausePara request, Context context) {
 		context.getLogger().log("Input request: " + request);
+		/**
+		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
+		 * through out session
+		 */
+		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
+		
 		boolean update = false;
 		GatewayResponse<? extends Object> response = null;
 		PauseParaDataValidator rDataValidator = null;
@@ -55,15 +61,15 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 				update = PauseParaService.updatePauseParaData(request);
 				if (update == true) {
 					response = ResponseUtil.getCustErrorMessage(
-							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_SUCCESS), RCCLConstants.SC_OK);
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_SUCCESS), RCCLConstants.SC_OK,RCCLConstants.REQUEST_ID);
 				} else {
 					response = ResponseUtil.getCustErrorMessage(
-							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_FAILURE), RCCLConstants.SC_OK);
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_FAILURE), RCCLConstants.SC_OK,RCCLConstants.REQUEST_ID);
 				}
 			}
 		} catch (Exception ex) {
 			 logger.error("Error occured while executing PauseParaDataHandler: " + ex.getMessage());
-			 return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST);
+			 return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST,RCCLConstants.REQUEST_ID);
 		}
 		System.out.println("value of update():" + update);
 		return response;

@@ -33,7 +33,7 @@ public class GetPauseParaDataHandler
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(GetPauseParaDataHandler.class);
-	
+
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 
@@ -46,6 +46,13 @@ public class GetPauseParaDataHandler
 	 */
 	public GatewayResponse<? extends Object> handleRequest(ParameterFiltersData request, Context context) {
 		logger.info("Input: " + request);
+
+		/**
+		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
+		 * through out session
+		 */
+		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
+
 		List<PauseParaDTO> pauseParaList = null;
 		GatewayResponse<? extends Object> response = null;
 		RequestDataValidator pauseParaValidator = null;
@@ -58,15 +65,16 @@ public class GetPauseParaDataHandler
 				pauseParaList = pauseParaService.getPauseParaData(request);
 				if (pauseParaList != null && pauseParaList.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(
-							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK);
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
 				} else {
 					response = new GatewayResponse<List<PauseParaDTO>>(pauseParaList, ResponseUtil.getHeaders(),
-							RCCLConstants.SC_OK);
+							RCCLConstants.SC_OK, RCCLConstants.REQUEST_ID);
 				}
 			}
 		} catch (Exception e) {
 			logger.error("Error occured while executing GetPauseParaDataHandler: " + e.getMessage());
-			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
 		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
@@ -78,8 +86,7 @@ public class GetPauseParaDataHandler
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-		new GetPauseParaDataHandler().handleRequest(FiltersData.getRequestData(),
-				new Context() {
+		new GetPauseParaDataHandler().handleRequest(FiltersData.getRequestData(), new Context() {
 			@Override
 			public int getRemainingTimeInMillis() {
 				// TODO Auto-generated method stub
@@ -150,8 +157,7 @@ public class GetPauseParaDataHandler
 				// TODO Auto-generated method stub
 				return null;
 			}
-		})
-		;
+		});
 	}
 
 }

@@ -32,20 +32,27 @@ public class GetRefundablePremiumHandler
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(GetRefundablePremiumHandler.class);
-	
+
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
-	
+
 	/**
-	 * This method will be invoked from AWS Lambda function to fetch refundable premium
-	 * parameter data based on provided filter criteria
+	 * This method will be invoked from AWS Lambda function to fetch refundable
+	 * premium parameter data based on provided filter criteria
 	 *
 	 * @see com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java.lang.
 	 *      Object, com.amazonaws.services.lambda.runtime.Context)
 	 * 
 	 */
 	public GatewayResponse<? extends Object> handleRequest(ParameterFiltersData request, Context context) {
-		//logger.info("Input request: " + request);
+		logger.info("Input request: " + request);
+
+		/**
+		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
+		 * through out session
+		 */
+		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
+
 		GatewayResponse<? extends Object> response = null;
 		List<RefundablePremiumDTO> refundablePremiumList = null;
 		RequestDataValidator requestDataValidator = null;
@@ -58,22 +65,22 @@ public class GetRefundablePremiumHandler
 				refundablePremiumList = refundablePremiumService.getRefundablePremiumData(request);
 				if (refundablePremiumList != null && refundablePremiumList.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(
-							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK);
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
 				} else {
 					response = new GatewayResponse<List<RefundablePremiumDTO>>(refundablePremiumList,
-							ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
+							ResponseUtil.getHeaders(), RCCLConstants.SC_OK, RCCLConstants.REQUEST_ID);
 				}
 			}
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			logger.error("Error occured while executing GetRollingWindowHandler: " + ex.getMessage());
 			response = new GatewayResponse<String>(ex.getLocalizedMessage(), ResponseUtil.getHeaders(),
-					RCCLConstants.SC_BAD_REQUEST);
+					RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
 		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
 	}
-	
+
 	public static void main(String args[]) {
 		// prepares sample input data for handler class
 		ParameterFiltersData parameterFiltersData = new ParameterFiltersData();
@@ -83,7 +90,7 @@ public class GetRefundablePremiumHandler
 		parameterFiltersData.setProduct_code("CARIB5");
 		parameterFiltersData.setSail_month("3");
 		parameterFiltersData.setShip_code("MJ");
-		
+
 		new GetRefundablePremiumHandler().handleRequest(parameterFiltersData, new Context() {
 
 			@Override
@@ -150,15 +157,15 @@ public class GetRefundablePremiumHandler
 			public LambdaLogger getLogger() {
 				// TODO Auto-generated method stub
 				return new LambdaLogger() {
-					
+
 					@Override
 					public void log(String string) {
 						// TODO Auto-generated method stub
-						
+
 					}
 				};
 			}
-			
+
 		});
 	}
 

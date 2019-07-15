@@ -33,7 +33,7 @@ public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Gate
 	/** The Constant logger. */
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(PutPriceRangeDataHandler.class);
-	
+
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 
@@ -50,6 +50,13 @@ public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Gate
 	 */
 	public GatewayResponse<? extends Object> handleRequest(PriceRange request, Context context) {
 		logger.info("input: " + request.toString());
+
+		/**
+		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
+		 * through out session
+		 */
+		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
+
 		Boolean result = false;
 		PriceRangeDataValidator dataValidator = null;
 		GatewayResponse<? extends Object> response = null;
@@ -63,15 +70,17 @@ public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Gate
 				result = priceRangeService.updatePriceRangeData(request);
 				if (result == true) {
 					response = ResponseUtil.getCustErrorMessage(
-							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_SUCCESS), RCCLConstants.SC_OK);
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_SUCCESS), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
 				} else {
 					response = ResponseUtil.getCustErrorMessage(
-							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_FAILURE), RCCLConstants.SC_OK);
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_FAILURE), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
 				}
 			}
 		} catch (Exception e) {
 			logger.error("Error occured while executing PutPriceRangeDataHandler: " + e);
-			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
 		return response;
 	}
@@ -90,12 +99,11 @@ public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Gate
 
 		priceRangeReq.setFiltersData(FiltersData.getParamRequestData());
 
-		System.out.println(new GsonBuilder().serializeNulls().create().toJson(
-				new GatewayResponse<Boolean>(true, ResponseUtil.getHeaders(), RCCLConstants.SC_OK)));
+		System.out.println(new GsonBuilder().serializeNulls().create().toJson(new GatewayResponse<Boolean>(true,
+				ResponseUtil.getHeaders(), RCCLConstants.SC_OK, RCCLConstants.REQUEST_ID)));
 		System.exit(0);
 
-		new PutPriceRangeDataHandler().handleRequest(priceRangeReq,
-				new Context() {
+		new PutPriceRangeDataHandler().handleRequest(priceRangeReq, new Context() {
 
 			@Override
 			public int getRemainingTimeInMillis() {
@@ -169,8 +177,7 @@ public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Gate
 				// TODO Auto-generated method stub
 				return null;
 			}
-		})
-		;
+		});
 
 	}
 }

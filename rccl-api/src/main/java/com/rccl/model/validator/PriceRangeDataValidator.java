@@ -96,7 +96,7 @@ public class PriceRangeDataValidator {
 			}
 		} catch (Exception e) {
 			logger.error(e);
-			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST,RCCLConstants.REQUEST_ID);
 		}
 		return null;
 	}

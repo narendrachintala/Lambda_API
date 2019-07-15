@@ -34,8 +34,10 @@ public class PutInversionGapsParaDataHandler
 	static final Logger logger = LogManager.getLogger(PutInversionGapsParaDataHandler.class);
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see
 	 * com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java.lang.
 	 * Object, com.amazonaws.services.lambda.runtime.Context)
@@ -46,6 +48,13 @@ public class PutInversionGapsParaDataHandler
 	 */
 	public GatewayResponse<? extends Object> handleRequest(InversionGapPara request, Context context) {
 		logger.info("input: " + request.toString());
+
+		/**
+		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
+		 * through out session
+		 */
+		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
+
 		Boolean result = false;
 		InversionGapsParaDataValidator dataValidator = null;
 		GatewayResponse<? extends Object> response = null;
@@ -59,19 +68,22 @@ public class PutInversionGapsParaDataHandler
 				result = inversionGapParaService.updateinversionGapParaData(request);
 				if (result == true) {
 					response = ResponseUtil.getCustErrorMessage(
-							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_SUCCESS), RCCLConstants.SC_OK);
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_SUCCESS), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
 				} else {
 					response = ResponseUtil.getCustErrorMessage(
-							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_FAILURE), RCCLConstants.SC_OK);
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_FAILURE), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
 				}
 			}
 		} catch (Exception e) {
 			logger.error("Error occured while executing PutInversionGapsParaDataHandler: " + e);
-			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
 		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
 	}
+
 	/**
 	 * The main method.
 	 * 
@@ -104,8 +116,7 @@ public class PutInversionGapsParaDataHandler
 		String json = gson.toJson(inversionGapPara);
 
 		System.out.println("Sample Input data:" + json);
-		new PutInversionGapsParaDataHandler().handleRequest(inversionGapPara
-				,new Context() {
+		new PutInversionGapsParaDataHandler().handleRequest(inversionGapPara, new Context() {
 
 			@Override
 			public int getRemainingTimeInMillis() {
@@ -179,8 +190,7 @@ public class PutInversionGapsParaDataHandler
 				// TODO Auto-generated method stub
 				return null;
 			}
-		})
-				;
+		});
 
 	}
 

@@ -32,7 +32,7 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 	/** The Constant logger. */
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(PutCurrentPriceDataHandler.class);
-	
+
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 
@@ -45,14 +45,22 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 	 */
 	@Override
 	/**
-	 * Post current price data based on applied filters and requested data
-	 * Handle request.
+	 * Post current price data based on applied filters and requested data Handle
+	 * request.
+	 * 
 	 * @param request contains chosen filters as key-value pair
 	 * @param context lambda context object
 	 * @return true if update is successful
 	 */
 	public GatewayResponse<? extends Object> handleRequest(CurrentPricePara request, Context context) {
 		logger.info("input: " + request.toString());
+
+		/**
+		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
+		 * through out session
+		 */
+		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
+
 		Boolean result = false;
 		CurrentPriceDataValidator dataValidator = null;
 		ConfigUtil configInst = ConfigUtil.getInstance();
@@ -66,15 +74,17 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 				result = currentPriceService.updateCurrentPriceParaData(request);
 				if (result == true) {
 					response = ResponseUtil.getCustErrorMessage(
-							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_SUCCESS), RCCLConstants.SC_OK);
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_SUCCESS), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
 				} else {
 					response = ResponseUtil.getCustErrorMessage(
-							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_FAILURE), RCCLConstants.SC_OK);
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_FAILURE), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
 				}
 			}
 		} catch (Exception e) {
 			logger.error("Error occured while executing PutCurrentPriceDataHandler: " + e);
-			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
 		return response;
 	}
@@ -94,9 +104,10 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 		currentPriceReq.setFiltersData(FiltersData.getParamRequestData());
 
 		ResponseUtil.getInstance();
-		//System.out.println(new GsonBuilder().serializeNulls().create()
-		//		.toJson(new GatewayResponse<Boolean>(true, ResponseUtil.getHeaders(), RCCLConstants.SC_OK)));
-	//	System.exit(0);
+		// System.out.println(new GsonBuilder().serializeNulls().create()
+		// .toJson(new GatewayResponse<Boolean>(true, ResponseUtil.getHeaders(),
+		// RCCLConstants.SC_OK)));
+		// System.exit(0);
 
 		new PutCurrentPriceDataHandler().handleRequest(currentPriceReq, new Context() {
 
@@ -173,6 +184,6 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 				return null;
 			}
 		});
-		
+
 	}
 }

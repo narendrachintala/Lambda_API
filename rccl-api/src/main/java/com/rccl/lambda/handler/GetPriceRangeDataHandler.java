@@ -55,6 +55,12 @@ public class GetPriceRangeDataHandler
 		// LambdaLogger logger = context.getLogger();
 		logger.info("Input: " + request.toString());
 
+		/**
+		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
+		 * through out session
+		 */
+		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
+
 		List<PriceRangeDTO> priceRangeList = null;
 		GatewayResponse<? extends Object> response = null;
 
@@ -69,17 +75,17 @@ public class GetPriceRangeDataHandler
 				if (priceRangeList != null && priceRangeList.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(
 							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
-							context.getAwsRequestId());
+							RCCLConstants.REQUEST_ID);
 				} else {
 					response = new GatewayResponse<List<PriceRangeDTO>>(priceRangeList, ResponseUtil.getHeaders(),
-							RCCLConstants.SC_OK, context.getAwsRequestId());
+							RCCLConstants.SC_OK, RCCLConstants.REQUEST_ID);
 				}
 			}
 
 		} catch (Exception e) {
 			logger.error("Error occured while executing GetPriceRangeDataHandler: " + e.getMessage());
 			e.printStackTrace();
-			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, context.getAwsRequestId());
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
 		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;

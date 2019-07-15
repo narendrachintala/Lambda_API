@@ -8,6 +8,7 @@ package com.rccl.utils;
 public class RCCLConstants {
 
 	public final static String USER_NAME = "pre";
+	public static String REQUEST_ID = null;
 
 	/**
 	 * DB Keys

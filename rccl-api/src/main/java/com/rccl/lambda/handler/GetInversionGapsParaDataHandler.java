@@ -33,7 +33,7 @@ public class GetInversionGapsParaDataHandler
 	/** The Constant logger. */
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(GetInversionGapsParaDataHandler.class);
-	
+
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 
@@ -49,6 +49,12 @@ public class GetInversionGapsParaDataHandler
 	 */
 	public GatewayResponse<? extends Object> handleRequest(ParameterFiltersData request, Context context) {
 		logger.info("Input: " + request.toString());
+		/**
+		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
+		 * through out session
+		 */
+		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
+
 		List<InversionGapsParaDTO> inversionGapsParaList = null;
 		GatewayResponse<? extends Object> response = null;
 		try {
@@ -60,15 +66,16 @@ public class GetInversionGapsParaDataHandler
 				inversionGapsParaList = inversionGapParaService.getinversionGapParaData(request);
 				if (inversionGapsParaList != null && inversionGapsParaList.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(
-							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK);
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
 				} else {
 					response = new GatewayResponse<List<InversionGapsParaDTO>>(inversionGapsParaList,
-							ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
+							ResponseUtil.getHeaders(), RCCLConstants.SC_OK, RCCLConstants.REQUEST_ID);
 				}
 			}
 		} catch (Exception e) {
 			logger.error("Error occured while executing GetInversionGapsParaDataHandler: " + e.getMessage());
-			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
 		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;

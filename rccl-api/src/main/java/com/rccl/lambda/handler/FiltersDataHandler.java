@@ -40,6 +40,13 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 	@Override
 	public GatewayResponse<? extends Object> handleRequest(FiltersData request, Context context) {
 		logger.info("input: " + request);
+
+		/**
+		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
+		 * through out session
+		 */
+		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
+
 		FilterDataService dataService = null;
 		FilterDataDTO dataDTO = null;
 		GatewayResponse<? extends Object> response = null;
@@ -49,11 +56,12 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 			if (response == null) {
 				dataService = new FilterDataService();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.METAPRODUCT_F);
-				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
+				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
+						RCCLConstants.REQUEST_ID);
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getMetaProducts API: " + e.getCause());
-			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
 
 		return response;
@@ -80,11 +88,12 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 			if (response == null) {
 				dataService = new FilterDataService();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.PRODUCT_CODE_F);
-				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
+				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
+						RCCLConstants.REQUEST_ID);
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getProductCodes API: " + e.getCause());
-			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
 
 		return response;
@@ -109,11 +118,12 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 			if (response == null) {
 				dataService = new FilterDataService();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.SHIP_CODE_F);
-				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
+				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
+						RCCLConstants.REQUEST_ID);
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getShipCodes API: " + e.getMessage());
-			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
 		return response;
 	}
@@ -137,11 +147,12 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 			if (response == null) {
 				dataService = new FilterDataService();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.SAIL_MONTH_F);
-				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
+				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
+						RCCLConstants.REQUEST_ID);
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getSailMonths API: " + e.getMessage());
-			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
 		return response;
 	}
@@ -166,11 +177,12 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 			if (response == null) {
 				dataService = new FilterDataService();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.CAT_CLASS_F);
-				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
+				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
+						RCCLConstants.REQUEST_ID);
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getCatClasses API: " + e.getMessage());
-			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
 		return response;
 	}
@@ -194,11 +206,12 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 			if (response == null) {
 				dataService = new FilterDataService();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.CATEGORY_F);
-				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
+				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
+						RCCLConstants.REQUEST_ID);
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getCategory API: " + e.getMessage());
-			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
 		return response;
 	}
@@ -222,11 +235,12 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 			if (response == null) {
 				dataService = new FilterDataService();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.OCCUPANCY_F);
-				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK);
+				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
+						RCCLConstants.REQUEST_ID);
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getOccupancies API: " + e.getMessage());
-			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
 		return response;
 	}

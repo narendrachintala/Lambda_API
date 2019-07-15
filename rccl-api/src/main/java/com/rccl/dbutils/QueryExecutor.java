@@ -42,6 +42,7 @@ public class QueryExecutor {
 			logger.info("executing query : " + query);
 			stmt = con.prepareStatement(query);
 		} catch (SQLException e) {
+			logger.error(e);
 			throw new RCCLException("Error while initializing the database connection", e);
 		}
 		// Returns the result else will throw the exception
@@ -52,6 +53,7 @@ public class QueryExecutor {
 				resultProcessor.processResult(rs);
 			}
 		} catch (Exception e) {
+			logger.error(e);
 			throw new RCCLException("error in querying table", e);
 		} finally {
 			try {
@@ -65,6 +67,7 @@ public class QueryExecutor {
 					con.close();
 				}
 			} catch (SQLException e) {
+				logger.error(e);
 				throw new RCCLException("error in querying table", e);
 			}
 		}
@@ -104,6 +107,7 @@ public class QueryExecutor {
 			result = stmt.executeUpdate();
 			return result;
 		} catch (Exception e) {
+			logger.error(e);
 			throw new RCCLException("error in querying table", e);
 		} finally {
 			try {
@@ -117,6 +121,7 @@ public class QueryExecutor {
 					con.close();
 				}
 			} catch (SQLException e) {
+				logger.error(e);
 				throw new RCCLException("error in querying table", e);
 			}
 		}

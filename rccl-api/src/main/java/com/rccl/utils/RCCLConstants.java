@@ -9,6 +9,7 @@ public class RCCLConstants {
 
 	public final static String USER_NAME = "pre";
 	public static String REQUEST_ID = null;
+	
 
 	/**
 	 * DB Keys
@@ -60,6 +61,7 @@ public class RCCLConstants {
 	public static final String CURRENT_PRICE_PARA = "current_price_para";
 	public static final String REFUNDABLE_PREMIUM = "refundable_premium_para";
 	public static final String INVERSION_GAP_PARA = "inversion_gap_para";
+	public static final String CURRENCY_GAP_PARA = "currency_gap_para";
 
 	/**
 	 * Filters data fields
@@ -95,6 +97,16 @@ public class RCCLConstants {
 	public static final String SAIL_MONTH = "sail_month";
 	public static final String CAT_CLASS = "cat_class";
 	public static final String OCCUPANCY = "occupancy";
+	
+
+	/**
+	 * CurrencyGapPara table update columns
+	 */
+	public static final String CURRENCY1 = "currency1";
+	public static final String CURRENCY2 = "currency2";
+	public static final String CURRENCY3 = "currency3";
+	public static final String INSERT_DATE = "insert_date";
+
 
 	/**
 	 * InversionGapsPara table update columns

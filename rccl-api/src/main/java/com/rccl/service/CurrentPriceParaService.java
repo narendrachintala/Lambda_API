@@ -21,7 +21,6 @@ public class CurrentPriceParaService {
 
 	/**
 	 * @param request  contains end user chosen filter criteria
-	 * @param lambdaLogger
 	 * @return returns final current price parameter data with applied criteria
 	 */
 	public List<CurrentPriceParaDTO> getCurrentPriceParaData(ParameterFiltersData request) {
@@ -38,9 +37,8 @@ public class CurrentPriceParaService {
 	}
 
 	/**
-	 * @param currentPriceParaReq
-	 * @param logger
-	 * @return
+	 * @param currentPriceParaReq (Model for CurrentPricePara)
+	 * @return Boolean status of completion.
 	 */
 	public boolean updateCurrentPriceParaData(CurrentPricePara currentPriceParaReq) {
 		CurrentPriceParaRepo currentPriceParaRepo = null;

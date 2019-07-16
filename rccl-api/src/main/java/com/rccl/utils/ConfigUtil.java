@@ -236,4 +236,26 @@ public class ConfigUtil {
 		System.out.println(getInstance().getPriceRangeData());
 	}
 
+	/**
+	 * Gets the currency gap data.
+	 *
+	 * @return the currency gap data
+	 */
+	public String getCurrencyGapData() {
+		return conf.getProperty("get_currency_gap_para").replace(
+				CustomFunctions.getNamedQuery(RCCLConstants.CURRENCY_GAP_PARA),
+				conf.getProperty(RCCLConstants.CURRENCY_GAP_PARA));
+	}
+
+	/**
+	 * Update currency gap data.
+	 *
+	 * @return the string
+	 */
+	public String updateCurrencyGapData() {
+		return conf.getProperty("update_currency_gap_para").replace(
+				CustomFunctions.getNamedQuery(RCCLConstants.CURRENCY_GAP_PARA),
+				conf.getProperty(RCCLConstants.CURRENCY_GAP_PARA));
+	}
+
 }

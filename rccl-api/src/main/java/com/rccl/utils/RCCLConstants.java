@@ -62,6 +62,7 @@ public class RCCLConstants {
 	public static final String REFUNDABLE_PREMIUM = "refundable_premium_para";
 	public static final String INVERSION_GAP_PARA = "inversion_gap_para";
 	public static final String CURRENCY_GAP_PARA = "currency_gap_para";
+	public static final String BOOKED_POSITION_PARA = "booked_position_para";
 
 	/**
 	 * Filters data fields

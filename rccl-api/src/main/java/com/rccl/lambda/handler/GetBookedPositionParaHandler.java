@@ -23,7 +23,7 @@ import com.rccl.utils.ResponseUtil;
 /**
  * The Class GetBookedPositionPara.
  */
-public class GetBookedPositionPara implements RequestHandler<ParameterFiltersData, GatewayResponse<? extends Object>> {
+public class GetBookedPositionParaHandler implements RequestHandler<ParameterFiltersData, GatewayResponse<? extends Object>> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
@@ -86,7 +86,7 @@ public class GetBookedPositionPara implements RequestHandler<ParameterFiltersDat
 				parameterFiltersData.setShip_code("MA");
 				
 				
-				new GetBookedPositionPara().handleRequest(parameterFiltersData,
+				new GetBookedPositionParaHandler().handleRequest(parameterFiltersData,
 						new Context() {
 
 					@Override

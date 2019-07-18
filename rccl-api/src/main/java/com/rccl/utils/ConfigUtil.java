@@ -186,6 +186,17 @@ public class ConfigUtil {
 				CustomFunctions.getNamedQuery(RCCLConstants.INVERSION_GAP_PARA),
 				conf.getProperty(RCCLConstants.INVERSION_GAP_PARA));
 	}
+	
+	/**
+	 * Gets the booked position para.
+	 *
+	 * @return the booked position para
+	 */
+	public String getBookedPositionPara() {
+		return conf.getProperty("get_booked_position_data").replace(
+				CustomFunctions.getNamedQuery(RCCLConstants.BOOKED_POSITION_PARA),
+				conf.getProperty(RCCLConstants.BOOKED_POSITION_PARA));
+	}
 	/**
 	 * Gets the secret managemer name.
 	 *

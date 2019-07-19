@@ -3,10 +3,14 @@ package com.rccl.dbutils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.rccl.model.BookedPosition;
 import com.rccl.model.ParameterFiltersData;
+import com.rccl.model.RefundablePremium;
 import com.rccl.utils.ConfigUtil;
 import com.rccl.utils.RCCLConstants;
+import com.rccl.utils.helper.BookedPositionDataHelper;
 import com.rccl.utils.helper.FilterDataHelper;
+import com.rccl.utils.helper.RefundablePremiumDataHelper;
 
 /**
  * The Class BookedPositionDBUtils.
@@ -65,5 +69,37 @@ public class BookedPositionDBUtils {
 
 			return getBookedPositionQuery;
 		}
+		// Generate final BookedPosition query for POST API
+		public String updateBookedPositionDataQuery(BookedPosition request) {
+			StringBuffer queryBuffer = new StringBuffer();
+			StringBuffer updateBuffer = new StringBuffer();
+			String updateBookedPositionQuery = null;
+			System.out.println("this is dbutils");
+			try {
+				updateBookedPositionQuery = new String(configInst.updateBookedPositionPara());
+				System.out.println("reading query from config:" + updateBookedPositionQuery);
+				//logger.debug("reading query from config:" + updateBookedPositionQuery);
+				FilterDataHelper filterDataHelper = new FilterDataHelper();
+				String finalWhereCondition = filterDataHelper.generateFilterCondition(request.getFiltersData(),
+						queryBuffer);
+				BookedPositionDataHelper BookedPositionDataHelper = new BookedPositionDataHelper();
+				String finalUpdateCondition = BookedPositionDataHelper.generateSetterCondition(request, updateBuffer);
+				if (finalWhereCondition.equals("")) {
+					updateBookedPositionQuery = updateBookedPositionQuery.replace(RCCLConstants.WHERE_CONDITION_Q, "1=1");
+				} else {
+					updateBookedPositionQuery = updateBookedPositionQuery.replace(RCCLConstants.WHERE_CONDITION_Q,
+							finalWhereCondition);
+				}
+				updateBookedPositionQuery = updateBookedPositionQuery.replace(RCCLConstants.SETTER_COLUMNS_Q,
+						finalUpdateCondition);
+				//logger.debug("Final query for POST API Refundable Premium:" + updateBookedPositionQuery);
+
+			} catch (Exception e) {
+				//logger.error("Error occured in updateBookedPositionQuery: " + e);
+				throw e;
+			}
+			return updateBookedPositionQuery;
+		}
+
 
 }

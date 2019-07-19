@@ -9,9 +9,6 @@ public class BookedPosition {
 	/** The filters data. */
 	private ParameterFiltersData filtersData;	
 	
-	/** The currency. */
-	private String currency;
-	
 	/** The booked position. */
 	private Integer booked_position;
 	
@@ -35,25 +32,6 @@ public class BookedPosition {
 	public void setFiltersData(ParameterFiltersData filtersData) {
 		this.filtersData = filtersData;
 	}
-	
-	/**
-	 * Gets the currency.
-	 *
-	 * @return the currency
-	 */
-	public String getCurrency() {
-		return currency;
-	}
-	
-	/**
-	 * Sets the currency.
-	 *
-	 * @param currency the new currency
-	 */
-	public void setCurrency(String currency) {
-		this.currency = currency;
-	}
-	
 	/**
 	 * Gets the booked position.
 	 *
@@ -89,4 +67,13 @@ public class BookedPosition {
 	public void setL1_insert_date(Timestamp l1_insert_date) {
 		this.l1_insert_date = l1_insert_date;
 	}
+	/**
+	 * To string.
+	 * @return the string
+	 */
+	@Override
+	public String toString() {
+		return "BookedPosition [filtersData=" + filtersData + ", booked_position=" + booked_position + ", l1_insert_date=" + l1_insert_date+ 
+				", getBooked_position()=" + getBooked_position() +", getL1_insert_date()=" + getL1_insert_date() + "]";
+		}
 }

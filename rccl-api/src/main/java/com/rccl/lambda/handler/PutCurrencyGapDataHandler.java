@@ -99,10 +99,9 @@ public class PutCurrencyGapDataHandler implements RequestHandler<CurrencyGapPara
 
 		CurrencyGapPara currentPriceReq = new CurrencyGapPara();
 
-		
-
 		currentPriceReq.setFiltersData(FiltersData.getParamRequestData());
-
+		currentPriceReq.setCurrency3("USD");
+		currentPriceReq.setGap3(0.1);
 		ResponseUtil.getInstance();
 		// System.out.println(new GsonBuilder().serializeNulls().create()
 		// .toJson(new GatewayResponse<Boolean>(true, ResponseUtil.getHeaders(),

@@ -107,23 +107,26 @@ public class RCCLConstants {
 	public static final String CURRENCY2 = "currency2";
 	public static final String CURRENCY3 = "currency3";
 	public static final String INSERT_DATE = "insert_date";
+	public static final String GAP1 = "gap1";
+	public static final String GAP2 = "gap2";
+	public static final String GAP3 = "gap3";
 
 
 	/**
 	 * InversionGapsPara table update columns
 	 */
-	public static final String ORDER1 = "order_1";
-	public static final String ORDER2 = "order_2";
-	public static final String ORDER3 = "order_3";
-	public static final String ORDER4 = "order_4";
-	public static final String ORDER5 = "order_5";
-	public static final String ORDER6 = "order_6";
-	public static final String GAP1 = "gap_1";
-	public static final String GAP2 = "gap_2";
-	public static final String GAP3 = "gap_3";
-	public static final String GAP4 = "gap_4";
-	public static final String GAP5 = "gap_5";
-	public static final String GAP6 = "gap_6";
+	public static final String ORDER_1 = "order_1";
+	public static final String ORDER_2 = "order_2";
+	public static final String ORDER_3 = "order_3";
+	public static final String ORDER_4 = "order_4";
+	public static final String ORDER_5 = "order_5";
+	public static final String ORDER_6 = "order_6";
+	public static final String GAP_1 = "gap_1";
+	public static final String GAP_2 = "gap_2";
+	public static final String GAP_3 = "gap_3";
+	public static final String GAP_4 = "gap_4";
+	public static final String GAP_5 = "gap_5";
+	public static final String GAP_6 = "gap_6";
 
 	/**
 	 * UI keys

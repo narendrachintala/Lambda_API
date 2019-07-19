@@ -2,10 +2,13 @@ package com.rccl.model;
 
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class InversionGapPara.
  */
+@JsonPOJOBuilder
 public class InversionGapPara {
 	
 	/** The filters data. */

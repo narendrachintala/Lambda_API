@@ -1,11 +1,14 @@
 package com.rccl.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 //TODO: Auto-generated Javadoc
 /**
 * The Class CurrentPricePara.
 *
 * @author chandrabhan.birla
 */
+@JsonPOJOBuilder
 public class CurrentPricePara {
 	
 	/** The filter data. */

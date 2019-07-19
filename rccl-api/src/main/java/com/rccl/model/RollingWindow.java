@@ -2,9 +2,12 @@ package com.rccl.model;
 
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 /**
  * The Class RollingWindow.
  */
+@JsonPOJOBuilder
 public class RollingWindow {
 
 	/** The filters data. */

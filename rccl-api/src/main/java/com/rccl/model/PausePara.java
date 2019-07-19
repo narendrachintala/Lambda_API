@@ -2,9 +2,12 @@ package com.rccl.model;
 
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 /**
  * The Class PausePara.
  */
+@JsonPOJOBuilder
 public class PausePara {
 
 	/** The filters data. */

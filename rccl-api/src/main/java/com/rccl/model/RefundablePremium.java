@@ -1,8 +1,11 @@
 package com.rccl.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 /**
  * The Class RefundablePremium.
  */
+@JsonPOJOBuilder
 public class RefundablePremium {
 	
 	/** The filters data. */

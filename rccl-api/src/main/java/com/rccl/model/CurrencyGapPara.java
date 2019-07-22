@@ -1,11 +1,14 @@
 package com.rccl.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class CurrencyGapPara.
  * 
  * @author : chandrabhan.birla
  */
+@JsonPOJOBuilder
 public class CurrencyGapPara {
 
 	/** The filter data. */

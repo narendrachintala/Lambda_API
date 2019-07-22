@@ -1,9 +1,12 @@
 package com.rccl.model;
 
 import java.sql.Timestamp;
+
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 /**
  * The Class BookedPosition.
  */
+@JsonPOJOBuilder
 public class BookedPosition {
 	
 	/** The filters data. */

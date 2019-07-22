@@ -8,9 +8,7 @@ import org.apache.logging.log4j.Logger;
 import com.rccl.dto.BookedPositionDTO;
 import com.rccl.model.BookedPosition;
 import com.rccl.model.ParameterFiltersData;
-import com.rccl.model.RefundablePremium;
 import com.rccl.repo.BookedPositionRepo;
-import com.rccl.repo.RefundablePremiumRepo;
 
 /**
  * The Class BookedPositionParaService.
@@ -47,7 +45,6 @@ public class BookedPositionParaService {
 		BookedPositionRepo bookedPositionRepo = null;
 		boolean status = false;
 		try {
-			System.out.println("this is service");
 			bookedPositionRepo = new BookedPositionRepo();
 			status = bookedPositionRepo.updateBookedPositionData(request);
 		} catch (Exception e) {

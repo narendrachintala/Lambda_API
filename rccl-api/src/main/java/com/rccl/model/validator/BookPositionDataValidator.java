@@ -19,8 +19,8 @@ public class BookPositionDataValidator {
 	public static BookPositionDataValidator _instance = null;
 	
 	/**
-	 * Gets the single instance of RefundablePremiumDataValidator.
-	 * @return single instance of RefundablePremiumDataValidator
+	 * Gets the single instance of BookPositionDataValidator.
+	 * @return single instance of BookPositionDataValidator
 	 */
 	public static BookPositionDataValidator getInstance() {
 		if (_instance == null) {

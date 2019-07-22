@@ -8,11 +8,9 @@ import org.apache.logging.log4j.Logger;
 
 import com.rccl.dbutils.BookedPositionDBUtils;
 import com.rccl.dbutils.QueryExecutor;
-import com.rccl.dbutils.RefundablePremiumDBUtil;
 import com.rccl.dto.BookedPositionDTO;
 import com.rccl.model.BookedPosition;
 import com.rccl.model.ParameterFiltersData;
-import com.rccl.model.RefundablePremium;
 import com.rccl.processor.BookedPositionResultProcessor;
 
 /**
@@ -56,7 +54,6 @@ public class BookedPositionRepo {
 	public boolean updateBookedPositionData(BookedPosition request) {
 		BookedPositionDBUtils dbUtils = BookedPositionDBUtils.getInstance();
 		QueryExecutor queryExecutor = new QueryExecutor();
-		System.out.println("this is Repo");
 		Integer status = 0;
 		try {
 			String updateBookedPositionQuery = dbUtils.updateBookedPositionDataQuery(request);

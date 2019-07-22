@@ -19,6 +19,9 @@ import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.ResponseUtil;
 
+/**
+ * The Class PutBookedPositionParaHandler.
+ */
 public class PutBookedPositionParaHandler implements RequestHandler<BookedPosition, GatewayResponse<? extends Object>> {
 
 	static {
@@ -33,7 +36,6 @@ public class PutBookedPositionParaHandler implements RequestHandler<BookedPositi
 
 	/**
 	 * Handle request.
-	 * 
 	 * @param request contains chosen filters as key-value pair
 	 * @param context lambda context object
 	 * @return true if update is successful

@@ -160,6 +160,11 @@ public class RCCLConstants {
 	public final static String GAP_TYPE = "gap_type";
 	public final static String CURRENT_GAP_PCT = "current_gap_pct";
 	public final static String STANDARD_GAP_PCT = "standard_gap_pct";
+	/**
+	 * Booked position para TABLE update columns
+	 */
+	
+	public final static String BOOKED_POSITION = "booked_position";
 
 	/**
 	 * Error messages

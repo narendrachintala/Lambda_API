@@ -90,7 +90,7 @@ public class QueryExecutor {
 		int i = 0;
 		int result = 0;
 		try {
-			logger.info("executing query : " + query);
+			//logger.info("executing query : " + query);
 			stmt = con.prepareStatement(query);
 		} catch (SQLException e) {
 			throw new RCCLException("Error while initializing the database connection", e);
@@ -99,15 +99,15 @@ public class QueryExecutor {
 			i = 1;
 			if (!CollectionUtils.isNullOrEmpty(params)) {
 				for (String p : params) {
-					logger.debug("param" + i + ":" + p);
+					//logger.debug("param" + i + ":" + p);
 					stmt.setString(i++, p);
 				}
 			}
-			logger.debug("statement object :" + stmt);
+			//logger.debug("statement object :" + stmt);
 			result = stmt.executeUpdate();
 			return result;
 		} catch (Exception e) {
-			logger.error(e);
+			//logger.error(e);
 			throw new RCCLException("error in querying table", e);
 		} finally {
 			try {
@@ -121,7 +121,7 @@ public class QueryExecutor {
 					con.close();
 				}
 			} catch (SQLException e) {
-				logger.error(e);
+				//logger.error(e);
 				throw new RCCLException("error in querying table", e);
 			}
 		}

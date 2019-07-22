@@ -198,6 +198,16 @@ public class ConfigUtil {
 				conf.getProperty(RCCLConstants.BOOKED_POSITION_PARA));
 	}
 	/**
+	 * Update BookedPositionPara.
+	 *
+	 * @return the string
+	 */
+	public String updateBookedPositionPara() {
+		return conf.getProperty("update_booked_position_data").replace(
+				CustomFunctions.getNamedQuery(RCCLConstants.BOOKED_POSITION_PARA),
+				conf.getProperty(RCCLConstants.BOOKED_POSITION_PARA));
+	}
+	/**
 	 * Gets the secret managemer name.
 	 *
 	 * @return the secret managemer name

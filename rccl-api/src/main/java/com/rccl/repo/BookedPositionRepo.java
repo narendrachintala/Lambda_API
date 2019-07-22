@@ -57,10 +57,10 @@ public class BookedPositionRepo {
 		Integer status = 0;
 		try {
 			String updateBookedPositionQuery = dbUtils.updateBookedPositionDataQuery(request);
-			//logger.debug("updateBookedPositionQuery: " + updateBookedPositionQuery);
+			logger.debug("updateBookedPositionQuery: " + updateBookedPositionQuery);
 			status = queryExecutor.executeUpdate(updateBookedPositionQuery, null);
 		} catch (Exception e) {
-			//logger.error("Error occured while executing updateBookedPositionQuery: " + e);
+			logger.error("Error occured while executing updateBookedPositionQuery: " + e);
 			throw e;
 		}
 		if (status == 0) {

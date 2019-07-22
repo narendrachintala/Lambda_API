@@ -29,7 +29,7 @@ public class PutBookedPositionParaHandler implements RequestHandler<BookedPositi
 	}
 
 	// Initialize the Log4j logger.
-	//static final Logger logger = LogManager.getLogger(PutRefundablePremiumDataHandler.class);
+	static final Logger logger = LogManager.getLogger(PutRefundablePremiumDataHandler.class);
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
@@ -41,13 +41,13 @@ public class PutBookedPositionParaHandler implements RequestHandler<BookedPositi
 	 * @return true if update is successful
 	 */
 	public GatewayResponse<? extends Object> handleRequest(BookedPosition request, Context context) {
-		//logger.info("Input request: " + request);
+		logger.info("Input request: " + request);
 
 		/**
 		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
 		 * through out session
 		 */
-		//RCCLConstants.REQUEST_ID = context.getAwsRequestId();
+		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 
 		boolean update = false;
 		GatewayResponse<? extends Object> response = null;
@@ -55,31 +55,31 @@ public class PutBookedPositionParaHandler implements RequestHandler<BookedPositi
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.BOOKED_POSITION_PARA);
 		try {
-		rDataValidator = new BookPositionDataValidator();
-		response = rDataValidator.validatePutRequest(request, jobName);
-		if (response == null) {
-			BookedPositionParaService bookedPositionParaService = new BookedPositionParaService();
-			update = bookedPositionParaService.updateBookedPositionData(request);
-			if (update == true) {
-				response = ResponseUtil.getCustErrorMessage(
-						rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_SUCCESS), RCCLConstants.SC_OK,
-						RCCLConstants.REQUEST_ID);
-			} else {
-				response = ResponseUtil.getCustErrorMessage(
-						rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_FAILURE), RCCLConstants.SC_OK,
-						RCCLConstants.REQUEST_ID);
+			rDataValidator = new BookPositionDataValidator();
+			response = rDataValidator.validatePutRequest(request, jobName);
+			if (response == null) {
+				BookedPositionParaService bookedPositionParaService = new BookedPositionParaService();
+				update = bookedPositionParaService.updateBookedPositionData(request);
+				if (update == true) {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_SUCCESS), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
+				} else {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_RECORDS_FAILURE), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
+				}
 			}
+		} catch (Exception ex) {
+			logger.error("Error occured while executing PutBookedPositionParaHandler: " + ex.getMessage());
+			return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
+
 		}
-	} catch (Exception ex) {
-		//logger.error("Error occured while executing PutBookedPositionParaHandler: " + ex.getMessage());
-		return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
+		Gson gson = new Gson();
+		String json = gson.toJson(response);
 
-	}
-	Gson gson = new Gson();
-	String json = gson.toJson(response);
-
-	System.out.println("Response:" + json);
-	return response;
+		System.out.println("Response:" + json);
+		return response;
 	}
 	/**
 	 * The main method.
@@ -103,82 +103,81 @@ public class PutBookedPositionParaHandler implements RequestHandler<BookedPositi
 
 		System.out.println("Sample Input data:" + json);
 		
-		new PutBookedPositionParaHandler().handleRequest(bookedposition,null) 
-//				new Context() {
-//			
-//			@Override
-//			public int getRemainingTimeInMillis() {
-//				// TODO Auto-generated method stub
-//				return 0;
-//			}
-//			
-//			@Override
-//			public int getMemoryLimitInMB() {
-//				// TODO Auto-generated method stub
-//				return 0;
-//			}
-//			
-//			@Override
-//			public LambdaLogger getLogger() {
-//				// TODO Auto-generated method stub
-//				return new LambdaLogger() {
-//					
-//					@Override
-//					public void log(String string) {
-//						// TODO Auto-generated method stub
-//						
-//					}
-//				};
-//			}
-//			
-//			@Override
-//			public String getLogStreamName() {
-//				// TODO Auto-generated method stub
-//				return null;
-//			}
-//			
-//			@Override
-//			public String getLogGroupName() {
-//				// TODO Auto-generated method stub
-//				return null;
-//			}
-//			
-//			@Override
-//			public String getInvokedFunctionArn() {
-//				// TODO Auto-generated method stub
-//				return null;
-//			}
-//			
-//			@Override
-//			public CognitoIdentity getIdentity() {
-//				// TODO Auto-generated method stub
-//				return null;
-//			}
-//			
-//			@Override
-//			public String getFunctionVersion() {
-//				// TODO Auto-generated method stub
-//				return null;
-//			}
-//			
-//			@Override
-//			public String getFunctionName() {
-//				// TODO Auto-generated method stub
-//				return null;
-//			}
-//			
-//			@Override
-//			public ClientContext getClientContext() {
-//				// TODO Auto-generated method stub
-//				return null;
-//			}
-//			
-//			@Override
-//			public String getAwsRequestId() {
-//				// TODO Auto-generated method stub
-//				return null;
-//			}
-//		})
-		;
+		new PutBookedPositionParaHandler().handleRequest(bookedposition, 
+				new Context() {
+			
+			@Override
+			public int getRemainingTimeInMillis() {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+			
+			@Override
+			public int getMemoryLimitInMB() {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+			
+			@Override
+			public LambdaLogger getLogger() {
+				// TODO Auto-generated method stub
+				return new LambdaLogger() {
+					
+					@Override
+					public void log(String string) {
+						// TODO Auto-generated method stub
+						
+					}
+				};
+			}
+			
+			@Override
+			public String getLogStreamName() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public String getLogGroupName() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public String getInvokedFunctionArn() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public CognitoIdentity getIdentity() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public String getFunctionVersion() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public String getFunctionName() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public ClientContext getClientContext() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public String getAwsRequestId() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		});
 	}
 }

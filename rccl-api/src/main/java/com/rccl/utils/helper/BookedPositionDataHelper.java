@@ -4,16 +4,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.rccl.model.BookedPosition;
-import com.rccl.model.RefundablePremium;
 import com.rccl.utils.RCCLConstants;
 
+/**
+ * The Class BookedPositionDataHelper.
+ */
 public class BookedPositionDataHelper {
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(BookedPositionDataHelper.class);
 
 	/**
 	 * Generate filter condition.
-	 * 
 	 * @param request     the request
 	 * @param queryBuffer the query buffer
 	 * @return the final set condition
@@ -28,12 +29,9 @@ public class BookedPositionDataHelper {
 				queryBuffer.append(SINGLE_QUOTE).append(request.getBooked_position()).append(SINGLE_QUOTE);
 				queryBuffer.append(COMMA);
 			}
-
 			queryBuffer = UpdateColumnHelper.updateGenericColumns(queryBuffer);
-
 			// removing last appended extra ,
 			queryBuffer.replace(queryBuffer.lastIndexOf(COMMA), queryBuffer.length(), "");
-
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
@@ -41,5 +39,4 @@ public class BookedPositionDataHelper {
 		System.out.println("QueryBuffer " + queryBuffer.toString());
 		return queryBuffer.toString();
 	}
-
 }

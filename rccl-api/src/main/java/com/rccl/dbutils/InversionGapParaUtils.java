@@ -60,6 +60,7 @@ public class InversionGapParaUtils {
 			logger.error("Error occured in getinversionGapParaQuery: " + e);
 			throw e;
 		}
+		
 		return getinversionGapParaQuery;
 	}
 
@@ -78,7 +79,7 @@ public class InversionGapParaUtils {
 		try {
 			updateInversionGapsParaQuery = new String(configInst.updateInversionGapsPara());
 			System.out.println("reading query from config:" + updateInversionGapsParaQuery);
-			 logger.debug("reading query from config:" + updateInversionGapsParaQuery);
+			 //logger.debug("reading query from config:" + updateInversionGapsParaQuery);
 			FilterDataHelper filterDataHelper = new FilterDataHelper();
 			String finalWhereCondition = filterDataHelper.generateFilterCondition(request.getFiltersData(),
 					queryBuffer);
@@ -98,7 +99,7 @@ public class InversionGapParaUtils {
 			 updateInversionGapsParaQuery);
 
 		} catch (Exception e) {
-			 logger.error("Error occured in updateInversionGapsParaQuery: " + e);
+			logger.error("Error occured in updateInversionGapsParaQuery: " + e);
 			throw e;
 		}
 		return updateInversionGapsParaQuery;

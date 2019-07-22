@@ -31,11 +31,11 @@ public class BookedPositionParaService {
 			BookedPositionRepo repo = new BookedPositionRepo();
 			bookedPositionData = repo.getBookedPositionData(request);
 		} catch (Exception e) {
-			// e.printStackTrace();
 			throw e;
 		}
 		return bookedPositionData;
 	}
+	
 	/**
 	 * Update BookedPosition premium data.
 	 * @param request the request

@@ -61,12 +61,10 @@ public class InversionGapParaRepo {
 		Integer status = 0;
 		try {
 			String updateInversionGapsParaQuery = dbUtils.updateInversionGapsPara(request);
-			 logger.debug("updateInversionGapsParaQuery: " +
-			 updateInversionGapsParaQuery);
+			 logger.debug("updateInversionGapsParaQuery: " + updateInversionGapsParaQuery);
 			status = queryExecutor.executeUpdate(updateInversionGapsParaQuery, null);
 		} catch (Exception e) {
-			logger.error("Error occured while executing updateInversionGapsParaQuery: " +
-			 e);
+			logger.error("Error occured while executing updateInversionGapsParaQuery: " + e);
 			throw e;
 		}
 		if (status == 0) {

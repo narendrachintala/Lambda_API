@@ -87,7 +87,8 @@ public class GetInversionGapsParaDataHandler
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-		new GetInversionGapsParaDataHandler().handleRequest(FiltersData.getRequestData(), new Context() {
+		new GetInversionGapsParaDataHandler().handleRequest(FiltersData.getRequestData(),
+				new Context() {
 			@Override
 			public int getRemainingTimeInMillis() {
 				// TODO Auto-generated method stub
@@ -158,6 +159,7 @@ public class GetInversionGapsParaDataHandler
 				// TODO Auto-generated method stub
 				return null;
 			}
-		});
+		})
+		;
 	}
 }

@@ -53,7 +53,7 @@ public class PutInversionGapsParaDataHandler
 		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
 		 * through out session
 		 */
-		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
+		//RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 
 		Boolean result = false;
 		InversionGapsParaDataValidator dataValidator = null;
@@ -116,7 +116,8 @@ public class PutInversionGapsParaDataHandler
 		String json = gson.toJson(inversionGapPara);
 
 		System.out.println("Sample Input data:" + json);
-		new PutInversionGapsParaDataHandler().handleRequest(inversionGapPara, new Context() {
+		new PutInversionGapsParaDataHandler().handleRequest(inversionGapPara, 
+				new Context() {
 
 			@Override
 			public int getRemainingTimeInMillis() {
@@ -190,7 +191,8 @@ public class PutInversionGapsParaDataHandler
 				// TODO Auto-generated method stub
 				return null;
 			}
-		});
+		})
+				;
 
 	}
 

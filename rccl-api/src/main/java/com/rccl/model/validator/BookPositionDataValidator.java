@@ -10,6 +10,9 @@ import com.rccl.utils.CustomFunctions;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResponseUtil;
 
+/**
+ * The Class BookPositionDataValidator.
+ */
 public class BookPositionDataValidator {
 	/** The Constant logger. */
 	static final Logger logger = LogManager.getLogger(BookPositionDataValidator.class);
@@ -56,7 +59,6 @@ public class BookPositionDataValidator {
 				return ResponseUtil.error_locked();
 			}
 		} catch (Exception e) {
-			//logger.error(e);
 			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST,RCCLConstants.REQUEST_ID);
 		}
 		return null;

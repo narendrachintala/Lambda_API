@@ -60,7 +60,7 @@ public class BookedPositionDBUtils {
 				getBookedPositionQuery = getBookedPositionQuery.replace(RCCLConstants.WHERE_CONDITION_Q,
 						whereCondition);
 			}
-			logger.debug("Final query for GET API rolling window:" + getBookedPositionQuery);
+			logger.debug("Final query for GET API Booked Position:" + getBookedPositionQuery);
 		} catch (Exception e) {
 			logger.error("Error occured in getBookedPositionQuery: " + e);
 			throw e;
@@ -77,7 +77,7 @@ public class BookedPositionDBUtils {
 		try {
 			updateBookedPositionQuery = new String(configInst.updateBookedPositionPara());
 			System.out.println("reading query from config:" + updateBookedPositionQuery);
-			// logger.debug("reading query from config:" + updateBookedPositionQuery);
+			logger.debug("reading query from config:" + updateBookedPositionQuery);
 			FilterDataHelper filterDataHelper = new FilterDataHelper();
 			String finalWhereCondition = filterDataHelper.generateFilterCondition(request.getFiltersData(),
 					queryBuffer);
@@ -91,11 +91,10 @@ public class BookedPositionDBUtils {
 			}
 			updateBookedPositionQuery = updateBookedPositionQuery.replace(RCCLConstants.SETTER_COLUMNS_Q,
 					finalUpdateCondition);
-			// logger.debug("Final query for POST API Refundable Premium:" +
-			// updateBookedPositionQuery);
+			logger.debug("Final query for POST API Booked Position:" + updateBookedPositionQuery);
 
 		} catch (Exception e) {
-			// logger.error("Error occured in updateBookedPositionQuery: " + e);
+			logger.error("Error occured in updateBookedPositionQuery: " + e);
 			throw e;
 		}
 		return updateBookedPositionQuery;

@@ -99,8 +99,6 @@ public class InversionGapsDataHelper {
 				}
 				
 				queryBuffer = UpdateColumnHelper.updateGenericColumns(queryBuffer);
-				// removing last appended extra ,
-				queryBuffer.replace(queryBuffer.lastIndexOf(COMMA), queryBuffer.length(), "");
 			} catch (Exception e) {
 				logger.error(e);
 				throw e;

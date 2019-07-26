@@ -52,8 +52,10 @@ public class CurrencyGapDataValidator {
 			if (CustomFunctions.isNullOrEmpty(request.getFiltersData().getMetaproduct())) {
 				return ResponseUtil.error_metaproduct();
 			}
-			if (request.getCurrency1() == null && request.getCurrency2() == null && request.getCurrency3() == null
-					&& request.getGap1() == null && request.getGap2() == null && request.getGap3() == null) {
+			if (CustomFunctions.isNullOrEmpty(request.getCurrency1())
+					&& CustomFunctions.isNullOrEmpty(request.getCurrency2())
+					&& CustomFunctions.isNullOrEmpty(request.getCurrency3()) && request.getGap1() == null
+					&& request.getGap2() == null && request.getGap3() == null) {
 				return ResponseUtil.error_update_fields();
 			}
 			String lockStatus = accessControlRepo.getLockStatus(jobName);

@@ -92,6 +92,7 @@ public class QueryExecutor {
 		try {
 			logger.info("executing query : " + query);
 			stmt = con.prepareStatement(query);
+			
 		} catch (SQLException e) {
 			throw new RCCLException("Error while initializing the database connection", e);
 		}
@@ -99,12 +100,13 @@ public class QueryExecutor {
 			i = 1;
 			if (!CollectionUtils.isNullOrEmpty(params)) {
 				for (String p : params) {
-					logger.debug("param" + i + ":" + p);
+					//logger.debug("param" + i + ":" + p);
 					stmt.setString(i++, p);
 				}
 			}
 			logger.debug("statement object :" + stmt);
 			result = stmt.executeUpdate();
+			
 			return result;
 		} catch (Exception e) {
 			logger.error(e);

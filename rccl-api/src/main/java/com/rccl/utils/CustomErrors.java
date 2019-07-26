@@ -58,6 +58,15 @@ public class CustomErrors {
 		return ResponseUtil.getCustErrorMessage(rBundleUtility.getValue(RCCLConstants.ERROR_UPDATE_FIELDS),
 				RCCLConstants.SC_BAD_REQUEST,RCCLConstants.REQUEST_ID);
 	}
+	/**
+	 * Error update column values l1pause.
+	 *
+	 * @return the gateway response
+	 */
+	public static GatewayResponse<ErrorMessage> error_l1_pause() {
+		return ResponseUtil.getCustErrorMessage(rBundleUtility.getValue(RCCLConstants.L1PAUSE_UPDATE_VALUES),
+				RCCLConstants.SC_BAD_REQUEST,RCCLConstants.REQUEST_ID);
+	}
 
 	/**
 	 * Error table name.

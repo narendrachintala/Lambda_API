@@ -72,6 +72,9 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 			 return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST,RCCLConstants.REQUEST_ID);
 		}
 		System.out.println("value of update():" + update);
+		Gson gson = new Gson();
+		String json = gson.toJson(response);
+		System.out.println("response ="+json);
 		return response;
 	}
 
@@ -79,7 +82,7 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 
 		PausePara pausePara = new PausePara();
 		// values to be updated
-		pausePara.setL1_pause(0);
+		pausePara.setL1_pause(11);
 		pausePara.setresume_push_wts(2);
 		pausePara.setstop_push_wts(51);
 

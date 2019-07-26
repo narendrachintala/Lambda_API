@@ -27,6 +27,7 @@ public class PauseParaDataHelper {
 		String finalQuery = "";
 		try {
 			if (request.getL1_pause() != null) {
+				System.out.println("request.getL1_pause() = "+request.getL1_pause());
 				queryBuffer.append(RCCLConstants.L1_PAUSE).append(EQUALS);
 				queryBuffer.append(request.getL1_pause());
 				queryBuffer.append(COMMA);

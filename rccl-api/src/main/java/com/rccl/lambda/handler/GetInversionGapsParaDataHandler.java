@@ -10,13 +10,14 @@ import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rccl.dto.InversionGapsParaDTO;
+import com.rccl.model.ApiGatewayProxyRequest;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.validator.RequestDataValidator;
 import com.rccl.service.InversionGapParaService;
-import com.rccl.testdata.FiltersData;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.ResponseUtil;
@@ -25,7 +26,7 @@ import com.rccl.utils.ResponseUtil;
  * The Class GetPriceRangeDataHandler.
  */
 public class GetInversionGapsParaDataHandler
-		implements RequestHandler<ParameterFiltersData, GatewayResponse<? extends Object>> {
+		implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
 	}
@@ -43,11 +44,13 @@ public class GetInversionGapsParaDataHandler
 	 *
 	 * @param request the request
 	 * @param context the context
-	 * @return the gateway response<? extends object>
+	 * @return the gateway response
 	 * @see com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java.lang.
 	 *      Object, com.amazonaws.services.lambda.runtime.Context)
 	 */
-	public GatewayResponse<? extends Object> handleRequest(ParameterFiltersData request, Context context) {
+	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
+		
+		ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
 		logger.info("Input: " + request.toString());
 		/**
 		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
@@ -56,7 +59,7 @@ public class GetInversionGapsParaDataHandler
 		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 
 		List<InversionGapsParaDTO> inversionGapsParaList = null;
-		GatewayResponse<? extends Object> response = null;
+		GatewayResponse response = null;
 		try {
 			// validating request data
 			RequestDataValidator invergapValidator = new RequestDataValidator();
@@ -69,7 +72,7 @@ public class GetInversionGapsParaDataHandler
 							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
 							RCCLConstants.REQUEST_ID);
 				} else {
-					response = new GatewayResponse<List<InversionGapsParaDTO>>(inversionGapsParaList,
+					response = new GatewayResponse(inversionGapsParaList,
 							ResponseUtil.getHeaders(), RCCLConstants.SC_OK, RCCLConstants.REQUEST_ID);
 				}
 			}
@@ -87,7 +90,7 @@ public class GetInversionGapsParaDataHandler
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-		new GetInversionGapsParaDataHandler().handleRequest(FiltersData.getRequestData(),
+		new GetInversionGapsParaDataHandler().handleRequest(null,
 				new Context() {
 			@Override
 			public int getRemainingTimeInMillis() {

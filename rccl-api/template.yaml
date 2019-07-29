@@ -1,0 +1,346 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: |
+  rev-pre-api
+  RCCl PRE API's for parameter tables
+#Parameters:
+#    Stage:
+#      Type: String
+Globals:
+  Function:
+    MemorySize: 1024
+    Timeout: 180
+    Runtime: java8
+    VpcConfig:
+        SubnetIds:
+          - subnet-0edaea501fb4a6755
+        SecurityGroupIds:
+          - sg-b9017cc5
+    
+Resources:
+  ApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: dev
+      #Auth:
+      #  DefaultAuthorizer: AWS_IAM
+      
+  POSTMetaProductsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.FiltersDataHandler::handleRequest
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /meta_products_service
+            Method: post
+
+  POSTProductCodesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.FiltersDataHandler::getProductCodes
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /product_codes_service
+            Method: post
+      
+  POSTShipCodesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.FiltersDataHandler::getShipCodes
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /ship_codes_service
+            Method: post
+      
+  POSTSailMonthsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.FiltersDataHandler::getSailMonths
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /sail_months_service
+            Method: post
+      
+  POSTCatClassesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.FiltersDataHandler::getCatClasses
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /cat_classes_service
+            Method: post
+      
+  POSTCategoriesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.FiltersDataHandler::getCategories
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /categories_service
+            Method: post
+      
+  POSTOccupancyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.FiltersDataHandler::getOccupancy
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /occupancies_service
+            Method: post
+  POSTPriceRangeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.GetPriceRangeDataHandler::handleRequest
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /price_range_data_service
+            Method: post
+  POSTPauseParaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.GetPauseParaDataHandler::handleRequest
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /pause_para_data_service
+            Method: post
+  POSTRollingWindowFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.GetRollingWindowHandler::handleRequest
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /rolling_window_data_service
+            Method: post   
+  POSTRefundablePremiumFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.GetRefundablePremiumHandler::handleRequest
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /refundable_premium_data_service
+            Method: post
+  POSTInversionGapsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.GetInversionGapsParaDataHandler::handleRequest
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /inversion_gap_data_service
+            Method: post     
+  POSTCurrentPriceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.GetCurrentPriceDataHandler::handleRequest
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /current_price_data_service
+            Method: post    
+  POSTBookedPositionFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.GetBookedPositionParaHandler::handleRequest
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /booked_position_data_service
+            Method: post
+  POSTCurrencyGapFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.GetCurrencyGapDataHandler::handleRequest
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /currency_gap_data_service
+            Method: post
+            
+  PUTPriceRangeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.PutPriceRangeDataHandler::handleRequest
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /price_range_data_service
+            Method: put
+  PUTPauseParaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.PutPauseParaDataHandler::handleRequest
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /pause_para_data_service
+            Method: put
+  PUTRollingWindowFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.PutRollingWindowHandler::handleRequest
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /rolling_window_data_service
+            Method: put   
+  PUTRefundablePremiumFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.PutRefundablePremiumHandler::handleRequest
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /refundable_premium_data_service
+            Method: put
+  PUTInversionGapsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.PutInversionGapsParaDataHandler::handleRequest
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /inversion_gap_data_service
+            Method: put     
+  PUTCurrentPriceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.PutCurrentPriceDataHandler::handleRequest
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /current_price_data_service
+            Method: put    
+  PUTBookedPositionFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.PutBookedPositionParaHandler::handleRequest
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /booked_position_data_service
+            Method: put
+  PUTCurrencyGapFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.PutCurrencyGapDataHandler::handleRequest
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /currency_gap_data_service
+            Method: put
+#Outputs:
+#  ApiGateway:
+#    Description: 'API Gateway endpoint URL for PRE Parameter tables lambd functions'
+#    Value: !Sub 'https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/!Ref Stage/'
+#  ApiGatewayRestApiId:
+#    Description: 'API Gateway ARN for PRE AWS API Gateway'
+#    Value: !Ref ApiGateway
+#    Export:
+#      Name: ApiGateway-RestApiId
+#  ApiGatewayRootResourceId:
+#    Value: !GetAtt ApiGateway.RootResourceId
+#    Export:
+#      Name: ApiGateway-RootResourceId

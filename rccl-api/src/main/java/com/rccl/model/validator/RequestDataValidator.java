@@ -35,10 +35,10 @@ public class RequestDataValidator {
 	/**
 	 * Validate Input-request.
 	 * @param requestData the request data
-	 * @return the gateway response<? extends object>
+	 * @return the gateway response
 	 * @throws RCCLException the RCCL exception
 	 */
-	public GatewayResponse<? extends Object> validateGetRequest(ParameterFiltersData requestData) throws RCCLException {
+	public GatewayResponse validateGetRequest(ParameterFiltersData requestData) throws RCCLException {
 		try {
 			if (requestData == null) {
 				return ResponseUtil.error_json();

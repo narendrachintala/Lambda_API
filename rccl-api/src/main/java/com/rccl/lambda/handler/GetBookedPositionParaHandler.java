@@ -10,8 +10,10 @@ import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rccl.dto.BookedPositionDTO;
+import com.rccl.model.ApiGatewayProxyRequest;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.validator.RequestDataValidator;
@@ -23,7 +25,7 @@ import com.rccl.utils.ResponseUtil;
 /**
  * The Class GetBookedPositionPara.
  */
-public class GetBookedPositionParaHandler implements RequestHandler<ParameterFiltersData, GatewayResponse<? extends Object>> {
+public class GetBookedPositionParaHandler implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
@@ -42,10 +44,12 @@ public class GetBookedPositionParaHandler implements RequestHandler<ParameterFil
 	 * @param context lambda context object
 	 * @return the list of column values based on provided tablename
 	 */
-	public GatewayResponse<? extends Object> handleRequest(ParameterFiltersData request, Context context) {
+	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
+		logger.info("Handler started");
+		ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
 		logger.info("Input request: " + request);
 		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
-		GatewayResponse<? extends Object> response = null;
+		GatewayResponse response = null;
 		List<BookedPositionDTO> bookedPositionlist = null;
 		RequestDataValidator requestDataValidator = null;
 		try {
@@ -60,7 +64,7 @@ public class GetBookedPositionParaHandler implements RequestHandler<ParameterFil
 							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
 							RCCLConstants.REQUEST_ID);
 				} else {
-					response = new GatewayResponse<List<BookedPositionDTO>>(bookedPositionlist,
+					response = new GatewayResponse(bookedPositionlist,
 							ResponseUtil.getHeaders(), RCCLConstants.SC_OK, RCCLConstants.REQUEST_ID);
 				}
 
@@ -86,7 +90,7 @@ public class GetBookedPositionParaHandler implements RequestHandler<ParameterFil
 				parameterFiltersData.setShip_code("MA");
 				
 				
-				new GetBookedPositionParaHandler().handleRequest(parameterFiltersData,
+				new GetBookedPositionParaHandler().handleRequest(null,
 						new Context() {
 
 					@Override

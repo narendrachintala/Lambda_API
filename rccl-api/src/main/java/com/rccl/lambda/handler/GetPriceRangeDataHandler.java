@@ -7,13 +7,13 @@ import org.apache.logging.log4j.Logger;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.google.gson.GsonBuilder;
+import com.google.gson.Gson;
 import com.rccl.dto.PriceRangeDTO;
+import com.rccl.model.ApiGatewayProxyRequest;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.validator.RequestDataValidator;
 import com.rccl.service.PriceRangeService;
-import com.rccl.testdata.FiltersData;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.ResponseUtil;
@@ -28,7 +28,7 @@ import com.rccl.utils.ResponseUtil;
  */
 
 public class GetPriceRangeDataHandler
-		implements RequestHandler<ParameterFiltersData, GatewayResponse<? extends Object>> {
+		implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
@@ -47,12 +47,13 @@ public class GetPriceRangeDataHandler
 	 *
 	 * @param request the request
 	 * @param context the context
-	 * @return the gateway response<? extends object>
+	 * @return the gateway response
 	 * @see com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java.lang.
 	 *      Object, com.amazonaws.services.lambda.runtime.Context)
 	 */
-	public GatewayResponse<? extends Object> handleRequest(ParameterFiltersData request, Context context) {
+	public GatewayResponse handleRequest(final ApiGatewayProxyRequest req, final Context context) {
 		// LambdaLogger logger = context.getLogger();
+		ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
 		logger.info("Input: " + request.toString());
 
 		/**
@@ -62,7 +63,7 @@ public class GetPriceRangeDataHandler
 		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 
 		List<PriceRangeDTO> priceRangeList = null;
-		GatewayResponse<? extends Object> response = null;
+		GatewayResponse response = null;
 
 		try {
 			// validating request data
@@ -77,7 +78,7 @@ public class GetPriceRangeDataHandler
 							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
 							RCCLConstants.REQUEST_ID);
 				} else {
-					response = new GatewayResponse<List<PriceRangeDTO>>(priceRangeList, ResponseUtil.getHeaders(),
+					response = new GatewayResponse(priceRangeList, ResponseUtil.getHeaders(),
 							RCCLConstants.SC_OK, RCCLConstants.REQUEST_ID);
 				}
 			}
@@ -87,7 +88,6 @@ public class GetPriceRangeDataHandler
 			e.printStackTrace();
 			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
-		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
 
 	}
@@ -105,6 +105,6 @@ public class GetPriceRangeDataHandler
 		 * GsonBuilder().serializeNulls().create().toJson(data)); System.exit(0);
 		 */
 
-		new GetPriceRangeDataHandler().handleRequest(FiltersData.getRequestData(), null);
+		//new GetPriceRangeDataHandler().handleRequest(FiltersData.getRequestData(), null);
 	}
 }

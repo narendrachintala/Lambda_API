@@ -8,7 +8,9 @@ import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.rccl.model.ApiGatewayProxyRequest;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.PriceRange;
 import com.rccl.model.validator.PriceRangeDataValidator;
@@ -24,7 +26,7 @@ import com.rccl.utils.ResponseUtil;
  *
  * @author narendra.chintala
  */
-public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, GatewayResponse<? extends Object>> {
+public class PutPriceRangeDataHandler implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
@@ -48,7 +50,9 @@ public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Gate
 	/**
 	 * Post price range data based on applied filters and requested data
 	 */
-	public GatewayResponse<? extends Object> handleRequest(PriceRange request, Context context) {
+	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
+		
+		PriceRange request = new Gson().fromJson(req.getBody(), PriceRange.class);
 		logger.info("input: " + request.toString());
 
 		/**
@@ -59,7 +63,7 @@ public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Gate
 
 		Boolean result = false;
 		PriceRangeDataValidator dataValidator = null;
-		GatewayResponse<? extends Object> response = null;
+		GatewayResponse response = null;
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.PRICE_RANGE_PARA);
 		try {
@@ -99,11 +103,11 @@ public class PutPriceRangeDataHandler implements RequestHandler<PriceRange, Gate
 
 		priceRangeReq.setFiltersData(FiltersData.getParamRequestData());
 
-		System.out.println(new GsonBuilder().serializeNulls().create().toJson(new GatewayResponse<Boolean>(true,
+		System.out.println(new GsonBuilder().serializeNulls().create().toJson(new GatewayResponse(true,
 				ResponseUtil.getHeaders(), RCCLConstants.SC_OK, RCCLConstants.REQUEST_ID)));
 		System.exit(0);
 
-		new PutPriceRangeDataHandler().handleRequest(priceRangeReq, new Context() {
+		new PutPriceRangeDataHandler().handleRequest(null, new Context() {
 
 			@Override
 			public int getRemainingTimeInMillis() {

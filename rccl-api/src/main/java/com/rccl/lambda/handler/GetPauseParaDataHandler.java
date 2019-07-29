@@ -75,7 +75,6 @@ public class GetPauseParaDataHandler
 		List<PauseParaDTO> pauseParaList = null;
 
 		GatewayResponse response = null;
-		RequestDataValidator pauseParaValidator = null;
 
 		try {
 			// Validate input request if any error occurred throw custom exception.

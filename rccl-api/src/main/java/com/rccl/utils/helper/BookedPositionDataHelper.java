@@ -12,6 +12,23 @@ import com.rccl.utils.RCCLConstants;
 public class BookedPositionDataHelper {
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(BookedPositionDataHelper.class);
+	
+	/** The instance. */
+	// creating instance of class
+	public static BookedPositionDataHelper _instance = null;
+
+	/**
+	 * Gets the single instance of BookedPositionDataHelper.
+	 * 
+	 * @return single instance of BookedPositionDataHelper
+	 */
+	public static BookedPositionDataHelper getInstance() {
+		if (_instance == null) {
+			_instance = new BookedPositionDataHelper();
+		}
+		return _instance;
+	}
+
 
 	/**
 	 * Generate filter condition.

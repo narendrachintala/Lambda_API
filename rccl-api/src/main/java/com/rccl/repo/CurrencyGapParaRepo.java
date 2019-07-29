@@ -23,6 +23,22 @@ public class CurrencyGapParaRepo {
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(CurrencyGapParaRepo.class);
+	
+	/** The instance. */
+	// creating instance of class
+	public static CurrencyGapParaRepo _instance = null;
+
+	/**
+	 * Gets the single instance of CurrencyGapParaRepo.
+	 * 
+	 * @return single instance of CurrencyGapParaRepo
+	 */
+	public static CurrencyGapParaRepo getInstance() {
+		if (_instance == null) {
+			_instance = new CurrencyGapParaRepo();
+		}
+		return _instance;
+	}
 
 	/**
 	 * Gets the currency gap data.
@@ -31,26 +47,20 @@ public class CurrencyGapParaRepo {
 	 * @return the currency gap data
 	 */
 	public List<CurrencyGapParaDTO> getCurrencyGapData(ParameterFiltersData filterDataReq) {
-
 		List<CurrencyGapParaDTO> currecyGapData = new ArrayList<CurrencyGapParaDTO>();
 		CurrencyGapDBUtil currencyGapdbUtil = CurrencyGapDBUtil.getInstance();
-		QueryExecutor queryExecutor = new QueryExecutor();
-
+		QueryExecutor queryExecutor = QueryExecutor.getInstance();
 		try {
-
 			String getCurrencyGapQuery = currencyGapdbUtil.getCurrencyGapDataQuery(filterDataReq);
 			CurrencyGapResultProcessor processor = new CurrencyGapResultProcessor();
 			processor.setResult(currecyGapData);
-
 			logger.debug("Query to GET currency gap data : " + getCurrencyGapQuery);
 			queryExecutor.execute(getCurrencyGapQuery, processor);
 			currecyGapData = processor.getResult();
-
 		} catch (Exception e) {
 			logger.error("Error occured in getCurrencyGapData: " + e);
 			throw e;
 		}
-
 		return currecyGapData;
 	}
 
@@ -63,7 +73,7 @@ public class CurrencyGapParaRepo {
 	public boolean updateCurrencyGapData(CurrencyGapPara currencyGapParaReq) {
 		CurrencyGapDBUtil currencyGapDBUtil = CurrencyGapDBUtil.getInstance();
 		Integer status = 0;
-		QueryExecutor queryExecutor = new QueryExecutor();
+		QueryExecutor queryExecutor = QueryExecutor.getInstance();
 		try {
 			/* generates update query for CurrencyGapPara table */
 			String updateCurrencyGapQuery = currencyGapDBUtil.updateCurrecyGapQuery(currencyGapParaReq);

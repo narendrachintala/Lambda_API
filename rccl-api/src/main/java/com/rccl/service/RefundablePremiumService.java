@@ -18,6 +18,23 @@ public class RefundablePremiumService {
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(RefundablePremiumService.class);
 	
+	/** The instance. */
+	// creating instance of class
+	public static RefundablePremiumService _instance = null;
+
+	/**
+	 * Gets the single instance of RefundablePremiumService.
+	 * 
+	 * @return single instance of RefundablePremiumService
+	 */
+	public static RefundablePremiumService getInstance() {
+		if (_instance == null) {
+			_instance = new RefundablePremiumService();
+		}
+		return _instance;
+	}
+
+	
 	/**
 	 * Gets the refundable premium data.
 	 * @param request the request
@@ -26,7 +43,7 @@ public class RefundablePremiumService {
 	public List<RefundablePremiumDTO> getRefundablePremiumData(ParameterFiltersData request) {
 		List<RefundablePremiumDTO> refundablePremiumData = null;
 		try {
-			RefundablePremiumRepo repo = new RefundablePremiumRepo();
+			RefundablePremiumRepo repo = RefundablePremiumRepo.getInstance();
 			refundablePremiumData = repo.getRefundablePremiumData(request);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -40,10 +57,9 @@ public class RefundablePremiumService {
 	 * @return true, if successful
 	 */
 	public boolean updateRefundablePremiumData(RefundablePremium request) {
-		RefundablePremiumRepo refundablePremiumRepo = null;
 		boolean status = false;
 		try {
-			refundablePremiumRepo = new RefundablePremiumRepo();
+			RefundablePremiumRepo refundablePremiumRepo = RefundablePremiumRepo.getInstance();
 			status = refundablePremiumRepo.updateRefundablePremiumData(request);
 		} catch (Exception e) {
 			throw e;

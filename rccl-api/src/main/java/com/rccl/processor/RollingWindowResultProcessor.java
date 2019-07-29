@@ -24,6 +24,7 @@ public class RollingWindowResultProcessor extends ResultProcessor<List<RollingWi
 
 	/**
 	 * Process result.
+	 * 
 	 * @param rs the rs
 	 * @throws SQLException the SQL exception
 	 */

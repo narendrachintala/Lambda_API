@@ -34,6 +34,22 @@ public class PutPauseParaDataHandler implements RequestHandler<ApiGatewayProxyRe
 	
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static PutPauseParaDataHandler _instance = null;
+
+	/**
+	 * Gets the single instance of PutPauseParaDataHandler.
+	 * 
+	 * @return single instance of PutPauseParaDataHandler
+	 */
+	public static PutPauseParaDataHandler getInstance() {
+		if (_instance == null) {
+			_instance = new PutPauseParaDataHandler();
+		}
+		return _instance;
+	}
 
 	/**
 	 * Handle request.
@@ -53,14 +69,13 @@ public class PutPauseParaDataHandler implements RequestHandler<ApiGatewayProxyRe
 		
 		boolean update = false;
 		GatewayResponse response = null;
-		PauseParaDataValidator rDataValidator = null;
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.PAUSE_PARA);
 		try {
-			rDataValidator = new PauseParaDataValidator();
+			PauseParaDataValidator rDataValidator = PauseParaDataValidator.getInstance();
 			response = rDataValidator.validatePutRequest(request, jobName);
 			if (response == null) {
-				PauseParaDataService PauseParaService = new PauseParaDataService();
+				PauseParaDataService PauseParaService = PauseParaDataService.getInstance();
 				update = PauseParaService.updatePauseParaData(request);
 				if (update == true) {
 					response = ResponseUtil.getCustErrorMessage(
@@ -75,6 +90,9 @@ public class PutPauseParaDataHandler implements RequestHandler<ApiGatewayProxyRe
 			 return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST,RCCLConstants.REQUEST_ID);
 		}
 		System.out.println("value of update():" + update);
+		Gson gson = new Gson();
+		String json = gson.toJson(response);
+		System.out.println("response ="+json);
 		return response;
 	}
 
@@ -82,7 +100,7 @@ public class PutPauseParaDataHandler implements RequestHandler<ApiGatewayProxyRe
 
 		PausePara pausePara = new PausePara();
 		// values to be updated
-		pausePara.setL1_pause(0);
+		pausePara.setL1_pause(11);
 		pausePara.setresume_push_wts(2);
 		pausePara.setstop_push_wts(51);
 

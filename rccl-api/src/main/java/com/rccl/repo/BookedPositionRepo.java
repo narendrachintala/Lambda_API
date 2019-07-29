@@ -19,6 +19,21 @@ import com.rccl.processor.BookedPositionResultProcessor;
 public class BookedPositionRepo {
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(BookedPositionRepo.class);
+	
+	// creating instance of class
+	public static BookedPositionRepo _instance = null;
+
+	/**
+	 * Gets the single instance of BookedPositionRepo.
+	 * 
+	 * @return single instance of BookedPositionRepo
+	 */
+	public static BookedPositionRepo getInstance() {
+		if (_instance == null) {
+			_instance = new BookedPositionRepo();
+		}
+		return _instance;
+	}
 
 	/**
 	 * Gets the BookedPosition data.
@@ -30,7 +45,7 @@ public class BookedPositionRepo {
 	// This method is used to fetch results from DB
 	public List<BookedPositionDTO> getBookedPositionData(ParameterFiltersData request) {
 		BookedPositionDBUtils bookedPositionDBUtils = BookedPositionDBUtils.getInstance();
-		QueryExecutor queryExecutor = new QueryExecutor();
+		QueryExecutor queryExecutor = QueryExecutor.getInstance();
 		List<BookedPositionDTO> list = new ArrayList<BookedPositionDTO>();
 		try {
 			String getbookedPositionQuery = bookedPositionDBUtils.getBookedPositionQuery(request);
@@ -53,7 +68,7 @@ public class BookedPositionRepo {
 	 */
 	public boolean updateBookedPositionData(BookedPosition request) {
 		BookedPositionDBUtils dbUtils = BookedPositionDBUtils.getInstance();
-		QueryExecutor queryExecutor = new QueryExecutor();
+		QueryExecutor queryExecutor = QueryExecutor.getInstance();
 		Integer status = 0;
 		try {
 			String updateBookedPositionQuery = dbUtils.updateBookedPositionDataQuery(request);

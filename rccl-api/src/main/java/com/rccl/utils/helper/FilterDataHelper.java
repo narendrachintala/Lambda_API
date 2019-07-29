@@ -17,10 +17,25 @@ public class FilterDataHelper {
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(FilterDataHelper.class);
 
+	// creating instance of class
+	public static FilterDataHelper _instance = null;
+
+	/**
+	 * Gets the single instance of FilterDataHelper.
+	 * 
+	 * @return single instance of FilterDataHelper
+	 */
+	public static FilterDataHelper getInstance() {
+		if (_instance == null) {
+			_instance = new FilterDataHelper();
+		}
+		return _instance;
+	}
+
 	/**
 	 * Generate filter condition.
 	 * 
-	 * @param 'filterData' contains chosen filters
+	 * @param 'filterData'  contains chosen filters
 	 * @param 'queryBuffer' is required to append the generated query
 	 * @return returns the final string which is a end query
 	 */

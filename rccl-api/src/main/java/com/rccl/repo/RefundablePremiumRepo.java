@@ -17,18 +17,35 @@ import com.rccl.processor.RefundablePremiumResultProcessor;
  * The Class RefundablePremiumRepo.
  */
 public class RefundablePremiumRepo {
-	
+
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(RefundablePremiumRepo.class);
 
+	/** The instance. */
+	// creating instance of class
+	public static RefundablePremiumRepo _instance = null;
+
+	/**
+	 * Gets the single instance of RefundablePremiumRepo.
+	 * 
+	 * @return single instance of RefundablePremiumRepo
+	 */
+	public static RefundablePremiumRepo getInstance() {
+		if (_instance == null) {
+			_instance = new RefundablePremiumRepo();
+		}
+		return _instance;
+	}
+
 	/**
 	 * Gets the refundable premium data.
+	 * 
 	 * @param request the request
 	 * @return the refundable premium data
 	 */
 	public List<RefundablePremiumDTO> getRefundablePremiumData(ParameterFiltersData request) {
 		RefundablePremiumDBUtil refundablePremiumDBUtil = RefundablePremiumDBUtil.getInstance();
-		QueryExecutor queryExecutor = new QueryExecutor();
+		QueryExecutor queryExecutor = QueryExecutor.getInstance();
 		List<RefundablePremiumDTO> list = new ArrayList<RefundablePremiumDTO>();
 		try {
 			String getRefundablePremiumQuery = refundablePremiumDBUtil.getRefundablePremiumQuery(request);
@@ -42,10 +59,16 @@ public class RefundablePremiumRepo {
 		}
 		return list;
 	}
-	
+
+	/**
+	 * Update refundable premium data.
+	 *
+	 * @param request the request
+	 * @return true, if successful
+	 */
 	public boolean updateRefundablePremiumData(RefundablePremium request) {
 		RefundablePremiumDBUtil dbUtils = RefundablePremiumDBUtil.getInstance();
-		QueryExecutor queryExecutor = new QueryExecutor();
+		QueryExecutor queryExecutor = QueryExecutor.getInstance();
 		Integer status = 0;
 		try {
 			String updateRefundablePremiumQuery = dbUtils.updateRefundablePremiumDataQuery(request);

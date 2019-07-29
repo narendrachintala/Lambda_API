@@ -7,7 +7,6 @@ import com.rccl.model.CurrencyGapPara;
 import com.rccl.utils.CustomFunctions;
 import com.rccl.utils.RCCLConstants;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class CurrencyGapDataHelper.
  * 
@@ -18,6 +17,23 @@ public class CurrencyGapDataHelper {
 	/** The Constant logger. */
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(CurrentPriceDataHelper.class);
+	
+	/** The instance. */
+	// creating instance of class
+	public static CurrencyGapDataHelper _instance = null;
+
+	/**
+	 * Gets the single instance of CurrencyGapDataHelper.
+	 * 
+	 * @return single instance of CurrencyGapDataHelper
+	 */
+	public static CurrencyGapDataHelper getInstance() {
+		if (_instance == null) {
+			_instance = new CurrencyGapDataHelper();
+		}
+		return _instance;
+	}
+
 
 	/**
 	 * Generate setter condition.
@@ -76,8 +92,6 @@ public class CurrencyGapDataHelper {
 			queryBuffer.append(RCCLConstants.INSERT_DATE).append(RCCLConstants.EQUALS);
 			queryBuffer.append(RCCLConstants.SINGLE_QUOTE).append(CustomFunctions.getCurrentDate())
 					.append(RCCLConstants.SINGLE_QUOTE).append(RCCLConstants.COMMA);
-
-			// queryBuffer = UpdateColumnHelper.updateGenericColumns(queryBuffer);
 
 			// removing last appended extra COMMA
 			if (queryBuffer.toString().endsWith(",")) {

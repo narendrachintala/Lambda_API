@@ -53,9 +53,14 @@ public class PauseParaDataValidator {
 				return ResponseUtil.error_metaproduct();
 			}
 			if (request.getL1_pause() == null && request.getresume_push_wts() == null
-					&& request.getstop_push_wts() == null) {
+					&& request.getstop_push_wts() == null ) {
 				return ResponseUtil.error_update_fields();
 			}
+			//request.getL1_pause() != RCCLConstants.ONE || 
+			if(request.getL1_pause() != RCCLConstants.ZERO && request.getL1_pause() != RCCLConstants.ONE ) {
+				return ResponseUtil.error_l1_pause();
+			}
+			
 			String lockStatus = accessControlRepo.getLockStatus(jobName);
 			if (lockStatus.equalsIgnoreCase(RCCLConstants.LOCKED_CTRL_TBL_STS_FLAG)) {
 				return ResponseUtil.error_locked();

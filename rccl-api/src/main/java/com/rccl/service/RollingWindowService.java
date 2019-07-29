@@ -17,6 +17,23 @@ public class RollingWindowService {
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(RollingWindowService.class);
+	
+	/** The instance. */
+	// creating instance of class
+	public static RollingWindowService _instance = null;
+
+	/**
+	 * Gets the single instance of RollingWindowService.
+	 * 
+	 * @return single instance of RollingWindowService
+	 */
+	public static RollingWindowService getInstance() {
+		if (_instance == null) {
+			_instance = new RollingWindowService();
+		}
+		return _instance;
+	}
+
 
 	/**
 	 * Gets the rolling window data.
@@ -28,7 +45,7 @@ public class RollingWindowService {
 	public List<RollingWindowDTO> getRollingWindowData(ParameterFiltersData request) {
 		List<RollingWindowDTO> rollingWindowData = null;
 		try {
-			RollingWindowRepo repo = new RollingWindowRepo();
+			RollingWindowRepo repo = RollingWindowRepo.getInstance();
 			rollingWindowData = repo.getRollingWindowData(request);
 		} catch (Exception e) {
 			//e.printStackTrace();
@@ -45,10 +62,9 @@ public class RollingWindowService {
 	 * @return true, if successful
 	 */
 	public boolean updateRollingWindowData(RollingWindow request) {
-		RollingWindowRepo rollingWindowRepo = null;
 		boolean status = false;
 		try {
-			rollingWindowRepo = new RollingWindowRepo();
+			RollingWindowRepo rollingWindowRepo = RollingWindowRepo.getInstance();
 			status = rollingWindowRepo.updateRollingWindowData(request);
 		} catch (Exception e) {
 			//e.printStackTrace();

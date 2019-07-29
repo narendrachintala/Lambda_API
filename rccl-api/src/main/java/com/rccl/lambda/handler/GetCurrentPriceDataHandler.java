@@ -35,6 +35,23 @@ public class GetCurrentPriceDataHandler
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static GetCurrentPriceDataHandler _instance = null;
+
+	/**
+	 * Gets the single instance of GetCurrentPriceDataHandler.
+	 * 
+	 * @return single instance of GetCurrentPriceDataHandler
+	 */
+	public static GetCurrentPriceDataHandler getInstance() {
+		if (_instance == null) {
+			_instance = new GetCurrentPriceDataHandler();
+		}
+		return _instance;
+	}
+
 
 	/**
 	 * This method will be invoked from AWS Lambda function to fetch price range
@@ -62,11 +79,11 @@ public class GetCurrentPriceDataHandler
 
 		try {
 			// validating request data
-			RequestDataValidator currentPriceValidator = new RequestDataValidator();
+			RequestDataValidator currentPriceValidator = RequestDataValidator.getInstance();
 			response = currentPriceValidator.validateGetRequest(request);
 			if (response == null) { // response null denotes request is valid
 
-				CurrentPriceParaService currrentPriceService = new CurrentPriceParaService();
+				CurrentPriceParaService currrentPriceService = CurrentPriceParaService.getInstance();
 				currentPriceParaList = currrentPriceService.getCurrentPriceParaData(request);
 				if (currentPriceParaList != null && currentPriceParaList.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(

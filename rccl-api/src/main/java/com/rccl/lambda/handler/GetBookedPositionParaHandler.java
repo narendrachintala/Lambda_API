@@ -25,6 +25,7 @@ import com.rccl.utils.ResponseUtil;
 /**
  * The Class GetBookedPositionPara.
  */
+
 public class GetBookedPositionParaHandler implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
 	static {
@@ -36,6 +37,22 @@ public class GetBookedPositionParaHandler implements RequestHandler<ApiGatewayPr
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+
+	/** The instance. */
+	// creating instance of class
+	public static GetBookedPositionParaHandler _instance = null;
+
+	/**
+	 * Gets the single instance of GetBookedPositionParaHandler.
+	 * 
+	 * @return single instance of GetBookedPositionParaHandler
+	 */
+	public static GetBookedPositionParaHandler getInstance() {
+		if (_instance == null) {
+			_instance = new GetBookedPositionParaHandler();
+		}
+		return _instance;
+	}
 
 	/**
 	 * executes on requesting for list of values for specific table name.
@@ -51,13 +68,12 @@ public class GetBookedPositionParaHandler implements RequestHandler<ApiGatewayPr
 		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 		GatewayResponse response = null;
 		List<BookedPositionDTO> bookedPositionlist = null;
-		RequestDataValidator requestDataValidator = null;
+		RequestDataValidator requestDataValidator = RequestDataValidator.getInstance();
 		try {
 			// Validate input request
-			requestDataValidator = new RequestDataValidator();
 			response = requestDataValidator.validateGetRequest(request);
 			if (response == null) { // response null denotes request is valid
-				BookedPositionParaService bookedPositionParaService = new BookedPositionParaService();
+				BookedPositionParaService bookedPositionParaService = BookedPositionParaService.getInstance();
 				bookedPositionlist = bookedPositionParaService.getBookedPositionData(request);
 				if (bookedPositionlist != null && bookedPositionlist.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(
@@ -76,6 +92,7 @@ public class GetBookedPositionParaHandler implements RequestHandler<ApiGatewayPr
 		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
 	}
+
 	/**
 	 * The main method.
 	 * 
@@ -83,92 +100,87 @@ public class GetBookedPositionParaHandler implements RequestHandler<ApiGatewayPr
 	 */
 	public static void main(String[] args) {
 		// prepares sample input data for handler class
-				ParameterFiltersData parameterFiltersData = new ParameterFiltersData();
-				parameterFiltersData.setMetaproduct("SHORT CARIBBEAN");
-				parameterFiltersData.setProduct_code("PRTCNVR3");
-				parameterFiltersData.setSail_month("8");
-				parameterFiltersData.setShip_code("MA");
-				
-				
-				new GetBookedPositionParaHandler().handleRequest(null,
-						new Context() {
 
-					@Override
-					public int getRemainingTimeInMillis() {
-						// TODO Auto-generated method stub
-						return 0;
-					}
+		ParameterFiltersData parameterFiltersData = new ParameterFiltersData();
+		parameterFiltersData.setMetaproduct("SHORT CARIBBEAN");
+		parameterFiltersData.setProduct_code("PRTCNVR3");
+		parameterFiltersData.setSail_month("8");
+		parameterFiltersData.setShip_code("MA");
 
-					@Override
-					public int getMemoryLimitInMB() {
-						// TODO Auto-generated method stub
-						return 0;
-					}
+		new GetBookedPositionParaHandler().handleRequest(null, new Context() {
 
-					@Override
-					public LambdaLogger getLogger() {
-						// TODO Auto-generated method stub
-						return new LambdaLogger() {
-
-							@Override
-							public void log(String string) {
-								// TODO Auto-generated method stub
-
-							}
-						};
-					}
-
-					@Override
-					public String getLogStreamName() {
-						// TODO Auto-generated method stub
-						return null;
-					}
-
-					@Override
-					public String getLogGroupName() {
-						// TODO Auto-generated method stub
-						return null;
-					}
-
-					@Override
-					public String getInvokedFunctionArn() {
-						// TODO Auto-generated method stub
-						return null;
-					}
-
-					@Override
-					public CognitoIdentity getIdentity() {
-						// TODO Auto-generated method stub
-						return null;
-					}
-
-					@Override
-					public String getFunctionVersion() {
-						// TODO Auto-generated method stub
-						return null;
-					}
-
-					@Override
-					public String getFunctionName() {
-						// TODO Auto-generated method stub
-						return null;
-					}
-
-					@Override
-					public ClientContext getClientContext() {
-						// TODO Auto-generated method stub
-						return null;
-					}
-
-					@Override
-					public String getAwsRequestId() {
-						// TODO Auto-generated method stub
-						return null;
-					}
-				})
-				;
+			@Override
+			public int getRemainingTimeInMillis() {
+				// TODO Auto-generated method stub
+				return 0;
 			}
-		}
 
-		
-	
+			@Override
+			public int getMemoryLimitInMB() {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+
+			@Override
+			public LambdaLogger getLogger() {
+				// TODO Auto-generated method stub
+				return new LambdaLogger() {
+
+					@Override
+					public void log(String string) {
+						// TODO Auto-generated method stub
+
+					}
+				};
+			}
+
+			@Override
+			public String getLogStreamName() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public String getLogGroupName() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public String getInvokedFunctionArn() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public CognitoIdentity getIdentity() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public String getFunctionVersion() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public String getFunctionName() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public ClientContext getClientContext() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public String getAwsRequestId() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		});
+	}
+}

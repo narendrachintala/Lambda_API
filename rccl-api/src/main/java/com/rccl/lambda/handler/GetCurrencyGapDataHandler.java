@@ -24,8 +24,7 @@ import com.rccl.utils.ResponseUtil;
  *
  * @author chandrabhan.birla
  */
-public class GetCurrencyGapDataHandler
-		implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
+public class GetCurrencyGapDataHandler implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
@@ -36,6 +35,22 @@ public class GetCurrencyGapDataHandler
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static GetCurrencyGapDataHandler _instance = null;
+
+	/**
+	 * Gets the single instance of GetCurrencyGapDataHander.
+	 * 
+	 * @return single instance of GetCurrencyGapDataHander
+	 */
+	public static GetCurrencyGapDataHandler getInstance() {
+		if (_instance == null) {
+			_instance = new GetCurrencyGapDataHandler();
+		}
+		return _instance;
+	}
 
 	/**
 	 * This method will be invoked from AWS Lambda function to fetch currency gap
@@ -63,11 +78,11 @@ public class GetCurrencyGapDataHandler
 
 		try {
 			// validating request data
-			RequestDataValidator currencyGapValidator = new RequestDataValidator();
+			RequestDataValidator currencyGapValidator = RequestDataValidator.getInstance();
 			response = currencyGapValidator.validateGetRequest(request);
 			if (response == null) { // response null denotes request is valid
 
-				CurrencyGapParaService currencyGapService = new CurrencyGapParaService();
+				CurrencyGapParaService currencyGapService = CurrencyGapParaService.getInstance();
 				currencyGapParaList = currencyGapService.getCurrencyGapParaData(request);
 				if (currencyGapParaList != null && currencyGapParaList.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(

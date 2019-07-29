@@ -14,6 +14,21 @@ public class RollingWindowDataHelper {
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(RollingWindowDataHelper.class);
 
+	// creating instance of class
+	public static RollingWindowDataHelper _instance = null;
+
+	/**
+	 * Gets the single instance of RollingWindowDataHelper.
+	 * 
+	 * @return single instance of RollingWindowDataHelper
+	 */
+	public static RollingWindowDataHelper getInstance() {
+		if (_instance == null) {
+			_instance = new RollingWindowDataHelper();
+		}
+		return _instance;
+	}
+
 	/**
 	 * Generate filter condition.
 	 * 
@@ -55,7 +70,7 @@ public class RollingWindowDataHelper {
 				queryBuffer.append(request.getPrice_window());
 				queryBuffer.append(COMMA);
 			}
-			
+
 			queryBuffer = UpdateColumnHelper.updateGenericColumns(queryBuffer);
 			// removing last appended extra ,
 			queryBuffer.replace(queryBuffer.lastIndexOf(COMMA), queryBuffer.length(), "");

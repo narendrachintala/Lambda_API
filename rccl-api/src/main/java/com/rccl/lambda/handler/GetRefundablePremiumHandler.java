@@ -37,6 +37,22 @@ public class GetRefundablePremiumHandler
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static GetRefundablePremiumHandler _instance = null;
+
+	/**
+	 * Gets the single instance of GetRefundablePremiumHandler.
+	 * 
+	 * @return single instance of GetRefundablePremiumHandler
+	 */
+	public static GetRefundablePremiumHandler getInstance() {
+		if (_instance == null) {
+			_instance = new GetRefundablePremiumHandler();
+		}
+		return _instance;
+	}
 
 	/**
 	 * This method will be invoked from AWS Lambda function to fetch refundable
@@ -59,13 +75,12 @@ public class GetRefundablePremiumHandler
 
 		GatewayResponse response = null;
 		List<RefundablePremiumDTO> refundablePremiumList = null;
-		RequestDataValidator requestDataValidator = null;
 		try {
 			// Validate input request
-			requestDataValidator = new RequestDataValidator();
+			RequestDataValidator requestDataValidator = RequestDataValidator.getInstance();
 			response = requestDataValidator.validateGetRequest(request);
 			if (response == null) { // response null denotes request is valid
-				RefundablePremiumService refundablePremiumService = new RefundablePremiumService();
+				RefundablePremiumService refundablePremiumService = RefundablePremiumService.getInstance();
 				refundablePremiumList = refundablePremiumService.getRefundablePremiumData(request);
 				if (refundablePremiumList != null && refundablePremiumList.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(

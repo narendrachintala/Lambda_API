@@ -40,6 +40,23 @@ public class GetPriceRangeDataHandler
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static GetPriceRangeDataHandler _instance = null;
+
+	/**
+	 * Gets the single instance of GetPriceRangeDataHandler.
+	 * 
+	 * @return single instance of GetPriceRangeDataHandler
+	 */
+	public static GetPriceRangeDataHandler getInstance() {
+		if (_instance == null) {
+			_instance = new GetPriceRangeDataHandler();
+		}
+		return _instance;
+	}
+
 
 	/**
 	 * This method will be invoked from AWS Lambda function to fetch price range
@@ -66,11 +83,11 @@ public class GetPriceRangeDataHandler
 
 		try {
 			// validating request data
-			RequestDataValidator priceRangeValidator = new RequestDataValidator();
+			RequestDataValidator priceRangeValidator = RequestDataValidator.getInstance();
 			response = priceRangeValidator.validateGetRequest(request);
 			if (response == null) { // response null denotes request is valid
 
-				PriceRangeService priceRangeService = new PriceRangeService();
+				PriceRangeService priceRangeService = PriceRangeService.getInstance();
 				priceRangeList = priceRangeService.getPriceRangeData(request);
 				if (priceRangeList != null && priceRangeList.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(

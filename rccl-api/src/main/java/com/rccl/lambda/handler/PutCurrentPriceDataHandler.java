@@ -35,6 +35,22 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static PutCurrentPriceDataHandler _instance = null;
+
+	/**
+	 * Gets the single instance of PutCurrentPriceDataHandler.
+	 * 
+	 * @return single instance of PutCurrentPriceDataHandler
+	 */
+	public static PutCurrentPriceDataHandler getInstance() {
+		if (_instance == null) {
+			_instance = new PutCurrentPriceDataHandler();
+		}
+		return _instance;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -62,15 +78,14 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 
 		Boolean result = false;
-		CurrentPriceDataValidator dataValidator = null;
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.CURRENT_PRICE_PARA);
 		GatewayResponse<? extends Object> response = null;
 		try {
-			dataValidator = CurrentPriceDataValidator.getInstance();
+			CurrentPriceDataValidator dataValidator = CurrentPriceDataValidator.getInstance();
 			response = dataValidator.validatePutRequest(request, jobName);
 			if (response == null) { // response null denotes request is valid
-				CurrentPriceParaService currentPriceService = new CurrentPriceParaService();
+				CurrentPriceParaService currentPriceService = CurrentPriceParaService.getInstance();
 				result = currentPriceService.updateCurrentPriceParaData(request);
 				if (result == true) {
 					response = ResponseUtil.getCustErrorMessage(

@@ -33,6 +33,23 @@ public class PutBookedPositionParaHandler implements RequestHandler<BookedPositi
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static PutBookedPositionParaHandler _instance = null;
+
+	/**
+	 * Gets the single instance of PutBookedPositionParaHandler.
+	 * 
+	 * @return single instance of PutBookedPositionParaHandler
+	 */
+	public static PutBookedPositionParaHandler getInstance() {
+		if (_instance == null) {
+			_instance = new PutBookedPositionParaHandler();
+		}
+		return _instance;
+	}
+
 
 	/**
 	 * Handle request.
@@ -51,14 +68,13 @@ public class PutBookedPositionParaHandler implements RequestHandler<BookedPositi
 
 		boolean update = false;
 		GatewayResponse<? extends Object> response = null;
-		BookPositionDataValidator rDataValidator = null;
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.BOOKED_POSITION_PARA);
 		try {
-			rDataValidator = new BookPositionDataValidator();
+			BookPositionDataValidator rDataValidator = BookPositionDataValidator.getInstance();
 			response = rDataValidator.validatePutRequest(request, jobName);
 			if (response == null) {
-				BookedPositionParaService bookedPositionParaService = new BookedPositionParaService();
+				BookedPositionParaService bookedPositionParaService = BookedPositionParaService.getInstance();
 				update = bookedPositionParaService.updateBookedPositionData(request);
 				if (update == true) {
 					response = ResponseUtil.getCustErrorMessage(

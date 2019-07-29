@@ -33,6 +33,22 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 	
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static PutPauseParaDataHandler _instance = null;
+
+	/**
+	 * Gets the single instance of PutPauseParaDataHandler.
+	 * 
+	 * @return single instance of PutPauseParaDataHandler
+	 */
+	public static PutPauseParaDataHandler getInstance() {
+		if (_instance == null) {
+			_instance = new PutPauseParaDataHandler();
+		}
+		return _instance;
+	}
 
 	/**
 	 * Handle request.
@@ -50,14 +66,13 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 		
 		boolean update = false;
 		GatewayResponse<? extends Object> response = null;
-		PauseParaDataValidator rDataValidator = null;
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.PAUSE_PARA);
 		try {
-			rDataValidator = new PauseParaDataValidator();
+			PauseParaDataValidator rDataValidator = PauseParaDataValidator.getInstance();
 			response = rDataValidator.validatePutRequest(request, jobName);
 			if (response == null) {
-				PauseParaDataService PauseParaService = new PauseParaDataService();
+				PauseParaDataService PauseParaService = PauseParaDataService.getInstance();
 				update = PauseParaService.updatePauseParaData(request);
 				if (update == true) {
 					response = ResponseUtil.getCustErrorMessage(

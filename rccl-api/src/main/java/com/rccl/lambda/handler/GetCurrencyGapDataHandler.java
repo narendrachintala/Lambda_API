@@ -22,7 +22,7 @@ import com.rccl.utils.ResponseUtil;
  *
  * @author chandrabhan.birla
  */
-public class GetCurrencyGapDataHander
+public class GetCurrencyGapDataHandler
 		implements RequestHandler<ParameterFiltersData, GatewayResponse<? extends Object>> {
 
 	static {
@@ -30,10 +30,26 @@ public class GetCurrencyGapDataHander
 	}
 
 	// Initialize the Log4j logger.
-	static final Logger logger = LogManager.getLogger(GetCurrencyGapDataHander.class);
+	static final Logger logger = LogManager.getLogger(GetCurrencyGapDataHandler.class);
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static GetCurrencyGapDataHandler _instance = null;
+
+	/**
+	 * Gets the single instance of GetCurrencyGapDataHander.
+	 * 
+	 * @return single instance of GetCurrencyGapDataHander
+	 */
+	public static GetCurrencyGapDataHandler getInstance() {
+		if (_instance == null) {
+			_instance = new GetCurrencyGapDataHandler();
+		}
+		return _instance;
+	}
 
 	/**
 	 * This method will be invoked from AWS Lambda function to fetch currency gap
@@ -60,11 +76,11 @@ public class GetCurrencyGapDataHander
 
 		try {
 			// validating request data
-			RequestDataValidator currencyGapValidator = new RequestDataValidator();
+			RequestDataValidator currencyGapValidator = RequestDataValidator.getInstance();
 			response = currencyGapValidator.validateGetRequest(request);
 			if (response == null) { // response null denotes request is valid
 
-				CurrencyGapParaService currencyGapService = new CurrencyGapParaService();
+				CurrencyGapParaService currencyGapService = CurrencyGapParaService.getInstance();
 				currencyGapParaList = currencyGapService.getCurrencyGapParaData(request);
 				if (currencyGapParaList != null && currencyGapParaList.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(
@@ -108,7 +124,7 @@ public class GetCurrencyGapDataHander
 		currencyGapdata.setSail_date("23-NOV-19 12.00.00.000000000 AM");
 		currencyGapdata.setSail_month("11");
 
-		GatewayResponse<? extends Object> rcode = new GetCurrencyGapDataHander().handleRequest(currencyGapdata,
+		GatewayResponse<? extends Object> rcode = new GetCurrencyGapDataHandler().handleRequest(currencyGapdata,
 				null);
 		System.out.println(new GsonBuilder().serializeNulls().create().toJson(rcode));
 		System.out.println(rcode.getStatusCode());

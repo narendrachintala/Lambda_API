@@ -21,6 +21,21 @@ public class QueryExecutor {
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(FilterDataRepo.class);
+	
+	// creating instance of class
+	public static QueryExecutor _instance = null;
+
+	/**
+	 * Gets the single instance of QueryExecutor.
+	 * 
+	 * @return single instance of QueryExecutor
+	 */
+	public static QueryExecutor getInstance() {
+		if (_instance == null) {
+			_instance = new QueryExecutor();
+		}
+		return _instance;
+	}
 
 	/**
 	 * Execute.

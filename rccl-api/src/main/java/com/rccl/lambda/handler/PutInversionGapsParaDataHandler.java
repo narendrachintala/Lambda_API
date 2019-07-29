@@ -34,6 +34,22 @@ public class PutInversionGapsParaDataHandler
 	static final Logger logger = LogManager.getLogger(PutInversionGapsParaDataHandler.class);
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static PutInversionGapsParaDataHandler _instance = null;
+
+	/**
+	 * Gets the single instance of PutInversionGapsParaDataHandler.
+	 * 
+	 * @return single instance of PutInversionGapsParaDataHandler
+	 */
+	public static PutInversionGapsParaDataHandler getInstance() {
+		if (_instance == null) {
+			_instance = new PutInversionGapsParaDataHandler();
+		}
+		return _instance;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -56,15 +72,14 @@ public class PutInversionGapsParaDataHandler
 		//RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 
 		Boolean result = false;
-		InversionGapsParaDataValidator dataValidator = null;
 		GatewayResponse<? extends Object> response = null;
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.INVERSION_GAP_PARA);
 		try {
-			dataValidator = InversionGapsParaDataValidator.getInstance();
+			InversionGapsParaDataValidator dataValidator = InversionGapsParaDataValidator.getInstance();
 			response = dataValidator.validatePutRequest(request, jobName);
 			if (response == null) { // response null denotes request is valid
-				InversionGapParaService inversionGapParaService = new InversionGapParaService();
+				InversionGapParaService inversionGapParaService = InversionGapParaService.getInstance();
 				result = inversionGapParaService.updateinversionGapParaData(request);
 				if (result == true) {
 					response = ResponseUtil.getCustErrorMessage(

@@ -36,6 +36,22 @@ public class GetPauseParaDataHandler
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static GetPauseParaDataHandler _instance = null;
+
+	/**
+	 * Gets the single instance of GetPauseParaDataHandler.
+	 * 
+	 * @return single instance of GetPauseParaDataHandler
+	 */
+	public static GetPauseParaDataHandler getInstance() {
+		if (_instance == null) {
+			_instance = new GetPauseParaDataHandler();
+		}
+		return _instance;
+	}
 
 	/**
 	 * executes on requesting for list of values for PausePara table name.
@@ -55,13 +71,12 @@ public class GetPauseParaDataHandler
 
 		List<PauseParaDTO> pauseParaList = null;
 		GatewayResponse<? extends Object> response = null;
-		RequestDataValidator pauseParaValidator = null;
 		try {
 			// Validate input request if any error occurred throw custom exception.
-			pauseParaValidator = new RequestDataValidator();
+			RequestDataValidator pauseParaValidator = RequestDataValidator.getInstance();
 			response = pauseParaValidator.validateGetRequest(request);
 			if (response == null) { // response null denotes request is valid
-				PauseParaDataService pauseParaService = new PauseParaDataService();
+				PauseParaDataService pauseParaService = PauseParaDataService.getInstance();
 				pauseParaList = pauseParaService.getPauseParaData(request);
 				if (pauseParaList != null && pauseParaList.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(

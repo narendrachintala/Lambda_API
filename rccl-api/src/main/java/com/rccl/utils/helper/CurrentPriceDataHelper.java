@@ -7,12 +7,29 @@ import com.rccl.model.CurrentPricePara;
 import com.rccl.utils.RCCLConstants;
 
 /**
- * The Class CurrentPriceDataHelper. author: chandrabhan.birla
+ * The Class CurrentPriceDataHelper.
+ * author: chandrabhan.birla
  */
 public class CurrentPriceDataHelper {
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(CurrentPriceDataHelper.class);
+
+	/** The instance. */
+	// creating instance of class
+	public static CurrentPriceDataHelper _instance = null;
+
+	/**
+	 * Gets the single instance of CurrentPriceDataHelper.
+	 * 
+	 * @return single instance of CurrentPriceDataHelper
+	 */
+	public static CurrentPriceDataHelper getInstance() {
+		if (_instance == null) {
+			_instance = new CurrentPriceDataHelper();
+		}
+		return _instance;
+	}
 
 	/**
 	 * Generate setter condition.

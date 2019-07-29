@@ -11,15 +11,28 @@ import com.rccl.model.PriceRange;
 import com.rccl.repo.PriceRangeRepo;
 
 /**
- * 
- * @author narendra.chintala
- * 
- *
+ * The Class PriceRangeService.
  */
 public class PriceRangeService {
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(PriceRangeService.class);
+	
+	/** The instance. */
+	// creating instance of class
+	public static PriceRangeService _instance = null;
+
+	/**
+	 * Gets the single instance of PriceRangeService.
+	 * 
+	 * @return single instance of PriceRangeService
+	 */
+	public static PriceRangeService getInstance() {
+		if (_instance == null) {
+			_instance = new PriceRangeService();
+		}
+		return _instance;
+	}
 
 	/**
 	 * @param request      contains end user chosen filter criteria
@@ -29,7 +42,7 @@ public class PriceRangeService {
 	public List<PriceRangeDTO> getPriceRangeData(ParameterFiltersData request) {
 		List<PriceRangeDTO> priceRangeData = null;
 		try {
-			PriceRangeRepo repo = new PriceRangeRepo();
+			PriceRangeRepo repo = PriceRangeRepo.getInstance();
 			priceRangeData = repo.getPriceRangeData(request);
 
 		} catch (Exception e) {
@@ -44,10 +57,9 @@ public class PriceRangeService {
 	 * @return
 	 */
 	public boolean updatePriceRangeData(PriceRange priceRangeReq) {
-		PriceRangeRepo priceRangeRepo = null;
 		boolean status = false;
 		try {
-			priceRangeRepo = new PriceRangeRepo();
+			PriceRangeRepo priceRangeRepo = PriceRangeRepo.getInstance();
 			status = priceRangeRepo.updatePriceRangeData(priceRangeReq);
 		} catch (Exception e) {
 			// logger.error("Error occured while executing updatePriceRangeData: " + e);

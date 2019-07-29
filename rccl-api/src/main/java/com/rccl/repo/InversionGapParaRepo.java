@@ -12,7 +12,6 @@ import com.rccl.model.InversionGapPara;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.processor.InversionGapResultProcessor;
 
-
 /**
  * The Class InversionGapParaRepo.
  */
@@ -22,6 +21,22 @@ public class InversionGapParaRepo {
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(InversionGapParaRepo.class);
 
+	/** The instance. */
+	// creating instance of class
+	public static InversionGapParaRepo _instance = null;
+
+	/**
+	 * Gets the single instance of InversionGapParaRepo.
+	 * 
+	 * @return single instance of InversionGapParaRepo
+	 */
+	public static InversionGapParaRepo getInstance() {
+		if (_instance == null) {
+			_instance = new InversionGapParaRepo();
+		}
+		return _instance;
+	}
+
 	/**
 	 * Gets the invesion gap para.
 	 *
@@ -29,11 +44,9 @@ public class InversionGapParaRepo {
 	 * @return the invesion gap para
 	 */
 	public List<InversionGapsParaDTO> getInvesionGapPara(ParameterFiltersData filterData) {
-
 		InversionGapParaUtils inversionGapParaUtils = InversionGapParaUtils.getInstance();
-		QueryExecutor queryExecutor = new QueryExecutor();
+		QueryExecutor queryExecutor = QueryExecutor.getInstance();
 		List<InversionGapsParaDTO> inversionData = new ArrayList<InversionGapsParaDTO>();
-
 		try {
 			String getinversionQuery = inversionGapParaUtils.getInversionGapParaDataQuery(filterData);
 			InversionGapResultProcessor processor = new InversionGapResultProcessor();
@@ -44,9 +57,7 @@ public class InversionGapParaRepo {
 			logger.error("Error occured in getinversionQuery: " + e);
 			throw e;
 		}
-
 		return inversionData;
-
 	}
 
 	/**
@@ -57,11 +68,11 @@ public class InversionGapParaRepo {
 	 */
 	public boolean updateInversionGapsParaData(InversionGapPara request) {
 		InversionGapParaUtils dbUtils = InversionGapParaUtils.getInstance();
-		QueryExecutor queryExecutor = new QueryExecutor();
+		QueryExecutor queryExecutor = QueryExecutor.getInstance();
 		Integer status = 0;
 		try {
 			String updateInversionGapsParaQuery = dbUtils.updateInversionGapsPara(request);
-			 logger.debug("updateInversionGapsParaQuery: " + updateInversionGapsParaQuery);
+			logger.debug("updateInversionGapsParaQuery: " + updateInversionGapsParaQuery);
 			status = queryExecutor.executeUpdate(updateInversionGapsParaQuery, null);
 		} catch (Exception e) {
 			logger.error("Error occured while executing updateInversionGapsParaQuery: " + e);

@@ -36,6 +36,22 @@ public class GetRollingWindowHandler
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static GetRollingWindowHandler _instance = null;
+
+	/**
+	 * Gets the single instance of GetRollingWindowHandler.
+	 * 
+	 * @return single instance of GetRollingWindowHandler
+	 */
+	public static GetRollingWindowHandler getInstance() {
+		if (_instance == null) {
+			_instance = new GetRollingWindowHandler();
+		}
+		return _instance;
+	}
 
 	/**
 	 * executes on requesting for list of values for specific table name
@@ -55,13 +71,12 @@ public class GetRollingWindowHandler
 
 		GatewayResponse<? extends Object> response = null;
 		List<RollingWindowDTO> rollingWindowList = null;
-		RequestDataValidator requestDataValidator = null;
 		try {
 			// Validate input request
-			requestDataValidator = new RequestDataValidator();
+			RequestDataValidator requestDataValidator = RequestDataValidator.getInstance();
 			response = requestDataValidator.validateGetRequest(request);
 			if (response == null) { // response null denotes request is valid
-				RollingWindowService rollingWindowService = new RollingWindowService();
+				RollingWindowService rollingWindowService = RollingWindowService.getInstance();
 				rollingWindowList = rollingWindowService.getRollingWindowData(request);
 				if (rollingWindowList != null && rollingWindowList.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(

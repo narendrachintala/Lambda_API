@@ -36,6 +36,22 @@ public class GetInversionGapsParaDataHandler
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static GetInversionGapsParaDataHandler _instance = null;
+
+	/**
+	 * Gets the single instance of GetInversionGapsParaDataHandler.
+	 * 
+	 * @return single instance of GetInversionGapsParaDataHandler
+	 */
+	public static GetInversionGapsParaDataHandler getInstance() {
+		if (_instance == null) {
+			_instance = new GetInversionGapsParaDataHandler();
+		}
+		return _instance;
+	}
 
 	/**
 	 * This method will be invoked from AWS Lambda function to fetch price range
@@ -59,10 +75,10 @@ public class GetInversionGapsParaDataHandler
 		GatewayResponse<? extends Object> response = null;
 		try {
 			// validating request data
-			RequestDataValidator invergapValidator = new RequestDataValidator();
+			RequestDataValidator invergapValidator = RequestDataValidator.getInstance();
 			response = invergapValidator.validateGetRequest(request);
 			if (response == null) { // response null denotes request is valid
-				InversionGapParaService inversionGapParaService = new InversionGapParaService();
+				InversionGapParaService inversionGapParaService = InversionGapParaService.getInstance();
 				inversionGapsParaList = inversionGapParaService.getinversionGapParaData(request);
 				if (inversionGapsParaList != null && inversionGapsParaList.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(

@@ -14,6 +14,21 @@ public class PauseParaDataHelper {
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(PauseParaDataHelper.class);
 
+	// creating instance of class
+	public static PauseParaDataHelper _instance = null;
+
+	/**
+	 * Gets the single instance of PauseParaDataHelper.
+	 * 
+	 * @return single instance of PauseParaDataHelper
+	 */
+	public static PauseParaDataHelper getInstance() {
+		if (_instance == null) {
+			_instance = new PauseParaDataHelper();
+		}
+		return _instance;
+	}
+
 	/**
 	 * Generate setter condition.
 	 * 
@@ -24,10 +39,9 @@ public class PauseParaDataHelper {
 	public String generateSetterCondition(PausePara request, StringBuffer queryBuffer) {
 		String EQUALS = RCCLConstants.EQUALS;
 		String COMMA = RCCLConstants.COMMA;
-		String finalQuery = "";
 		try {
 			if (request.getL1_pause() != null) {
-				System.out.println("request.getL1_pause() = "+request.getL1_pause());
+				System.out.println("request.getL1_pause() = " + request.getL1_pause());
 				queryBuffer.append(RCCLConstants.L1_PAUSE).append(EQUALS);
 				queryBuffer.append(request.getL1_pause());
 				queryBuffer.append(COMMA);
@@ -42,11 +56,9 @@ public class PauseParaDataHelper {
 				queryBuffer.append(request.getstop_push_wts());
 				queryBuffer.append(COMMA);
 			}
-			// removing last appended extra ,
-			if (queryBuffer.toString().endsWith(",")) {
-				finalQuery = queryBuffer.substring(0, queryBuffer.length() - 1);
-			}
 			queryBuffer = UpdateColumnHelper.updateGenericColumns(queryBuffer);
+			// removing last appended extra COMMA
+			queryBuffer.replace(queryBuffer.lastIndexOf(COMMA), queryBuffer.length(), "");
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;

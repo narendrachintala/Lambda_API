@@ -37,6 +37,22 @@ public class PutCurrencyGapDataHandler implements RequestHandler<CurrencyGapPara
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 
+	/** The instance. */
+	// creating instance of class
+	public static PutCurrencyGapDataHandler _instance = null;
+
+	/**
+	 * Gets the single instance of PutCurrencyGapDataHandler.
+	 * 
+	 * @return single instance of PutCurrencyGapDataHandler
+	 */
+	public static PutCurrencyGapDataHandler getInstance() {
+		if (_instance == null) {
+			_instance = new PutCurrencyGapDataHandler();
+		}
+		return _instance;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -46,8 +62,8 @@ public class PutCurrencyGapDataHandler implements RequestHandler<CurrencyGapPara
 	 */
 	@Override
 	/**
-	 * Post currency gap parameter data based on applied filters and requested data Handle
-	 * request.
+	 * Post currency gap parameter data based on applied filters and requested data
+	 * Handle request.
 	 * 
 	 * @param request contains chosen filters as key-value pair
 	 * @param context lambda context object
@@ -63,15 +79,14 @@ public class PutCurrencyGapDataHandler implements RequestHandler<CurrencyGapPara
 		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 
 		Boolean result = false;
-		CurrencyGapDataValidator dataValidator = null;
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.CURRENCY_GAP_PARA);
 		GatewayResponse<? extends Object> response = null;
 		try {
-			dataValidator = CurrencyGapDataValidator.getInstance();
+			CurrencyGapDataValidator dataValidator = CurrencyGapDataValidator.getInstance();
 			response = dataValidator.validatePutRequest(request, jobName);
 			if (response == null) { // response null denotes request is valid
-				CurrencyGapParaService currentPriceService = new CurrencyGapParaService();
+				CurrencyGapParaService currentPriceService = CurrencyGapParaService.getInstance();
 				result = currentPriceService.updateCurrencyGapParaData(request);
 				if (result == true) {
 					response = ResponseUtil.getCustErrorMessage(

@@ -34,6 +34,22 @@ public class PutRefundablePremiumDataHandler
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static PutRefundablePremiumDataHandler _instance = null;
+
+	/**
+	 * Gets the single instance of PutRefundablePremiumDataHandler.
+	 * 
+	 * @return single instance of PutRefundablePremiumDataHandler
+	 */
+	public static PutRefundablePremiumDataHandler getInstance() {
+		if (_instance == null) {
+			_instance = new PutRefundablePremiumDataHandler();
+		}
+		return _instance;
+	}
 
 	/**
 	 * Handle request.
@@ -53,14 +69,13 @@ public class PutRefundablePremiumDataHandler
 
 		boolean update = false;
 		GatewayResponse<? extends Object> response = null;
-		RefundablePremiumDataValidator rDataValidator = null;
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.REFUNDABLE_PREMIUM);
 		try {
-			rDataValidator = new RefundablePremiumDataValidator();
+			RefundablePremiumDataValidator rDataValidator = RefundablePremiumDataValidator.getInstance();
 			response = rDataValidator.validatePutRequest(request, jobName);
 			if (response == null) {
-				RefundablePremiumService refundablePremiumService = new RefundablePremiumService();
+				RefundablePremiumService refundablePremiumService = RefundablePremiumService.getInstance();
 				update = refundablePremiumService.updateRefundablePremiumData(request);
 				if (update == true) {
 					response = ResponseUtil.getCustErrorMessage(

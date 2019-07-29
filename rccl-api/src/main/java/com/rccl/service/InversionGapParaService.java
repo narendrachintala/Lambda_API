@@ -18,6 +18,24 @@ public class InversionGapParaService {
 	/** The Constant logger. */
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(PriceRangeService.class);
+	
+	/** The instance. */
+	// creating instance of class
+	public static InversionGapParaService _instance = null;
+
+	/**
+	 * Gets the single instance of InversionGapParaService.
+	 * 
+	 * @return single instance of InversionGapParaService
+	 */
+	public static InversionGapParaService getInstance() {
+		if (_instance == null) {
+			_instance = new InversionGapParaService();
+		}
+		return _instance;
+	}
+
+	
 	/**
 	 * Gets the inversion gap para data.
 	 * @param request the request
@@ -26,7 +44,7 @@ public class InversionGapParaService {
 	public List<InversionGapsParaDTO> getinversionGapParaData(ParameterFiltersData request) {
 		List<InversionGapsParaDTO> inversionGapParaData = null;
 		try {
-			InversionGapParaRepo repo = new InversionGapParaRepo();
+			InversionGapParaRepo repo = InversionGapParaRepo.getInstance();
 			inversionGapParaData = repo.getInvesionGapPara(request);
 
 		} catch (Exception e) {
@@ -43,10 +61,9 @@ public class InversionGapParaService {
 	 * @return true, if successful
 	 */
 	public boolean updateinversionGapParaData(InversionGapPara inversionGapParaReq) {
-		InversionGapParaRepo inversionGapParaRepo = null;
 		boolean status = false;
 		try {
-			inversionGapParaRepo = new InversionGapParaRepo();
+			InversionGapParaRepo inversionGapParaRepo = InversionGapParaRepo.getInstance();
 			status = inversionGapParaRepo.updateInversionGapsParaData(inversionGapParaReq);
 		
 		} catch (Exception e) {

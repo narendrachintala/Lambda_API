@@ -21,6 +21,22 @@ public class PauseParaDataRepo {
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(PauseParaDataRepo.class);
 
+	/** The instance. */
+	// creating instance of class
+	public static PauseParaDataRepo _instance = null;
+
+	/**
+	 * Gets the single instance of PauseParaDataRepo.
+	 * 
+	 * @return single instance of PauseParaDataRepo
+	 */
+	public static PauseParaDataRepo getInstance() {
+		if (_instance == null) {
+			_instance = new PauseParaDataRepo();
+		}
+		return _instance;
+	}
+
 	/**
 	 * Gets the pause para.
 	 * 
@@ -31,7 +47,7 @@ public class PauseParaDataRepo {
 	// This method is used to fetch results from DB
 	public List<PauseParaDTO> getPausePara(ParameterFiltersData filterData) {
 		List<PauseParaDTO> PauseParaData = new ArrayList<PauseParaDTO>();
-		QueryExecutor queryExecutor = new QueryExecutor();
+		QueryExecutor queryExecutor = QueryExecutor.getInstance();
 		PauseParaDBUtils dbUtils = PauseParaDBUtils.getInstance();
 		try {
 			String getPauseParaQuery = dbUtils.getPauseParaDataQuery(filterData, logger);
@@ -54,7 +70,7 @@ public class PauseParaDataRepo {
 	 */
 	public boolean updatePauseParaData(PausePara request) {
 		PauseParaDBUtils dbUtils = PauseParaDBUtils.getInstance();
-		QueryExecutor queryExecutor = new QueryExecutor();
+		QueryExecutor queryExecutor = QueryExecutor.getInstance();
 		Integer status = 0;
 		try {
 			String updatePauseParaQuery = dbUtils.updatePauseParaDataQuery(request);

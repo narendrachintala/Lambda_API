@@ -60,9 +60,6 @@ public class PutRefundablePremiumDataHandler
 	 * @return true if update is successful
 	 */
 	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
-		
-		RefundablePremium request = new Gson().fromJson(req.getBody(), RefundablePremium.class);
-		logger.info("Input request: " + request);
 
 		/**
 		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
@@ -75,6 +72,10 @@ public class PutRefundablePremiumDataHandler
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.REFUNDABLE_PREMIUM);
 		try {
+			
+			RefundablePremium request = new Gson().fromJson(req.getBody(), RefundablePremium.class);
+			logger.info("Input request: " + request);
+			//Validates Input Request
 			RefundablePremiumDataValidator rDataValidator = RefundablePremiumDataValidator.getInstance();
 			response = rDataValidator.validatePutRequest(request, jobName);
 			if (response == null) {

@@ -72,9 +72,6 @@ public class PutCurrencyGapDataHandler implements RequestHandler<ApiGatewayProxy
 	 * @return true if update is successful
 	 */
 	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
-		
-		CurrencyGapPara request = new Gson().fromJson(req.getBody(), CurrencyGapPara.class);
-		logger.info("input: " + request.toString());
 
 		/**
 		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
@@ -87,6 +84,10 @@ public class PutCurrencyGapDataHandler implements RequestHandler<ApiGatewayProxy
 		String jobName = configInst.getTableName(RCCLConstants.CURRENCY_GAP_PARA);
 		GatewayResponse response = null;
 		try {
+			
+			CurrencyGapPara request = new Gson().fromJson(req.getBody(), CurrencyGapPara.class);
+			logger.info("input: " + request.toString());
+			//Validates input Request
 			CurrencyGapDataValidator dataValidator = CurrencyGapDataValidator.getInstance();
 			response = dataValidator.validatePutRequest(request, jobName);
 			if (response == null) { // response null denotes request is valid

@@ -71,9 +71,6 @@ public class PutCurrentPriceDataHandler implements RequestHandler<ApiGatewayProx
 	 * @return true if update is successful
 	 */
 	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
-		
-		CurrentPricePara request = new Gson().fromJson(req.getBody(), CurrentPricePara.class);
-		logger.info("input: " + request.toString());
 
 		/**
 		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
@@ -86,6 +83,10 @@ public class PutCurrentPriceDataHandler implements RequestHandler<ApiGatewayProx
 		String jobName = configInst.getTableName(RCCLConstants.CURRENT_PRICE_PARA);
 		GatewayResponse response = null;
 		try {
+			
+			CurrentPricePara request = new Gson().fromJson(req.getBody(), CurrentPricePara.class);
+			logger.info("input: " + request.toString());
+			//Validates input Request
 			CurrentPriceDataValidator dataValidator = CurrentPriceDataValidator.getInstance();
 			response = dataValidator.validatePutRequest(request, jobName);
 			if (response == null) { // response null denotes request is valid

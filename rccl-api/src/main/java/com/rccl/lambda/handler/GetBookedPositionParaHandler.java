@@ -62,14 +62,16 @@ public class GetBookedPositionParaHandler implements RequestHandler<ApiGatewayPr
 	 * @return the list of column values based on provided tablename
 	 */
 	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
+		
 		logger.info("Handler started");
-		ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
-		logger.info("Input request: " + request);
 		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 		GatewayResponse response = null;
 		List<BookedPositionDTO> bookedPositionlist = null;
 		RequestDataValidator requestDataValidator = RequestDataValidator.getInstance();
 		try {
+			
+			ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
+			logger.info("Input request: " + request);
 			// Validate input request
 			response = requestDataValidator.validateGetRequest(request);
 			if (response == null) { // response null denotes request is valid

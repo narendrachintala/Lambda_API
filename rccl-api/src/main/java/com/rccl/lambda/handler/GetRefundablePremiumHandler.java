@@ -63,9 +63,6 @@ public class GetRefundablePremiumHandler
 	 * 
 	 */
 	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
-		
-		ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
-		logger.info("Input request: " + request);
 
 		/**
 		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
@@ -76,6 +73,9 @@ public class GetRefundablePremiumHandler
 		GatewayResponse response = null;
 		List<RefundablePremiumDTO> refundablePremiumList = null;
 		try {
+			
+			ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
+			logger.info("Input request: " + request);
 			// Validate input request
 			RequestDataValidator requestDataValidator = RequestDataValidator.getInstance();
 			response = requestDataValidator.validateGetRequest(request);

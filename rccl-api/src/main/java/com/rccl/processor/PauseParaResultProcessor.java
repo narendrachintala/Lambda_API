@@ -20,7 +20,7 @@ public class PauseParaResultProcessor extends ResultProcessor<List<PauseParaDTO>
 	 */
 	public PauseParaResultProcessor() {
 		result = null;
-		fetchSize = RCCLConstants.MID_FETCH_ROWS;
+		fetchSize = RCCLConstants.MAX_FETCH_ROWS;
 	}
 
 	/**

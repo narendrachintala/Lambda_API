@@ -19,7 +19,7 @@ public class RollingWindowResultProcessor extends ResultProcessor<List<RollingWi
 	 */
 	public RollingWindowResultProcessor() {
 		result = null;
-		fetchSize = RCCLConstants.MID_FETCH_ROWS;
+		fetchSize = RCCLConstants.MAX_FETCH_ROWS;
 	}
 
 	/**

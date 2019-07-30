@@ -16,7 +16,7 @@ public class InversionGapResultProcessor extends ResultProcessor<List<InversionG
 
 	public InversionGapResultProcessor() {
 		result = null;
-		fetchSize = RCCLConstants.MID_FETCH_ROWS;
+		fetchSize = RCCLConstants.MAX_FETCH_ROWS;
 	}
 
 	/**

@@ -18,7 +18,7 @@ public class PriceRangeResultProcessor extends ResultProcessor<List<PriceRangeDT
 
 	public PriceRangeResultProcessor() {
 		result = null;
-		fetchSize = RCCLConstants.MID_FETCH_ROWS;
+		fetchSize = RCCLConstants.MAX_FETCH_ROWS;
 	}
 
 	/**

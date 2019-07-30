@@ -18,7 +18,7 @@ public abstract class ResultProcessor<T> extends Object {
 
 
 	/** The fetch size. */
-	protected Integer fetchSize = RCCLConstants.MIN_FETCH_ROWS; // fetch number of rows in result-set for one traverse
+	protected Integer fetchSize = RCCLConstants.MAX_FETCH_ROWS; // fetch number of rows in result-set for one traverse
 
 	/**
 	 * Process result.

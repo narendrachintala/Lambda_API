@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.rccl.dbutils.BookedPositionDBUtils;
+import com.rccl.dbutils.BookedPositionDBUtil;
 import com.rccl.dbutils.QueryExecutor;
 import com.rccl.dto.BookedPositionDTO;
 import com.rccl.model.BookedPosition;
@@ -44,7 +44,7 @@ public class BookedPositionRepo {
 	 */
 	// This method is used to fetch results from DB
 	public List<BookedPositionDTO> getBookedPositionData(ParameterFiltersData request) {
-		BookedPositionDBUtils bookedPositionDBUtils = BookedPositionDBUtils.getInstance();
+		BookedPositionDBUtil bookedPositionDBUtils = BookedPositionDBUtil.getInstance();
 		QueryExecutor queryExecutor = QueryExecutor.getInstance();
 		List<BookedPositionDTO> list = new ArrayList<BookedPositionDTO>();
 		try {
@@ -67,7 +67,7 @@ public class BookedPositionRepo {
 	 * @return true, if successful
 	 */
 	public boolean updateBookedPositionData(BookedPosition request) {
-		BookedPositionDBUtils dbUtils = BookedPositionDBUtils.getInstance();
+		BookedPositionDBUtil dbUtils = BookedPositionDBUtil.getInstance();
 		QueryExecutor queryExecutor = QueryExecutor.getInstance();
 		Integer status = 0;
 		try {

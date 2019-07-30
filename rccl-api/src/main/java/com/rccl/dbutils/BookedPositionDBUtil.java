@@ -11,30 +11,30 @@ import com.rccl.utils.helper.BookedPositionDataHelper;
 import com.rccl.utils.helper.FilterDataHelper;
 
 /**
- * The Class BookedPositionDBUtils.
+ * The Class BookedPositionDBUtil.
  */
-public class BookedPositionDBUtils {
+public class BookedPositionDBUtil {
 
 	/** The Constant logger. */
 	// Initialize the Log4j logger.
-	static final Logger logger = LogManager.getLogger(BookedPositionDBUtils.class);
+	static final Logger logger = LogManager.getLogger(BookedPositionDBUtil.class);
 
 	/** The instance. */
 	// Creates instance
-	public static BookedPositionDBUtils _instance = null;
+	public static BookedPositionDBUtil _instance = null;
 
 	/** The config inst. */
 	// Read properties from configuration file
 	ConfigUtil configInst = ConfigUtil.getInstance();
 
 	/**
-	 * Gets the single instance of BookedPositionDBUtils.
+	 * Gets the single instance of BookedPositionDBUtil.
 	 * 
-	 * @return single instance of BookedPositionDBUtils
+	 * @return single instance of BookedPositionDBUtil
 	 */
-	public static BookedPositionDBUtils getInstance() {
+	public static BookedPositionDBUtil getInstance() {
 		if (_instance == null) {
-			_instance = new BookedPositionDBUtils();
+			_instance = new BookedPositionDBUtil();
 		}
 		return _instance;
 	}

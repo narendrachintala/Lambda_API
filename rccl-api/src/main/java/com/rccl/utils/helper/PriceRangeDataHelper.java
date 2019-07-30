@@ -14,6 +14,21 @@ public class PriceRangeDataHelper {
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(PriceRangeDataHelper.class);
 
+	// creating instance of class
+	public static PriceRangeDataHelper _instance = null;
+
+	/**
+	 * Gets the single instance of PriceRangeDataHelper.
+	 * 
+	 * @return single instance of PriceRangeDataHelper
+	 */
+	public static PriceRangeDataHelper getInstance() {
+		if (_instance == null) {
+			_instance = new PriceRangeDataHelper();
+		}
+		return _instance;
+	}
+
 	/**
 	 * Generate setter condition.
 	 *

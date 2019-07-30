@@ -10,6 +10,7 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.rccl.model.ApiGatewayProxyRequest;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.RollingWindow;
@@ -23,7 +24,7 @@ import com.rccl.utils.ResponseUtil;
 /**
  * The Class PostRollingWindowDataHandler.
  */
-public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow, GatewayResponse<? extends Object>> {
+public class PutRollingWindowDataHandler implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
@@ -34,6 +35,22 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 	
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static PutRollingWindowDataHandler _instance = null;
+
+	/**
+	 * Gets the single instance of PutRollingWindowDataHandler.
+	 * 
+	 * @return single instance of PutRollingWindowDataHandler
+	 */
+	public static PutRollingWindowDataHandler getInstance() {
+		if (_instance == null) {
+			_instance = new PutRollingWindowDataHandler();
+		}
+		return _instance;
+	}
 
 	/**
 	 * Handle request.
@@ -41,7 +58,9 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 	 * @param context lambda context object
 	 * @return true if update is successful
 	 */
-	public GatewayResponse<? extends Object> handleRequest(RollingWindow request, Context context) {
+	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
+		
+		RollingWindow request = new Gson().fromJson(req.getBody(), RollingWindow.class);
 		logger.info("Input request: " + request);
 		
 		/**
@@ -51,15 +70,14 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 		
 		boolean update = false;
-		GatewayResponse<? extends Object> response = null;
-		RollingWindowDataValidator rDataValidator = null;
+		GatewayResponse response = null;
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.ROLLING_WINDOW);
 		try {
-			rDataValidator = new RollingWindowDataValidator();
+			RollingWindowDataValidator rDataValidator = RollingWindowDataValidator.getInstance();
 			response = rDataValidator.validatePutRequest(request, jobName);
 			if (response == null) {
-				RollingWindowService rollingWindowService = new RollingWindowService();
+				RollingWindowService rollingWindowService = RollingWindowService.getInstance();
 				update = rollingWindowService.updateRollingWindowData(request);
 				if (update == true) {
 					response = ResponseUtil.getCustErrorMessage(
@@ -106,7 +124,7 @@ public class PutRollingWindowDataHandler implements RequestHandler<RollingWindow
 		
 		System.out.println("Sample Input data:" + json);
 		
-		new PutRollingWindowDataHandler().handleRequest(roWindow, new Context() {
+		new PutRollingWindowDataHandler().handleRequest(null, new Context() {
 			
 			@Override
 			public int getRemainingTimeInMillis() {

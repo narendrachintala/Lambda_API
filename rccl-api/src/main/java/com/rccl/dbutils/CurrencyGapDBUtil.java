@@ -45,32 +45,25 @@ public class CurrencyGapDBUtil {
 	 * @return the currency gap data query
 	 */
 	public String getCurrencyGapDataQuery(ParameterFiltersData filterDataReq) {
-
 		StringBuffer queryBuffer = new StringBuffer();
 		String getCurrencyGapQuery = new String(configInst.getCurrencyGapData());
-
 		try {
-
 			logger.debug("Reading query from config:" + getCurrencyGapQuery);
-
 			FilterDataHelper filterDataHelper = new FilterDataHelper();
 			String whereCondition = filterDataHelper.generateFilterCondition(filterDataReq, queryBuffer);
-
 			if (whereCondition.equals("")) {
 				getCurrencyGapQuery = getCurrencyGapQuery.replace(RCCLConstants.WHERE_CONDITION_Q, "1=1");
 			} else {
 				getCurrencyGapQuery = getCurrencyGapQuery.replace(RCCLConstants.WHERE_CONDITION_Q, whereCondition);
 			}
 			logger.debug("Final query for GET API current price para :" + getCurrencyGapQuery);
-
 		} catch (Exception e) {
 			logger.error("Error occured in getCurrencyGapQuery: " + e);
 			throw e;
 		}
 		return getCurrencyGapQuery;
 	}
-	
-	
+
 	/**
 	 * Update currecy gap query.
 	 *
@@ -78,36 +71,28 @@ public class CurrencyGapDBUtil {
 	 * @return the string
 	 */
 	public String updateCurrecyGapQuery(CurrencyGapPara currencyGapParaReq) {
-		
 		StringBuffer queryBuffer = new StringBuffer();
 		String updateCurrencyGapQuery = new String(configInst.updateCurrencyGapData());
-		
 		try {
 			logger.debug("reading query from config:" + updateCurrencyGapQuery);
 			FilterDataHelper filterDataHelper = new FilterDataHelper();
-
 			String filterWhereCondition = filterDataHelper.generateFilterCondition(currencyGapParaReq.getFiltersData(),
 					queryBuffer);
-
-			CurrencyGapDataHelper currencyGapDataHelper = new CurrencyGapDataHelper();
-
+			CurrencyGapDataHelper currencyGapDataHelper = CurrencyGapDataHelper.getInstance();
 			String setterCondition = currencyGapDataHelper.generateSetterCondition(currencyGapParaReq,
 					new StringBuffer());
-
 			if (setterCondition != "") {
-				updateCurrencyGapQuery = updateCurrencyGapQuery.replace(RCCLConstants.SETTER_COLUMNS_Q, setterCondition);
+				updateCurrencyGapQuery = updateCurrencyGapQuery.replace(RCCLConstants.SETTER_COLUMNS_Q,
+						setterCondition);
 			}
-
 			if (filterWhereCondition.equals("")) {
 				updateCurrencyGapQuery = updateCurrencyGapQuery.replace(RCCLConstants.WHERE_CONDITION_Q, "1=1");
 			} else {
 				updateCurrencyGapQuery = updateCurrencyGapQuery.replace(RCCLConstants.WHERE_CONDITION_Q,
 						filterWhereCondition);
 			}
-
 			logger.debug("Final query for POST API currency gap para :" + updateCurrencyGapQuery);
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			logger.error("Error occured in updateCurrencyGapQuery: " + e);
 			throw e;
 		}

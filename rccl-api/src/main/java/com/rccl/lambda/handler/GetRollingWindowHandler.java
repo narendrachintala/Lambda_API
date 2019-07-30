@@ -10,8 +10,10 @@ import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rccl.dto.RollingWindowDTO;
+import com.rccl.model.ApiGatewayProxyRequest;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.validator.RequestDataValidator;
@@ -25,7 +27,7 @@ import com.rccl.utils.ResponseUtil;
  */
 // Start of Lambda Function request
 public class GetRollingWindowHandler
-		implements RequestHandler<ParameterFiltersData, GatewayResponse<? extends Object>> {
+		implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
@@ -36,6 +38,22 @@ public class GetRollingWindowHandler
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static GetRollingWindowHandler _instance = null;
+
+	/**
+	 * Gets the single instance of GetRollingWindowHandler.
+	 * 
+	 * @return single instance of GetRollingWindowHandler
+	 */
+	public static GetRollingWindowHandler getInstance() {
+		if (_instance == null) {
+			_instance = new GetRollingWindowHandler();
+		}
+		return _instance;
+	}
 
 	/**
 	 * executes on requesting for list of values for specific table name
@@ -44,7 +62,9 @@ public class GetRollingWindowHandler
 	 * @param context lambda context object
 	 * @return the list of column values based on provided tablename
 	 */
-	public GatewayResponse<? extends Object> handleRequest(ParameterFiltersData request, Context context) {
+	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
+		
+		ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
 		logger.info("Input request: " + request);
 
 		/**
@@ -53,22 +73,21 @@ public class GetRollingWindowHandler
 		 */
 		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 
-		GatewayResponse<? extends Object> response = null;
+		GatewayResponse response = null;
 		List<RollingWindowDTO> rollingWindowList = null;
-		RequestDataValidator requestDataValidator = null;
 		try {
 			// Validate input request
-			requestDataValidator = new RequestDataValidator();
+			RequestDataValidator requestDataValidator = RequestDataValidator.getInstance();
 			response = requestDataValidator.validateGetRequest(request);
 			if (response == null) { // response null denotes request is valid
-				RollingWindowService rollingWindowService = new RollingWindowService();
+				RollingWindowService rollingWindowService = RollingWindowService.getInstance();
 				rollingWindowList = rollingWindowService.getRollingWindowData(request);
 				if (rollingWindowList != null && rollingWindowList.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(
 							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
 							RCCLConstants.REQUEST_ID);
 				} else {
-					response = new GatewayResponse<List<RollingWindowDTO>>(rollingWindowList, ResponseUtil.getHeaders(),
+					response = new GatewayResponse(rollingWindowList, ResponseUtil.getHeaders(),
 							RCCLConstants.SC_OK, RCCLConstants.REQUEST_ID);
 				}
 			}
@@ -95,7 +114,7 @@ public class GetRollingWindowHandler
 		parameterFiltersData.setSail_month("3");
 		parameterFiltersData.setShip_code("MJ");
 
-		new GetRollingWindowHandler().handleRequest(parameterFiltersData, new Context() {
+		new GetRollingWindowHandler().handleRequest(null, new Context() {
 
 			@Override
 			public int getRemainingTimeInMillis() {

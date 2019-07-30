@@ -18,6 +18,21 @@ public class BookedPositionParaService {
 	/** The Constant logger. */
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(BookedPositionParaService.class);
+	
+	// creating instance of class
+	public static BookedPositionParaService _instance = null;
+
+	/**
+	 * Gets the single instance of BookedPositionParaService.
+	 * 
+	 * @return single instance of BookedPositionParaService
+	 */
+	public static BookedPositionParaService getInstance() {
+		if (_instance == null) {
+			_instance = new BookedPositionParaService();
+		}
+		return _instance;
+	}
 
 	/**
 	 * Gets the BookedPosition data.
@@ -28,7 +43,7 @@ public class BookedPositionParaService {
 	public List<BookedPositionDTO> getBookedPositionData(ParameterFiltersData request) {
 		List<BookedPositionDTO> bookedPositionData = null;
 		try {
-			BookedPositionRepo repo = new BookedPositionRepo();
+			BookedPositionRepo repo = BookedPositionRepo.getInstance();
 			bookedPositionData = repo.getBookedPositionData(request);
 		} catch (Exception e) {
 			throw e;
@@ -42,10 +57,9 @@ public class BookedPositionParaService {
 	 * @return true, if successful
 	 */
 	public boolean updateBookedPositionData(BookedPosition request) {
-		BookedPositionRepo bookedPositionRepo = null;
 		boolean status = false;
 		try {
-			bookedPositionRepo = new BookedPositionRepo();
+			BookedPositionRepo bookedPositionRepo = BookedPositionRepo.getInstance();
 			status = bookedPositionRepo.updateBookedPositionData(request);
 		} catch (Exception e) {
 			throw e;

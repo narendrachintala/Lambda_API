@@ -12,8 +12,8 @@ import com.rccl.utils.RCCLConstants;
 /**
  * The Class RefundablePremiumResultProcessor.
  */
-public class RefundablePremiumResultProcessor extends ResultProcessor<List<RefundablePremiumDTO>>{
-	
+public class RefundablePremiumResultProcessor extends ResultProcessor<List<RefundablePremiumDTO>> {
+
 	/**
 	 * Instantiates a new rolling window result processor.
 	 */
@@ -21,15 +21,17 @@ public class RefundablePremiumResultProcessor extends ResultProcessor<List<Refun
 		result = null;
 		fetchSize = RCCLConstants.MID_FETCH_ROWS;
 	}
-	
+
 	/**
 	 * Process result.
+	 * 
 	 * @param rs the rs
 	 * @throws SQLException the SQL exception
 	 */
 	@Override
 	public void processResult(ResultSet rs) throws SQLException {
-		BeanListHandler<RefundablePremiumDTO> handle = new BeanListHandler<RefundablePremiumDTO>(RefundablePremiumDTO.class);
+		BeanListHandler<RefundablePremiumDTO> handle = new BeanListHandler<RefundablePremiumDTO>(
+				RefundablePremiumDTO.class);
 		result = handle.handle(rs);
 	}
 

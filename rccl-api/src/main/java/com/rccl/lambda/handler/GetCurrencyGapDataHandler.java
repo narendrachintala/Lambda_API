@@ -7,8 +7,10 @@ import org.apache.logging.log4j.Logger;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rccl.dto.CurrencyGapParaDTO;
+import com.rccl.model.ApiGatewayProxyRequest;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.validator.RequestDataValidator;
@@ -22,18 +24,33 @@ import com.rccl.utils.ResponseUtil;
  *
  * @author chandrabhan.birla
  */
-public class GetCurrencyGapDataHander
-		implements RequestHandler<ParameterFiltersData, GatewayResponse<? extends Object>> {
+public class GetCurrencyGapDataHandler implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
 	}
 
 	// Initialize the Log4j logger.
-	static final Logger logger = LogManager.getLogger(GetCurrencyGapDataHander.class);
+	static final Logger logger = LogManager.getLogger(GetCurrencyGapDataHandler.class);
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static GetCurrencyGapDataHandler _instance = null;
+
+	/**
+	 * Gets the single instance of GetCurrencyGapDataHander.
+	 * 
+	 * @return single instance of GetCurrencyGapDataHander
+	 */
+	public static GetCurrencyGapDataHandler getInstance() {
+		if (_instance == null) {
+			_instance = new GetCurrencyGapDataHandler();
+		}
+		return _instance;
+	}
 
 	/**
 	 * This method will be invoked from AWS Lambda function to fetch currency gap
@@ -41,12 +58,13 @@ public class GetCurrencyGapDataHander
 	 *
 	 * @param request the request
 	 * @param context the context
-	 * @return the gateway response<? extends object>
+	 * @return the gateway response
 	 * @see com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java.lang.
 	 *      Object, com.amazonaws.services.lambda.runtime.Context)
 	 */
-	public GatewayResponse<? extends Object> handleRequest(ParameterFiltersData request, Context context) {
+	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
 
+		ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
 		logger.info("Input: " + request.toString());
 
 		/**
@@ -56,22 +74,22 @@ public class GetCurrencyGapDataHander
 		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 
 		List<CurrencyGapParaDTO> currencyGapParaList = null;
-		GatewayResponse<? extends Object> response = null;
+		GatewayResponse response = null;
 
 		try {
 			// validating request data
-			RequestDataValidator currencyGapValidator = new RequestDataValidator();
+			RequestDataValidator currencyGapValidator = RequestDataValidator.getInstance();
 			response = currencyGapValidator.validateGetRequest(request);
 			if (response == null) { // response null denotes request is valid
 
-				CurrencyGapParaService currencyGapService = new CurrencyGapParaService();
+				CurrencyGapParaService currencyGapService = CurrencyGapParaService.getInstance();
 				currencyGapParaList = currencyGapService.getCurrencyGapParaData(request);
 				if (currencyGapParaList != null && currencyGapParaList.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(
 							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
 							RCCLConstants.REQUEST_ID);
 				} else {
-					response = new GatewayResponse<List<CurrencyGapParaDTO>>(currencyGapParaList,
+					response = new GatewayResponse(currencyGapParaList,
 							ResponseUtil.getHeaders(), RCCLConstants.SC_OK, RCCLConstants.REQUEST_ID);
 				}
 			}
@@ -108,7 +126,7 @@ public class GetCurrencyGapDataHander
 		currencyGapdata.setSail_date("23-NOV-19 12.00.00.000000000 AM");
 		currencyGapdata.setSail_month("11");
 
-		GatewayResponse<? extends Object> rcode = new GetCurrencyGapDataHander().handleRequest(currencyGapdata,
+		GatewayResponse rcode = new GetCurrencyGapDataHandler().handleRequest(null,
 				null);
 		System.out.println(new GsonBuilder().serializeNulls().create().toJson(rcode));
 		System.out.println(rcode.getStatusCode());

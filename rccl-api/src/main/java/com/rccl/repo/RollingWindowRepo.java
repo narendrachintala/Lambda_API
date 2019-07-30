@@ -20,6 +20,23 @@ public class RollingWindowRepo {
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(RollingWindowRepo.class);
+	
+	/** The instance. */
+	// creating instance of class
+	public static RollingWindowRepo _instance = null;
+
+	/**
+	 * Gets the single instance of RollingWindowRepo.
+	 * 
+	 * @return single instance of RollingWindowRepo
+	 */
+	public static RollingWindowRepo getInstance() {
+		if (_instance == null) {
+			_instance = new RollingWindowRepo();
+		}
+		return _instance;
+	}
+
 
 	/**
 	 * Gets the rolling window data.
@@ -31,7 +48,7 @@ public class RollingWindowRepo {
 	// This method is used to fetch results from DB
 	public List<RollingWindowDTO> getRollingWindowData(ParameterFiltersData request) {
 		RollingWindowDBUtil rollingWindowDBUtil = RollingWindowDBUtil.getInstance();
-		QueryExecutor queryExecutor = new QueryExecutor();
+		QueryExecutor queryExecutor = QueryExecutor.getInstance();
 		List<RollingWindowDTO> list = new ArrayList<RollingWindowDTO>();
 		try {
 			String getRollingWindowQuery = rollingWindowDBUtil.getRollingWindowQuery(request);
@@ -55,7 +72,7 @@ public class RollingWindowRepo {
 	 */
 	public boolean updateRollingWindowData(RollingWindow request) {
 		RollingWindowDBUtil dbUtils = RollingWindowDBUtil.getInstance();
-		QueryExecutor queryExecutor = new QueryExecutor();
+		QueryExecutor queryExecutor = QueryExecutor.getInstance();
 		Integer status = 0;
 		try {
 			String updateRollingWindowQuery = dbUtils.updateRollingWindowDataQuery(request);

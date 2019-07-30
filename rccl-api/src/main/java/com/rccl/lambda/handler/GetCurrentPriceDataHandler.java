@@ -7,8 +7,10 @@ import org.apache.logging.log4j.Logger;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rccl.dto.CurrentPriceParaDTO;
+import com.rccl.model.ApiGatewayProxyRequest;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.validator.RequestDataValidator;
@@ -22,7 +24,7 @@ import com.rccl.utils.ResponseUtil;
  *
  */
 public class GetCurrentPriceDataHandler
-		implements RequestHandler<ParameterFiltersData, GatewayResponse<? extends Object>> {
+		implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
@@ -33,6 +35,23 @@ public class GetCurrentPriceDataHandler
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static GetCurrentPriceDataHandler _instance = null;
+
+	/**
+	 * Gets the single instance of GetCurrentPriceDataHandler.
+	 * 
+	 * @return single instance of GetCurrentPriceDataHandler
+	 */
+	public static GetCurrentPriceDataHandler getInstance() {
+		if (_instance == null) {
+			_instance = new GetCurrentPriceDataHandler();
+		}
+		return _instance;
+	}
+
 
 	/**
 	 * This method will be invoked from AWS Lambda function to fetch price range
@@ -40,12 +59,13 @@ public class GetCurrentPriceDataHandler
 	 *
 	 * @param request the request
 	 * @param context the context
-	 * @return the gateway response<? extends object>
+	 * @return the gateway response
 	 * @see com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java.lang.
 	 *      Object, com.amazonaws.services.lambda.runtime.Context)
 	 */
-	public GatewayResponse<? extends Object> handleRequest(ParameterFiltersData request, Context context) {
+	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
 
+		ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
 		logger.info("Input: " + request.toString());
 
 		/**
@@ -55,22 +75,22 @@ public class GetCurrentPriceDataHandler
 		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 
 		List<CurrentPriceParaDTO> currentPriceParaList = null;
-		GatewayResponse<? extends Object> response = null;
+		GatewayResponse response = null;
 
 		try {
 			// validating request data
-			RequestDataValidator currentPriceValidator = new RequestDataValidator();
+			RequestDataValidator currentPriceValidator = RequestDataValidator.getInstance();
 			response = currentPriceValidator.validateGetRequest(request);
 			if (response == null) { // response null denotes request is valid
 
-				CurrentPriceParaService currrentPriceService = new CurrentPriceParaService();
+				CurrentPriceParaService currrentPriceService = CurrentPriceParaService.getInstance();
 				currentPriceParaList = currrentPriceService.getCurrentPriceParaData(request);
 				if (currentPriceParaList != null && currentPriceParaList.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(
 							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
 							RCCLConstants.REQUEST_ID);
 				} else {
-					response = new GatewayResponse<List<CurrentPriceParaDTO>>(currentPriceParaList,
+					response = new GatewayResponse(currentPriceParaList,
 							ResponseUtil.getHeaders(), RCCLConstants.SC_OK, RCCLConstants.REQUEST_ID);
 				}
 			}
@@ -107,7 +127,7 @@ public class GetCurrentPriceDataHandler
 		currentPricedata.setSail_date("23-NOV-19 12.00.00.000000000 AM");
 		currentPricedata.setSail_month("11");
 
-		GatewayResponse<? extends Object> rcode = new GetCurrentPriceDataHandler().handleRequest(currentPricedata,
+		GatewayResponse rcode = new GetCurrentPriceDataHandler().handleRequest(null,
 				null);
 		System.out.println(new GsonBuilder().serializeNulls().create().toJson(rcode));
 		System.out.println(rcode.getStatusCode());

@@ -5,7 +5,9 @@ import org.apache.logging.log4j.Logger;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.google.gson.Gson;
 import com.rccl.dto.FilterDataDTO;
+import com.rccl.model.ApiGatewayProxyRequest;
 import com.rccl.model.FiltersData;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.validator.FilterDataValidator;
@@ -20,7 +22,7 @@ import com.rccl.utils.ResponseUtil;
  *         data from all parameter tables based on dynamically provided table
  *         name
  */
-public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayResponse<? extends Object>> {
+public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
@@ -28,6 +30,22 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(FiltersDataHandler.class);
+	
+	/** The instance. */
+	// creating instance of class
+	public static FiltersDataHandler _instance = null;
+
+	/**
+	 * Gets the single instance of FiltersDataHandler.
+	 * 
+	 * @return single instance of FiltersDataHandler
+	 */
+	public static FiltersDataHandler getInstance() {
+		if (_instance == null) {
+			_instance = new FiltersDataHandler();
+		}
+		return _instance;
+	}
 
 	/**
 	 * executes on requesting for list of meta_products for specific table name
@@ -38,8 +56,11 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 	 *         name
 	 */
 	@Override
-	public GatewayResponse<? extends Object> handleRequest(FiltersData request, Context context) {
+	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
+		
+		FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
 		logger.info("input: " + request);
+		
 
 		/**
 		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
@@ -47,16 +68,15 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 		 */
 		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 
-		FilterDataService dataService = null;
 		FilterDataDTO dataDTO = null;
-		GatewayResponse<? extends Object> response = null;
-		FilterDataValidator dataValidator = new FilterDataValidator();
+		GatewayResponse response = null;
+		FilterDataValidator dataValidator = FilterDataValidator.getInstance();
 		try {
 			response = dataValidator.validateGetRequest(request);
 			if (response == null) {
-				dataService = new FilterDataService();
+				FilterDataService dataService = FilterDataService.getInstance();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.METAPRODUCT_F);
-				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
+				response = new GatewayResponse(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
 						RCCLConstants.REQUEST_ID);
 			}
 		} catch (Exception e) {
@@ -76,19 +96,21 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 	 * @return returns list of product_code column values based on provided table
 	 *         name
 	 */
-	public GatewayResponse<? extends Object> getProductCodes(FiltersData request, Context context) {
+	public GatewayResponse getProductCodes(ApiGatewayProxyRequest req, Context context) {
+		
+		
+		FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
 		logger.info("input: " + request);
 
-		FilterDataService dataService = null;
 		FilterDataDTO dataDTO = null;
-		GatewayResponse<? extends Object> response = null;
-		FilterDataValidator dataValidator = new FilterDataValidator();
+		GatewayResponse response = null;
+		FilterDataValidator dataValidator = FilterDataValidator.getInstance();
 		try {
 			response = dataValidator.validateGetRequest(request);
 			if (response == null) {
-				dataService = new FilterDataService();
+				FilterDataService dataService = FilterDataService.getInstance();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.PRODUCT_CODE_F);
-				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
+				response = new GatewayResponse(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
 						RCCLConstants.REQUEST_ID);
 			}
 		} catch (Exception e) {
@@ -107,18 +129,19 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 	 * @param context lambda context object
 	 * @return returns list of ship_code column values based on provided table name
 	 */
-	public GatewayResponse<? extends Object> getShipCodes(FiltersData request, Context context) {
+	public GatewayResponse getShipCodes(ApiGatewayProxyRequest req, Context context) {
+		
+		FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
 		logger.info("input: " + request);
-		FilterDataService dataService = null;
 		FilterDataDTO dataDTO = null;
-		GatewayResponse<? extends Object> response = null;
-		FilterDataValidator dataValidator = new FilterDataValidator();
+		GatewayResponse response = null;
+		FilterDataValidator dataValidator = FilterDataValidator.getInstance();
 		try {
 			response = dataValidator.validateGetRequest(request);
 			if (response == null) {
-				dataService = new FilterDataService();
+				FilterDataService dataService = FilterDataService.getInstance();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.SHIP_CODE_F);
-				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
+				response = new GatewayResponse(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
 						RCCLConstants.REQUEST_ID);
 			}
 		} catch (Exception e) {
@@ -136,18 +159,19 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 	 * @param context lambda context object
 	 * @return returns list of sail_month column values based on provided table name
 	 */
-	public GatewayResponse<? extends Object> getSailMonths(FiltersData request, Context context) {
+	public GatewayResponse getSailMonths(ApiGatewayProxyRequest req, Context context) {
+		
+		FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
 		logger.info("input: " + request);
-		FilterDataService dataService = null;
 		FilterDataDTO dataDTO = null;
-		GatewayResponse<? extends Object> response = null;
-		FilterDataValidator dataValidator = new FilterDataValidator();
+		GatewayResponse response = null;
+		FilterDataValidator dataValidator = FilterDataValidator.getInstance();
 		try {
 			response = dataValidator.validateGetRequest(request);
 			if (response == null) {
-				dataService = new FilterDataService();
+				FilterDataService dataService = FilterDataService.getInstance();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.SAIL_MONTH_F);
-				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
+				response = new GatewayResponse(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
 						RCCLConstants.REQUEST_ID);
 			}
 		} catch (Exception e) {
@@ -166,18 +190,19 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 	 * @return returns list of cat_classe column values based on provided table name
 	 */
 
-	public GatewayResponse<? extends Object> getCatClasses(FiltersData request, Context context) {
+	public GatewayResponse getCatClasses(ApiGatewayProxyRequest req, Context context) {
+		
+		FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
 		logger.info("input: " + request);
-		FilterDataService dataService = null;
 		FilterDataDTO dataDTO = null;
-		GatewayResponse<? extends Object> response = null;
-		FilterDataValidator dataValidator = new FilterDataValidator();
+		GatewayResponse response = null;
+		FilterDataValidator dataValidator = FilterDataValidator.getInstance();
 		try {
 			response = dataValidator.validateGetRequest(request);
 			if (response == null) {
-				dataService = new FilterDataService();
+				FilterDataService dataService = FilterDataService.getInstance();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.CAT_CLASS_F);
-				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
+				response = new GatewayResponse(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
 						RCCLConstants.REQUEST_ID);
 			}
 		} catch (Exception e) {
@@ -195,18 +220,19 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 	 * @param context lambda context object
 	 * @return returns list of category column values based on provided table name
 	 */
-	public GatewayResponse<? extends Object> getCategories(FiltersData request, Context context) {
+	public GatewayResponse getCategories(ApiGatewayProxyRequest req, Context context) {
+		
+		FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
 		logger.info("input: " + request);
-		FilterDataService dataService = null;
 		FilterDataDTO dataDTO = null;
-		GatewayResponse<? extends Object> response = null;
-		FilterDataValidator dataValidator = new FilterDataValidator();
+		GatewayResponse response = null;
+		FilterDataValidator dataValidator = FilterDataValidator.getInstance();
 		try {
 			response = dataValidator.validateGetRequest(request);
 			if (response == null) {
-				dataService = new FilterDataService();
+				FilterDataService dataService = FilterDataService.getInstance();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.CATEGORY_F);
-				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
+				response = new GatewayResponse(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
 						RCCLConstants.REQUEST_ID);
 			}
 		} catch (Exception e) {
@@ -224,18 +250,19 @@ public class FiltersDataHandler implements RequestHandler<FiltersData, GatewayRe
 	 * @param context lambda context object
 	 * @return returns list of occupancy column values based on provided table name
 	 */
-	public GatewayResponse<? extends Object> getOccupancy(FiltersData request, Context context) {
+	public GatewayResponse getOccupancy(ApiGatewayProxyRequest req, Context context) {
+		
+		FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
 		logger.info("input: " + request);
-		FilterDataService dataService = null;
 		FilterDataDTO dataDTO = null;
-		GatewayResponse<? extends Object> response = null;
-		FilterDataValidator dataValidator = new FilterDataValidator();
+		GatewayResponse response = null;
+		FilterDataValidator dataValidator = FilterDataValidator.getInstance();
 		try {
 			response = dataValidator.validateGetRequest(request);
 			if (response == null) {
-				dataService = new FilterDataService();
+				FilterDataService dataService = FilterDataService.getInstance();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.OCCUPANCY_F);
-				response = new GatewayResponse<FilterDataDTO>(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
+				response = new GatewayResponse(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
 						RCCLConstants.REQUEST_ID);
 			}
 		} catch (Exception e) {

@@ -9,8 +9,11 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import com.rccl.dto.InversionGapsParaDTO;
 import com.rccl.utils.RCCLConstants;
 
+/**
+ * The Class InversionGapResultProcessor.
+ */
 public class InversionGapResultProcessor extends ResultProcessor<List<InversionGapsParaDTO>> {
-	
+
 	public InversionGapResultProcessor() {
 		result = null;
 		fetchSize = RCCLConstants.MID_FETCH_ROWS;
@@ -21,7 +24,8 @@ public class InversionGapResultProcessor extends ResultProcessor<List<InversionG
 	 */
 	@Override
 	public void processResult(ResultSet rs) throws SQLException {
-		BeanListHandler<InversionGapsParaDTO> handle = new BeanListHandler<InversionGapsParaDTO>(InversionGapsParaDTO.class);
+		BeanListHandler<InversionGapsParaDTO> handle = new BeanListHandler<InversionGapsParaDTO>(
+				InversionGapsParaDTO.class);
 		result = handle.handle(rs);
 
 	}

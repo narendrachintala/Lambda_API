@@ -11,12 +11,29 @@ import com.rccl.model.PausePara;
 import com.rccl.repo.PauseParaDataRepo;
 
 /**
- * The Class RollingWindowService.
+ * The Class PauseParaDataService.
  */
 public class PauseParaDataService {
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(PauseParaDataService.class);
+	
+	/** The instance. */
+	// creating instance of class
+	public static PauseParaDataService _instance = null;
+
+	/**
+	 * Gets the single instance of PauseParaDataService.
+	 * 
+	 * @return single instance of PauseParaDataService
+	 */
+	public static PauseParaDataService getInstance() {
+		if (_instance == null) {
+			_instance = new PauseParaDataService();
+		}
+		return _instance;
+	}
+
 
 	/**
 	 * Gets the PausePara Data.
@@ -28,7 +45,7 @@ public class PauseParaDataService {
 	public List<PauseParaDTO> getPauseParaData(ParameterFiltersData request) {
 		List<PauseParaDTO> PauseParaData = null;
 		try {
-			PauseParaDataRepo repo = new PauseParaDataRepo();
+			PauseParaDataRepo repo = PauseParaDataRepo.getInstance();
 			PauseParaData = repo.getPausePara(request);
 
 		} catch (Exception e) {
@@ -45,10 +62,9 @@ public class PauseParaDataService {
 	 * @return true, if successful
 	 */
 	public boolean updatePauseParaData(PausePara request) {
-		PauseParaDataRepo pauseParaRepo = null;
 		boolean status = false;
 		try {
-			pauseParaRepo = new PauseParaDataRepo();
+			PauseParaDataRepo pauseParaRepo = PauseParaDataRepo.getInstance();
 			status = pauseParaRepo.updatePauseParaData(request);
 		} catch (Exception e) {
 			throw e;

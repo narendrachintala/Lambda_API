@@ -9,6 +9,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
+import com.rccl.model.ApiGatewayProxyRequest;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.RefundablePremium;
@@ -23,7 +24,7 @@ import com.rccl.utils.ResponseUtil;
  * The Class PutRefundablePremiumDataHandler.
  */
 public class PutRefundablePremiumDataHandler
-		implements RequestHandler<RefundablePremium, GatewayResponse<? extends Object>> {
+		implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
@@ -34,6 +35,22 @@ public class PutRefundablePremiumDataHandler
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static PutRefundablePremiumDataHandler _instance = null;
+
+	/**
+	 * Gets the single instance of PutRefundablePremiumDataHandler.
+	 * 
+	 * @return single instance of PutRefundablePremiumDataHandler
+	 */
+	public static PutRefundablePremiumDataHandler getInstance() {
+		if (_instance == null) {
+			_instance = new PutRefundablePremiumDataHandler();
+		}
+		return _instance;
+	}
 
 	/**
 	 * Handle request.
@@ -42,7 +59,9 @@ public class PutRefundablePremiumDataHandler
 	 * @param context lambda context object
 	 * @return true if update is successful
 	 */
-	public GatewayResponse<? extends Object> handleRequest(RefundablePremium request, Context context) {
+	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
+		
+		RefundablePremium request = new Gson().fromJson(req.getBody(), RefundablePremium.class);
 		logger.info("Input request: " + request);
 
 		/**
@@ -52,15 +71,14 @@ public class PutRefundablePremiumDataHandler
 		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 
 		boolean update = false;
-		GatewayResponse<? extends Object> response = null;
-		RefundablePremiumDataValidator rDataValidator = null;
+		GatewayResponse response = null;
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.REFUNDABLE_PREMIUM);
 		try {
-			rDataValidator = new RefundablePremiumDataValidator();
+			RefundablePremiumDataValidator rDataValidator = RefundablePremiumDataValidator.getInstance();
 			response = rDataValidator.validatePutRequest(request, jobName);
 			if (response == null) {
-				RefundablePremiumService refundablePremiumService = new RefundablePremiumService();
+				RefundablePremiumService refundablePremiumService = RefundablePremiumService.getInstance();
 				update = refundablePremiumService.updateRefundablePremiumData(request);
 				if (update == true) {
 					response = ResponseUtil.getCustErrorMessage(
@@ -111,7 +129,7 @@ public class PutRefundablePremiumDataHandler
 
 		System.out.println("Sample Input data:" + json);
 
-		new PutRefundablePremiumDataHandler().handleRequest(refundablePremium, new Context() {
+		new PutRefundablePremiumDataHandler().handleRequest(null, new Context() {
 
 			@Override
 			public String getAwsRequestId() {

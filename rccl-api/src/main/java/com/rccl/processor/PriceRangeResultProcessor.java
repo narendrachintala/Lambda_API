@@ -9,11 +9,10 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import com.rccl.dto.PriceRangeDTO;
 import com.rccl.utils.RCCLConstants;
 
-
 /**
- * 
- * @author narendra.chintala
+ * The Class PriceRangeResultProcessor.
  *
+ * @author narendra.chintala
  */
 public class PriceRangeResultProcessor extends ResultProcessor<List<PriceRangeDTO>> {
 

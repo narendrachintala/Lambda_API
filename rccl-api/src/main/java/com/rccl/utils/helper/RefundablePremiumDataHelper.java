@@ -10,10 +10,25 @@ import com.rccl.utils.RCCLConstants;
  * The Class RefundablePremiumDataHelper.
  */
 public class RefundablePremiumDataHelper {
-	
+
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(RefundablePremiumDataHelper.class);
-	
+
+	// creating instance of class
+	public static RefundablePremiumDataHelper _instance = null;
+
+	/**
+	 * Gets the single instance of RefundablePremiumDataHelper.
+	 * 
+	 * @return single instance of RefundablePremiumDataHelper
+	 */
+	public static RefundablePremiumDataHelper getInstance() {
+		if (_instance == null) {
+			_instance = new RefundablePremiumDataHelper();
+		}
+		return _instance;
+	}
+
 	/**
 	 * Generate filter condition.
 	 * 
@@ -41,9 +56,9 @@ public class RefundablePremiumDataHelper {
 				queryBuffer.append(request.getStandard_gap_pct());
 				queryBuffer.append(COMMA);
 			}
-			
+
 			queryBuffer = UpdateColumnHelper.updateGenericColumns(queryBuffer);
-			
+
 			// removing last appended extra ,
 			queryBuffer.replace(queryBuffer.lastIndexOf(COMMA), queryBuffer.length(), "");
 		} catch (Exception e) {

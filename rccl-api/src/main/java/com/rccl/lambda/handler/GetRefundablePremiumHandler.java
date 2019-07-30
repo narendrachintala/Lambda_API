@@ -10,8 +10,10 @@ import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rccl.dto.RefundablePremiumDTO;
+import com.rccl.model.ApiGatewayProxyRequest;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.validator.RequestDataValidator;
@@ -24,7 +26,7 @@ import com.rccl.utils.ResponseUtil;
  * The Class GetRefundablePremiumHandler.
  */
 public class GetRefundablePremiumHandler
-		implements RequestHandler<ParameterFiltersData, GatewayResponse<? extends Object>> {
+		implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
@@ -35,6 +37,22 @@ public class GetRefundablePremiumHandler
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static GetRefundablePremiumHandler _instance = null;
+
+	/**
+	 * Gets the single instance of GetRefundablePremiumHandler.
+	 * 
+	 * @return single instance of GetRefundablePremiumHandler
+	 */
+	public static GetRefundablePremiumHandler getInstance() {
+		if (_instance == null) {
+			_instance = new GetRefundablePremiumHandler();
+		}
+		return _instance;
+	}
 
 	/**
 	 * This method will be invoked from AWS Lambda function to fetch refundable
@@ -44,7 +62,9 @@ public class GetRefundablePremiumHandler
 	 *      Object, com.amazonaws.services.lambda.runtime.Context)
 	 * 
 	 */
-	public GatewayResponse<? extends Object> handleRequest(ParameterFiltersData request, Context context) {
+	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
+		
+		ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
 		logger.info("Input request: " + request);
 
 		/**
@@ -53,28 +73,27 @@ public class GetRefundablePremiumHandler
 		 */
 		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 
-		GatewayResponse<? extends Object> response = null;
+		GatewayResponse response = null;
 		List<RefundablePremiumDTO> refundablePremiumList = null;
-		RequestDataValidator requestDataValidator = null;
 		try {
 			// Validate input request
-			requestDataValidator = new RequestDataValidator();
+			RequestDataValidator requestDataValidator = RequestDataValidator.getInstance();
 			response = requestDataValidator.validateGetRequest(request);
 			if (response == null) { // response null denotes request is valid
-				RefundablePremiumService refundablePremiumService = new RefundablePremiumService();
+				RefundablePremiumService refundablePremiumService = RefundablePremiumService.getInstance();
 				refundablePremiumList = refundablePremiumService.getRefundablePremiumData(request);
 				if (refundablePremiumList != null && refundablePremiumList.size() == 0) {
 					response = ResponseUtil.getCustErrorMessage(
 							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
 							RCCLConstants.REQUEST_ID);
 				} else {
-					response = new GatewayResponse<List<RefundablePremiumDTO>>(refundablePremiumList,
+					response = new GatewayResponse(refundablePremiumList,
 							ResponseUtil.getHeaders(), RCCLConstants.SC_OK, RCCLConstants.REQUEST_ID);
 				}
 			}
 		} catch (Exception ex) {
 			logger.error("Error occured while executing GetRollingWindowHandler: " + ex.getMessage());
-			response = new GatewayResponse<String>(ex.getLocalizedMessage(), ResponseUtil.getHeaders(),
+			response = new GatewayResponse(ex.getLocalizedMessage(), ResponseUtil.getHeaders(),
 					RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
 		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
@@ -91,7 +110,7 @@ public class GetRefundablePremiumHandler
 		parameterFiltersData.setSail_month("3");
 		parameterFiltersData.setShip_code("MJ");
 
-		new GetRefundablePremiumHandler().handleRequest(parameterFiltersData, new Context() {
+		new GetRefundablePremiumHandler().handleRequest(null, new Context() {
 
 			@Override
 			public String getAwsRequestId() {

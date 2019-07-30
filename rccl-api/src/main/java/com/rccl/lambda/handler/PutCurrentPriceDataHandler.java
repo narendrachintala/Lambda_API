@@ -8,6 +8,8 @@ import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.google.gson.Gson;
+import com.rccl.model.ApiGatewayProxyRequest;
 import com.rccl.model.CurrentPricePara;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.validator.CurrentPriceDataValidator;
@@ -23,7 +25,7 @@ import com.rccl.utils.ResponseUtil;
  *
  * @author chandrabhan.birla
  */
-public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePara, GatewayResponse<? extends Object>> {
+public class PutCurrentPriceDataHandler implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
@@ -35,6 +37,22 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static PutCurrentPriceDataHandler _instance = null;
+
+	/**
+	 * Gets the single instance of PutCurrentPriceDataHandler.
+	 * 
+	 * @return single instance of PutCurrentPriceDataHandler
+	 */
+	public static PutCurrentPriceDataHandler getInstance() {
+		if (_instance == null) {
+			_instance = new PutCurrentPriceDataHandler();
+		}
+		return _instance;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -52,7 +70,9 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 	 * @param context lambda context object
 	 * @return true if update is successful
 	 */
-	public GatewayResponse<? extends Object> handleRequest(CurrentPricePara request, Context context) {
+	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
+		
+		CurrentPricePara request = new Gson().fromJson(req.getBody(), CurrentPricePara.class);
 		logger.info("input: " + request.toString());
 
 		/**
@@ -62,15 +82,14 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 
 		Boolean result = false;
-		CurrentPriceDataValidator dataValidator = null;
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.CURRENT_PRICE_PARA);
-		GatewayResponse<? extends Object> response = null;
+		GatewayResponse response = null;
 		try {
-			dataValidator = CurrentPriceDataValidator.getInstance();
+			CurrentPriceDataValidator dataValidator = CurrentPriceDataValidator.getInstance();
 			response = dataValidator.validatePutRequest(request, jobName);
 			if (response == null) { // response null denotes request is valid
-				CurrentPriceParaService currentPriceService = new CurrentPriceParaService();
+				CurrentPriceParaService currentPriceService = CurrentPriceParaService.getInstance();
 				result = currentPriceService.updateCurrentPriceParaData(request);
 				if (result == true) {
 					response = ResponseUtil.getCustErrorMessage(
@@ -109,7 +128,7 @@ public class PutCurrentPriceDataHandler implements RequestHandler<CurrentPricePa
 		// RCCLConstants.SC_OK)));
 		// System.exit(0);
 
-		new PutCurrentPriceDataHandler().handleRequest(currentPriceReq, new Context() {
+		new PutCurrentPriceDataHandler().handleRequest(null, new Context() {
 
 			@Override
 			public int getRemainingTimeInMillis() {

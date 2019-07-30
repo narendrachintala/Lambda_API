@@ -15,9 +15,9 @@ public class RCCLConstants {
 	 * DB Keys
 	 */
 
-	public final static Integer MIN_FETCH_ROWS = 100;
-	public final static Integer MID_FETCH_ROWS = 250;
-	public final static Integer MAX_FETCH_ROWS = 500;
+	public final static Integer MIN_FETCH_ROWS = 250;
+	public final static Integer MID_FETCH_ROWS = 500;
+	public final static Integer MAX_FETCH_ROWS = 1000;
 
 	/**
 	 * 
@@ -182,6 +182,7 @@ public class RCCLConstants {
 	public final static String ERROR_NO_RECORDS_FOUND = "no_records_found";
 	public final static String ERROR_UPDATE_RECORDS_SUCCESS = "update_records_success";
 	public final static String ERROR_UPDATE_RECORDS_FAILURE = "update_records_failure";
+	public final static String L1PAUSE_UPDATE_VALUES = "error_l1_pause_valid_values";
 
 	/**
 	 * Status codes
@@ -233,6 +234,8 @@ public class RCCLConstants {
 	 * pause para table update columns
 	 */
 	public final static String L1_PAUSE = "l1_pause";
+	public final static int ONE = 1;
+	public final static int ZERO = 0;
 
 	public final static String RESUME_PUSH_WTS = "resume_push_wts";
 	public final static String STOP_PUSH_WTS = "stop_push_wts";

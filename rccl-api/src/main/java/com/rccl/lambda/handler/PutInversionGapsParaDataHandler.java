@@ -10,6 +10,7 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.rccl.model.ApiGatewayProxyRequest;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.InversionGapPara;
 import com.rccl.model.ParameterFiltersData;
@@ -24,7 +25,7 @@ import com.rccl.utils.ResponseUtil;
  * The Class PutInversionGapsParaDataHandler.
  */
 public class PutInversionGapsParaDataHandler
-		implements RequestHandler<InversionGapPara, GatewayResponse<? extends Object>> {
+		implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
@@ -34,6 +35,22 @@ public class PutInversionGapsParaDataHandler
 	static final Logger logger = LogManager.getLogger(PutInversionGapsParaDataHandler.class);
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static PutInversionGapsParaDataHandler _instance = null;
+
+	/**
+	 * Gets the single instance of PutInversionGapsParaDataHandler.
+	 * 
+	 * @return single instance of PutInversionGapsParaDataHandler
+	 */
+	public static PutInversionGapsParaDataHandler getInstance() {
+		if (_instance == null) {
+			_instance = new PutInversionGapsParaDataHandler();
+		}
+		return _instance;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -46,7 +63,9 @@ public class PutInversionGapsParaDataHandler
 	/**
 	 * Post InversionGapPara data based on applied filters and requested data
 	 */
-	public GatewayResponse<? extends Object> handleRequest(InversionGapPara request, Context context) {
+	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
+		
+		InversionGapPara request = new Gson().fromJson(req.getBody(), InversionGapPara.class);
 		logger.info("input: " + request.toString());
 
 		/**
@@ -56,15 +75,14 @@ public class PutInversionGapsParaDataHandler
 		//RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 
 		Boolean result = false;
-		InversionGapsParaDataValidator dataValidator = null;
-		GatewayResponse<? extends Object> response = null;
+		GatewayResponse response = null;
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.INVERSION_GAP_PARA);
 		try {
-			dataValidator = InversionGapsParaDataValidator.getInstance();
+			InversionGapsParaDataValidator dataValidator = InversionGapsParaDataValidator.getInstance();
 			response = dataValidator.validatePutRequest(request, jobName);
 			if (response == null) { // response null denotes request is valid
-				InversionGapParaService inversionGapParaService = new InversionGapParaService();
+				InversionGapParaService inversionGapParaService = InversionGapParaService.getInstance();
 				result = inversionGapParaService.updateinversionGapParaData(request);
 				if (result == true) {
 					response = ResponseUtil.getCustErrorMessage(
@@ -116,7 +134,7 @@ public class PutInversionGapsParaDataHandler
 		String json = gson.toJson(inversionGapPara);
 
 		System.out.println("Sample Input data:" + json);
-		new PutInversionGapsParaDataHandler().handleRequest(inversionGapPara, 
+		new PutInversionGapsParaDataHandler().handleRequest(null, 
 				new Context() {
 
 			@Override

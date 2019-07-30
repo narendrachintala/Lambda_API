@@ -11,13 +11,30 @@ import com.rccl.model.ParameterFiltersData;
 import com.rccl.repo.CurrentPriceParaRepo;
 
 /**
- * 
- * @author chandrabhan.birla
+ * The Class CurrentPriceParaService.
  *
+ * @author chandrabhan.birla
  */
 public class CurrentPriceParaService {
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(CurrentPriceParaService.class);
+	
+	/** The instance. */
+	// creating instance of class
+	public static CurrentPriceParaService _instance = null;
+
+	/**
+	 * Gets the single instance of CurrentPriceParaService.
+	 * 
+	 * @return single instance of CurrentPriceParaService
+	 */
+	public static CurrentPriceParaService getInstance() {
+		if (_instance == null) {
+			_instance = new CurrentPriceParaService();
+		}
+		return _instance;
+	}
+
 
 	/**
 	 * @param request  contains end user chosen filter criteria
@@ -26,7 +43,7 @@ public class CurrentPriceParaService {
 	public List<CurrentPriceParaDTO> getCurrentPriceParaData(ParameterFiltersData request) {
 		List<CurrentPriceParaDTO> currentPriceParaData = null;
 		try {
-			CurrentPriceParaRepo repo = new CurrentPriceParaRepo();
+			CurrentPriceParaRepo repo = CurrentPriceParaRepo.getInstance();
 			currentPriceParaData = repo.getCurrentPriceData(request);
 
 		} catch (Exception e) {
@@ -41,10 +58,9 @@ public class CurrentPriceParaService {
 	 * @return Boolean status of completion.
 	 */
 	public boolean updateCurrentPriceParaData(CurrentPricePara currentPriceParaReq) {
-		CurrentPriceParaRepo currentPriceParaRepo = null;
 		boolean status = false;
 		try {
-			currentPriceParaRepo = new CurrentPriceParaRepo();
+			CurrentPriceParaRepo currentPriceParaRepo = CurrentPriceParaRepo.getInstance();
 			status = currentPriceParaRepo.updateCurrentPriceData(currentPriceParaReq);
 		} catch (Exception e) {
 			logger.error("Error occurred while executing updateCurrentPriceParaData: " + e);

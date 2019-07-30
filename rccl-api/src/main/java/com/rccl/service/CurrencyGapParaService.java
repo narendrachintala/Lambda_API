@@ -20,6 +20,23 @@ public class CurrencyGapParaService {
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(CurrencyGapParaService.class);
+	
+	/** The instance. */
+	// creating instance of class
+	public static CurrencyGapParaService _instance = null;
+
+	/**
+	 * Gets the single instance of CurrencyGapParaService.
+	 * 
+	 * @return single instance of CurrencyGapParaService
+	 */
+	public static CurrencyGapParaService getInstance() {
+		if (_instance == null) {
+			_instance = new CurrencyGapParaService();
+		}
+		return _instance;
+	}
+
 
 	/**
 	 * @param request contains end user chosen filter criteria
@@ -28,7 +45,7 @@ public class CurrencyGapParaService {
 	public List<CurrencyGapParaDTO> getCurrencyGapParaData(ParameterFiltersData request) {
 		List<CurrencyGapParaDTO> currencyGapParaData = null;
 		try {
-			CurrencyGapParaRepo repo = new CurrencyGapParaRepo();
+			CurrencyGapParaRepo repo = CurrencyGapParaRepo.getInstance();
 			currencyGapParaData = repo.getCurrencyGapData(request);
 
 		} catch (Exception e) {
@@ -44,10 +61,9 @@ public class CurrencyGapParaService {
 	 * @return Boolean status of completion.
 	 */
 	public boolean updateCurrencyGapParaData(CurrencyGapPara currencyGapParaReq) {
-		CurrencyGapParaRepo currencyGapParaRepo = null;
 		boolean status = false;
 		try {
-			currencyGapParaRepo = new CurrencyGapParaRepo();
+			CurrencyGapParaRepo currencyGapParaRepo = CurrencyGapParaRepo.getInstance();
 			status = currencyGapParaRepo.updateCurrencyGapData(currencyGapParaReq);
 		} catch (Exception e) {
 			logger.error("Error occurred while executing updateCurrencyGapParaData: " + e);

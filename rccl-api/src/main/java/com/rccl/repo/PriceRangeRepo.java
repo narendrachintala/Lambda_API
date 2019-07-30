@@ -14,14 +14,30 @@ import com.rccl.model.PriceRange;
 import com.rccl.processor.PriceRangeResultProcessor;
 
 /**
- * 
- * @author narendra.chintala
+ * The Class PriceRangeRepo.
  *
+ * @author narendra.chintala
  */
 public class PriceRangeRepo {
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(PriceRangeRepo.class);
+
+	/** The instance. */
+	// creating instance of class
+	public static PriceRangeRepo _instance = null;
+
+	/**
+	 * Gets the single instance of PriceRangeRepo.
+	 * 
+	 * @return single instance of PriceRangeRepo
+	 */
+	public static PriceRangeRepo getInstance() {
+		if (_instance == null) {
+			_instance = new PriceRangeRepo();
+		}
+		return _instance;
+	}
 
 	/**
 	 * Gets the price range data.
@@ -33,7 +49,7 @@ public class PriceRangeRepo {
 	public List<PriceRangeDTO> getPriceRangeData(ParameterFiltersData filterData) {
 
 		PriceRangeDBUtil priceRangeDBUtil = PriceRangeDBUtil.getInstance();
-		QueryExecutor queryExecutor = new QueryExecutor();
+		QueryExecutor queryExecutor = QueryExecutor.getInstance();
 		List<PriceRangeDTO> priceData = new ArrayList<PriceRangeDTO>();
 
 		try {
@@ -61,7 +77,7 @@ public class PriceRangeRepo {
 	public boolean updatePriceRangeData(PriceRange priceRangeReq) {
 		PriceRangeDBUtil priceRangeDBUtil = PriceRangeDBUtil.getInstance();
 		Integer status = 0;
-		QueryExecutor queryExecutor = new QueryExecutor();
+		QueryExecutor queryExecutor = QueryExecutor.getInstance();
 		try {
 			/* generates update query for price range table */
 			String updatePriceRangeQuery = priceRangeDBUtil.generateUpdatePriceRangeDataQuery(priceRangeReq);

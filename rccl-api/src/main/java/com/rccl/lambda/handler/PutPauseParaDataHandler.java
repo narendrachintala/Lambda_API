@@ -9,6 +9,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
+import com.rccl.model.ApiGatewayProxyRequest;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PausePara;
@@ -22,7 +23,7 @@ import com.rccl.utils.ResponseUtil;
 /**
  * The Class PutPauseParaDataHandler.
  */
-public class PutPauseParaDataHandler implements RequestHandler<PausePara, GatewayResponse<? extends Object>> {
+public class PutPauseParaDataHandler implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
@@ -33,6 +34,22 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 	
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+	
+	/** The instance. */
+	// creating instance of class
+	public static PutPauseParaDataHandler _instance = null;
+
+	/**
+	 * Gets the single instance of PutPauseParaDataHandler.
+	 * 
+	 * @return single instance of PutPauseParaDataHandler
+	 */
+	public static PutPauseParaDataHandler getInstance() {
+		if (_instance == null) {
+			_instance = new PutPauseParaDataHandler();
+		}
+		return _instance;
+	}
 
 	/**
 	 * Handle request.
@@ -40,7 +57,9 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 	 * @param context lambda context object
 	 * @return true if update is successful
 	 */
-	public GatewayResponse<? extends Object> handleRequest(PausePara request, Context context) {
+	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
+		
+		PausePara request = new Gson().fromJson(req.getBody(), PausePara.class);
 		context.getLogger().log("Input request: " + request);
 		/**
 		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
@@ -49,15 +68,14 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 		
 		boolean update = false;
-		GatewayResponse<? extends Object> response = null;
-		PauseParaDataValidator rDataValidator = null;
+		GatewayResponse response = null;
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.PAUSE_PARA);
 		try {
-			rDataValidator = new PauseParaDataValidator();
+			PauseParaDataValidator rDataValidator = PauseParaDataValidator.getInstance();
 			response = rDataValidator.validatePutRequest(request, jobName);
 			if (response == null) {
-				PauseParaDataService PauseParaService = new PauseParaDataService();
+				PauseParaDataService PauseParaService = PauseParaDataService.getInstance();
 				update = PauseParaService.updatePauseParaData(request);
 				if (update == true) {
 					response = ResponseUtil.getCustErrorMessage(
@@ -72,6 +90,9 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 			 return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST,RCCLConstants.REQUEST_ID);
 		}
 		System.out.println("value of update():" + update);
+		Gson gson = new Gson();
+		String json = gson.toJson(response);
+		System.out.println("response ="+json);
 		return response;
 	}
 
@@ -79,7 +100,7 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 
 		PausePara pausePara = new PausePara();
 		// values to be updated
-		pausePara.setL1_pause(0);
+		pausePara.setL1_pause(11);
 		pausePara.setresume_push_wts(2);
 		pausePara.setstop_push_wts(51);
 
@@ -99,7 +120,7 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 
 		System.out.println("Sample Input data:" + json);
 
-		new PutPauseParaDataHandler().handleRequest(pausePara
+		new PutPauseParaDataHandler().handleRequest(null
 				,new Context() {
 			@Override
 			public int getRemainingTimeInMillis() {

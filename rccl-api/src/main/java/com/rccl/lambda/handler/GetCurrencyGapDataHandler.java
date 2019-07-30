@@ -7,8 +7,10 @@ import org.apache.logging.log4j.Logger;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rccl.dto.CurrencyGapParaDTO;
+import com.rccl.model.ApiGatewayProxyRequest;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.validator.RequestDataValidator;
@@ -22,8 +24,7 @@ import com.rccl.utils.ResponseUtil;
  *
  * @author chandrabhan.birla
  */
-public class GetCurrencyGapDataHandler
-		implements RequestHandler<ParameterFiltersData, GatewayResponse<? extends Object>> {
+public class GetCurrencyGapDataHandler implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
@@ -57,12 +58,13 @@ public class GetCurrencyGapDataHandler
 	 *
 	 * @param request the request
 	 * @param context the context
-	 * @return the gateway response<? extends object>
+	 * @return the gateway response
 	 * @see com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java.lang.
 	 *      Object, com.amazonaws.services.lambda.runtime.Context)
 	 */
-	public GatewayResponse<? extends Object> handleRequest(ParameterFiltersData request, Context context) {
+	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
 
+		ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
 		logger.info("Input: " + request.toString());
 
 		/**
@@ -72,7 +74,7 @@ public class GetCurrencyGapDataHandler
 		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 
 		List<CurrencyGapParaDTO> currencyGapParaList = null;
-		GatewayResponse<? extends Object> response = null;
+		GatewayResponse response = null;
 
 		try {
 			// validating request data
@@ -87,7 +89,7 @@ public class GetCurrencyGapDataHandler
 							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
 							RCCLConstants.REQUEST_ID);
 				} else {
-					response = new GatewayResponse<List<CurrencyGapParaDTO>>(currencyGapParaList,
+					response = new GatewayResponse(currencyGapParaList,
 							ResponseUtil.getHeaders(), RCCLConstants.SC_OK, RCCLConstants.REQUEST_ID);
 				}
 			}
@@ -124,7 +126,7 @@ public class GetCurrencyGapDataHandler
 		currencyGapdata.setSail_date("23-NOV-19 12.00.00.000000000 AM");
 		currencyGapdata.setSail_month("11");
 
-		GatewayResponse<? extends Object> rcode = new GetCurrencyGapDataHandler().handleRequest(currencyGapdata,
+		GatewayResponse rcode = new GetCurrencyGapDataHandler().handleRequest(null,
 				null);
 		System.out.println(new GsonBuilder().serializeNulls().create().toJson(rcode));
 		System.out.println(rcode.getStatusCode());

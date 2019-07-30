@@ -37,9 +37,9 @@ public class RefundablePremiumDataValidator {
 	 * Validate put request.
 	 * @param request the request
 	 * @param jobName the job name
-	 * @return the gateway response<? extends object>
+	 * @return the gateway response
 	 */
-	public GatewayResponse<? extends Object> validatePutRequest(RefundablePremium request, String jobName) {
+	public GatewayResponse validatePutRequest(RefundablePremium request, String jobName) {
 		AccessControlRepo accessControlRepo = new AccessControlRepo();
 		try {
 			if (request == null) {

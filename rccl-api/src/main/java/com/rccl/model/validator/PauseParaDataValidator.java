@@ -38,9 +38,9 @@ public class PauseParaDataValidator {
 	 * Validate input request.
 	 * @param jobName the job name
 	 * @param request the request
-	 * @return the gateway response<? extends object>
+	 * @return the gateway response
 	 */
-	public GatewayResponse<? extends Object> validatePutRequest(PausePara request,String jobName) throws RCCLException {
+	public GatewayResponse validatePutRequest(PausePara request,String jobName) throws RCCLException {
 		AccessControlRepo accessControlRepo = new AccessControlRepo();
 		try {
 			if (request == null) {

@@ -9,6 +9,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
+import com.rccl.model.ApiGatewayProxyRequest;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.PausePara;
@@ -22,7 +23,7 @@ import com.rccl.utils.ResponseUtil;
 /**
  * The Class PutPauseParaDataHandler.
  */
-public class PutPauseParaDataHandler implements RequestHandler<PausePara, GatewayResponse<? extends Object>> {
+public class PutPauseParaDataHandler implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
@@ -56,7 +57,9 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 	 * @param context lambda context object
 	 * @return true if update is successful
 	 */
-	public GatewayResponse<? extends Object> handleRequest(PausePara request, Context context) {
+	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
+		
+		PausePara request = new Gson().fromJson(req.getBody(), PausePara.class);
 		context.getLogger().log("Input request: " + request);
 		/**
 		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
@@ -65,7 +68,7 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 		
 		boolean update = false;
-		GatewayResponse<? extends Object> response = null;
+		GatewayResponse response = null;
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.PAUSE_PARA);
 		try {
@@ -117,7 +120,7 @@ public class PutPauseParaDataHandler implements RequestHandler<PausePara, Gatewa
 
 		System.out.println("Sample Input data:" + json);
 
-		new PutPauseParaDataHandler().handleRequest(pausePara
+		new PutPauseParaDataHandler().handleRequest(null
 				,new Context() {
 			@Override
 			public int getRemainingTimeInMillis() {

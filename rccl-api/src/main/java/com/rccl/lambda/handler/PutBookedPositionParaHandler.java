@@ -9,6 +9,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
+import com.rccl.model.ApiGatewayProxyRequest;
 import com.rccl.model.BookedPosition;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
@@ -22,7 +23,7 @@ import com.rccl.utils.ResponseUtil;
 /**
  * The Class PutBookedPositionParaHandler.
  */
-public class PutBookedPositionParaHandler implements RequestHandler<BookedPosition, GatewayResponse<? extends Object>> {
+public class PutBookedPositionParaHandler implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
@@ -57,7 +58,9 @@ public class PutBookedPositionParaHandler implements RequestHandler<BookedPositi
 	 * @param context lambda context object
 	 * @return true if update is successful
 	 */
-	public GatewayResponse<? extends Object> handleRequest(BookedPosition request, Context context) {
+	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
+		
+		BookedPosition request = new Gson().fromJson(req.getBody(), BookedPosition.class);
 		logger.info("Input request: " + request);
 
 		/**
@@ -67,7 +70,7 @@ public class PutBookedPositionParaHandler implements RequestHandler<BookedPositi
 		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 
 		boolean update = false;
-		GatewayResponse<? extends Object> response = null;
+		GatewayResponse response = null;
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.BOOKED_POSITION_PARA);
 		try {
@@ -119,7 +122,7 @@ public class PutBookedPositionParaHandler implements RequestHandler<BookedPositi
 
 		System.out.println("Sample Input data:" + json);
 		
-		new PutBookedPositionParaHandler().handleRequest(bookedposition, 
+		new PutBookedPositionParaHandler().handleRequest(null, 
 				new Context() {
 			
 			@Override

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.google.gson.Gson;
 
 /**
  * POJO containing response object for API Gateway.
@@ -12,13 +13,13 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
  * @param <T> the generic type
  */
 @JsonAutoDetect
-public class GatewayResponse<T> {
+public class GatewayResponse {
 
 	/** The request ID. */
-	private final String requestID;
+	/* private final String requestID; */
 
 	/** The body. */
-	private final T body;
+	private final String body;
 
 	/** The headers. */
 	private final Map<String, String> headers;
@@ -34,12 +35,11 @@ public class GatewayResponse<T> {
 	 * @param statusCode the status code
 	 * @param requestID  the request ID
 	 */
-	public GatewayResponse(final T body, final Map<String, String> headers, final int statusCode,
-			final String requestID) {
+	public GatewayResponse(final Object body, final Map<String, String> headers, final int statusCode,final String requestID) {
 		this.statusCode = statusCode;
-		this.body = body;
+		this.body = new Gson().toJson(body);
 		this.headers = Collections.unmodifiableMap(new HashMap<>(headers));
-		this.requestID = requestID;
+		// this.requestID = requestID;
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class GatewayResponse<T> {
 	 * 
 	 * @return the body
 	 */
-	public T getBody() {
+	public String getBody() {
 		return body;
 	}
 
@@ -74,8 +74,8 @@ public class GatewayResponse<T> {
 	 *
 	 * @return the request ID
 	 */
-	public String getRequestID() {
-		return requestID;
-	}
+	/*
+	 * public String getRequestID() { return requestID; }
+	 */
 
 }

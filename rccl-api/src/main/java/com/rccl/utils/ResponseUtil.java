@@ -57,15 +57,15 @@ public class ResponseUtil extends CustomErrors {
 	 * @param requestID
 	 * @return the error message
 	 */
-	public static GatewayResponse<ErrorMessage> getErrorMessage(Exception e, Integer statusCode, String requestID) {
+	public static GatewayResponse getErrorMessage(Exception e, Integer statusCode, String requestID) {
 		String errorMsg = e.getCause().getLocalizedMessage();
 		if (errorMsg != null) {
 			errorMsg.substring(errorMsg.indexOf(RCCLConstants.NAMED_QRY_PREFIX));
 		}
-		GatewayResponse<ErrorMessage> error = null;
+		GatewayResponse error = null;
 		try {
 			ErrorMessage errorMessage = new ErrorMessage(errorMsg, statusCode);
-			error = new GatewayResponse<ErrorMessage>(errorMessage, getHeaders(), RCCLConstants.SC_BAD_REQUEST,
+			error = new GatewayResponse(errorMessage, getHeaders(), RCCLConstants.SC_BAD_REQUEST,
 					requestID);
 		} catch (Exception ex) {
 			logger.error(ex);
@@ -82,11 +82,11 @@ public class ResponseUtil extends CustomErrors {
 	 * @param statusCode the status code
 	 * @return the cust error message
 	 */
-	public static GatewayResponse<ErrorMessage> getCustErrorMessage(String errorMsg, Integer statusCode,String requestID) {
-		GatewayResponse<ErrorMessage> message = null;
+	public static GatewayResponse getCustErrorMessage(String errorMsg, Integer statusCode,String requestID) {
+		GatewayResponse message = null;
 		try {
 			ErrorMessage errorMessage = new ErrorMessage(errorMsg, statusCode);
-			message = new GatewayResponse<ErrorMessage>(errorMessage, getHeaders(), statusCode,requestID);
+			message = new GatewayResponse(errorMessage, getHeaders(), statusCode,requestID);
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;
@@ -94,5 +94,5 @@ public class ResponseUtil extends CustomErrors {
 		}
 		return message;
 	}
-
+	
 }

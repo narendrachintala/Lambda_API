@@ -10,13 +10,14 @@ import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rccl.dto.PauseParaDTO;
+import com.rccl.model.ApiGatewayProxyRequest;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.ParameterFiltersData;
 import com.rccl.model.validator.RequestDataValidator;
 import com.rccl.service.PauseParaDataService;
-import com.rccl.testdata.FiltersData;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.ResponseUtil;
@@ -25,7 +26,7 @@ import com.rccl.utils.ResponseUtil;
  * The Class PauseParaDataHandler.
  */
 public class GetPauseParaDataHandler
-		implements RequestHandler<ParameterFiltersData, GatewayResponse<? extends Object>> {
+		implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
@@ -60,7 +61,9 @@ public class GetPauseParaDataHandler
 	 * @param context lambda context object
 	 * @return the list of column values based on provided PausePara table name.
 	 */
-	public GatewayResponse<? extends Object> handleRequest(ParameterFiltersData request, Context context) {
+	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
+		
+		ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
 		logger.info("Input: " + request);
 
 		/**
@@ -70,7 +73,9 @@ public class GetPauseParaDataHandler
 		RCCLConstants.REQUEST_ID = context.getAwsRequestId();
 
 		List<PauseParaDTO> pauseParaList = null;
-		GatewayResponse<? extends Object> response = null;
+
+		GatewayResponse response = null;
+
 		try {
 			// Validate input request if any error occurred throw custom exception.
 			RequestDataValidator pauseParaValidator = RequestDataValidator.getInstance();
@@ -83,7 +88,7 @@ public class GetPauseParaDataHandler
 							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
 							RCCLConstants.REQUEST_ID);
 				} else {
-					response = new GatewayResponse<List<PauseParaDTO>>(pauseParaList, ResponseUtil.getHeaders(),
+					response = new GatewayResponse(pauseParaList, ResponseUtil.getHeaders(),
 							RCCLConstants.SC_OK, RCCLConstants.REQUEST_ID);
 				}
 			}
@@ -101,7 +106,7 @@ public class GetPauseParaDataHandler
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-		new GetPauseParaDataHandler().handleRequest(FiltersData.getRequestData(), new Context() {
+		new GetPauseParaDataHandler().handleRequest(null, new Context() {
 			@Override
 			public int getRemainingTimeInMillis() {
 				// TODO Auto-generated method stub

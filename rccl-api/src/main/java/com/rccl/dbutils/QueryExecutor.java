@@ -11,7 +11,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.amazonaws.util.CollectionUtils;
 import com.rccl.processor.ResultProcessor;
-import com.rccl.repo.FilterDataRepo;
 import com.rccl.utils.helper.RCCLException;
 
 /**
@@ -20,7 +19,8 @@ import com.rccl.utils.helper.RCCLException;
 public class QueryExecutor {
 
 	// Initialize the Log4j logger.
-	static final Logger logger = LogManager.getLogger(FilterDataRepo.class);
+	static final Logger logger = LogManager.getLogger(QueryExecutor.class);
+
 	
 	// creating instance of class
 	public static QueryExecutor _instance = null;
@@ -57,6 +57,7 @@ public class QueryExecutor {
 			logger.info("executing query : " + query);
 			stmt = con.prepareStatement(query);
 		} catch (SQLException e) {
+			System.out.println(e);
 			logger.error(e);
 			throw new RCCLException("Error while initializing the database connection", e);
 		}
@@ -68,6 +69,7 @@ public class QueryExecutor {
 				resultProcessor.processResult(rs);
 			}
 		} catch (Exception e) {
+			System.out.println(e);
 			logger.error(e);
 			throw new RCCLException("error in querying table", e);
 		} finally {
@@ -82,6 +84,7 @@ public class QueryExecutor {
 					con.close();
 				}
 			} catch (SQLException e) {
+				System.out.println(e);
 				logger.error(e);
 				throw new RCCLException("error in querying table", e);
 			}

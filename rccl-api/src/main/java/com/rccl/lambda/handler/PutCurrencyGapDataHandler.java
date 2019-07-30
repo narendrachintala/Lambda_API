@@ -8,6 +8,8 @@ import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.google.gson.Gson;
+import com.rccl.model.ApiGatewayProxyRequest;
 import com.rccl.model.CurrencyGapPara;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.validator.CurrencyGapDataValidator;
@@ -24,7 +26,7 @@ import com.rccl.utils.ResponseUtil;
  * @author chandrabhan.birla
  */
 
-public class PutCurrencyGapDataHandler implements RequestHandler<CurrencyGapPara, GatewayResponse<? extends Object>> {
+public class PutCurrencyGapDataHandler implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
@@ -69,7 +71,9 @@ public class PutCurrencyGapDataHandler implements RequestHandler<CurrencyGapPara
 	 * @param context lambda context object
 	 * @return true if update is successful
 	 */
-	public GatewayResponse<? extends Object> handleRequest(CurrencyGapPara request, Context context) {
+	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
+		
+		CurrencyGapPara request = new Gson().fromJson(req.getBody(), CurrencyGapPara.class);
 		logger.info("input: " + request.toString());
 
 		/**
@@ -81,7 +85,7 @@ public class PutCurrencyGapDataHandler implements RequestHandler<CurrencyGapPara
 		Boolean result = false;
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.CURRENCY_GAP_PARA);
-		GatewayResponse<? extends Object> response = null;
+		GatewayResponse response = null;
 		try {
 			CurrencyGapDataValidator dataValidator = CurrencyGapDataValidator.getInstance();
 			response = dataValidator.validatePutRequest(request, jobName);
@@ -123,7 +127,7 @@ public class PutCurrencyGapDataHandler implements RequestHandler<CurrencyGapPara
 		// RCCLConstants.SC_OK)));
 		// System.exit(0);
 
-		new PutCurrencyGapDataHandler().handleRequest(currentPriceReq, new Context() {
+		new PutCurrencyGapDataHandler().handleRequest(null, new Context() {
 
 			@Override
 			public int getRemainingTimeInMillis() {

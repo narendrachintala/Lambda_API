@@ -38,9 +38,9 @@ public class CurrencyGapDataValidator {
 	 * 
 	 * @param request the request
 	 * @param jobName the job name
-	 * @return the gateway response<? extends object>
+	 * @return the gateway response
 	 */
-	public GatewayResponse<? extends Object> validatePutRequest(CurrencyGapPara request, String jobName) {
+	public GatewayResponse validatePutRequest(CurrencyGapPara request, String jobName) {
 		AccessControlRepo accessControlRepo = new AccessControlRepo();
 		try {
 			if (request == null) {

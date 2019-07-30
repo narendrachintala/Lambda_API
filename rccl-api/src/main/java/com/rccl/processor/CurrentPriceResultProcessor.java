@@ -20,7 +20,7 @@ public class CurrentPriceResultProcessor extends ResultProcessor<List<CurrentPri
 	 */
 	public CurrentPriceResultProcessor() {
 		result = null;
-		fetchSize = RCCLConstants.MAX_FETCH_ROWS;
+		fetchSize = RCCLConstants.MID_FETCH_ROWS;
 	}
 
 	/**

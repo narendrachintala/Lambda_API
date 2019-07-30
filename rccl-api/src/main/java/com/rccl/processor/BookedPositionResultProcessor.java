@@ -18,7 +18,7 @@ public class BookedPositionResultProcessor extends ResultProcessor<List<BookedPo
 	 */
 	public BookedPositionResultProcessor() {
 		result = null;
-		fetchSize = RCCLConstants.MAX_FETCH_ROWS;
+		fetchSize = RCCLConstants.MID_FETCH_ROWS;
 	}
 
 	/**

@@ -19,7 +19,7 @@ public class RefundablePremiumResultProcessor extends ResultProcessor<List<Refun
 	 */
 	public RefundablePremiumResultProcessor() {
 		result = null;
-		fetchSize = RCCLConstants.MAX_FETCH_ROWS;
+		fetchSize = RCCLConstants.MID_FETCH_ROWS;
 	}
 
 	/**

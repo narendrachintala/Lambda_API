@@ -15,9 +15,9 @@ public class RCCLConstants {
 	 * DB Keys
 	 */
 
-	public final static Integer MIN_FETCH_ROWS = 100;
-	public final static Integer MID_FETCH_ROWS = 250;
-	public final static Integer MAX_FETCH_ROWS = 500;
+	public final static Integer MIN_FETCH_ROWS = 250;
+	public final static Integer MID_FETCH_ROWS = 500;
+	public final static Integer MAX_FETCH_ROWS = 1000;
 
 	/**
 	 * 

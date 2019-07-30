@@ -21,7 +21,7 @@ public class CurrencyGapResultProcessor extends ResultProcessor<List<CurrencyGap
 	 */
 	public CurrencyGapResultProcessor() {
 		result = null;
-		fetchSize = RCCLConstants.MAX_FETCH_ROWS;
+		fetchSize = RCCLConstants.MID_FETCH_ROWS;
 	}
 
 	/**

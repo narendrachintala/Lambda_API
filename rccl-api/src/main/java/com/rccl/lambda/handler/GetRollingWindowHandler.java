@@ -63,9 +63,6 @@ public class GetRollingWindowHandler
 	 * @return the list of column values based on provided tablename
 	 */
 	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
-		
-		ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
-		logger.info("Input request: " + request);
 
 		/**
 		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
@@ -76,6 +73,10 @@ public class GetRollingWindowHandler
 		GatewayResponse response = null;
 		List<RollingWindowDTO> rollingWindowList = null;
 		try {
+			
+			ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
+			logger.info("Input request: " + request);
+			
 			// Validate input request
 			RequestDataValidator requestDataValidator = RequestDataValidator.getInstance();
 			response = requestDataValidator.validateGetRequest(request);

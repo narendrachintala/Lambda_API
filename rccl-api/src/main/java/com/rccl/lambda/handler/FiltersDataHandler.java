@@ -57,10 +57,6 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 	 */
 	@Override
 	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
-		
-		FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
-		logger.info("input: " + request);
-		
 
 		/**
 		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
@@ -72,6 +68,9 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 		GatewayResponse response = null;
 		FilterDataValidator dataValidator = FilterDataValidator.getInstance();
 		try {
+			
+			FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
+			logger.info("input: " + request);
 			response = dataValidator.validateGetRequest(request);
 			if (response == null) {
 				FilterDataService dataService = FilterDataService.getInstance();

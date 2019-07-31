@@ -60,9 +60,6 @@ public class PutRollingWindowDataHandler implements RequestHandler<ApiGatewayPro
 	 */
 	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
 		
-		RollingWindow request = new Gson().fromJson(req.getBody(), RollingWindow.class);
-		logger.info("Input request: " + request);
-		
 		/**
 		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
 		 * through out session
@@ -74,6 +71,10 @@ public class PutRollingWindowDataHandler implements RequestHandler<ApiGatewayPro
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.ROLLING_WINDOW);
 		try {
+			
+			RollingWindow request = new Gson().fromJson(req.getBody(), RollingWindow.class);
+			logger.info("Input request: " + request);
+			//Validates input request
 			RollingWindowDataValidator rDataValidator = RollingWindowDataValidator.getInstance();
 			response = rDataValidator.validatePutRequest(request, jobName);
 			if (response == null) {

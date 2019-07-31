@@ -69,9 +69,6 @@ public class GetPriceRangeDataHandler
 	 *      Object, com.amazonaws.services.lambda.runtime.Context)
 	 */
 	public GatewayResponse handleRequest(final ApiGatewayProxyRequest req, final Context context) {
-		// LambdaLogger logger = context.getLogger();
-		ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
-		logger.info("Input: " + request.toString());
 
 		/**
 		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
@@ -83,6 +80,9 @@ public class GetPriceRangeDataHandler
 		GatewayResponse response = null;
 
 		try {
+			
+			ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
+			logger.info("Input: " + request.toString());
 			// validating request data
 			RequestDataValidator priceRangeValidator = RequestDataValidator.getInstance();
 			response = priceRangeValidator.validateGetRequest(request);

@@ -48,10 +48,14 @@ public class InversionGapsParaDataValidator {
 			if (CustomFunctions.isNullOrEmpty(request.getFiltersData().getMetaproduct())) {
 				return ResponseUtil.error_metaproduct();
 			}
-			if (request.getOrder_1() == null && request.getOrder_2() == null && request.getOrder_3() == null
-					&& request.getOrder_4() == null && request.getOrder_5() == null && request.getOrder_6() == null
-					&& request.getGap1() == null && request.getGap2() == null && request.getGap3() == null
-					&& request.getGap4() == null && request.getGap5() == null && request.getGap6() == null) {
+			if (CustomFunctions.isNullOrEmpty(request.getOrder_1())
+					&& CustomFunctions.isNullOrEmpty(request.getOrder_2())
+					&& CustomFunctions.isNullOrEmpty(request.getOrder_3())
+					&& CustomFunctions.isNullOrEmpty(request.getOrder_4())
+					&& CustomFunctions.isNullOrEmpty(request.getOrder_5())
+					&& CustomFunctions.isNullOrEmpty(request.getOrder_6()) && request.getGap1() == null
+					&& request.getGap2() == null && request.getGap3() == null && request.getGap4() == null
+					&& request.getGap5() == null && request.getGap6() == null) {
 				return ResponseUtil.error_update_fields();
 
 			}
@@ -64,7 +68,7 @@ public class InversionGapsParaDataValidator {
 
 		} catch (Exception e) {
 			logger.error(e);
-			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST,RCCLConstants.REQUEST_ID);
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
 		return null;
 	}

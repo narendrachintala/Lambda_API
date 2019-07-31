@@ -120,89 +120,15 @@ public class PutCurrencyGapDataHandler implements RequestHandler<ApiGatewayProxy
 		CurrencyGapPara currentPriceReq = new CurrencyGapPara();
 
 		currentPriceReq.setFiltersData(FiltersData.getParamRequestData());
-		currentPriceReq.setCurrency3("USD");
-		currentPriceReq.setGap3(0.1);
+		currentPriceReq.setCurrency3("");
+		//currentPriceReq.setGap3(0.1);
 		ResponseUtil.getInstance();
 		// System.out.println(new GsonBuilder().serializeNulls().create()
 		// .toJson(new GatewayResponse<Boolean>(true, ResponseUtil.getHeaders(),
 		// RCCLConstants.SC_OK)));
 		// System.exit(0);
 
-		new PutCurrencyGapDataHandler().handleRequest(null, new Context() {
-
-			@Override
-			public int getRemainingTimeInMillis() {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-
-			@Override
-			public int getMemoryLimitInMB() {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-
-			@Override
-			public LambdaLogger getLogger() {
-				// TODO Auto-generated method stub
-				return new LambdaLogger() {
-
-					@Override
-					public void log(String string) {
-						// TODO Auto-generated method stub
-
-					}
-				};
-			}
-
-			@Override
-			public String getLogStreamName() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public String getLogGroupName() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public String getInvokedFunctionArn() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public CognitoIdentity getIdentity() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public String getFunctionVersion() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public String getFunctionName() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public ClientContext getClientContext() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public String getAwsRequestId() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		});
+		
 
 	}
 }

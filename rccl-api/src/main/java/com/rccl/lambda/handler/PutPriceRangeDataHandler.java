@@ -67,9 +67,6 @@ public class PutPriceRangeDataHandler implements RequestHandler<ApiGatewayProxyR
 	 * Post price range data based on applied filters and requested data
 	 */
 	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
-		
-		PriceRange request = new Gson().fromJson(req.getBody(), PriceRange.class);
-		logger.info("input: " + request.toString());
 
 		/**
 		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
@@ -82,6 +79,10 @@ public class PutPriceRangeDataHandler implements RequestHandler<ApiGatewayProxyR
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.PRICE_RANGE_PARA);
 		try {
+			
+			PriceRange request = new Gson().fromJson(req.getBody(), PriceRange.class);
+			logger.info("input: " + request.toString());
+			//Validates input request
 			PriceRangeDataValidator dataValidator = PriceRangeDataValidator.getInstance();
 			response = dataValidator.validatePutRequest(request, jobName);
 			if (response == null) { // response null denotes request is valid

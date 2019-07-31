@@ -59,8 +59,6 @@ public class PutPauseParaDataHandler implements RequestHandler<ApiGatewayProxyRe
 	 */
 	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
 		
-		PausePara request = new Gson().fromJson(req.getBody(), PausePara.class);
-		context.getLogger().log("Input request: " + request);
 		/**
 		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
 		 * through out session
@@ -72,6 +70,10 @@ public class PutPauseParaDataHandler implements RequestHandler<ApiGatewayProxyRe
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.PAUSE_PARA);
 		try {
+			
+			PausePara request = new Gson().fromJson(req.getBody(), PausePara.class);
+			context.getLogger().log("Input request: " + request);
+			//Validates input Request
 			PauseParaDataValidator rDataValidator = PauseParaDataValidator.getInstance();
 			response = rDataValidator.validatePutRequest(request, jobName);
 			if (response == null) {

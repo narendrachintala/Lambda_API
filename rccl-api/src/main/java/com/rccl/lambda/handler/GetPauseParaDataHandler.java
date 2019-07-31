@@ -62,9 +62,6 @@ public class GetPauseParaDataHandler
 	 * @return the list of column values based on provided PausePara table name.
 	 */
 	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
-		
-		ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
-		logger.info("Input: " + request);
 
 		/**
 		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
@@ -77,6 +74,9 @@ public class GetPauseParaDataHandler
 		GatewayResponse response = null;
 
 		try {
+			
+			ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
+			logger.info("Input: " + request);
 			// Validate input request if any error occurred throw custom exception.
 			RequestDataValidator pauseParaValidator = RequestDataValidator.getInstance();
 			response = pauseParaValidator.validateGetRequest(request);

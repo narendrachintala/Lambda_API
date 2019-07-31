@@ -64,9 +64,6 @@ public class GetCurrencyGapDataHandler implements RequestHandler<ApiGatewayProxy
 	 */
 	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
 
-		ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
-		logger.info("Input: " + request.toString());
-
 		/**
 		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
 		 * through out session
@@ -75,8 +72,10 @@ public class GetCurrencyGapDataHandler implements RequestHandler<ApiGatewayProxy
 
 		List<CurrencyGapParaDTO> currencyGapParaList = null;
 		GatewayResponse response = null;
-
 		try {
+			
+			ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
+			logger.info("Input: " + request.toString());
 			// validating request data
 			RequestDataValidator currencyGapValidator = RequestDataValidator.getInstance();
 			response = currencyGapValidator.validateGetRequest(request);

@@ -64,9 +64,6 @@ public class PutInversionGapsParaDataHandler
 	 * Post InversionGapPara data based on applied filters and requested data
 	 */
 	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
-		
-		InversionGapPara request = new Gson().fromJson(req.getBody(), InversionGapPara.class);
-		logger.info("input: " + request.toString());
 
 		/**
 		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
@@ -79,6 +76,10 @@ public class PutInversionGapsParaDataHandler
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.INVERSION_GAP_PARA);
 		try {
+			
+			InversionGapPara request = new Gson().fromJson(req.getBody(), InversionGapPara.class);
+			logger.info("input: " + request.toString());
+			//validates input request
 			InversionGapsParaDataValidator dataValidator = InversionGapsParaDataValidator.getInstance();
 			response = dataValidator.validatePutRequest(request, jobName);
 			if (response == null) { // response null denotes request is valid

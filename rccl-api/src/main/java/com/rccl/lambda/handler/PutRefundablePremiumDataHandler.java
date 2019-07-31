@@ -60,9 +60,6 @@ public class PutRefundablePremiumDataHandler
 	 * @return true if update is successful
 	 */
 	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
-		
-		RefundablePremium request = new Gson().fromJson(req.getBody(), RefundablePremium.class);
-		logger.info("Input request: " + request);
 
 		/**
 		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
@@ -75,6 +72,10 @@ public class PutRefundablePremiumDataHandler
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.REFUNDABLE_PREMIUM);
 		try {
+			
+			RefundablePremium request = new Gson().fromJson(req.getBody(), RefundablePremium.class);
+			logger.info("Input request: " + request);
+			//Validates Input Request
 			RefundablePremiumDataValidator rDataValidator = RefundablePremiumDataValidator.getInstance();
 			response = rDataValidator.validatePutRequest(request, jobName);
 			if (response == null) {
@@ -110,7 +111,7 @@ public class PutRefundablePremiumDataHandler
 	public static void main(String args[]) {
 
 		RefundablePremium refundablePremium = new RefundablePremium();
-		refundablePremium.setGap_type("Standard");
+		refundablePremium.setGap_type("Current");
 		refundablePremium.setCurrent_gap_pct(10.0);
 		refundablePremium.setStandard_gap_pct(20.0);
 
@@ -129,7 +130,8 @@ public class PutRefundablePremiumDataHandler
 
 		System.out.println("Sample Input data:" + json);
 
-		new PutRefundablePremiumDataHandler().handleRequest(null, new Context() {
+		new PutRefundablePremiumDataHandler().handleRequest(null,
+				new Context() {
 
 			@Override
 			public String getAwsRequestId() {
@@ -204,7 +206,8 @@ public class PutRefundablePremiumDataHandler
 				};
 			}
 
-		});
+		})
+				;
 	}
 
 }

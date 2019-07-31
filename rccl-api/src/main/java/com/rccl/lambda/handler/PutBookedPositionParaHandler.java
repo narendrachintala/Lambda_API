@@ -60,9 +60,6 @@ public class PutBookedPositionParaHandler implements RequestHandler<ApiGatewayPr
 	 */
 	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
 		
-		BookedPosition request = new Gson().fromJson(req.getBody(), BookedPosition.class);
-		logger.info("Input request: " + request);
-
 		/**
 		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
 		 * through out session
@@ -74,6 +71,10 @@ public class PutBookedPositionParaHandler implements RequestHandler<ApiGatewayPr
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String jobName = configInst.getTableName(RCCLConstants.BOOKED_POSITION_PARA);
 		try {
+			
+			BookedPosition request = new Gson().fromJson(req.getBody(), BookedPosition.class);
+			logger.info("Input request: " + request);
+			//Validate input Request
 			BookPositionDataValidator rDataValidator = BookPositionDataValidator.getInstance();
 			response = rDataValidator.validatePutRequest(request, jobName);
 			if (response == null) {

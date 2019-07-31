@@ -65,9 +65,6 @@ public class GetCurrentPriceDataHandler
 	 */
 	public GatewayResponse handleRequest(ApiGatewayProxyRequest req, Context context) {
 
-		ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
-		logger.info("Input: " + request.toString());
-
 		/**
 		 * Assigning the AWS Lambda Request ID to Static Constant, which can be referred
 		 * through out session
@@ -78,6 +75,9 @@ public class GetCurrentPriceDataHandler
 		GatewayResponse response = null;
 
 		try {
+			
+			ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
+			logger.info("Input: " + request.toString());
 			// validating request data
 			RequestDataValidator currentPriceValidator = RequestDataValidator.getInstance();
 			response = currentPriceValidator.validateGetRequest(request);

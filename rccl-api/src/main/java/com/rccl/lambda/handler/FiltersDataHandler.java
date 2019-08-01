@@ -71,7 +71,7 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 			
 			FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
 			logger.info("input: " + request);
-			response = dataValidator.validateGetRequest(request);
+			response = dataValidator.validateGetRequest(request, RCCLConstants.METAPRODUCT_F);
 			if (response == null) {
 				FilterDataService dataService = FilterDataService.getInstance();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.METAPRODUCT_F);
@@ -105,7 +105,7 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 		GatewayResponse response = null;
 		FilterDataValidator dataValidator = FilterDataValidator.getInstance();
 		try {
-			response = dataValidator.validateGetRequest(request);
+			response = dataValidator.validateGetRequest(request, RCCLConstants.PRODUCT_CODE_F);
 			if (response == null) {
 				FilterDataService dataService = FilterDataService.getInstance();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.PRODUCT_CODE_F);
@@ -136,7 +136,7 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 		GatewayResponse response = null;
 		FilterDataValidator dataValidator = FilterDataValidator.getInstance();
 		try {
-			response = dataValidator.validateGetRequest(request);
+			response = dataValidator.validateGetRequest(request, RCCLConstants.SHIP_CODE_F);
 			if (response == null) {
 				FilterDataService dataService = FilterDataService.getInstance();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.SHIP_CODE_F);
@@ -166,7 +166,7 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 		GatewayResponse response = null;
 		FilterDataValidator dataValidator = FilterDataValidator.getInstance();
 		try {
-			response = dataValidator.validateGetRequest(request);
+			response = dataValidator.validateGetRequest(request, RCCLConstants.SAIL_MONTH_F);
 			if (response == null) {
 				FilterDataService dataService = FilterDataService.getInstance();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.SAIL_MONTH_F);
@@ -197,7 +197,7 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 		GatewayResponse response = null;
 		FilterDataValidator dataValidator = FilterDataValidator.getInstance();
 		try {
-			response = dataValidator.validateGetRequest(request);
+			response = dataValidator.validateGetRequest(request, RCCLConstants.CAT_CLASS_F);
 			if (response == null) {
 				FilterDataService dataService = FilterDataService.getInstance();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.CAT_CLASS_F);
@@ -227,7 +227,7 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 		GatewayResponse response = null;
 		FilterDataValidator dataValidator = FilterDataValidator.getInstance();
 		try {
-			response = dataValidator.validateGetRequest(request);
+			response = dataValidator.validateGetRequest(request, RCCLConstants.CATEGORY_F);
 			if (response == null) {
 				FilterDataService dataService = FilterDataService.getInstance();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.CATEGORY_F);
@@ -257,7 +257,7 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 		GatewayResponse response = null;
 		FilterDataValidator dataValidator = FilterDataValidator.getInstance();
 		try {
-			response = dataValidator.validateGetRequest(request);
+			response = dataValidator.validateGetRequest(request, RCCLConstants.OCCUPANCY_F);
 			if (response == null) {
 				FilterDataService dataService = FilterDataService.getInstance();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.OCCUPANCY_F);
@@ -270,5 +270,4 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 		}
 		return response;
 	}
-
 }

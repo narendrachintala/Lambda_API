@@ -34,19 +34,27 @@ public class FilterDataValidator {
 	}
 
 	/**
-	 * Validate Input-request.
-	 * 
+	 * Validate get request.
+	 *
 	 * @param requestData the request data
+	 * @param filter the filter
 	 * @return the gateway response
 	 * @throws RCCLException the RCCL exception
 	 */
-	public GatewayResponse validateGetRequest(FiltersData requestData) throws RCCLException {
+	public GatewayResponse validateGetRequest(FiltersData requestData, String filter) throws RCCLException {
 		try {
 			if (requestData == null) {
 				return ResponseUtil.error_json();
 			}
 			if (CustomFunctions.isNullOrEmpty(requestData.getTable_name())) {
 				return ResponseUtil.error_table_name();
+			}
+			if (filter.equalsIgnoreCase(RCCLConstants.METAPRODUCT_F)) {
+				logger.info("fetching metaproducts data");
+			} else {
+				if (CustomFunctions.isNullOrEmpty(requestData.getMetaproduct())) {
+					return ResponseUtil.error_metaproduct();
+				}
 			}
 		} catch (Exception e) {
 			logger.error(e);

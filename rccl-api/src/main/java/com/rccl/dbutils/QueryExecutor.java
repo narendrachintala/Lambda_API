@@ -21,7 +21,6 @@ public class QueryExecutor {
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(QueryExecutor.class);
 
-	
 	// creating instance of class
 	public static QueryExecutor _instance = null;
 
@@ -40,8 +39,8 @@ public class QueryExecutor {
 	/**
 	 * Execute.
 	 * 
-	 * @param 'query'  final input query
-	 * @param 'logger' is used to generate the output logs
+	 * @param                 'query' final input query
+	 * @param                 'logger' is used to generate the output logs
 	 * @param resultProcessor the result processor
 	 */
 	public void execute(String query, ResultProcessor<?> resultProcessor) {
@@ -80,9 +79,9 @@ public class QueryExecutor {
 				if (stmt != null) {
 					stmt.close();
 				}
-				if (con != null) {
-					con.close();
-				}
+				/*
+				 * if (con != null) { con.close(); }
+				 */
 			} catch (SQLException e) {
 				System.out.println(e);
 				logger.error(e);
@@ -110,21 +109,22 @@ public class QueryExecutor {
 		try {
 			logger.info("executing query : " + query);
 			stmt = con.prepareStatement(query);
-			
+
 		} catch (SQLException e) {
+			logger.error(e);
 			throw new RCCLException("Error while initializing the database connection", e);
 		}
 		try {
 			i = 1;
 			if (!CollectionUtils.isNullOrEmpty(params)) {
 				for (String p : params) {
-					//logger.debug("param" + i + ":" + p);
+					// logger.debug("param" + i + ":" + p);
 					stmt.setString(i++, p);
 				}
 			}
 			logger.debug("statement object :" + stmt);
 			result = stmt.executeUpdate();
-			
+
 			return result;
 		} catch (Exception e) {
 			logger.error(e);
@@ -137,9 +137,9 @@ public class QueryExecutor {
 				if (stmt != null) {
 					stmt.close();
 				}
-				if (con != null) {
-					con.close();
-				}
+				/*
+				 * if (con != null) { con.close(); }
+				 */
 			} catch (SQLException e) {
 				logger.error(e);
 				throw new RCCLException("error in querying table", e);

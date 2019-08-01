@@ -1,6 +1,8 @@
 package com.rccl.lambda.handler;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,6 +14,7 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.rccl.dbutils.RevoreoConnect;
 import com.rccl.dto.PauseParaDTO;
 import com.rccl.model.ApiGatewayProxyRequest;
 import com.rccl.model.GatewayResponse;
@@ -25,11 +28,18 @@ import com.rccl.utils.ResponseUtil;
 /**
  * The Class PauseParaDataHandler.
  */
-public class GetPauseParaDataHandler
-		implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
+public class GetPauseParaDataHandler implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
+		ExecutorService executorService = Executors.newSingleThreadExecutor();
+		executorService.execute(new Runnable() {
+			public void run() {
+				System.out.println("executing run method to establish connection.");
+				RevoreoConnect.getInstance().getConnection();
+			}
+		});
+		executorService.shutdown();
 	}
 
 	// Initialize the Log4j logger.
@@ -37,7 +47,7 @@ public class GetPauseParaDataHandler
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
-	
+
 	/** The instance. */
 	// creating instance of class
 	public static GetPauseParaDataHandler _instance = null;
@@ -74,7 +84,7 @@ public class GetPauseParaDataHandler
 		GatewayResponse response = null;
 
 		try {
-			
+
 			ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
 			logger.info("Input: " + request);
 			// Validate input request if any error occurred throw custom exception.
@@ -88,8 +98,8 @@ public class GetPauseParaDataHandler
 							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
 							RCCLConstants.REQUEST_ID);
 				} else {
-					response = new GatewayResponse(pauseParaList, ResponseUtil.getHeaders(),
-							RCCLConstants.SC_OK, RCCLConstants.REQUEST_ID);
+					response = new GatewayResponse(pauseParaList, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
 				}
 			}
 		} catch (Exception e) {

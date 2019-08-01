@@ -2,30 +2,52 @@ package com.rccl.dbutils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * The Class RevoreoConnect.
  */
 public class RevoreoConnect {
 
+	static final Logger logger = LogManager.getLogger(RevoreoConnect.class);
+
 	/** The connection. */
-	private Connection connection = null;
-	
+	private static Connection connection = null;
+
 	/** The instance. */
 	private static RevoreoConnect _instance;
-	
 
 	/**
 	 * Gets the single instance of RevoreoConnect.
 	 *
 	 * @return single instance of RevoreoConnect
+	 * @throws SQLException
 	 */
 	public static RevoreoConnect getInstance() {
-		if (_instance == null) {
-			_instance = new RevoreoConnect();
+		try {
+			if (_instance == null) {
+				_instance = new RevoreoConnect();
+			}
+			synchronized (_instance) {
+				System.out.println("initializing oracle connection");
+				if (_instance.getConnection() == null || _instance.getConnection().isClosed()) {
+					initializeConn();
+				}
+			}
+		} catch (Exception e) {
+			logger.error(e);
 		}
-		System.out.println("initializing oracle connection");
+
+		return _instance;
+
+	}
+
+	public static RevoreoConnect initializeConn() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			System.out.println("Oracle driver loaded");
@@ -77,7 +99,18 @@ public class RevoreoConnect {
 	 * @param connection the new connection
 	 */
 	public void setConnection(Connection connection) {
-		this.connection = connection;
+		RevoreoConnect.connection = connection;
+	}
+
+	public static void initializeDBConnection() {
+		ExecutorService executorService = Executors.newSingleThreadExecutor();
+		executorService.execute(new Runnable() {
+			public void run() {
+				System.out.println("executing run method to establish connection.");
+				RevoreoConnect.getInstance().getConnection();
+			}
+		});
+		executorService.shutdown();
 	}
 
 	/**

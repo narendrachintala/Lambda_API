@@ -16,7 +16,7 @@ Globals:
           - subnet-0edaea501fb4a6755
         SecurityGroupIds:
           - sg-b9017cc5
-    
+       
 Resources:
   ApiGateway:
     Type: AWS::Serverless::Api
@@ -257,7 +257,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
-      Handler: com.rccl.lambda.handler.PutRollingWindowHandler::handleRequest
+      Handler: com.rccl.lambda.handler.PutRollingWindowDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
         PostEvent:
@@ -270,7 +270,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
-      Handler: com.rccl.lambda.handler.PutRefundablePremiumHandler::handleRequest
+      Handler: com.rccl.lambda.handler.PutRefundablePremiumDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
         PostEvent:
@@ -331,16 +331,3 @@ Resources:
             RestApiId: !Ref "ApiGateway"
             Path: /currency_gap_data_service
             Method: put
-#Outputs:
-#  ApiGateway:
-#    Description: 'API Gateway endpoint URL for PRE Parameter tables lambd functions'
-#    Value: !Sub 'https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/!Ref Stage/'
-#  ApiGatewayRestApiId:
-#    Description: 'API Gateway ARN for PRE AWS API Gateway'
-#    Value: !Ref ApiGateway
-#    Export:
-#      Name: ApiGateway-RestApiId
-#  ApiGatewayRootResourceId:
-#    Value: !GetAtt ApiGateway.RootResourceId
-#    Export:
-#      Name: ApiGateway-RootResourceId

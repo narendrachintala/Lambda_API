@@ -1,6 +1,8 @@
 package com.rccl.lambda.handler;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,6 +11,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.rccl.dbutils.RevoreoConnect;
 import com.rccl.dto.CurrencyGapParaDTO;
 import com.rccl.model.ApiGatewayProxyRequest;
 import com.rccl.model.GatewayResponse;
@@ -28,6 +31,14 @@ public class GetCurrencyGapDataHandler implements RequestHandler<ApiGatewayProxy
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
+		ExecutorService executorService = Executors.newSingleThreadExecutor();
+		executorService.execute(new Runnable() {
+			public void run() {
+				System.out.println("executing run method to establish connection.");
+				RevoreoConnect.getInstance().getConnection();
+			}
+		});
+		executorService.shutdown();
 	}
 
 	// Initialize the Log4j logger.

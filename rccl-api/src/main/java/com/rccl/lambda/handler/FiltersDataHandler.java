@@ -1,11 +1,15 @@
 package com.rccl.lambda.handler;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
+import com.rccl.dbutils.RevoreoConnect;
 import com.rccl.dto.FilterDataDTO;
 import com.rccl.model.ApiGatewayProxyRequest;
 import com.rccl.model.FiltersData;
@@ -26,11 +30,19 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
+		ExecutorService executorService = Executors.newSingleThreadExecutor();
+		executorService.execute(new Runnable() {
+			public void run() {
+				System.out.println("executing run method to establish connection.");
+				RevoreoConnect.getInstance().getConnection();
+			}
+		});
+		executorService.shutdown();
 	}
 
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(FiltersDataHandler.class);
-	
+
 	/** The instance. */
 	// creating instance of class
 	public static FiltersDataHandler _instance = null;
@@ -68,7 +80,7 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 		GatewayResponse response = null;
 		FilterDataValidator dataValidator = FilterDataValidator.getInstance();
 		try {
-			
+
 			FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
 			logger.info("input: " + request);
 			response = dataValidator.validateGetRequest(request);
@@ -96,8 +108,7 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 	 *         name
 	 */
 	public GatewayResponse getProductCodes(ApiGatewayProxyRequest req, Context context) {
-		
-		
+
 		FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
 		logger.info("input: " + request);
 
@@ -129,7 +140,7 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 	 * @return returns list of ship_code column values based on provided table name
 	 */
 	public GatewayResponse getShipCodes(ApiGatewayProxyRequest req, Context context) {
-		
+
 		FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
 		logger.info("input: " + request);
 		FilterDataDTO dataDTO = null;
@@ -159,7 +170,7 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 	 * @return returns list of sail_month column values based on provided table name
 	 */
 	public GatewayResponse getSailMonths(ApiGatewayProxyRequest req, Context context) {
-		
+
 		FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
 		logger.info("input: " + request);
 		FilterDataDTO dataDTO = null;
@@ -190,7 +201,7 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 	 */
 
 	public GatewayResponse getCatClasses(ApiGatewayProxyRequest req, Context context) {
-		
+
 		FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
 		logger.info("input: " + request);
 		FilterDataDTO dataDTO = null;
@@ -220,7 +231,7 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 	 * @return returns list of category column values based on provided table name
 	 */
 	public GatewayResponse getCategories(ApiGatewayProxyRequest req, Context context) {
-		
+
 		FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
 		logger.info("input: " + request);
 		FilterDataDTO dataDTO = null;
@@ -250,7 +261,7 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 	 * @return returns list of occupancy column values based on provided table name
 	 */
 	public GatewayResponse getOccupancy(ApiGatewayProxyRequest req, Context context) {
-		
+
 		FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
 		logger.info("input: " + request);
 		FilterDataDTO dataDTO = null;

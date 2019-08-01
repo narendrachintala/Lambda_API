@@ -32,6 +32,9 @@ public class ParameterFiltersData {
 	/** The occupancy. */
 	private String occupancy;
 	
+	/** The currency. */
+	private String currency;
+	
 	/**
 	 * Gets the metaproduct.
 	 * @return the metaproduct
@@ -160,6 +163,24 @@ public class ParameterFiltersData {
 	public void setOccupancy(String occupancy) {
 		this.occupancy = occupancy;
 	}
+	
+	/**
+	 * Gets the currency.
+	 *
+	 * @return the currency
+	 */
+	public String getCurrency() {
+		return currency;
+	}
+	
+	/**
+	 * Sets the currency.
+	 *
+	 * @param currency the new currency
+	 */
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
 
 	/**
 	 * To string.
@@ -169,7 +190,6 @@ public class ParameterFiltersData {
 	public String toString() {
 		return "ParameterFiltersData [metaproduct=" + metaproduct + ", product_code=" + product_code + ", ship_code="
 				+ ship_code + ", sail_month=" + sail_month + ", sail_date=" + sail_date + ", cat_class=" + cat_class
-				+ ", category=" + category + ", occupancy=" + occupancy + "]";
+				+ ", category=" + category + ", occupancy=" + occupancy + ", currency=" + currency + "]";
 	}
-
 }

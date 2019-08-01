@@ -51,13 +51,14 @@ public class ResponseUtil extends CustomErrors {
 
 	/**
 	 * Gets the error message.
-	 * 
-	 * @param e          the e
+	 *
+	 * @param e the e
 	 * @param statusCode the status code
-	 * @param requestID
+	 * @param requestID the request ID
 	 * @return the error message
 	 */
 	public static GatewayResponse getErrorMessage(Exception e, Integer statusCode, String requestID) {
+
 		String errorMsg = null;
 		if (e.getCause() == null) {
 			errorMsg = e.getLocalizedMessage();

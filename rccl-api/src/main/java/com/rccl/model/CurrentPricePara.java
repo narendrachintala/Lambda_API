@@ -2,7 +2,7 @@ package com.rccl.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-//TODO: Auto-generated Javadoc
+// TODO: Auto-generated Javadoc
 /**
 * The Class CurrentPricePara.
 *
@@ -11,219 +11,118 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 @JsonPOJOBuilder
 public class CurrentPricePara {
 	
-	/** The filter data. */
+	/** The filters data. */
 	private ParameterFiltersData filtersData;
 	
-	private String currency;
-	private String metaproduct;
-	private String product_code;
-	private String ship_code;
-	private String sail_date;
-	private Integer sail_month;
-	private String cat_class;
-	private String occupancy;
+	/** The price window. */
 	private Double price_window;
+	
+	/** The l 1 range min. */
 	private Double l1_range_min;
+	
+	/** The l 1 range max. */
 	private Double l1_range_max;
+	
+	/** The l 1 insert date. */
 	private String l1_insert_date;
-
+	
 	/**
-	 * Gets the filter data.
+	 * Gets the filters data.
 	 *
-	 * @return the filter data
+	 * @return the filters data
 	 */
 	public ParameterFiltersData getFiltersData() {
 		return filtersData;
 	}
 	
 	/**
-	 * Sets the filter data.
+	 * Sets the filters data.
 	 *
-	 * @param filterData the new filter data
+	 * @param filtersData the new filters data
 	 */
 	public void setFiltersData(ParameterFiltersData filtersData) {
 		this.filtersData = filtersData;
 	}
-
+	
 	/**
-	 * @return the currency
-	 */
-	public String getCurrency() {
-		return currency;
-	}
-
-	/**
-	 * @param currency the currency to set
-	 */
-	public void setCurrency(String currency) {
-		this.currency = currency;
-	}
-
-	/**
-	 * @return the metaproduct
-	 */
-	public String getMetaproduct() {
-		return metaproduct;
-	}
-
-	/**
-	 * @param metaproduct the metaproduct to set
-	 */
-	public void setMetaproduct(String metaproduct) {
-		this.metaproduct = metaproduct;
-	}
-
-	/**
-	 * @return the product_code
-	 */
-	public String getProduct_code() {
-		return product_code;
-	}
-
-	/**
-	 * @param product_code the product_code to set
-	 */
-	public void setProduct_code(String product_code) {
-		this.product_code = product_code;
-	}
-
-	/**
-	 * @return the ship_code
-	 */
-	public String getShip_code() {
-		return ship_code;
-	}
-
-	/**
-	 * @param ship_code the ship_code to set
-	 */
-	public void setShip_code(String ship_code) {
-		this.ship_code = ship_code;
-	}
-
-	/**
-	 * @return the sail_date
-	 */
-	public String getSail_date() {
-		return sail_date;
-	}
-
-	/**
-	 * @param sail_date the sail_date to set
-	 */
-	public void setSail_date(String sail_date) {
-		this.sail_date = sail_date;
-	}
-
-	/**
-	 * @return the sail_month
-	 */
-	public Integer getSail_month() {
-		return sail_month;
-	}
-
-	/**
-	 * @param sail_month the sail_month to set
-	 */
-	public void setSail_month(Integer sail_month) {
-		this.sail_month = sail_month;
-	}
-
-	/**
-	 * @return the cat_class
-	 */
-	public String getCat_class() {
-		return cat_class;
-	}
-
-	/**
-	 * @param cat_class the cat_class to set
-	 */
-	public void setCat_class(String cat_class) {
-		this.cat_class = cat_class;
-	}
-
-	/**
-	 * @return the occupancy
-	 */
-	public String getOccupancy() {
-		return occupancy;
-	}
-
-	/**
-	 * @param occupancy the occupancy to set
-	 */
-	public void setOccupancy(String occupancy) {
-		this.occupancy = occupancy;
-	}
-
-	/**
-	 * @return the price_window
+	 * Gets the price window.
+	 *
+	 * @return the price window
 	 */
 	public Double getPrice_window() {
 		return price_window;
 	}
-
+	
 	/**
-	 * @param price_window the price_window to set
+	 * Sets the price window.
+	 *
+	 * @param price_window the new price window
 	 */
 	public void setPrice_window(Double price_window) {
 		this.price_window = price_window;
 	}
-
+	
 	/**
-	 * @return the l1_range_min
+	 * Gets the l 1 range min.
+	 *
+	 * @return the l 1 range min
 	 */
 	public Double getL1_range_min() {
 		return l1_range_min;
 	}
-
+	
 	/**
-	 * @param l1_range_min the l1_range_min to set
+	 * Sets the l 1 range min.
+	 *
+	 * @param l1_range_min the new l 1 range min
 	 */
 	public void setL1_range_min(Double l1_range_min) {
 		this.l1_range_min = l1_range_min;
 	}
-
+	
 	/**
-	 * @return the l1_range_max
+	 * Gets the l 1 range max.
+	 *
+	 * @return the l 1 range max
 	 */
 	public Double getL1_range_max() {
 		return l1_range_max;
 	}
-
+	
 	/**
-	 * @param l1_range_max the l1_range_max to set
+	 * Sets the l 1 range max.
+	 *
+	 * @param l1_range_max the new l 1 range max
 	 */
 	public void setL1_range_max(Double l1_range_max) {
 		this.l1_range_max = l1_range_max;
 	}
-
+	
 	/**
-	 * @return the l1_insert_date
+	 * Gets the l 1 insert date.
+	 *
+	 * @return the l 1 insert date
 	 */
 	public String getL1_insert_date() {
 		return l1_insert_date;
 	}
-
+	
 	/**
-	 * @param l1_insert_date the l1_insert_date to set
+	 * Sets the l 1 insert date.
+	 *
+	 * @param l1_insert_date the new l 1 insert date
 	 */
 	public void setL1_insert_date(String l1_insert_date) {
 		this.l1_insert_date = l1_insert_date;
 	}
 
+	/**
+	 * To string.
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
-		return "CurrentPricePara [filtersData=" + filtersData + ", currency=" + currency + ", metaproduct="
-				+ metaproduct + ", product_code=" + product_code + ", ship_code=" + ship_code + ", sail_date="
-				+ sail_date + ", sail_month=" + sail_month + ", cat_class=" + cat_class + ", occupancy=" + occupancy
-				+ ", price_window=" + price_window + ", l1_range_min=" + l1_range_min + ", l1_range_max=" + l1_range_max
-				+ ", l1_insert_date=" + l1_insert_date + "]";
+		return "CurrentPricePara [filtersData=" + filtersData + ", price_window=" + price_window + ", l1_range_min="
+				+ l1_range_min + ", l1_range_max=" + l1_range_max + ", l1_insert_date=" + l1_insert_date + "]";
 	}
-
-	
-	
-	
-	
 }

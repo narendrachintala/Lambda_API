@@ -118,6 +118,14 @@ public class GetInversionGapsParaDataHandler
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
+		
+		ParameterFiltersData parameterFiltersData = new ParameterFiltersData();
+		parameterFiltersData.setMetaproduct("EUROPE");
+		parameterFiltersData.setProduct_code("EURMED7");
+		parameterFiltersData.setShip_code("AL");
+		parameterFiltersData.setSail_month("5");
+		parameterFiltersData.setOccupancy("double");
+		
 		new GetInversionGapsParaDataHandler().handleRequest(null,
 				new Context() {
 			@Override

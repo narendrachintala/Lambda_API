@@ -72,6 +72,11 @@ public class PriceRangeDataHelper {
 				queryBuffer.append(COMMA);
 
 			}
+			if (priceRangeReq.getFiltersData().getUser_id() != null) {
+				queryBuffer.append(RCCLConstants.USER_ID).append(EQUALS);
+				queryBuffer.append(priceRangeReq.getFiltersData().getUser_id());
+				queryBuffer.append(COMMA);
+			}
 			queryBuffer = UpdateColumnHelper.updateGenericColumns(queryBuffer);
 			// removing last appended extra COMMA
 			queryBuffer.replace(queryBuffer.lastIndexOf(COMMA), queryBuffer.length(), "");

@@ -88,6 +88,11 @@ public class CurrencyGapDataHelper {
 				queryBuffer.append(currencyGapReq.getGap3());
 				queryBuffer.append(COMMA);
 			}
+			if (currencyGapReq.getFiltersData().getUser_id() != null) {
+				queryBuffer.append(RCCLConstants.USER_ID).append(EQUALS);
+				queryBuffer.append(currencyGapReq.getFiltersData().getUser_id());
+				queryBuffer.append(COMMA);
+			}
 
 			queryBuffer.append(RCCLConstants.INSERT_DATE).append(RCCLConstants.EQUALS);
 			queryBuffer.append(RCCLConstants.SINGLE_QUOTE).append(CustomFunctions.getCurrentDate())

@@ -53,6 +53,9 @@ public class InversionGapPara {
 	/** The gap 6. */
 	private Timestamp insert_date;
 	
+	/** The user id. */
+	private String user_id;
+	
 	/**
 	 * Gets the filters data.
 	 *
@@ -303,13 +306,30 @@ public class InversionGapPara {
 	public void setL1_insert_date(Timestamp insert_date) {
 		this.insert_date = insert_date;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	
+	/**
+	 * @return the user_id
+	 */
+	public String getUser_id() {
+		return user_id;
+	}
+
+	/**
+	 * @param user_id the user_id to set
+	 */
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+
+	/**
+	 * To string.
+	 * @return the string
 	 */
 	@Override
 	public String toString() {
-		return "InversionGapPara [filterData=" + filtersData + ", order_1=" + order_1 +", order_2=" + order_2 +", order_3=" + order_3 +", order_4=" + order_4 +", order_5=" + order_5 +", order_6=" + order_6 +", gap1=" + gap1 +", gap2=" + gap2 +", gap3=" + gap3 +
-		", gap4=" + gap4 +", gap5=" + gap5 +", gap6=" + gap6 +", insert_date=" + insert_date +"]";
-		}
-	
+		return "InversionGapPara [filtersData=" + filtersData + ", order_1=" + order_1 + ", order_2=" + order_2
+				+ ", order_3=" + order_3 + ", order_4=" + order_4 + ", order_5=" + order_5 + ", order_6=" + order_6
+				+ ", gap1=" + gap1 + ", gap2=" + gap2 + ", gap3=" + gap3 + ", gap4=" + gap4 + ", gap5=" + gap5
+				+ ", gap6=" + gap6 + ", insert_date=" + insert_date + ", user_id=" + user_id + "]";
+	}
 }

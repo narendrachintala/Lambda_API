@@ -34,6 +34,9 @@ public class CurrencyGapPara {
 	/** The insert date. */
 	private String insert_date;
 	
+	/** The user id. */
+	private String user_id;
+	
 	/**
 	 * Gets the filters data.
 	 *
@@ -179,6 +182,20 @@ public class CurrencyGapPara {
 	public void setInsert_date(String insert_date) {
 		this.insert_date = insert_date;
 	}
+	
+	/**
+	 * @return the user_id
+	 */
+	public String getUser_id() {
+		return user_id;
+	}
+
+	/**
+	 * @param user_id the user_id to set
+	 */
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
 
 	/**
 	 * To string.
@@ -188,6 +205,6 @@ public class CurrencyGapPara {
 	public String toString() {
 		return "CurrencyGapPara [filtersData=" + filtersData + ", currency1=" + currency1 + ", gap1=" + gap1
 				+ ", currency2=" + currency2 + ", gap2=" + gap2 + ", currency3=" + currency3 + ", gap3=" + gap3
-				+ ", insert_date=" + insert_date + "]";
+				+ ", insert_date=" + insert_date + ", user_id=" + user_id + "]";
 	}
 }

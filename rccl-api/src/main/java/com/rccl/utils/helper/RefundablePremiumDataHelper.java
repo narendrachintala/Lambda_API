@@ -56,9 +56,9 @@ public class RefundablePremiumDataHelper {
 				queryBuffer.append(request.getStandard_gap_pct());
 				queryBuffer.append(COMMA);
 			}
-			if (request.getFiltersData().getUser_id() != null) {
+			if (request.getUser_id() != null) {
 				queryBuffer.append(RCCLConstants.USER_ID).append(EQUALS);
-				queryBuffer.append(request.getFiltersData().getUser_id());
+				queryBuffer.append(request.getUser_id());
 				queryBuffer.append(COMMA);
 			}
 

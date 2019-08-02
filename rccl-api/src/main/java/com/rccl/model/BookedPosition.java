@@ -18,6 +18,9 @@ public class BookedPosition {
 	/** The l 1 insert date. */
 	private Timestamp l1_insert_date;
 	
+	/** The user id. */
+	private String user_id;
+	
 	/**
 	 * Gets the filters data.
 	 *
@@ -70,13 +73,28 @@ public class BookedPosition {
 	public void setL1_insert_date(Timestamp l1_insert_date) {
 		this.l1_insert_date = l1_insert_date;
 	}
+	
+	/**
+	 * @return the user_id
+	 */
+	public String getUser_id() {
+		return user_id;
+	}
+
+	/**
+	 * @param user_id the user_id to set
+	 */
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+	
 	/**
 	 * To string.
 	 * @return the string
 	 */
 	@Override
 	public String toString() {
-		return "BookedPosition [filtersData=" + filtersData + ", booked_position=" + booked_position + ", l1_insert_date=" + l1_insert_date+ 
-				", getBooked_position()=" + getBooked_position() +", getL1_insert_date()=" + getL1_insert_date() + "]";
-		}
+		return "BookedPosition [filtersData=" + filtersData + ", booked_position=" + booked_position
+				+ ", l1_insert_date=" + l1_insert_date + ", user_id=" + user_id + "]";
+	}
 }

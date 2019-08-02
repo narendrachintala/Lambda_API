@@ -88,9 +88,9 @@ public class CurrencyGapDataHelper {
 				queryBuffer.append(currencyGapReq.getGap3());
 				queryBuffer.append(COMMA);
 			}
-			if (currencyGapReq.getFiltersData().getUser_id() != null) {
+			if (currencyGapReq.getUser_id() != null) {
 				queryBuffer.append(RCCLConstants.USER_ID).append(EQUALS);
-				queryBuffer.append(currencyGapReq.getFiltersData().getUser_id());
+				queryBuffer.append(currencyGapReq.getUser_id());
 				queryBuffer.append(COMMA);
 			}
 

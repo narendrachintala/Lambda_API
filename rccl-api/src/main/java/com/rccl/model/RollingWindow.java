@@ -33,6 +33,9 @@ public class RollingWindow {
 
 	/** The fut demand window. */
 	private Integer fut_demand_window;
+	
+	/** The user id. */
+	private String user_id;
 
 	/**
 	 * Gets the filters data.
@@ -177,13 +180,30 @@ public class RollingWindow {
 	public void setFut_demand_window(Integer fut_demand_window) {
 		this.fut_demand_window = fut_demand_window;
 	}
+	
+	/**
+	 * @return the user_id
+	 */
+	public String getUser_id() {
+		return user_id;
+	}
 
+	/**
+	 * @param user_id the user_id to set
+	 */
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+
+	/**
+	 * To string.
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
 		return "RollingWindow [filtersData=" + filtersData + ", prev_forecast=" + prev_forecast + ", fut_forecast="
 				+ fut_forecast + ", price_window=" + price_window + ", wts=" + wts + ", l1_insert_date="
 				+ l1_insert_date + ", prev_demand_window=" + prev_demand_window + ", fut_demand_window="
-				+ fut_demand_window + "]";
+				+ fut_demand_window + ", user_id=" + user_id + "]";
 	}
-
 }

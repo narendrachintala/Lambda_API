@@ -28,6 +28,9 @@ public class PriceRange {
 
 	/** The l 2 range max. */
 	private Double l2_range_max;
+	
+	/** The user id. */
+	private String user_id;
 
 	/**
 	 * Gets the filter data.
@@ -136,19 +139,31 @@ public class PriceRange {
 	public void setL2_range_max(Double l2_range_max) {
 		this.l2_range_max = l2_range_max;
 	}
+	
+	/**
+	 * @return the user_id
+	 */
+	public String getUser_id() {
+		return user_id;
+	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * @param user_id the user_id to set
+	 */
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+
+	/**
+	 * To string.
+	 * @return the string
 	 */
 	@Override
 	public String toString() {
-		return "PriceRange [filterData=" + filtersData + ", l1_range_min=" + l1_range_min + ", l1_range_max="
+		return "PriceRange [filtersData=" + filtersData + ", l1_range_min=" + l1_range_min + ", l1_range_max="
 				+ l1_range_max + ", l1_insert_date=" + l1_insert_date + ", l2_range_min=" + l2_range_min
-				+ ", l2_range_max=" + l2_range_max + "]";
+				+ ", l2_range_max=" + l2_range_max + ", user_id=" + user_id + "]";
 	}
-
 	/*
 	 * public static void main(String[] args) { PriceRange p = new PriceRange();
 	 * p.setL1_range_min(-0.06); ValidatorFactory factory =

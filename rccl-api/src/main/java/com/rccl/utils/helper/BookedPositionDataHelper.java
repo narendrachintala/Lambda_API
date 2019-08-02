@@ -46,9 +46,9 @@ public class BookedPositionDataHelper {
 				queryBuffer.append(SINGLE_QUOTE).append(request.getBooked_position()).append(SINGLE_QUOTE);
 				queryBuffer.append(COMMA);
 			}
-			if (request.getFiltersData().getUser_id() != null) {
+			if (request.getUser_id() != null) {
 				queryBuffer.append(RCCLConstants.USER_ID).append(EQUALS);
-				queryBuffer.append(request.getFiltersData().getUser_id());
+				queryBuffer.append(request.getUser_id());
 				queryBuffer.append(COMMA);
 			}
 			queryBuffer = UpdateColumnHelper.updateGenericColumns(queryBuffer);

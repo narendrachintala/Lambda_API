@@ -25,6 +25,9 @@ public class PausePara {
 	/** The STOP_PUSH_WTS. */
 	private Integer stop_push_wts;
 	
+	/** The user id. */
+	private String user_id;
+	
 	/**
 	 * Gets the filters data.
 	 * @return the filters data
@@ -102,17 +105,29 @@ public class PausePara {
 	public void setL1_insert_date(Timestamp l1_insert_date) {
 		this.l1_insert_date = l1_insert_date;
 	}
+	
+	/**
+	 * @return the user_id
+	 */
+	public String getUser_id() {
+		return user_id;
+	}
+
+	/**
+	 * @param user_id the user_id to set
+	 */
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+
 	/**
 	 * To string.
 	 * @return the string
 	 */
-	
-@Override
+	@Override
 	public String toString() {
-	return "PausePara [filtersData=" + filtersData + ", resume_push_wts=" + resume_push_wts +", stop_push_wts=" + stop_push_wts +", l1_pause=" + l1_pause + ", l1_insert_date=" + l1_insert_date+ 
-			", getresume_push_wts()=" + getresume_push_wts() +", getstop_push_wts()=" + getstop_push_wts() +", getFiltersData()=" + getFiltersData() + ", getL1_pause()=" + getL1_pause()
-	+ ", getL1_insert_date()=" + getL1_insert_date() + ", getClass()=" + getClass() + ", hashCode()="
-	+ hashCode() + ", toString()=" + super.toString() + "]";
+		return "PausePara [filtersData=" + filtersData + ", l1_pause=" + l1_pause + ", l1_insert_date=" + l1_insert_date
+				+ ", resume_push_wts=" + resume_push_wts + ", stop_push_wts=" + stop_push_wts + ", user_id=" + user_id
+				+ "]";
 	}
-	
 }

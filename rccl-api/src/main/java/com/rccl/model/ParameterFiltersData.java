@@ -35,9 +35,6 @@ public class ParameterFiltersData {
 	/** The currency. */
 	private String currency;
 	
-	/** The user id. */
-	private String user_id;
-	
 	/**
 	 * Gets the metaproduct.
 	 * @return the metaproduct
@@ -184,20 +181,6 @@ public class ParameterFiltersData {
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
-	
-	/**
-	 * @return the user_id
-	 */
-	public String getUser_id() {
-		return user_id;
-	}
-
-	/**
-	 * @param user_id the user_id to set
-	 */
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
-	}
 
 	/**
 	 * To string.
@@ -207,7 +190,6 @@ public class ParameterFiltersData {
 	public String toString() {
 		return "ParameterFiltersData [metaproduct=" + metaproduct + ", product_code=" + product_code + ", ship_code="
 				+ ship_code + ", sail_month=" + sail_month + ", sail_date=" + sail_date + ", cat_class=" + cat_class
-				+ ", category=" + category + ", occupancy=" + occupancy + ", currency=" + currency + ", user_id="
-				+ user_id + "]";
+				+ ", category=" + category + ", occupancy=" + occupancy + ", currency=" + currency + "]";
 	}
 }

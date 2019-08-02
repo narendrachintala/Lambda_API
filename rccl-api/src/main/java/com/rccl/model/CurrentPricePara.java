@@ -26,6 +26,9 @@ public class CurrentPricePara {
 	/** The l 1 insert date. */
 	private String l1_insert_date;
 	
+	/** The user id. */
+	private String user_id;
+	
 	/**
 	 * Gets the filters data.
 	 *
@@ -115,6 +118,20 @@ public class CurrentPricePara {
 	public void setL1_insert_date(String l1_insert_date) {
 		this.l1_insert_date = l1_insert_date;
 	}
+	
+	/**
+	 * @return the user_id
+	 */
+	public String getUser_id() {
+		return user_id;
+	}
+
+	/**
+	 * @param user_id the user_id to set
+	 */
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
 
 	/**
 	 * To string.
@@ -123,6 +140,7 @@ public class CurrentPricePara {
 	@Override
 	public String toString() {
 		return "CurrentPricePara [filtersData=" + filtersData + ", price_window=" + price_window + ", l1_range_min="
-				+ l1_range_min + ", l1_range_max=" + l1_range_max + ", l1_insert_date=" + l1_insert_date + "]";
+				+ l1_range_min + ", l1_range_max=" + l1_range_max + ", l1_insert_date=" + l1_insert_date + ", user_id="
+				+ user_id + "]";
 	}
 }

@@ -20,6 +20,9 @@ public class RefundablePremium {
 	/** The standard gap pct. */
 	private Double standard_gap_pct;
 	
+	/** The user id. */
+	private String user_id;
+	
 	/**
 	 * Gets the filters data.
 	 *
@@ -90,5 +93,29 @@ public class RefundablePremium {
 	 */
 	public void setStandard_gap_pct(Double standard_gap_pct) {
 		this.standard_gap_pct = standard_gap_pct;
+	}
+	
+	/**
+	 * @return the user_id
+	 */
+	public String getUser_id() {
+		return user_id;
+	}
+
+	/**
+	 * @param user_id the user_id to set
+	 */
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+
+	/**
+	 * To string.
+	 * @return the string
+	 */
+	@Override
+	public String toString() {
+		return "RefundablePremium [filtersData=" + filtersData + ", gap_type=" + gap_type + ", current_gap_pct="
+				+ current_gap_pct + ", standard_gap_pct=" + standard_gap_pct + ", user_id=" + user_id + "]";
 	}
 }

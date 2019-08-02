@@ -240,7 +240,9 @@ public class ConfigUtil {
 	 * @return the lock status
 	 */
 	public String getLockStatus() {
-		return conf.getProperty("lock_status");
+		return conf.getProperty("lock_status").replace(
+				CustomFunctions.getNamedQuery(RCCLConstants.ACCESS_CONTROL_TABLE),
+				conf.getProperty(RCCLConstants.ACCESS_CONTROL_TABLE));
 	}
 
 	/**
@@ -278,5 +280,4 @@ public class ConfigUtil {
 				CustomFunctions.getNamedQuery(RCCLConstants.CURRENCY_GAP_PARA),
 				conf.getProperty(RCCLConstants.CURRENCY_GAP_PARA));
 	}
-
 }

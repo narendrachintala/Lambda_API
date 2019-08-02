@@ -4,6 +4,8 @@
 package com.rccl.utils;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -31,6 +33,8 @@ public class ConfigUtil {
 
 	/** The instance. */
 	private static ConfigUtil _instance;
+
+	public static List<String> configuredTableList = getConfigTables();
 
 	/**
 	 * Gets the single instance of ConfigUtil.
@@ -176,6 +180,7 @@ public class ConfigUtil {
 				CustomFunctions.getNamedQuery(RCCLConstants.INVERSION_GAP_PARA),
 				conf.getProperty(RCCLConstants.INVERSION_GAP_PARA));
 	}
+
 	/**
 	 * Update inversionGapPara.
 	 *
@@ -186,7 +191,7 @@ public class ConfigUtil {
 				CustomFunctions.getNamedQuery(RCCLConstants.INVERSION_GAP_PARA),
 				conf.getProperty(RCCLConstants.INVERSION_GAP_PARA));
 	}
-	
+
 	/**
 	 * Gets the booked position para.
 	 *
@@ -197,6 +202,7 @@ public class ConfigUtil {
 				CustomFunctions.getNamedQuery(RCCLConstants.BOOKED_POSITION_PARA),
 				conf.getProperty(RCCLConstants.BOOKED_POSITION_PARA));
 	}
+
 	/**
 	 * Update BookedPositionPara.
 	 *
@@ -207,6 +213,7 @@ public class ConfigUtil {
 				CustomFunctions.getNamedQuery(RCCLConstants.BOOKED_POSITION_PARA),
 				conf.getProperty(RCCLConstants.BOOKED_POSITION_PARA));
 	}
+
 	/**
 	 * Gets the secret managemer name.
 	 *
@@ -277,6 +284,26 @@ public class ConfigUtil {
 		return conf.getProperty("update_currency_gap_para").replace(
 				CustomFunctions.getNamedQuery(RCCLConstants.CURRENCY_GAP_PARA),
 				conf.getProperty(RCCLConstants.CURRENCY_GAP_PARA));
+	}
+
+	/**
+	 * Gets the configured tables.
+	 *
+	 * @return the configured tables
+	 */
+	private static List<String> getConfigTables() {
+		configuredTableList = new ArrayList<String>();
+
+		ConfigUtil configInst = ConfigUtil.getInstance();
+		configuredTableList.add(configInst.getTableName(RCCLConstants.PAUSE_PARA).toLowerCase());
+		configuredTableList.add(configInst.getTableName(RCCLConstants.PRICE_RANGE_PARA).toLowerCase());
+		configuredTableList.add(configInst.getTableName(RCCLConstants.ROLLING_WINDOW).toLowerCase());
+		configuredTableList.add(configInst.getTableName(RCCLConstants.CURRENT_PRICE_PARA).toLowerCase());
+		configuredTableList.add(configInst.getTableName(RCCLConstants.REFUNDABLE_PREMIUM).toLowerCase());
+		configuredTableList.add(configInst.getTableName(RCCLConstants.INVERSION_GAP_PARA).toLowerCase());
+		configuredTableList.add(configInst.getTableName(RCCLConstants.CURRENCY_GAP_PARA).toLowerCase());
+		configuredTableList.add(configInst.getTableName(RCCLConstants.BOOKED_POSITION_PARA).toLowerCase());
+		return configuredTableList;
 	}
 
 }

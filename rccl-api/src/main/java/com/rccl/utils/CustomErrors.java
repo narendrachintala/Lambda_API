@@ -87,6 +87,15 @@ public class CustomErrors {
 		return ResponseUtil.getCustErrorMessage(rBundleUtility.getValue(RCCLConstants.ERROR_TABLE_NAME),
 				RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 	}
+	
+	/** Error invalid table name.
+	 *
+	 * @return the gateway response
+	 */
+	public static GatewayResponse error_invalid_table_name() {
+		return ResponseUtil.getCustErrorMessage(rBundleUtility.getValue(RCCLConstants.ERROR_INVALID_TABLE_NAME),
+				RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
+	}
 
 	/**
 	 * Error locked.

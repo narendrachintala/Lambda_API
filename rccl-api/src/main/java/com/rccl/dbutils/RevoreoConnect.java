@@ -34,8 +34,10 @@ public class RevoreoConnect {
 				_instance = new RevoreoConnect();
 			}
 			synchronized (_instance) {
-				System.out.println("initializing oracle connection");
 				if (_instance.getConnection() == null || _instance.getConnection().isClosed()) {
+					if (_instance.getConnection() != null) {
+						logger.info("is oracle connection closed: " + _instance.getConnection().isClosed());
+					}
 					initializeConn();
 				}
 			}
@@ -48,15 +50,16 @@ public class RevoreoConnect {
 	}
 
 	public static RevoreoConnect initializeConn() {
+		logger.info("initializing oracle connection");
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			System.out.println("Oracle driver loaded");
+			logger.info("Oracle driver loaded");
 			_instance.setConnection(DriverManager.getConnection(
 					"jdbc:oracle:thin:@//edssp-exa.rccl.com:1689/srvc_dss_rptg_edss.rccl.com", "revoreo",
 					"B222330EE3+00D65A"));
-			System.out.println("oracle connection established");
+			logger.info("oracle connection established");
 		} catch (Exception ioe) {
-			System.out.println("Error while establishing oracle connection: " + ioe.getMessage());
+			logger.error("Error while establishing oracle connection: " + ioe.getMessage());
 			try {
 				_instance.getConnection().close();
 			} catch (Exception e) {

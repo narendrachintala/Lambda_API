@@ -54,8 +54,8 @@ public class FilterDataValidator {
 			if (CustomFunctions.isNullOrEmpty(requestData.getTable_name())) {
 				return ResponseUtil.error_table_name();
 			}
-			if (!validateTable(requestData.getTable_name())) {
-				return ResponseUtil.error_table_name();
+			if (!ConfigUtil.configuredTableList.contains(requestData.getTable_name().toLowerCase())) {
+				return ResponseUtil.error_invalid_table_name();
 			}
 
 			if (filter.equalsIgnoreCase(RCCLConstants.METAPRODUCT_F)) {
@@ -72,29 +72,4 @@ public class FilterDataValidator {
 		return null;
 	}
 
-	/**
-	 * Validate table.
-	 *
-	 * @param inputTable the input table
-	 * @return true, if successful
-	 */
-	private boolean validateTable(String inputTable) {
-		List<String> tableList = new ArrayList<String>();
-
-		ConfigUtil configInst = ConfigUtil.getInstance();
-		tableList.add(configInst.getTableName(RCCLConstants.PAUSE_PARA).toLowerCase());
-		tableList.add(configInst.getTableName(RCCLConstants.PRICE_RANGE_PARA).toLowerCase());
-		tableList.add(configInst.getTableName(RCCLConstants.ROLLING_WINDOW).toLowerCase());
-		tableList.add(configInst.getTableName(RCCLConstants.CURRENT_PRICE_PARA).toLowerCase());
-		tableList.add(configInst.getTableName(RCCLConstants.REFUNDABLE_PREMIUM).toLowerCase());
-		tableList.add(configInst.getTableName(RCCLConstants.INVERSION_GAP_PARA).toLowerCase());
-		tableList.add(configInst.getTableName(RCCLConstants.CURRENCY_GAP_PARA).toLowerCase());
-		tableList.add(configInst.getTableName(RCCLConstants.BOOKED_POSITION_PARA).toLowerCase());
-
-		if (tableList.contains(inputTable.toLowerCase())) {
-			return true;
-		}else {
-			return false;
-		}
-	}
 }

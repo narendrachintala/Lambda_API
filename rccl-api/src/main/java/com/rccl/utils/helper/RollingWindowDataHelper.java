@@ -72,7 +72,7 @@ public class RollingWindowDataHelper {
 			}
 			if (request.getUser_id() != null) {
 				queryBuffer.append(RCCLConstants.USER_ID).append(EQUALS);
-				queryBuffer.append(request.getUser_id());
+				queryBuffer.append(RCCLConstants.SINGLE_QUOTE).append(request.getUser_id()).append(RCCLConstants.SINGLE_QUOTE);
 				queryBuffer.append(COMMA);
 			}
 

@@ -3,9 +3,9 @@ Transform: AWS::Serverless-2016-10-31
 Description: |
   rev-pre-api
   RCCl PRE API's for parameter tables
-#Parameters:
-#    Stage:
-#      Type: String
+Parameters:
+    Stage:
+      Type: String
 Globals:
   Function:
     MemorySize: 1024
@@ -21,7 +21,7 @@ Resources:
   ApiGateway:
     Type: AWS::Serverless::Api
     Properties:
-      StageName: dev
+      StageName: !Ref Stage
       #Auth:
       #  DefaultAuthorizer: AWS_IAM
       

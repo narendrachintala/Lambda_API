@@ -74,7 +74,7 @@ public class PriceRangeDataHelper {
 			}
 			if (priceRangeReq.getUser_id() != null) {
 				queryBuffer.append(RCCLConstants.USER_ID).append(EQUALS);
-				queryBuffer.append(priceRangeReq.getUser_id());
+				queryBuffer.append(SINGLE_QUOTE).append(priceRangeReq.getUser_id()).append(SINGLE_QUOTE);
 				queryBuffer.append(COMMA);
 			}
 			queryBuffer = UpdateColumnHelper.updateGenericColumns(queryBuffer);

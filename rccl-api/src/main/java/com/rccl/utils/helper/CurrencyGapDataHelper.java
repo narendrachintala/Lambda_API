@@ -90,7 +90,7 @@ public class CurrencyGapDataHelper {
 			}
 			if (currencyGapReq.getUser_id() != null) {
 				queryBuffer.append(RCCLConstants.USER_ID).append(EQUALS);
-				queryBuffer.append(currencyGapReq.getUser_id());
+				queryBuffer.append(SINGLE_QUOTE).append(currencyGapReq.getUser_id()).append(SINGLE_QUOTE);
 				queryBuffer.append(COMMA);
 			}
 

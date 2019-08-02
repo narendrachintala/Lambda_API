@@ -68,7 +68,7 @@ public class CurrentPriceDataHelper {
 			}
 			if (currentPriceReq.getUser_id() != null) {
 				queryBuffer.append(RCCLConstants.USER_ID).append(EQUALS);
-				queryBuffer.append(currentPriceReq.getUser_id());
+				queryBuffer.append(SINGLE_QUOTE).append(currentPriceReq.getUser_id()).append(SINGLE_QUOTE);
 				queryBuffer.append(COMMA);
 			}
 			queryBuffer = UpdateColumnHelper.updateGenericColumns(queryBuffer);

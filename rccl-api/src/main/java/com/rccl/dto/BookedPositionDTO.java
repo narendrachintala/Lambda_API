@@ -33,7 +33,7 @@ public class BookedPositionDTO {
 	private String category;
 	
 	/** The position. */
-	private Integer position;
+	private Double booked_position;
 	
 	/** The l 1 insert date. */
 	private String l1_insert_date;
@@ -200,24 +200,25 @@ public class BookedPositionDTO {
 		this.category = category;
 	}
 	
-	/**
-	 * Gets the position.
-	 *
-	 * @return the position
-	 */
-	public Integer getPosition() {
-		return position;
-	}
 	
 	/**
-	 * Sets the position.
+	 * Gets the booked position.
 	 *
-	 * @param position the new position
+	 * @return the booked position
 	 */
-	public void setPosition(Integer position) {
-		this.position = position;
+	public Double getBooked_position() {
+		return booked_position;
 	}
-	
+
+	/**
+	 * Sets the booked position.
+	 *
+	 * @param booked_position the new booked position
+	 */
+	public void setBooked_position(Double booked_position) {
+		this.booked_position = booked_position;
+	}
+
 	/**
 	 * Gets the l 1 insert date.
 	 *

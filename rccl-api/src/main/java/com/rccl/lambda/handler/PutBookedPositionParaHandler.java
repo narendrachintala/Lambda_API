@@ -120,7 +120,7 @@ public class PutBookedPositionParaHandler implements RequestHandler<ApiGatewayPr
 	 */
 	public static void main(String args[]) {
 		BookedPosition bookedposition= new BookedPosition();
-		bookedposition.setBooked_position(1);
+		bookedposition.setBooked_position(1.0);
 		
 		ParameterFiltersData parameterFiltersData = new ParameterFiltersData();
 		parameterFiltersData.setMetaproduct("SHORT CARIBBEAN");

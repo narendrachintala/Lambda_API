@@ -13,7 +13,7 @@ public class BookedPosition {
 	private ParameterFiltersData filtersData;	
 	
 	/** The booked position. */
-	private Integer booked_position;
+	private Double booked_position;
 	
 	/** The l 1 insert date. */
 	private Timestamp l1_insert_date;
@@ -43,7 +43,7 @@ public class BookedPosition {
 	 *
 	 * @return the booked position
 	 */
-	public Integer getBooked_position() {
+	public Double getBooked_position() {
 		return booked_position;
 	}
 	
@@ -52,7 +52,7 @@ public class BookedPosition {
 	 *
 	 * @param booked_position the new booked position
 	 */
-	public void setBooked_position(Integer booked_position) {
+	public void setBooked_position(Double booked_position) {
 		this.booked_position = booked_position;
 	}
 	

@@ -42,12 +42,12 @@ public class RollingWindowDataHelper {
 		try {
 			if (request.getFut_forecast() != null) {
 				queryBuffer.append(RCCLConstants.PREV_FORECAST).append(EQUALS);
-				queryBuffer.append(request.getFut_forecast());
+				queryBuffer.append(request.getPrev_forecast());
 				queryBuffer.append(COMMA);
 			}
 			if (request.getPrev_forecast() != null) {
 				queryBuffer.append(RCCLConstants.FUT_FORECAST).append(EQUALS);
-				queryBuffer.append(request.getPrev_forecast());
+				queryBuffer.append(request.getFut_forecast());
 				queryBuffer.append(COMMA);
 			}
 			if (request.getPrice_window() != null) {
@@ -62,12 +62,12 @@ public class RollingWindowDataHelper {
 			}
 			if (request.getFut_demand_window() != null) {
 				queryBuffer.append(RCCLConstants.FUT_DEMAND_WINDOW).append(EQUALS);
-				queryBuffer.append(request.getPrev_forecast());
+				queryBuffer.append(request.getFut_demand_window());
 				queryBuffer.append(COMMA);
 			}
 			if (request.getPrev_demand_window() != null) {
 				queryBuffer.append(RCCLConstants.PREV_DEMAND_WINDOW).append(EQUALS);
-				queryBuffer.append(request.getPrice_window());
+				queryBuffer.append(request.getPrev_demand_window());
 				queryBuffer.append(COMMA);
 			}
 			if (request.getUser_id() != null) {

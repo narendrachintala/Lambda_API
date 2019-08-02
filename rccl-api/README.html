@@ -111,9 +111,7 @@ GRIDS
 
 <div>
 
-<h1>Welcome to AWS Lambda Eclipse Plugin</h1>
-
-<p><strong>Congratulations</strong>! You have created your first AWS Lambda project. So what's next?</p>
+<h1>Welcome to RCCL PRE API Lambda functions</h1>
 
 <hr>
 
@@ -121,12 +119,11 @@ GRIDS
 
 <div>
 
-<h3>Step 1: Implement your function</h3>
+<h3>AWS CLI Command to package SAM template to cloud formation template</h3>
 
-<p>Open up <strong>LambdaFunctionHandler.java</strong> and implement the <strong>handleRequest</strong> method. This method is the entry point for your Lambda function, and it will be invoked by Lambda in response to input from the event sources of your function.</p>
 
 <blockquote>
-  <p><strong>Note:</strong> You can add new classes and additional external dependencies in your project if needed.</p>
+  <p>aws cloudformation package --template-file template.yaml --s3-bucket name_of_bucket --output-template-file packaged-template.yaml --profile=profile_name</p>
 </blockquote>
 
 <hr>
@@ -135,13 +132,9 @@ GRIDS
 
 <div>
 
-<h3>Step 2: Test your function</h3>
+<h3>Deploy package into AWS using Cloud formation template and pass required paraeters</h3>
 
-<p>Open up <strong>LambdaFunctionHandlerTest.java</strong>. Fill in your test logic to validate the input and output of your function handler, and then run it locally as a normal JUnit test.</p>
-
-<blockquote>
-  <p><strong>Note:</strong> The unit test provides a sample JSON input file if you have chosen a predefined event type as your function input. You can modify the JSON file, or create new ones based on it.</p>
-</blockquote>
+<p>aws cloudformation deploy --template-file packaged-template.yaml --stack-name rev-pre-api --parameter-overrides Stage=dev --capabilities CAPABILITY_IAM --profile=profile_name</p>
 
 <hr>
 

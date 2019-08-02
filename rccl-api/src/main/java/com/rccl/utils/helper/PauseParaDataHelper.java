@@ -41,7 +41,6 @@ public class PauseParaDataHelper {
 		String COMMA = RCCLConstants.COMMA;
 		try {
 			if (request.getL1_pause() != null) {
-				System.out.println("request.getL1_pause() = " + request.getL1_pause());
 				queryBuffer.append(RCCLConstants.L1_PAUSE).append(EQUALS);
 				queryBuffer.append(request.getL1_pause());
 				queryBuffer.append(COMMA);
@@ -54,6 +53,11 @@ public class PauseParaDataHelper {
 			if (request.getstop_push_wts() != null) {
 				queryBuffer.append(RCCLConstants.STOP_PUSH_WTS).append(EQUALS);
 				queryBuffer.append(request.getstop_push_wts());
+				queryBuffer.append(COMMA);
+			}
+			if (request.getFiltersData().getUser_id() != null) {
+				queryBuffer.append(RCCLConstants.USER_ID).append(EQUALS);
+				queryBuffer.append(request.getFiltersData().getUser_id());
 				queryBuffer.append(COMMA);
 			}
 			queryBuffer = UpdateColumnHelper.updateGenericColumns(queryBuffer);

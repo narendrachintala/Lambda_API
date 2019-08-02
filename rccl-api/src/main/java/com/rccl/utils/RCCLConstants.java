@@ -63,6 +63,7 @@ public class RCCLConstants {
 	public static final String INVERSION_GAP_PARA = "inversion_gap_para";
 	public static final String CURRENCY_GAP_PARA = "currency_gap_para";
 	public static final String BOOKED_POSITION_PARA = "booked_position_para";
+	public static final String ACCESS_CONTROL_TABLE = "access_control_table";
 
 	/**
 	 * Filters data fields

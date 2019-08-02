@@ -70,6 +70,11 @@ public class RollingWindowDataHelper {
 				queryBuffer.append(request.getPrice_window());
 				queryBuffer.append(COMMA);
 			}
+			if (request.getFiltersData().getUser_id() != null) {
+				queryBuffer.append(RCCLConstants.USER_ID).append(EQUALS);
+				queryBuffer.append(request.getFiltersData().getUser_id());
+				queryBuffer.append(COMMA);
+			}
 
 			queryBuffer = UpdateColumnHelper.updateGenericColumns(queryBuffer);
 			// removing last appended extra ,

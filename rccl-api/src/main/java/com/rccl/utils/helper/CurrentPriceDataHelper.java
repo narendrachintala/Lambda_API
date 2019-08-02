@@ -66,6 +66,11 @@ public class CurrentPriceDataHelper {
 				queryBuffer.append(COMMA);
 
 			}
+			if (currentPriceReq.getFiltersData().getUser_id() != null) {
+				queryBuffer.append(RCCLConstants.USER_ID).append(EQUALS);
+				queryBuffer.append(currentPriceReq.getFiltersData().getUser_id());
+				queryBuffer.append(COMMA);
+			}
 			queryBuffer = UpdateColumnHelper.updateGenericColumns(queryBuffer);
 
 			// removing last appended extra COMMA

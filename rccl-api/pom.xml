@@ -87,18 +87,18 @@
 					<groupId>software.amazon.ion</groupId>
 					<artifactId>ion-java</artifactId>
 				</exclusion>
-				<exclusion>
+				<!-- <exclusion>
 					<groupId>joda-time</groupId>
 					<artifactId>joda-time</artifactId>
-				</exclusion>
+				</exclusion> -->
 				<exclusion>
 					<groupId>com.fasterxml.jackson.dataformat</groupId>
 					<artifactId>jackson-dataformat-cbor</artifactId>
 				</exclusion>
-				<exclusion>
+				<!-- <exclusion>
 					<groupId>org.apache.httpcomponents</groupId>
 					<artifactId>httpclient</artifactId>
-				</exclusion>
+				</exclusion> -->
 			</exclusions>
 		</dependency>
 		<!-- <dependency> <groupId>junit</groupId> <artifactId>junit</artifactId> 

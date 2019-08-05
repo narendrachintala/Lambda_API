@@ -9,6 +9,8 @@ import java.util.concurrent.Executors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.rccl.dto.SecretManagerDTO;
+
 /**
  * The Class RevoreoConnect.
  */
@@ -54,9 +56,12 @@ public class RevoreoConnect {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			logger.info("Oracle driver loaded");
-			_instance.setConnection(DriverManager.getConnection(
-					"jdbc:oracle:thin:@//edssp-exa.rccl.com:1689/srvc_dss_rptg_edss.rccl.com", "revoreo",
-					"B222330EE3+00D65A"));
+			SecretManagerDTO secretManager = GetSecretValue.getSecret();
+			_instance
+					.setConnection(DriverManager.getConnection(
+							"jdbc:oracle:thin:@//" + secretManager.getHost() + ":" + secretManager.getPort() + "/"
+									+ secretManager.getDbname(),
+							secretManager.getUsername(), secretManager.getPassword()));
 			logger.info("oracle connection established");
 		} catch (Exception ioe) {
 			logger.error("Error while establishing oracle connection: " + ioe.getMessage());

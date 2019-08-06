@@ -27,7 +27,7 @@ public class UpdateColumnHelper {
 			// update l1_insert_date with current time stamp
 			queryBuffer.append(RCCLConstants.L1_INSERT_DATE).append(RCCLConstants.EQUALS);
 			queryBuffer.append(RCCLConstants.SINGLE_QUOTE).append(CustomFunctions.getCurrentDate())
-					.append(RCCLConstants.SINGLE_QUOTE);//.append(RCCLConstants.COMMA)
+					.append(RCCLConstants.SINGLE_QUOTE).append(RCCLConstants.COMMA);
 
 			// update user_id from lambda context. user_id will be set in the handler
 			/*

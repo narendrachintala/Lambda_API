@@ -50,15 +50,15 @@ public class GetSecretValue {
 		try {
 			getSecretValueResult = client.getSecretValue(getSecretValueRequest);
 		} catch (ResourceNotFoundException e) {
-			System.out.println("The requested secret " + secretName + " was not found");
+			logger.error("The requested secret " + secretName + " was not found");
 		} catch (InvalidRequestException e) {
-			System.out.println("The request was invalid due to: " + e.getMessage());
+			logger.error("The request was invalid due to: " + e.getMessage());
 		} catch (InvalidParameterException e) {
-			System.out.println("The request had invalid params: " + e.getMessage());
+			logger.error("The request had invalid params: " + e.getMessage());
 		}
 		
 		if (getSecretValueResult == null) {
-			System.out.println("getSecretValueResult is " + getSecretValueResult);
+			logger.warn("getSecretValueResult is " + getSecretValueResult);
 			return null;
 		}
 

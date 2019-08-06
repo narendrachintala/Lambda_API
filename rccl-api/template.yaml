@@ -4,8 +4,11 @@ Description: |
   rev-pre-api
   RCCl PRE API's for parameter tables
 Parameters:
-    Stage:
-      Type: String
+     Stage:
+        Type: String
+     FunctionNamePrefix:
+        Type: String
+     
 Globals:
   Function:
     MemorySize: 1024
@@ -28,6 +31,7 @@ Resources:
   POSTMetaProductsFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-PostMetaProducts"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.FiltersDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
@@ -42,6 +46,7 @@ Resources:
   POSTProductCodesFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-POSTProductCodes"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.FiltersDataHandler::getProductCodes
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
@@ -56,6 +61,7 @@ Resources:
   POSTShipCodesFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-POSTShipCodes"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.FiltersDataHandler::getShipCodes
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
@@ -70,6 +76,7 @@ Resources:
   POSTSailMonthsFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-POSTSailMonths"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.FiltersDataHandler::getSailMonths
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
@@ -84,6 +91,7 @@ Resources:
   POSTCatClassesFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-POSTCatClasses"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.FiltersDataHandler::getCatClasses
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
@@ -98,6 +106,7 @@ Resources:
   POSTCategoriesFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-POSTCategories"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.FiltersDataHandler::getCategories
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
@@ -112,10 +121,16 @@ Resources:
   POSTOccupancyFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-POSTOccupancy"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.FiltersDataHandler::getOccupancy
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
         PostEvent:
           Type: Api
           Properties:
@@ -125,10 +140,16 @@ Resources:
   POSTPriceRangeFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-POSTPriceRange"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.GetPriceRangeDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
         PostEvent:
           Type: Api
           Properties:
@@ -138,10 +159,16 @@ Resources:
   POSTPauseParaFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-POSTPausePara"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.GetPauseParaDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
         PostEvent:
           Type: Api
           Properties:
@@ -151,6 +178,7 @@ Resources:
   POSTRollingWindowFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-POSTRollingWindow"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.GetRollingWindowHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
@@ -164,6 +192,7 @@ Resources:
   POSTRefundablePremiumFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-POSTRefundablePremium"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.GetRefundablePremiumHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
@@ -177,6 +206,7 @@ Resources:
   POSTInversionGapsFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-POSTInversionGaps"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.GetInversionGapsParaDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
@@ -190,6 +220,7 @@ Resources:
   POSTCurrentPriceFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-POSTCurrentPrice"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.GetCurrentPriceDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
@@ -203,6 +234,7 @@ Resources:
   POSTBookedPositionFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-POSTBookedPosition"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.GetBookedPositionParaHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
@@ -216,6 +248,7 @@ Resources:
   POSTCurrencyGapFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-POSTCurrencyGap"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.GetCurrencyGapDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
@@ -230,11 +263,17 @@ Resources:
   PUTPriceRangeFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-PUTPriceRange"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.PutPriceRangeDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
-        PostEvent:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
+        PutEvent:
           Type: Api
           Properties:
             RestApiId: !Ref "ApiGateway"
@@ -243,11 +282,17 @@ Resources:
   PUTPauseParaFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-PUTPausePara"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.PutPauseParaDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
-        PostEvent:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
+        PutEvent:
           Type: Api
           Properties:
             RestApiId: !Ref "ApiGateway"
@@ -256,11 +301,12 @@ Resources:
   PUTRollingWindowFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-PUTRollingWindow"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.PutRollingWindowDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
-        PostEvent:
+        PutEvent:
           Type: Api
           Properties:
             RestApiId: !Ref "ApiGateway"
@@ -269,11 +315,12 @@ Resources:
   PUTRefundablePremiumFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-PUTRefundablePremium"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.PutRefundablePremiumDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
-        PostEvent:
+        PutEvent:
           Type: Api
           Properties:
             RestApiId: !Ref "ApiGateway"
@@ -282,11 +329,12 @@ Resources:
   PUTInversionGapsFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-PUTInversionGaps"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.PutInversionGapsParaDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
-        PostEvent:
+        PutEvent:
           Type: Api
           Properties:
             RestApiId: !Ref "ApiGateway"
@@ -295,11 +343,12 @@ Resources:
   PUTCurrentPriceFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-PUTCurrentPrice"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.PutCurrentPriceDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
-        PostEvent:
+        PutEvent:
           Type: Api
           Properties:
             RestApiId: !Ref "ApiGateway"
@@ -308,11 +357,12 @@ Resources:
   PUTBookedPositionFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-PUTBookedPosition"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.PutBookedPositionParaHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
-        PostEvent:
+        PutEvent:
           Type: Api
           Properties:
             RestApiId: !Ref "ApiGateway"
@@ -321,11 +371,12 @@ Resources:
   PUTCurrencyGapFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-PUTCurrencyGap"
       CodeUri: .\target\rccl-pre-api-1.0.0.jar
       Handler: com.rccl.lambda.handler.PutCurrencyGapDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
-        PostEvent:
+        PutEvent:
           Type: Api
           Properties:
             RestApiId: !Ref "ApiGateway"

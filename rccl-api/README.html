@@ -115,6 +115,8 @@ GRIDS
 
 <hr>
 
+<p><b>Prerequisite to deploy the application: </b> AWS CLI, NodeJS, SAM CLI softwares</p>
+
 </div>
 
 <div>
@@ -134,61 +136,10 @@ GRIDS
 
 <h3>Deploy package into AWS using Cloud formation template and pass required paraeters</h3>
 
-<p>aws cloudformation deploy --template-file packaged-template.yaml --stack-name rev-pre-api --parameter-overrides Stage=dev --capabilities CAPABILITY_IAM --profile=profile_name</p>
+<p>aws cloudformation deploy --template-file packaged-template.yaml --stack-name rev-pre-api --parameter-overrides Stage=dev FunctionNamePrefix=rev-pre-api --capabilities CAPABILITY_IAM --profile=profile_name</p>
 
 <hr>
 
 </div>
 
-<div>
-
-<h3>Step 3: Upload your function</h3>
-
-<p>
-Under Project or Package Explorer View, right-click on your project and select <strong>Amazon Web Services -&gt; Upload Function to AWS Lambda</strong>.
-Then follow the steps to create a new Lambda function or upload your code to an existing function.
-</p>
-</ul>
-
-<hr>
-
-</div>
-
-<div>
-
-<h3>Step 4: Invoke your function</h3>
-
-<p>Now we are ready to run the function in the cloud. Right-click on your project again and select <strong>Amazon Web Services -&gt; Run on AWS Lambda</strong>. <br>
-In the input dialog, enter the JSON input for your function, or select one of the JSON files in your project.</p>
-
-<blockquote>
-  <p><strong>Tip:</strong> You can add new JSON input files in your project, and they will show up in this dialog as long as the file name ends with ".json".</p>
-</blockquote>
-
-<p>Click <strong>Invoke</strong> and check the output of your function in the Eclipse Console View.</p>
-
-<hr>
-
-</div>
-
-<div>
-
-<h3>What's next?</h3>
-
-<p>If you want to know more about AWS Lambda, check out the following links:</p>
-
-<ul>
-<li><a href="http://aws.amazon.com/lambda/details/">AWS Lambda Product Details</a></li>
-<li><a href="http://docs.aws.amazon.com/lambda/latest/dg/welcome.html">AWS Lambda Developer Guide</a></li>
-</ul>
-
-<p><a href="mailto:aws-eclipse-feedback@amazon.com">Contact us</a> to send bug reports and feedbacks.</p>
-
-<p><strong><em>AWS SDK for Java team</em></strong></p>
-
-</div>
-
-</div>
-
-</div>
 </html>

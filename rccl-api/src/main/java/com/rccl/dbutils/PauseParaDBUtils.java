@@ -80,12 +80,10 @@ public class PauseParaDBUtils {
 		StringBuffer updateBuffer = new StringBuffer();
 		try {
 			updatePauseParaQuery = new String(configInst.updatePauseParaData());
-			System.out.println("reading query from config:" + updatePauseParaQuery);
-			 logger.debug("reading query from config:" + updatePauseParaQuery);
+			logger.debug("reading query from config:" + updatePauseParaQuery);
 			FilterDataHelper filterDataHelper = new FilterDataHelper();
 			String finalWhereCondition = filterDataHelper.generateFilterCondition(request.getFiltersData(),
 					queryBuffer);
-			System.out.println("generated where clause:" + finalWhereCondition);
 			PauseParaDataHelper PauseParaDataHelper = new PauseParaDataHelper();
 			String finalUpdateCondition = PauseParaDataHelper.generateSetterCondition(request, updateBuffer);
 			if (finalWhereCondition.equals("")) {
@@ -95,7 +93,6 @@ public class PauseParaDBUtils {
 						finalWhereCondition);
 			}
 			updatePauseParaQuery = updatePauseParaQuery.replace(RCCLConstants.SETTER_COLUMNS_Q, finalUpdateCondition);
-			System.out.println("modified query:" + updatePauseParaQuery);
 			logger.debug("Final query for POST API rolling window:" +
 			 updatePauseParaQuery);
 		} catch (Exception e) {

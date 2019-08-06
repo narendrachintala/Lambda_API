@@ -48,7 +48,6 @@ public class RollingWindowDBUtil {
 		StringBuffer queryBuffer = new StringBuffer();
 		String getRollingWindowQuery = new String(configInst.getRollingWindowData());
 		try {
-			System.out.println("reading query from config:" + getRollingWindowQuery);
 			logger.debug("reading query from config:" + getRollingWindowQuery);
 			FilterDataHelper filterDataHelper = new FilterDataHelper();
 			String whereCondition = filterDataHelper.generateFilterCondition(request, queryBuffer);

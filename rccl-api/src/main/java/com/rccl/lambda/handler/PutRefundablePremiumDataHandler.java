@@ -29,21 +29,21 @@ import com.rccl.utils.ResponseUtil;
  */
 public class PutRefundablePremiumDataHandler
 		implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
+	
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(PutRefundablePremiumDataHandler.class);
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
 		ExecutorService executorService = Executors.newSingleThreadExecutor();
 		executorService.execute(new Runnable() {
 			public void run() {
-				System.out.println("executing run method to establish connection.");
+				logger.info("executing run method to establish connection.");
 				RevoreoConnect.getInstance().getConnection();
 			}
 		});
 		executorService.shutdown();
 	}
-
-	// Initialize the Log4j logger.
-	static final Logger logger = LogManager.getLogger(PutRefundablePremiumDataHandler.class);
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
@@ -111,7 +111,7 @@ public class PutRefundablePremiumDataHandler
 		Gson gson = new Gson();
 		String json = gson.toJson(response);
 
-		System.out.println("Response:" + json);
+		logger.info("Response:" + json);
 		return response;
 	}
 
@@ -140,7 +140,7 @@ public class PutRefundablePremiumDataHandler
 		Gson gson = new Gson();
 		String json = gson.toJson(refundablePremium);
 
-		System.out.println("Sample Input data:" + json);
+		logger.info("Sample Input data:" + json);
 
 		new PutRefundablePremiumDataHandler().handleRequest(null,
 				new Context() {

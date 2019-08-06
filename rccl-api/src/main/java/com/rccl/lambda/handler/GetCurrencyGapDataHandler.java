@@ -29,20 +29,20 @@ import com.rccl.utils.ResponseUtil;
  */
 public class GetCurrencyGapDataHandler implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(GetCurrencyGapDataHandler.class);
+		
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
 		ExecutorService executorService = Executors.newSingleThreadExecutor();
 		executorService.execute(new Runnable() {
 			public void run() {
-				System.out.println("executing run method to establish connection.");
+				logger.info("executing run method to establish connection.");
 				RevoreoConnect.getInstance().getConnection();
 			}
 		});
 		executorService.shutdown();
 	}
-
-	// Initialize the Log4j logger.
-	static final Logger logger = LogManager.getLogger(GetCurrencyGapDataHandler.class);
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
@@ -108,8 +108,6 @@ public class GetCurrencyGapDataHandler implements RequestHandler<ApiGatewayProxy
 			logger.error("Error occured while executing GetCurrencyGapDataHandler: " + e.getMessage());
 			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
-		// System.out.println(new
-		// GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
 
 	}
@@ -120,13 +118,6 @@ public class GetCurrencyGapDataHandler implements RequestHandler<ApiGatewayProxy
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-
-		/*
-		 * ParameterFiltersData data = new ParameterFiltersData();
-		 * data.setMetaproduct("OASIS"); System.out.println(new
-		 * GsonBuilder().serializeNulls().create().toJson(data)); System.exit(0);
-		 */
-
 		ParameterFiltersData currencyGapdata = new ParameterFiltersData();
 		currencyGapdata.setMetaproduct("OASIS");
 		currencyGapdata.setProduct_code("7N CARIBBEAN");
@@ -138,8 +129,6 @@ public class GetCurrencyGapDataHandler implements RequestHandler<ApiGatewayProxy
 
 		GatewayResponse rcode = new GetCurrencyGapDataHandler().handleRequest(null,
 				null);
-		System.out.println(new GsonBuilder().serializeNulls().create().toJson(rcode));
-		System.out.println(rcode.getStatusCode());
-		System.out.println(rcode.getBody());
+		logger.info(new GsonBuilder().serializeNulls().create().toJson(rcode));
 	}
 }

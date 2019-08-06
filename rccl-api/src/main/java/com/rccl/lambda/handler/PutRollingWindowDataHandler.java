@@ -29,22 +29,22 @@ import com.rccl.utils.ResponseUtil;
  * The Class PostRollingWindowDataHandler.
  */
 public class PutRollingWindowDataHandler implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
+	
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(PutRollingWindowDataHandler.class);
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
 		ExecutorService executorService = Executors.newSingleThreadExecutor();
 		executorService.execute(new Runnable() {
 			public void run() {
-				System.out.println("executing run method to establish connection.");
+				logger.info("executing run method to establish connection.");
 				RevoreoConnect.getInstance().getConnection();
 			}
 		});
 		executorService.shutdown();
 	}
 
-	// Initialize the Log4j logger.
-	static final Logger logger = LogManager.getLogger(PutRollingWindowDataHandler.class);
-	
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 	
@@ -105,7 +105,7 @@ public class PutRollingWindowDataHandler implements RequestHandler<ApiGatewayPro
 			return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST,RCCLConstants.REQUEST_ID);
 
 		}
-		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
+		logger.info(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
 	}
 	
@@ -135,7 +135,7 @@ public class PutRollingWindowDataHandler implements RequestHandler<ApiGatewayPro
 		Gson gson = new Gson();
 		String json = gson.toJson(roWindow);
 		
-		System.out.println("Sample Input data:" + json);
+		logger.info("Sample Input data:" + json);
 		
 		new PutRollingWindowDataHandler().handleRequest(null, new Context() {
 			

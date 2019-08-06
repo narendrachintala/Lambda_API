@@ -29,29 +29,27 @@ import com.rccl.utils.ResponseUtil;
 /**
  * The Class GetPriceRangeDataHandler.
  */
+public class GetPriceRangeDataHandler implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
 
-public class GetPriceRangeDataHandler
-		implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
+	/** The Constant logger. */
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(GetPriceRangeDataHandler.class);
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
 		ExecutorService executorService = Executors.newSingleThreadExecutor();
 		executorService.execute(new Runnable() {
 			public void run() {
-				System.out.println("executing run method to establish connection.");
+				logger.info("executing run method to establish connection.");
 				RevoreoConnect.getInstance().getConnection();
 			}
 		});
 		executorService.shutdown();
 	}
 
-	/** The Constant logger. */
-	// Initialize the Log4j logger.
-	static final Logger logger = LogManager.getLogger(GetPriceRangeDataHandler.class);
-
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
-	
+
 	/** The instance. */
 	// creating instance of class
 	public static GetPriceRangeDataHandler _instance = null;
@@ -67,7 +65,6 @@ public class GetPriceRangeDataHandler
 		}
 		return _instance;
 	}
-
 
 	/**
 	 * This method will be invoked from AWS Lambda function to fetch price range
@@ -91,7 +88,7 @@ public class GetPriceRangeDataHandler
 		GatewayResponse response = null;
 
 		try {
-			
+
 			ParameterFiltersData request = new Gson().fromJson(req.getBody(), ParameterFiltersData.class);
 			logger.info("Input: " + request.toString());
 			// validating request data
@@ -106,8 +103,8 @@ public class GetPriceRangeDataHandler
 							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
 							RCCLConstants.REQUEST_ID);
 				} else {
-					response = new GatewayResponse(priceRangeList, ResponseUtil.getHeaders(),
-							RCCLConstants.SC_OK, RCCLConstants.REQUEST_ID);
+					response = new GatewayResponse(priceRangeList, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
 				}
 			}
 
@@ -117,22 +114,5 @@ public class GetPriceRangeDataHandler
 			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
 		return response;
-
-	}
-
-	/**
-	 * The main method will be used for testing with sample data.
-	 * 
-	 * @param args the arguments
-	 */
-	public static void main(String[] args) {
-
-		/*
-		 * ParameterFiltersData data = new ParameterFiltersData();
-		 * data.setMetaproduct("OASIS"); System.out.println(new
-		 * GsonBuilder().serializeNulls().create().toJson(data)); System.exit(0);
-		 */
-
-		//new GetPriceRangeDataHandler().handleRequest(FiltersData.getRequestData(), null);
 	}
 }

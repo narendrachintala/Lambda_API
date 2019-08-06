@@ -30,21 +30,23 @@ import com.rccl.utils.ResponseUtil;
  */
 public class PutInversionGapsParaDataHandler
 		implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
+	
+	/** The Constant logger. */
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(PutInversionGapsParaDataHandler.class);
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
 		ExecutorService executorService = Executors.newSingleThreadExecutor();
 		executorService.execute(new Runnable() {
 			public void run() {
-				System.out.println("executing run method to establish connection.");
+				logger.info("executing run method to establish connection.");
 				RevoreoConnect.getInstance().getConnection();
 			}
 		});
 		executorService.shutdown();
 	}
-	/** The Constant logger. */
-	// Initialize the Log4j logger.
-	static final Logger logger = LogManager.getLogger(PutInversionGapsParaDataHandler.class);
+	
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 	
@@ -111,7 +113,7 @@ public class PutInversionGapsParaDataHandler
 			logger.error("Error occured while executing PutInversionGapsParaDataHandler: " + e);
 			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
-		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
+		logger.info(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
 	}
 
@@ -146,7 +148,7 @@ public class PutInversionGapsParaDataHandler
 		Gson gson = new Gson();
 		String json = gson.toJson(inversionGapPara);
 
-		System.out.println("Sample Input data:" + json);
+		logger.info("Sample Input data:" + json);
 		new PutInversionGapsParaDataHandler().handleRequest(null, 
 				new Context() {
 

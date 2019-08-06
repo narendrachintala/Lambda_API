@@ -44,13 +44,4 @@ public class CustomFunctions {
 		return formattedTimeStamp;
 	}
 
-	/**
-	 * The main method.
-	 *
-	 * @param args the arguments
-	 */
-	public static void main(String[] args) {
-		System.out.println(getCurrentDate());
-	}
-
 }

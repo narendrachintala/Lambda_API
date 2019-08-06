@@ -81,7 +81,7 @@ public class PriceRangeDataHelper {
 			// removing last appended extra COMMA
 			queryBuffer.replace(queryBuffer.lastIndexOf(COMMA), queryBuffer.length(), "");
 
-			System.out.println("queryBuffer.toString(): " + queryBuffer.toString());
+			logger.info("queryBuffer.toString(): " + queryBuffer.toString());
 		} catch (Exception e) {
 			logger.error(e);
 			throw e;

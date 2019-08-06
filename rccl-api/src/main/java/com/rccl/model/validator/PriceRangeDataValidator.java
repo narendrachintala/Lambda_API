@@ -92,7 +92,7 @@ public class PriceRangeDataValidator {
 			if (lockStatus.equalsIgnoreCase(RCCLConstants.LOCKED_CTRL_TBL_STS_FLAG)) {
 				return ResponseUtil.error_locked();
 			} else {
-				System.out.println("lock is disabled");
+				logger.info("lock is disabled");
 			}
 		} catch (Exception e) {
 			logger.error(e);

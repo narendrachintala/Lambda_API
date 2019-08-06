@@ -58,7 +58,7 @@ public class BookedPositionDataHelper {
 			logger.error(e);
 			throw e;
 		}
-		System.out.println("QueryBuffer " + queryBuffer.toString());
+		logger.info("QueryBuffer " + queryBuffer.toString());
 		return queryBuffer.toString();
 	}
 }

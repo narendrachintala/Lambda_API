@@ -61,7 +61,7 @@ public class RefundablePremiumDataValidator {
 			}
 			request.setGap_type(request.getGap_type().toUpperCase());
 			String lockStatus = accessControlRepo.getLockStatus(jobName);
-			System.out.println("lockStatus:" + lockStatus);
+			logger.info("lockStatus:" + lockStatus);
 			if (lockStatus.equalsIgnoreCase(RCCLConstants.LOCKED_CTRL_TBL_STS_FLAG)) {
 				return ResponseUtil.error_locked();
 			}

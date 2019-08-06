@@ -54,7 +54,7 @@ public class BookPositionDataValidator {
 				return ResponseUtil.error_update_fields();
 			}
 			String lockStatus = accessControlRepo.getLockStatus(jobName);
-			System.out.println("lockStatus:" + lockStatus);
+			logger.info("lockStatus:" + lockStatus);
 			if (lockStatus.equalsIgnoreCase(RCCLConstants.LOCKED_CTRL_TBL_STS_FLAG)) {
 				return ResponseUtil.error_locked();
 			}

@@ -262,10 +262,6 @@ public class ConfigUtil {
 		return conf.getProperty(key);
 	}
 
-	public static void main(String[] args) {
-		System.out.println(getInstance().getPriceRangeData());
-	}
-
 	/**
 	 * Gets the currency gap data.
 	 *

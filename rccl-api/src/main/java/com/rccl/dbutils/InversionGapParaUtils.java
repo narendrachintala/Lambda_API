@@ -78,8 +78,7 @@ public class InversionGapParaUtils {
 		String updateInversionGapsParaQuery = null;
 		try {
 			updateInversionGapsParaQuery = new String(configInst.updateInversionGapsPara());
-			System.out.println("reading query from config:" + updateInversionGapsParaQuery);
-			 //logger.debug("reading query from config:" + updateInversionGapsParaQuery);
+			logger.debug("reading query from config:" + updateInversionGapsParaQuery);
 			FilterDataHelper filterDataHelper = new FilterDataHelper();
 			String finalWhereCondition = filterDataHelper.generateFilterCondition(request.getFiltersData(),
 					queryBuffer);
@@ -94,7 +93,6 @@ public class InversionGapParaUtils {
 			}
 			updateInversionGapsParaQuery = updateInversionGapsParaQuery.replace(RCCLConstants.SETTER_COLUMNS_Q,
 					finalUpdateCondition);
-			System.out.println("modified query:" + updateInversionGapsParaQuery);
 			logger.debug("Final query for POST API InversionGapsPara:" +
 			 updateInversionGapsParaQuery);
 

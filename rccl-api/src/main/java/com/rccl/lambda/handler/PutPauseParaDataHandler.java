@@ -28,22 +28,22 @@ import com.rccl.utils.ResponseUtil;
  * The Class PutPauseParaDataHandler.
  */
 public class PutPauseParaDataHandler implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
+	
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(PutPauseParaDataHandler.class);
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
 		ExecutorService executorService = Executors.newSingleThreadExecutor();
 		executorService.execute(new Runnable() {
 			public void run() {
-				System.out.println("executing run method to establish connection.");
+				logger.info("executing run method to establish connection.");
 				RevoreoConnect.getInstance().getConnection();
 			}
 		});
 		executorService.shutdown();
 	}
 
-	// Initialize the Log4j logger.
-	static final Logger logger = LogManager.getLogger(PutPauseParaDataHandler.class);
-	
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
 	
@@ -103,10 +103,10 @@ public class PutPauseParaDataHandler implements RequestHandler<ApiGatewayProxyRe
 			 logger.error("Error occured while executing PauseParaDataHandler: " + ex.getMessage());
 			 return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST,RCCLConstants.REQUEST_ID);
 		}
-		System.out.println("value of update():" + update);
+		logger.info("value of update():" + update);
 		Gson gson = new Gson();
 		String json = gson.toJson(response);
-		System.out.println("response ="+json);
+		logger.info("response ="+json);
 		return response;
 	}
 
@@ -132,7 +132,7 @@ public class PutPauseParaDataHandler implements RequestHandler<ApiGatewayProxyRe
 		Gson gson = new Gson();
 		String json = gson.toJson(pausePara);
 
-		System.out.println("Sample Input data:" + json);
+		logger.info("Sample Input data:" + json);
 
 		new PutPauseParaDataHandler().handleRequest(null
 				,new Context() {

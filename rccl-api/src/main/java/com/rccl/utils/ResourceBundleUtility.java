@@ -45,13 +45,4 @@ public class ResourceBundleUtility {
 	public String getValue(String key) {
 		return conf.getProperty(key);
 	}
-
-	/**
-	 * The main method.
-	 *
-	 * @param args the arguments
-	 */
-	public static void main(String[] args) {
-		System.out.println(ResourceBundleUtility.getInstance().getValue(RCCLConstants.ERROR_METAPRODUCT));
-	}
 }

@@ -44,7 +44,6 @@ public class RefundablePremiumDBUtil {
 		StringBuffer queryBuffer = new StringBuffer();
 		String getRefundablePremiumQuery = new String(configInst.getRefundablePremiumData());
 		try {
-			System.out.println("reading query from config:" + getRefundablePremiumQuery);
 			logger.debug("reading query from config:" + getRefundablePremiumQuery);
 			FilterDataHelper filterDataHelper = new FilterDataHelper();
 			String whereCondition = filterDataHelper.generateFilterCondition(request, queryBuffer);
@@ -54,7 +53,6 @@ public class RefundablePremiumDBUtil {
 				getRefundablePremiumQuery = getRefundablePremiumQuery.replace(RCCLConstants.WHERE_CONDITION_Q,
 						whereCondition);
 			}
-			System.out.println("Final query for GET API refundable premium:" + getRefundablePremiumQuery);
 			logger.debug("Final query for GET API refundable premium:" + getRefundablePremiumQuery);
 		} catch (Exception e) {
 			logger.error("Error occured in getRefundablePremiumQuery: " + e);

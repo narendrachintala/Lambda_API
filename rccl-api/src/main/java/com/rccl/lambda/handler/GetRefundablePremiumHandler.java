@@ -30,21 +30,21 @@ import com.rccl.utils.ResponseUtil;
  */
 public class GetRefundablePremiumHandler
 		implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
+	
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(GetRefundablePremiumHandler.class);
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
 		ExecutorService executorService = Executors.newSingleThreadExecutor();
 		executorService.execute(new Runnable() {
 			public void run() {
-				System.out.println("executing run method to establish connection.");
+				logger.info("executing run method to establish connection.");
 				RevoreoConnect.getInstance().getConnection();
 			}
 		});
 		executorService.shutdown();
 	}
-
-	// Initialize the Log4j logger.
-	static final Logger logger = LogManager.getLogger(GetRefundablePremiumHandler.class);
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
@@ -107,7 +107,7 @@ public class GetRefundablePremiumHandler
 			response = new GatewayResponse(ex.getLocalizedMessage(), ResponseUtil.getHeaders(),
 					RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
-		System.out.println(new GsonBuilder().serializeNulls().create().toJson(response));
+		logger.info(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
 	}
 

@@ -28,21 +28,21 @@ import com.rccl.utils.ResponseUtil;
  */
 public class GetCurrentPriceDataHandler
 		implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
+	
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(GetCurrentPriceDataHandler.class);
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
 		ExecutorService executorService = Executors.newSingleThreadExecutor();
 		executorService.execute(new Runnable() {
 			public void run() {
-				System.out.println("executing run method to establish connection.");
+				logger.info("executing run method to establish connection.");
 				RevoreoConnect.getInstance().getConnection();
 			}
 		});
 		executorService.shutdown();
 	}
-
-	// Initialize the Log4j logger.
-	static final Logger logger = LogManager.getLogger(GetCurrentPriceDataHandler.class);
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
@@ -110,8 +110,6 @@ public class GetCurrentPriceDataHandler
 			logger.error("Error occured while executing GetCurrentPriceDataHandler: " + e.getMessage());
 			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
-		// System.out.println(new
-		// GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
 
 	}
@@ -122,12 +120,6 @@ public class GetCurrentPriceDataHandler
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-
-		/*
-		 * ParameterFiltersData data = new ParameterFiltersData();
-		 * data.setMetaproduct("OASIS"); System.out.println(new
-		 * GsonBuilder().serializeNulls().create().toJson(data)); System.exit(0);
-		 */
 
 		ParameterFiltersData currentPricedata = new ParameterFiltersData();
 		currentPricedata.setMetaproduct("OASIS");
@@ -140,8 +132,6 @@ public class GetCurrentPriceDataHandler
 
 		GatewayResponse rcode = new GetCurrentPriceDataHandler().handleRequest(null,
 				null);
-		System.out.println(new GsonBuilder().serializeNulls().create().toJson(rcode));
-		System.out.println(rcode.getStatusCode());
-		System.out.println(rcode.getBody());
+		logger.info(new GsonBuilder().serializeNulls().create().toJson(rcode));
 	}
 }

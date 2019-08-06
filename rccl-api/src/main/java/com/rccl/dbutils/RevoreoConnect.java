@@ -68,7 +68,7 @@ public class RevoreoConnect {
 			try {
 				_instance.getConnection().close();
 			} catch (Exception e) {
-				System.out.println("Error in closing oracle connection: " + e.getMessage());
+				logger.error("Error in closing oracle connection: " + e.getMessage());
 			}
 			_instance = null;
 		}
@@ -82,11 +82,11 @@ public class RevoreoConnect {
 	 */
 	public boolean closeConnection() {
 		try {
-			System.out.println("Closing oracle connection");
+			logger.info("Closing oracle connection");
 			getConnection().close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Error in closing oracle connection: " + e.getMessage());
+			logger.error("Error in closing oracle connection: " + e.getMessage());
 
 		}
 		return true;
@@ -114,20 +114,10 @@ public class RevoreoConnect {
 		ExecutorService executorService = Executors.newSingleThreadExecutor();
 		executorService.execute(new Runnable() {
 			public void run() {
-				System.out.println("executing run method to establish connection.");
+				logger.info("executing run method to establish connection.");
 				RevoreoConnect.getInstance().getConnection();
 			}
 		});
 		executorService.shutdown();
 	}
-
-	/**
-	 * The main method.
-	 *
-	 * @param args the arguments
-	 */
-	public static void main(String[] args) {
-		System.out.println(RevoreoConnect.getInstance());
-	}
-
 }

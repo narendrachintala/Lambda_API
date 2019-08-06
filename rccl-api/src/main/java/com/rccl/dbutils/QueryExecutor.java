@@ -56,7 +56,6 @@ public class QueryExecutor {
 			logger.info("executing query : " + query);
 			stmt = con.prepareStatement(query);
 		} catch (SQLException e) {
-			System.out.println(e);
 			logger.error(e);
 			throw new RCCLException("Error while initializing the database connection", e);
 		}
@@ -68,7 +67,6 @@ public class QueryExecutor {
 				resultProcessor.processResult(rs);
 			}
 		} catch (Exception e) {
-			System.out.println(e);
 			logger.error(e);
 			throw new RCCLException("error in querying table", e);
 		} finally {
@@ -83,7 +81,6 @@ public class QueryExecutor {
 				 * if (con != null) { con.close(); }
 				 */
 			} catch (SQLException e) {
-				System.out.println(e);
 				logger.error(e);
 				throw new RCCLException("error in querying table", e);
 			}
@@ -99,8 +96,7 @@ public class QueryExecutor {
 	 * @return the int
 	 */
 	public int executeUpdate(String query, List<String> params) {
-
-		System.out.println("in execute update:" + query);
+		logger.info("in execute update:" + query);
 		Connection con = RevoreoConnect.getInstance().getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;

@@ -15,7 +15,6 @@ import com.rccl.model.CurrencyGapPara;
 import com.rccl.model.GatewayResponse;
 import com.rccl.model.validator.CurrencyGapDataValidator;
 import com.rccl.service.CurrencyGapParaService;
-import com.rccl.testdata.FiltersData;
 import com.rccl.utils.ConfigUtil;
 import com.rccl.utils.RCCLConstants;
 import com.rccl.utils.ResourceBundleUtility;
@@ -28,22 +27,22 @@ import com.rccl.utils.ResponseUtil;
  */
 
 public class PutCurrencyGapDataHandler implements RequestHandler<ApiGatewayProxyRequest, GatewayResponse> {
+	
+	/** The Constant logger. */
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(PutCurrencyGapDataHandler.class);
 
 	static {
 		System.setProperty("log4j.configurationFile", "log4j2.xml");
 		ExecutorService executorService = Executors.newSingleThreadExecutor();
 		executorService.execute(new Runnable() {
 			public void run() {
-				System.out.println("executing run method to establish connection.");
+				logger.info("executing run method to establish connection.");
 				RevoreoConnect.getInstance().getConnection();
 			}
 		});
 		executorService.shutdown();
 	}
-
-	/** The Constant logger. */
-	// Initialize the Log4j logger.
-	static final Logger logger = LogManager.getLogger(PutCurrencyGapDataHandler.class);
 
 	// Read error messages from property file
 	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
@@ -117,27 +116,5 @@ public class PutCurrencyGapDataHandler implements RequestHandler<ApiGatewayProxy
 			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
 		return response;
-	}
-
-	/**
-	 * The main method.
-	 *
-	 * @param args the arguments
-	 */
-	public static void main(String[] args) {
-
-		CurrencyGapPara currentPriceReq = new CurrencyGapPara();
-
-		currentPriceReq.setFiltersData(FiltersData.getParamRequestData());
-		currentPriceReq.setCurrency3("");
-		//currentPriceReq.setGap3(0.1);
-		ResponseUtil.getInstance();
-		// System.out.println(new GsonBuilder().serializeNulls().create()
-		// .toJson(new GatewayResponse<Boolean>(true, ResponseUtil.getHeaders(),
-		// RCCLConstants.SC_OK)));
-		// System.exit(0);
-
-		
-
 	}
 }

@@ -50,7 +50,6 @@ public class BookedPositionDBUtil {
 		StringBuffer queryBuffer = new StringBuffer();
 		String getBookedPositionQuery = new String(configInst.getBookedPositionPara());
 		try {
-			System.out.println("reading query from config:" + getBookedPositionQuery);
 			logger.debug("reading query from config:" + getBookedPositionQuery);
 			FilterDataHelper filterDataHelper = new FilterDataHelper();
 			String whereCondition = filterDataHelper.generateFilterCondition(request, queryBuffer);
@@ -76,7 +75,6 @@ public class BookedPositionDBUtil {
 		String updateBookedPositionQuery = null;
 		try {
 			updateBookedPositionQuery = new String(configInst.updateBookedPositionPara());
-			System.out.println("reading query from config:" + updateBookedPositionQuery);
 			logger.debug("reading query from config:" + updateBookedPositionQuery);
 			FilterDataHelper filterDataHelper = new FilterDataHelper();
 			String finalWhereCondition = filterDataHelper.generateFilterCondition(request.getFiltersData(),

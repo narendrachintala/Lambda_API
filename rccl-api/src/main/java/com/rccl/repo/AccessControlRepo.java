@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.rccl.dbutils.RevoreoConnect;
 import com.rccl.utils.ConfigUtil;
 import com.rccl.utils.RCCLConstants;
@@ -14,6 +17,9 @@ import com.rccl.utils.helper.RCCLException;
  * The Class AccessControlRepo.
  */
 public class AccessControlRepo {
+	
+	// Initialize the Log4j logger.
+	static final Logger logger = LogManager.getLogger(AccessControlRepo.class);
 	
 	/**
 	 * Gets the lock status.
@@ -28,7 +34,7 @@ public class AccessControlRepo {
 		String query = configInst.getLockStatus();
 		
 		String finalQuery = query.replace(":value", SINGLE_QUOTE + jobName + SINGLE_QUOTE);
-		System.out.println("query for access control:" + finalQuery);
+		logger.info("query for access control:" + finalQuery);
 		
 		Connection con = RevoreoConnect.getInstance().getConnection();
 		PreparedStatement stmt = null;

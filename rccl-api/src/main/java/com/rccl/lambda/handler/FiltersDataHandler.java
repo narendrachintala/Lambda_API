@@ -17,6 +17,7 @@ import com.rccl.model.GatewayResponse;
 import com.rccl.model.validator.FilterDataValidator;
 import com.rccl.service.FilterDataService;
 import com.rccl.utils.RCCLConstants;
+import com.rccl.utils.ResourceBundleUtility;
 import com.rccl.utils.ResponseUtil;
 
 /**
@@ -41,7 +42,10 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 		});
 		executorService.shutdown();
 	}
-	
+
+	// Read error messages from property file
+	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+
 	/** The instance. */
 	// creating instance of class
 	public static FiltersDataHandler _instance = null;
@@ -86,8 +90,15 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 			if (response == null) {
 				FilterDataService dataService = FilterDataService.getInstance();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.METAPRODUCT_F);
-				response = new GatewayResponse(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
-						RCCLConstants.REQUEST_ID);
+				
+				if (dataDTO != null && dataDTO.getFilterData() != null && dataDTO.getFilterData().size() == 0) {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
+				} else {
+					response = new GatewayResponse(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getMetaProducts API: " + e.getCause());
@@ -119,8 +130,15 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 			if (response == null) {
 				FilterDataService dataService = FilterDataService.getInstance();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.PRODUCT_CODE_F);
+				
+				if (dataDTO != null && dataDTO.getFilterData() != null && dataDTO.getFilterData().size() == 0) {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
+				} else {
 				response = new GatewayResponse(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
 						RCCLConstants.REQUEST_ID);
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getProductCodes API: " + e.getCause());
@@ -150,8 +168,15 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 			if (response == null) {
 				FilterDataService dataService = FilterDataService.getInstance();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.SHIP_CODE_F);
+
+				if (dataDTO != null && dataDTO.getFilterData() != null && dataDTO.getFilterData().size() == 0) {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
+				} else {
 				response = new GatewayResponse(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
 						RCCLConstants.REQUEST_ID);
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getShipCodes API: " + e.getMessage());
@@ -180,8 +205,15 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 			if (response == null) {
 				FilterDataService dataService = FilterDataService.getInstance();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.SAIL_MONTH_F);
+				
+				if (dataDTO != null && dataDTO.getFilterData() != null && dataDTO.getFilterData().size() == 0) {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
+				} else {
 				response = new GatewayResponse(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
 						RCCLConstants.REQUEST_ID);
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getSailMonths API: " + e.getMessage());
@@ -211,8 +243,15 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 			if (response == null) {
 				FilterDataService dataService = FilterDataService.getInstance();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.CAT_CLASS_F);
+				
+				if (dataDTO != null && dataDTO.getFilterData() != null && dataDTO.getFilterData().size() == 0) {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
+				} else {
 				response = new GatewayResponse(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
 						RCCLConstants.REQUEST_ID);
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getCatClasses API: " + e.getMessage());
@@ -241,8 +280,15 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 			if (response == null) {
 				FilterDataService dataService = FilterDataService.getInstance();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.CATEGORY_F);
+				
+				if (dataDTO != null && dataDTO.getFilterData() != null && dataDTO.getFilterData().size() == 0) {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
+				} else {
 				response = new GatewayResponse(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
 						RCCLConstants.REQUEST_ID);
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getCategory API: " + e.getMessage());
@@ -271,8 +317,15 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 			if (response == null) {
 				FilterDataService dataService = FilterDataService.getInstance();
 				dataDTO = dataService.getFilterData(request, RCCLConstants.OCCUPANCY_F);
+				
+				if (dataDTO != null && dataDTO.getFilterData() != null && dataDTO.getFilterData().size() == 0) {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
+				} else {
 				response = new GatewayResponse(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
 						RCCLConstants.REQUEST_ID);
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Error occurred while invoking rev_pre_getOccupancies API: " + e.getMessage());

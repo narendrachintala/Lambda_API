@@ -6,6 +6,9 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.google.gson.Gson;
+import com.rccl.utils.RCCLConstants;
+import com.rccl.utils.ResourceBundleUtility;
+import com.rccl.utils.ResponseUtil;
 
 /**
  * POJO containing response object for API Gateway.
@@ -27,6 +30,9 @@ public class GatewayResponse {
 	/** The status code. */
 	private final int statusCode;
 
+	// Read error messages from property file
+	private static ResourceBundleUtility rBundleUtility = ResourceBundleUtility.getInstance();
+
 	/**
 	 * Instantiates a new gateway response.
 	 *
@@ -35,10 +41,21 @@ public class GatewayResponse {
 	 * @param statusCode the status code
 	 * @param requestID  the request ID
 	 */
-	public GatewayResponse(final Object body, final Map<String, String> headers, final int statusCode,final String requestID) {
-		this.statusCode = statusCode;
-		this.body = new Gson().toJson(body);
-		this.headers = Collections.unmodifiableMap(new HashMap<>(headers));
+	public GatewayResponse(final Object body, final Map<String, String> headers, final int statusCode,
+			final String requestID) {
+
+		String json = new Gson().toJson(body);
+		if (json.length() > RCCLConstants.LAMBDA_PAYLOAD_LIMIT) {
+			this.statusCode = RCCLConstants.SC_BAD_REQUEST;
+			ErrorMessage errorMsg = new ErrorMessage(rBundleUtility.getValue(RCCLConstants.ERROR_LARGE_BODY_SIZE),
+					RCCLConstants.SC_BAD_REQUEST);
+			this.body = new Gson().toJson(errorMsg);
+			this.headers = ResponseUtil.getHeaders();
+		} else {
+			this.statusCode = statusCode;
+			this.body = new Gson().toJson(body);
+			this.headers = Collections.unmodifiableMap(new HashMap<>(headers));
+		}
 		// this.requestID = requestID;
 	}
 

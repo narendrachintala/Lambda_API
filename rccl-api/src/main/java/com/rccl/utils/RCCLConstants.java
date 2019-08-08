@@ -18,6 +18,7 @@ public class RCCLConstants {
 	public final static Integer MIN_FETCH_ROWS = 250;
 	public final static Integer MID_FETCH_ROWS = 500;
 	public final static Integer MAX_FETCH_ROWS = 1000;
+	public final static Integer LAMBDA_PAYLOAD_LIMIT = 6000000; // Max Lambda limit in AWS is 6MB
 
 	/**
 	 * 
@@ -86,6 +87,7 @@ public class RCCLConstants {
 	public final static String L1_INSERT_DATE = "l1_insert_date";
 	public final static String L2_RANGE_MIN = "l2_range_min";
 	public final static String L2_RANGE_MAX = "l2_range_max";
+	public final static String L2_INSERT_DATE = "l2_insert_date";
 	public final static String USER_ID = "user_id";
 
 	/**
@@ -186,6 +188,7 @@ public class RCCLConstants {
 	public final static String ERROR_UPDATE_RECORDS_FAILURE = "update_records_failure";
 	public final static String L1PAUSE_UPDATE_VALUES = "error_l1_pause_valid_values";
 	public final static String REFUNABLE_UPDATE_VALUES = "error_refundable_values";
+	public final static String ERROR_LARGE_BODY_SIZE = "error_large_body_size";
 
 	/**
 	 * Status codes

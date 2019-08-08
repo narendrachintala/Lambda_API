@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.rccl.model.PriceRange;
+import com.rccl.utils.CustomFunctions;
 import com.rccl.utils.RCCLConstants;
 
 /**
@@ -72,6 +73,14 @@ public class PriceRangeDataHelper {
 				queryBuffer.append(COMMA);
 
 			}
+
+			if (priceRangeReq.getL2_range_max() != null || priceRangeReq.getL2_range_min() != null) {
+
+				queryBuffer.append(RCCLConstants.L2_INSERT_DATE).append(RCCLConstants.EQUALS);
+				queryBuffer.append(RCCLConstants.SINGLE_QUOTE).append(CustomFunctions.getCurrentDate())
+						.append(RCCLConstants.SINGLE_QUOTE).append(RCCLConstants.COMMA);
+			}
+
 			if (priceRangeReq.getUser_id() != null) {
 				queryBuffer.append(RCCLConstants.USER_ID).append(EQUALS);
 				queryBuffer.append(SINGLE_QUOTE).append(priceRangeReq.getUser_id()).append(SINGLE_QUOTE);

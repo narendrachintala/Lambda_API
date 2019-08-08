@@ -106,7 +106,7 @@ public class GetPauseParaDataHandler implements RequestHandler<ApiGatewayProxyRe
 			logger.error("Error occured while executing GetPauseParaDataHandler: " + e.getMessage());
 			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
-		logger.info(new GsonBuilder().serializeNulls().create().toJson(response));
+		//logger.info(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
 	}
 

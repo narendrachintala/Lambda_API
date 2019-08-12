@@ -51,6 +51,9 @@ public class RollingWindowDataValidator {
 			if (CustomFunctions.isNullOrEmpty(request.getFiltersData().getMetaproduct())) {
 				return ResponseUtil.error_metaproduct();
 			}
+			if (!CustomFunctions.validateSailDate(request.getFiltersData().getSail_date())) {
+				return ResponseUtil.error_date_format();
+			}
 			if (request.getFut_demand_window() == null && request.getFut_forecast() == null
 					&& request.getPrev_demand_window() == null && request.getPrev_forecast() == null
 					&& request.getPrice_window() == null && request.getWts() == null) {

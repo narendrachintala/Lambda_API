@@ -46,7 +46,8 @@ public class RefundablePremiumService {
 			RefundablePremiumRepo repo = RefundablePremiumRepo.getInstance();
 			refundablePremiumData = repo.getRefundablePremiumData(request);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
+			throw e;
 		}
 		return refundablePremiumData;
 	}

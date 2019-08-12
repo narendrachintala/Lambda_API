@@ -192,7 +192,6 @@ public class RCCLConstants {
 	public final static String REFUNABLE_UPDATE_VALUES = "error_refundable_values";
 	public final static String ERROR_LARGE_BODY_SIZE = "error_large_body_size";
 	public final static String ERROR_NUMBER_FORMAT = "error_number_format";
-	public final static String ERROR_DATE_FORMAT = "error_date_format";
 
 	/**
 	 * Status codes

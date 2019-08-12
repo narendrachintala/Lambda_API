@@ -96,6 +96,17 @@ public class CustomErrors {
 		return ResponseUtil.getCustErrorMessage(rBundleUtility.getValue(RCCLConstants.ERROR_INVALID_TABLE_NAME),
 				RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 	}
+	
+
+	/**
+	 * Error date format.
+	 *
+	 * @return the gateway response
+	 */
+	public static GatewayResponse error_date_format() {
+		return ResponseUtil.getCustErrorMessage(rBundleUtility.getValue(RCCLConstants.ERROR_DATE_FORMAT),
+				RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
+	}
 
 	/**
 	 * Error locked.

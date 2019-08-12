@@ -1,6 +1,7 @@
 package com.rccl.utils;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -40,35 +41,37 @@ public class CustomFunctions {
 
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-		String formattedTimeStamp = new SimpleDateFormat("dd-MMM-yy hh:mm:ss.sss a").format(timestamp);
+		String formattedTimeStamp = new SimpleDateFormat(RCCLConstants.INSERT_DATE_FORMAT).format(timestamp);
 
 		return formattedTimeStamp;
 	}
 
 	public static boolean isOracleDateErrCodeExists(String errorMsg) {
-		List<String> errorCodes =  ConfigUtil.getOracleDateErrorCodes();
+		List<String> errorCodes = ConfigUtil.getOracleDateErrorCodes();
 		System.out.println(errorCodes.size());
-		System.out.println("First: "+errorCodes.get(0));
+		System.out.println("First: " + errorCodes.get(0));
 
 		for (String str : errorCodes) {
-			System.out.println(str+" -- "+errorMsg);
+			System.out.println(str + " -- " + errorMsg);
 			System.out.println(errorMsg.contains(str));
 			if (errorMsg.contains(str))
 				return true;
 		}
 		return false;
 	}
+
 	/**
 	 * Format insert date.
 	 *
 	 * @param datetime the datetime
 	 * @return the string
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public static String formatInsertDate(String insertDate) throws Exception {
 		String formattedInsertDate = null;
 		try {
-			formattedInsertDate = new SimpleDateFormat("dd-MMM-yy hh:mm:ss.sss a").format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(insertDate));
+			formattedInsertDate = new SimpleDateFormat(RCCLConstants.INSERT_DATE_FORMAT)
+					.format(new SimpleDateFormat(RCCLConstants.DATE_FORMAT).parse(insertDate));
 
 		} catch (Exception e) {
 			logger.error("Error occured prcossing the L1_INSERT_DATE : " + e.getMessage());
@@ -82,12 +85,13 @@ public class CustomFunctions {
 	 *
 	 * @param datetime the datetime
 	 * @return the string
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public static String formatSailDate(String sailDate) throws Exception {
 		String formattedSailDate = null;
 		try {
-			formattedSailDate = new SimpleDateFormat("dd-MMM-yy").format(new SimpleDateFormat("yyyy-MM-dd").parse(sailDate));
+			formattedSailDate = new SimpleDateFormat(RCCLConstants.SAIL_DATE_FORMAT)
+					.format(new SimpleDateFormat(RCCLConstants.DATE_FORMAT).parse(sailDate));
 
 		} catch (Exception e) {
 			logger.error("Error occured prcossing the SAIL_DATE : " + e.getMessage());
@@ -96,4 +100,23 @@ public class CustomFunctions {
 		return formattedSailDate;
 	}
 
+	/**
+	 * Validate sail date.
+	 *
+	 * @param sailDate the sail date
+	 * @return true, if successful
+	 */
+	public static boolean validateSailDate(String sailDate) {
+		try {
+			new SimpleDateFormat(RCCLConstants.SAIL_DATE_FORMAT).parse(sailDate);
+
+		} catch (ParseException e) {
+			logger.error("Error occured prcossing the SAIL_DATE : " + e.getMessage());
+			return false;
+		} catch (Exception e) {
+			logger.error("Error occured prcossing the SAIL_DATE : " + e.getMessage());
+			return false;
+		}
+		return true;
+	}
 }

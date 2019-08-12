@@ -40,7 +40,9 @@ public class RCCLConstants {
 
 	public static final String NAMED_QRY_PREFIX = ":";
 	public static final String LOCKED_CTRL_TBL_STS_FLAG = "Y";
-	public static final String SAIL_DATE_FORMAT = "DD-MMM-YY";
+	public static final String SAIL_DATE_FORMAT = "dd-MMM-yy";
+	public static final String INSERT_DATE_FORMAT ="dd-MMM-yy hh:mm:ss.sss a";
+	public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
 	/*
 	 * Filter names

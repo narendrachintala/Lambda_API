@@ -46,6 +46,9 @@ public class RequestDataValidator {
 			if (CustomFunctions.isNullOrEmpty(requestData.getMetaproduct())) {
 				return ResponseUtil.error_metaproduct();
 			}
+			if (!CustomFunctions.validateSailDate(requestData.getSail_date())) {
+				return ResponseUtil.error_date_format();
+			}
 		} catch (Exception e) {
 			logger.error(e);
 			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST,RCCLConstants.REQUEST_ID);

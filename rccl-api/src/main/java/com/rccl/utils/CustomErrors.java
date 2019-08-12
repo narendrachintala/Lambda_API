@@ -104,8 +104,9 @@ public class CustomErrors {
 	 * @return the gateway response
 	 */
 	public static GatewayResponse error_date_format() {
-		return ResponseUtil.getCustErrorMessage(rBundleUtility.getValue(RCCLConstants.ERROR_DATE_FORMAT),
-				RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
+		
+		String message = MessageFormat.format(rBundleUtility.getValue(RCCLConstants.ERROR_DATE_FORMAT), RCCLConstants.SAIL_DATE_FORMAT);
+		return ResponseUtil.getCustErrorMessage(message, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 	}
 
 	/**

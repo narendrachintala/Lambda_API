@@ -54,6 +54,9 @@ public class FilterDataValidator {
 			if (!ConfigUtil.configuredTableList.contains(requestData.getTable_name().toLowerCase())) {
 				return ResponseUtil.error_invalid_table_name();
 			}
+			if (!CustomFunctions.validateSailDate(requestData.getSail_date())) {
+				return ResponseUtil.error_date_format();
+			}
 
 			if (filter.equalsIgnoreCase(RCCLConstants.METAPRODUCT_F)) {
 				logger.info("fetching metaproducts data");

@@ -7,7 +7,6 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.google.gson.JsonSyntaxException;
 import com.rccl.model.ErrorMessage;
 import com.rccl.model.GatewayResponse;
 
@@ -67,16 +66,23 @@ public class ResponseUtil extends CustomErrors {
 		String errorMsg = null;
 		GatewayResponse error = null;
 		try {
-			if (e.getClass() != null && e.getClass().equals(JsonSyntaxException.class)) {
+			/*
+			 * if (e.getClass() != null && e.getClass().equals(JsonSyntaxException.class)) {
+			 */
 
-				if (e.getMessage().contains(NumberFormatException.class.getName())) {
-					errorMsg = MessageFormat.format(rBundleUtility.getValue(RCCLConstants.ERROR_NUMBER_FORMAT),
-							e.getMessage().substring(e.getMessage().indexOf(RCCLConstants.NAMED_QRY_PREFIX) + 2)
-									.toLowerCase().replace("\"", ""));
-				} else {
-					errorMsg = e.getMessage();
-				}
+			if (e.getMessage().contains(NumberFormatException.class.getName())) {
+				errorMsg = MessageFormat.format(rBundleUtility.getValue(RCCLConstants.ERROR_NUMBER_FORMAT),
+						e.getCause().getLocalizedMessage().substring(e.getCause().getLocalizedMessage().indexOf(RCCLConstants.NAMED_QRY_PREFIX) + 1)
+								.toLowerCase().replace("\"", "'"));
+			} else if (e.getClass().toString().contains(NumberFormatException.class.getName())) {
+				errorMsg = MessageFormat.format(rBundleUtility.getValue(RCCLConstants.ERROR_NUMBER_FORMAT),
+						e.getMessage().substring(e.getMessage().indexOf(RCCLConstants.NAMED_QRY_PREFIX) + 1)
+								.toLowerCase().replace("\"", "'"));
 			}
+			/*
+			 * } else { errorMsg = e.getMessage(); }
+			 */
+			/* } */
 
 			if (errorMsg == null) {
 				if (e.getCause() == null) {
@@ -116,11 +122,6 @@ public class ResponseUtil extends CustomErrors {
 
 		}
 		return message;
-	}
-
-	public static void main(String[] args) {
-		String s = "error in querying table - ORA-01847";
-		System.out.println(NumberFormatException.class.getName());
 	}
 
 }

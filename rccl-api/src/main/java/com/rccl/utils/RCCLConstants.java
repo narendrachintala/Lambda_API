@@ -178,6 +178,7 @@ public class RCCLConstants {
 	public final static String ERROR_INVALID_TABLE_NAME = "error_invalid_table_name";
 	public final static String EX_GET_REQUEST = "ex_get_request";
 	public final static String ERROR_FILTERS_DATA = "filters_data";
+	public final static String ERROR_DATE_FORMAT = "date_format";
 	public final static String ERROR_UPDATE_FIELDS = "update_fields";
 	public final static String LOCK_SET = "lock_status";
 	public final static String ERROR_IN_L1_RANGE = "error_in_l1_range";

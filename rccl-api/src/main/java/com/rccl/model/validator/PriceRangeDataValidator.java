@@ -56,6 +56,9 @@ public class PriceRangeDataValidator {
 			if (CustomFunctions.isNullOrEmpty(request.getFiltersData().getMetaproduct())) {
 				return ResponseUtil.error_metaproduct();
 			}
+			if (!CustomFunctions.validateSailDate(request.getFiltersData().getSail_date())) {
+				return ResponseUtil.error_date_format();
+			}
 			if (request.getL1_range_max() == null && request.getL1_range_min() == null
 					&& request.getL2_range_max() == null && request.getL2_range_min() == null) {
 				return ResponseUtil.error_update_fields();

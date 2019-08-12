@@ -1,5 +1,7 @@
 package com.rccl.dto;
 
+import com.rccl.utils.CustomFunctions;
+
 /**
  * 
  * @author chandrabhan.birla
@@ -74,9 +76,10 @@ public class CurrentPriceParaDTO {
 	}
 	/**
 	 * @param sail_date the sail_date to set
+	 * @throws Exception 
 	 */
-	public void setSail_date(String sail_date) {
-		this.sail_date = sail_date;
+	public void setSail_date(String sail_date) throws Exception {
+		this.sail_date = CustomFunctions.formatSailDate(sail_date);
 	}
 	/**
 	 * @return the sail_month
@@ -159,8 +162,8 @@ public class CurrentPriceParaDTO {
 	/**
 	 * @param l1_insert_date the l1_insert_date to set
 	 */
-	public void setL1_insert_date(String l1_insert_date) {
-		this.l1_insert_date = l1_insert_date;
+	public void setL1_insert_date(String l1_insert_date) throws Exception {
+		this.l1_insert_date = CustomFunctions.formatInsertDate(l1_insert_date);
 	}
 	
 	

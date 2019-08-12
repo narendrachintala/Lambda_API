@@ -1,5 +1,7 @@
 package com.rccl.dto;
 
+import com.rccl.utils.CustomFunctions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class InversionGapsParaDTO.
@@ -169,9 +171,10 @@ public class InversionGapsParaDTO {
 	 * Sets the sail date.
 	 *
 	 * @param sail_date the new sail date
+	 * @throws Exception 
 	 */
-	public void setSail_date(String sail_date) {
-		this.sail_date = sail_date;
+	public void setSail_date(String sail_date) throws Exception {
+		this.sail_date = CustomFunctions.formatSailDate(sail_date);
 	}
 
 	/**
@@ -422,8 +425,8 @@ public class InversionGapsParaDTO {
 	 *
 	 * @param l1_insert_date the new l 1 insert date
 	 */
-	public void setL1_insert_date(String l1_insert_date) {
-		this.l1_insert_date = l1_insert_date;
+	public void setL1_insert_date(String l1_insert_date) throws Exception {
+		this.l1_insert_date = CustomFunctions.formatInsertDate(l1_insert_date);
 	}
 
 }

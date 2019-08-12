@@ -52,6 +52,9 @@ public class CurrencyGapDataValidator {
 			if (CustomFunctions.isNullOrEmpty(request.getFiltersData().getMetaproduct())) {
 				return ResponseUtil.error_metaproduct();
 			}
+			if (!CustomFunctions.validateSailDate(request.getFiltersData().getSail_date())) {
+				return ResponseUtil.error_date_format();
+			}
 			if (CustomFunctions.isNullOrEmpty(request.getCurrency1())
 					&& CustomFunctions.isNullOrEmpty(request.getCurrency2())
 					&& CustomFunctions.isNullOrEmpty(request.getCurrency3()) && request.getGap1() == null

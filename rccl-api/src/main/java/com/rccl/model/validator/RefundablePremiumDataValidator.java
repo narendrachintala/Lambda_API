@@ -51,6 +51,9 @@ public class RefundablePremiumDataValidator {
 			if (CustomFunctions.isNullOrEmpty(request.getFiltersData().getMetaproduct())) {
 				return ResponseUtil.error_metaproduct();
 			}
+			if (!CustomFunctions.validateSailDate(request.getFiltersData().getSail_date())) {
+				return ResponseUtil.error_date_format();
+			}
 			if (CustomFunctions.isNullOrEmpty(request.getGap_type()) && request.getCurrent_gap_pct() == null
 					&& request.getStandard_gap_pct() == null) {
 				return ResponseUtil.error_update_fields();

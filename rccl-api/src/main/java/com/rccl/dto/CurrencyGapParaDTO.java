@@ -1,5 +1,6 @@
 package com.rccl.dto;
 
+import com.rccl.utils.CustomFunctions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -140,9 +141,10 @@ public class CurrencyGapParaDTO {
 	 * Sets the sail date.
 	 *
 	 * @param sail_date the new sail date
+	 * @throws Exception 
 	 */
-	public void setSail_date(String sail_date) {
-		this.sail_date = sail_date;
+	public void setSail_date(String sail_date) throws Exception {
+		this.sail_date = CustomFunctions.formatSailDate(sail_date);
 	}
 	
 	/**
@@ -321,8 +323,8 @@ public class CurrencyGapParaDTO {
 	 *
 	 * @param insert_date the new insert date
 	 */
-	public void setInsert_date(String insert_date) {
-		this.insert_date = insert_date;
+	public void setInsert_date(String insert_date) throws Exception {
+		this.insert_date = CustomFunctions.formatInsertDate(insert_date);
 	}
 
 	

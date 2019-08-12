@@ -52,6 +52,9 @@ public class PauseParaDataValidator {
 			if (CustomFunctions.isNullOrEmpty(request.getFiltersData().getMetaproduct())) {
 				return ResponseUtil.error_metaproduct();
 			}
+			if (!CustomFunctions.validateSailDate(request.getFiltersData().getSail_date())) {
+				return ResponseUtil.error_date_format();
+			}
 			if (request.getL1_pause() == null && request.getresume_push_wts() == null
 					&& request.getstop_push_wts() == null ) {
 				return ResponseUtil.error_update_fields();

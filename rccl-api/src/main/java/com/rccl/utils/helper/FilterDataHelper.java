@@ -59,7 +59,7 @@ public class FilterDataHelper {
 					queryBuffer.append(join(filterData.getShip_code()));
 					queryBuffer.append(AND);
 				}
-				if (!CustomFunctions.isNullOrEmpty(filterData.getSail_month())) {
+				if (filterData.getSail_month() != null) {
 					queryBuffer.append(RCCLConstants.SAIL_MONTH_F).append(IN);
 					queryBuffer.append(filterData.getSail_month());
 					queryBuffer.append(AND);

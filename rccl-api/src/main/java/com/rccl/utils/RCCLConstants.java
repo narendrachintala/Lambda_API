@@ -40,6 +40,7 @@ public class RCCLConstants {
 
 	public static final String NAMED_QRY_PREFIX = ":";
 	public static final String LOCKED_CTRL_TBL_STS_FLAG = "Y";
+	public static final String SAIL_DATE_FORMAT = "DD-MMM-YY";
 
 	/*
 	 * Filter names
@@ -189,6 +190,8 @@ public class RCCLConstants {
 	public final static String L1PAUSE_UPDATE_VALUES = "error_l1_pause_valid_values";
 	public final static String REFUNABLE_UPDATE_VALUES = "error_refundable_values";
 	public final static String ERROR_LARGE_BODY_SIZE = "error_large_body_size";
+	public final static String ERROR_NUMBER_FORMAT = "error_number_format";
+	public final static String ERROR_DATE_FORMAT = "error_date_format";
 
 	/**
 	 * Status codes

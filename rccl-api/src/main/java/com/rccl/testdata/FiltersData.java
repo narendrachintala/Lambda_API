@@ -15,7 +15,7 @@ public class FiltersData {
 		filterData.setProduct_code("PRTCNVR4");
 		filterData.setShip_code("MA");
 //		filterData.setSail_date("27-OCT-19");
-		filterData.setSail_month("5");
+		filterData.setSail_month(5);
 		//filterData.setCat_class("N");
 //		filterData.setOccupancy("quad");
 //		filterData.setTable_name("rolling_window");
@@ -31,7 +31,7 @@ public class FiltersData {
 		filterData.setProduct_code("CARIBGLF");
 		filterData.setShip_code("LB");
 //		filterData.setSail_date("27-OCT-19");
-		filterData.setSail_month("3");
+		filterData.setSail_month(3);
 		filterData.setCat_class("I");
 		filterData.setOccupancy("quad");
 //		filterData.setTable_name("rolling_window");

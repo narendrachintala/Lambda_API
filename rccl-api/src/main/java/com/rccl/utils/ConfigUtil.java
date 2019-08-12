@@ -36,6 +36,8 @@ public class ConfigUtil {
 
 	public static List<String> configuredTableList = getConfigTables();
 
+	public static List<String> oracleDateErrorCodes = null;// getOracleDateErrorCodes();
+
 	/**
 	 * Gets the single instance of ConfigUtil.
 	 *
@@ -284,7 +286,6 @@ public class ConfigUtil {
 				conf.getProperty(RCCLConstants.CURRENCY_GAP_PARA));
 	}
 
-
 	/**
 	 * Gets the configured tables.
 	 *
@@ -303,5 +304,15 @@ public class ConfigUtil {
 		configuredTableList.add(configInst.getTableName(RCCLConstants.CURRENCY_GAP_PARA).toLowerCase());
 		configuredTableList.add(configInst.getTableName(RCCLConstants.BOOKED_POSITION_PARA).toLowerCase());
 		return configuredTableList;
+	}
+
+	public static List<String> getOracleDateErrorCodes() {
+		if (oracleDateErrorCodes == null) {
+			oracleDateErrorCodes = new ArrayList<String>();
+			oracleDateErrorCodes.add("ORA-01847");
+			oracleDateErrorCodes.add("ORA-01843");
+			oracleDateErrorCodes.add("ORA-01858");
+		}
+		return oracleDateErrorCodes;
 	}
 }

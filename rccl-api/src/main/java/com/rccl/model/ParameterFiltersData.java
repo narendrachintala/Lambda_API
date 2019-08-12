@@ -18,7 +18,7 @@ public class ParameterFiltersData {
 	private String ship_code;
 	
 	/** The sail month. */
-	private String sail_month;
+	private Integer sail_month;
 	
 	/** The sail date. */
 	private String sail_date;
@@ -87,7 +87,7 @@ public class ParameterFiltersData {
 	 * Gets the sail month.
 	 * @return the sail month
 	 */
-	public String getSail_month() {
+	public Integer getSail_month() {
 		return sail_month;
 	}
 
@@ -95,7 +95,7 @@ public class ParameterFiltersData {
 	 * Sets the sail month.
 	 * @param sail_month the new sail month
 	 */
-	public void setSail_month(String sail_month) {
+	public void setSail_month(Integer sail_month) {
 		this.sail_month = sail_month;
 	}
 

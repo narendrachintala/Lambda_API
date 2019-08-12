@@ -132,7 +132,7 @@ public class PutRefundablePremiumDataHandler
 		parameterFiltersData.setMetaproduct("SHORT CARIBBEAN");
 		parameterFiltersData.setOccupancy("quad");
 		parameterFiltersData.setProduct_code("BAHAMA4");
-		parameterFiltersData.setSail_month("3");
+		parameterFiltersData.setSail_month(3);
 		parameterFiltersData.setShip_code("MJ");
 
 		refundablePremium.setFiltersData(parameterFiltersData);

@@ -123,7 +123,7 @@ public class GetRollingWindowHandler
 		parameterFiltersData.setMetaproduct("SHORT CARIBBEAN123");
 		parameterFiltersData.setOccupancy("quad");
 		parameterFiltersData.setProduct_code("BAHAMA4");
-		parameterFiltersData.setSail_month("3");
+		parameterFiltersData.setSail_month(3);
 		parameterFiltersData.setShip_code("MJ");
 
 		new GetRollingWindowHandler().handleRequest(null, new Context() {

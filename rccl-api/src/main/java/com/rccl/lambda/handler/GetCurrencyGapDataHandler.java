@@ -125,7 +125,7 @@ public class GetCurrencyGapDataHandler implements RequestHandler<ApiGatewayProxy
 		// currentPricedata.setCategory("TEST");
 		currencyGapdata.setOccupancy("quad");
 		currencyGapdata.setSail_date("23-NOV-19 12.00.00.000000000 AM");
-		currencyGapdata.setSail_month("11");
+		currencyGapdata.setSail_month(11);
 
 		GatewayResponse rcode = new GetCurrencyGapDataHandler().handleRequest(null,
 				null);

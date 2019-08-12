@@ -2,6 +2,7 @@ package com.rccl.utils;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,6 +43,20 @@ public class CustomFunctions {
 		String formattedTimeStamp = new SimpleDateFormat("dd-MMM-yy hh:mm:ss.sss a").format(timestamp);
 
 		return formattedTimeStamp;
+	}
+
+	public static boolean isOracleDateErrCodeExists(String errorMsg) {
+		List<String> errorCodes =  ConfigUtil.getOracleDateErrorCodes();
+		System.out.println(errorCodes.size());
+		System.out.println("First: "+errorCodes.get(0));
+
+		for (String str : errorCodes) {
+			System.out.println(str+" -- "+errorMsg);
+			System.out.println(errorMsg.contains(str));
+			if (errorMsg.contains(str))
+				return true;
+		}
+		return false;
 	}
 
 }

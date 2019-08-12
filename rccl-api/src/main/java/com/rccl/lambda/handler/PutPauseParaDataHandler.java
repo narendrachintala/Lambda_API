@@ -124,7 +124,7 @@ public class PutPauseParaDataHandler implements RequestHandler<ApiGatewayProxyRe
 		parameterFiltersData.setMetaproduct("OASIS");
 		parameterFiltersData.setOccupancy("quad");
 		parameterFiltersData.setProduct_code("7N CARIBBEAN");
-		parameterFiltersData.setSail_month("12");
+		parameterFiltersData.setSail_month(12);
 		parameterFiltersData.setShip_code("AL");
 		parameterFiltersData.setCategory("A1");
 

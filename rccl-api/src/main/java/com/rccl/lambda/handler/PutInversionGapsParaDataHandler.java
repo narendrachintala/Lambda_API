@@ -141,7 +141,7 @@ public class PutInversionGapsParaDataHandler
 		parameterFiltersData.setMetaproduct("SHORT CARIBBEAN");
 		parameterFiltersData.setOccupancy("double");
 		parameterFiltersData.setProduct_code("PRTCNVR4");
-		parameterFiltersData.setSail_month("5");
+		parameterFiltersData.setSail_month(5);
 		parameterFiltersData.setShip_code("MA");
 
 		inversionGapPara.setFiltersData(parameterFiltersData);

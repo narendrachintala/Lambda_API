@@ -117,7 +117,7 @@ public class GetBookedPositionParaHandler implements RequestHandler<ApiGatewayPr
 		ParameterFiltersData parameterFiltersData = new ParameterFiltersData();
 		parameterFiltersData.setMetaproduct("SHORT CARIBBEAN");
 		parameterFiltersData.setProduct_code("PRTCNVR3");
-		parameterFiltersData.setSail_month("8");
+		parameterFiltersData.setSail_month(8);
 		parameterFiltersData.setShip_code("MA");
 
 		new GetBookedPositionParaHandler().handleRequest(null, new Context() {

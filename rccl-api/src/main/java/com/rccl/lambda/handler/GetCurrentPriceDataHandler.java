@@ -128,7 +128,7 @@ public class GetCurrentPriceDataHandler
 		// currentPricedata.setCategory("TEST");
 		currentPricedata.setOccupancy("quad");
 		currentPricedata.setSail_date("23-NOV-19 12.00.00.000000000 AM");
-		currentPricedata.setSail_month("11");
+		currentPricedata.setSail_month(11);
 
 		GatewayResponse rcode = new GetCurrentPriceDataHandler().handleRequest(null,
 				null);

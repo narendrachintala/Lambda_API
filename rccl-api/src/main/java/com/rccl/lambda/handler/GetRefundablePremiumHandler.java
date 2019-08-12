@@ -103,9 +103,8 @@ public class GetRefundablePremiumHandler
 				}
 			}
 		} catch (Exception ex) {
-			logger.error("Error occured while executing GetRollingWindowHandler: " + ex.getMessage());
-			response = new GatewayResponse(ex.getLocalizedMessage(), ResponseUtil.getHeaders(),
-					RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
+			logger.error("Error occured while executing GetRefunfdablePremiumHandler: " + ex.getMessage());
+			return ResponseUtil.getErrorMessage(ex, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
 		logger.info(new GsonBuilder().serializeNulls().create().toJson(response));
 		return response;
@@ -114,12 +113,12 @@ public class GetRefundablePremiumHandler
 	public static void main(String args[]) {
 		// prepares sample input data for handler class
 		ParameterFiltersData parameterFiltersData = new ParameterFiltersData();
-		parameterFiltersData.setCat_class("O");
+		parameterFiltersData.setCat_class("");
 		parameterFiltersData.setMetaproduct("SHORT CARIBBEAN");
-		parameterFiltersData.setOccupancy("quad");
+		parameterFiltersData.setOccupancy("");
 		parameterFiltersData.setProduct_code("CARIB5");
 		parameterFiltersData.setSail_month(3);
-		parameterFiltersData.setShip_code("MJ");
+		parameterFiltersData.setShip_code("");
 
 		new GetRefundablePremiumHandler().handleRequest(null, new Context() {
 

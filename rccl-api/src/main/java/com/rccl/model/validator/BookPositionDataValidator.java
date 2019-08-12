@@ -53,8 +53,10 @@ public class BookPositionDataValidator {
 			if (request.getBooked_position() == null) {
 				return ResponseUtil.error_update_fields();
 			}
-			if (!CustomFunctions.validateSailDate(request.getFiltersData().getSail_date())) {
-				return ResponseUtil.error_date_format();
+			if (!CustomFunctions.isNullOrEmpty(request.getFiltersData().getSail_date())) {
+				if (!CustomFunctions.validateSailDate(request.getFiltersData().getSail_date())) {
+					return ResponseUtil.error_date_format();
+				}
 			}
 			String lockStatus = accessControlRepo.getLockStatus(jobName);
 			logger.info("lockStatus:" + lockStatus);

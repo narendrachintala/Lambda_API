@@ -302,9 +302,10 @@ public class PriceRangeDTO {
 	 * Sets the l 2 insert date.
 	 *
 	 * @param l2_insert_date the new l 2 insert date
+	 * @throws Exception 
 	 */
-	public void setL2_insert_date(String l2_insert_date) {
-		this.l2_insert_date = l2_insert_date;
+	public void setL2_insert_date(String l2_insert_date) throws Exception {
+		this.l2_insert_date = CustomFunctions.formatInsertDate(l2_insert_date);
 	}
 
 	/**

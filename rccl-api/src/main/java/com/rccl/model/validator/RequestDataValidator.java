@@ -46,8 +46,10 @@ public class RequestDataValidator {
 			if (CustomFunctions.isNullOrEmpty(requestData.getMetaproduct())) {
 				return ResponseUtil.error_metaproduct();
 			}
-			if (!CustomFunctions.validateSailDate(requestData.getSail_date())) {
-				return ResponseUtil.error_date_format();
+			if (!CustomFunctions.isNullOrEmpty(requestData.getSail_date())) {
+				if (!CustomFunctions.validateSailDate(requestData.getSail_date())) {
+					return ResponseUtil.error_date_format();
+				}
 			}
 		} catch (Exception e) {
 			logger.error(e);

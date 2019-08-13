@@ -119,13 +119,12 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 	 */
 	public GatewayResponse getProductCodes(ApiGatewayProxyRequest req, Context context) {
 
-		FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
-		logger.info("input: " + request);
-
 		FilterDataDTO dataDTO = null;
 		GatewayResponse response = null;
 		FilterDataValidator dataValidator = FilterDataValidator.getInstance();
 		try {
+			FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
+			logger.info("input: " + request);
 			response = dataValidator.validateGetRequest(request, RCCLConstants.PRODUCT_CODE_F);
 			if (response == null) {
 				FilterDataService dataService = FilterDataService.getInstance();
@@ -158,12 +157,12 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 	 */
 	public GatewayResponse getShipCodes(ApiGatewayProxyRequest req, Context context) {
 
-		FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
-		logger.info("input: " + request);
 		FilterDataDTO dataDTO = null;
 		GatewayResponse response = null;
 		FilterDataValidator dataValidator = FilterDataValidator.getInstance();
 		try {
+			FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
+			logger.info("input: " + request);
 			response = dataValidator.validateGetRequest(request, RCCLConstants.SHIP_CODE_F);
 			if (response == null) {
 				FilterDataService dataService = FilterDataService.getInstance();
@@ -195,12 +194,12 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 	 */
 	public GatewayResponse getSailMonths(ApiGatewayProxyRequest req, Context context) {
 
-		FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
-		logger.info("input: " + request);
 		FilterDataDTO dataDTO = null;
 		GatewayResponse response = null;
 		FilterDataValidator dataValidator = FilterDataValidator.getInstance();
 		try {
+			FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
+			logger.info("input: " + request);
 			response = dataValidator.validateGetRequest(request, RCCLConstants.SAIL_MONTH_F);
 			if (response == null) {
 				FilterDataService dataService = FilterDataService.getInstance();
@@ -233,12 +232,12 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 
 	public GatewayResponse getCatClasses(ApiGatewayProxyRequest req, Context context) {
 
-		FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
-		logger.info("input: " + request);
 		FilterDataDTO dataDTO = null;
 		GatewayResponse response = null;
 		FilterDataValidator dataValidator = FilterDataValidator.getInstance();
 		try {
+			FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
+			logger.info("input: " + request);
 			response = dataValidator.validateGetRequest(request, RCCLConstants.CAT_CLASS_F);
 			if (response == null) {
 				FilterDataService dataService = FilterDataService.getInstance();
@@ -270,12 +269,12 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 	 */
 	public GatewayResponse getCategories(ApiGatewayProxyRequest req, Context context) {
 
-		FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
-		logger.info("input: " + request);
 		FilterDataDTO dataDTO = null;
 		GatewayResponse response = null;
 		FilterDataValidator dataValidator = FilterDataValidator.getInstance();
 		try {
+			FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
+			logger.info("input: " + request);
 			response = dataValidator.validateGetRequest(request, RCCLConstants.CATEGORY_F);
 			if (response == null) {
 				FilterDataService dataService = FilterDataService.getInstance();
@@ -307,12 +306,12 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 	 */
 	public GatewayResponse getOccupancy(ApiGatewayProxyRequest req, Context context) {
 
-		FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
-		logger.info("input: " + request);
 		FilterDataDTO dataDTO = null;
 		GatewayResponse response = null;
 		FilterDataValidator dataValidator = FilterDataValidator.getInstance();
 		try {
+			FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
+			logger.info("input: " + request);
 			response = dataValidator.validateGetRequest(request, RCCLConstants.OCCUPANCY_F);
 			if (response == null) {
 				FilterDataService dataService = FilterDataService.getInstance();

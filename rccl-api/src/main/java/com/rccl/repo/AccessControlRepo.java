@@ -17,25 +17,27 @@ import com.rccl.utils.helper.RCCLException;
  * The Class AccessControlRepo.
  */
 public class AccessControlRepo {
-	
+
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(AccessControlRepo.class);
-	
+
 	/**
 	 * Gets the lock status.
+	 * 
 	 * @param jobName the job name
 	 * @return the lock status
 	 */
-	public String getLockStatus(String jobName)  {
-		
+	public String getLockStatus(String jobName) {
+
 		String SINGLE_QUOTE = RCCLConstants.SINGLE_QUOTE;
-		
 		ConfigUtil configInst = ConfigUtil.getInstance();
 		String query = configInst.getLockStatus();
-		
+		String control_table_prefix = configInst.getValue(RCCLConstants.CONTROL_TABLE_PREFIX);
+		jobName = control_table_prefix != null ? control_table_prefix.concat(jobName) : jobName;
+
 		String finalQuery = query.replace(":value", SINGLE_QUOTE + jobName + SINGLE_QUOTE);
 		logger.info("query for access control:" + finalQuery);
-		
+
 		Connection con = RevoreoConnect.getInstance().getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -68,5 +70,9 @@ public class AccessControlRepo {
 			}
 		}
 		return lockStatus;
+	}
+
+	public static void main(String[] args) {
+		new AccessControlRepo().getLockStatus("price_range_para");
 	}
 }

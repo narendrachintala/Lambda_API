@@ -36,6 +36,7 @@ public class ConfigUtil {
 
 	public static List<String> configuredTableList = getConfigTables();
 
+	/** unused code**/
 	public static List<String> oracleDateErrorCodes = null;// getOracleDateErrorCodes();
 
 	/**
@@ -306,6 +307,8 @@ public class ConfigUtil {
 		return configuredTableList;
 	}
 
+	
+	/** unused code**/
 	public static List<String> getOracleDateErrorCodes() {
 		if (oracleDateErrorCodes == null) {
 			oracleDateErrorCodes = new ArrayList<String>();

@@ -46,14 +46,10 @@ public class CustomFunctions {
 		return formattedTimeStamp;
 	}
 
+	/** unused code**/
 	public static boolean isOracleDateErrCodeExists(String errorMsg) {
 		List<String> errorCodes = ConfigUtil.getOracleDateErrorCodes();
-		System.out.println(errorCodes.size());
-		System.out.println("First: " + errorCodes.get(0));
-
 		for (String str : errorCodes) {
-			System.out.println(str + " -- " + errorMsg);
-			System.out.println(errorMsg.contains(str));
 			if (errorMsg.contains(str))
 				return true;
 		}

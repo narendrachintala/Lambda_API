@@ -24,7 +24,7 @@ Resources:
   ApiGateway:
     Type: AWS::Serverless::Api
     Properties:
-      StageName: !Ref Stage
+      StageName: dev
       #Auth:
       #  DefaultAuthorizer: AWS_IAM
       
@@ -36,6 +36,11 @@ Resources:
       Handler: com.rccl.lambda.handler.FiltersDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
         PostEvent:
           Type: Api
           Properties:
@@ -51,6 +56,11 @@ Resources:
       Handler: com.rccl.lambda.handler.FiltersDataHandler::getProductCodes
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
         PostEvent:
           Type: Api
           Properties:
@@ -66,6 +76,11 @@ Resources:
       Handler: com.rccl.lambda.handler.FiltersDataHandler::getShipCodes
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
         PostEvent:
           Type: Api
           Properties:
@@ -81,6 +96,11 @@ Resources:
       Handler: com.rccl.lambda.handler.FiltersDataHandler::getSailMonths
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
         PostEvent:
           Type: Api
           Properties:
@@ -96,6 +116,11 @@ Resources:
       Handler: com.rccl.lambda.handler.FiltersDataHandler::getCatClasses
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
         PostEvent:
           Type: Api
           Properties:
@@ -111,6 +136,11 @@ Resources:
       Handler: com.rccl.lambda.handler.FiltersDataHandler::getCategories
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
         PostEvent:
           Type: Api
           Properties:
@@ -183,6 +213,11 @@ Resources:
       Handler: com.rccl.lambda.handler.GetRollingWindowHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
         PostEvent:
           Type: Api
           Properties:
@@ -197,6 +232,11 @@ Resources:
       Handler: com.rccl.lambda.handler.GetRefundablePremiumHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
         PostEvent:
           Type: Api
           Properties:
@@ -211,6 +251,11 @@ Resources:
       Handler: com.rccl.lambda.handler.GetInversionGapsParaDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
         PostEvent:
           Type: Api
           Properties:
@@ -225,6 +270,11 @@ Resources:
       Handler: com.rccl.lambda.handler.GetCurrentPriceDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
         PostEvent:
           Type: Api
           Properties:
@@ -239,6 +289,11 @@ Resources:
       Handler: com.rccl.lambda.handler.GetBookedPositionParaHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
         PostEvent:
           Type: Api
           Properties:
@@ -253,6 +308,11 @@ Resources:
       Handler: com.rccl.lambda.handler.GetCurrencyGapDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
         PostEvent:
           Type: Api
           Properties:
@@ -306,6 +366,11 @@ Resources:
       Handler: com.rccl.lambda.handler.PutRollingWindowDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
         PutEvent:
           Type: Api
           Properties:
@@ -320,6 +385,11 @@ Resources:
       Handler: com.rccl.lambda.handler.PutRefundablePremiumDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
         PutEvent:
           Type: Api
           Properties:
@@ -334,6 +404,11 @@ Resources:
       Handler: com.rccl.lambda.handler.PutInversionGapsParaDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
         PutEvent:
           Type: Api
           Properties:
@@ -348,6 +423,11 @@ Resources:
       Handler: com.rccl.lambda.handler.PutCurrentPriceDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
         PutEvent:
           Type: Api
           Properties:
@@ -362,6 +442,11 @@ Resources:
       Handler: com.rccl.lambda.handler.PutBookedPositionParaHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
         PutEvent:
           Type: Api
           Properties:
@@ -376,6 +461,11 @@ Resources:
       Handler: com.rccl.lambda.handler.PutCurrencyGapDataHandler::handleRequest
       Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
       Events:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
         PutEvent:
           Type: Api
           Properties:

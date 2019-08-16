@@ -15,13 +15,13 @@ import com.rccl.utils.helper.FilterDataHelper;
  * @author narendra.chintala
  */
 public class FiltersDBUtil {
-	
+
 	// Initialize the Log4j logger.
 	static final Logger logger = LogManager.getLogger(FiltersDBUtil.class);
 
 	/** The instance. */
 	public static FiltersDBUtil _instance = null;
-	
+
 	/** The config inst. */
 	ConfigUtil configInst = ConfigUtil.getInstance();
 
@@ -53,7 +53,13 @@ public class FiltersDBUtil {
 			if (!CustomFunctions.isNullOrEmpty(filterData.getTable_name())) {
 
 				filterQuery = filterQuery.replace(RCCLConstants.TABLE_NAME_Q, filterData.getTable_name());
-				filterQuery = filterQuery.replaceAll(RCCLConstants.FILTER_COLUMN_Q, filter_column);
+
+				if (filter_column.equals(RCCLConstants.SAIL_DATE_F)) {
+					filterQuery = filterQuery.replaceAll(RCCLConstants.FILTER_COLUMN_Q,
+							"TO_CHAR(" + filter_column + ",'dd-MON-yy')");
+				} else {
+					filterQuery = filterQuery.replaceAll(RCCLConstants.FILTER_COLUMN_Q, filter_column);
+				}
 			}
 			filterQuery = filterQuery.replace(RCCLConstants.FILTER_COLUMN_Q, filter_column);
 			if (filter_column.equals(RCCLConstants.METAPRODUCT_F)) {

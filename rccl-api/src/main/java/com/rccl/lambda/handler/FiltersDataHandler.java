@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.rccl.dbutils.RevoreoConnect;
 import com.rccl.dto.FilterDataDTO;
 import com.rccl.model.ApiGatewayProxyRequest;
@@ -36,7 +37,7 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 		ExecutorService executorService = Executors.newSingleThreadExecutor();
 		executorService.execute(new Runnable() {
 			public void run() {
-				logger.info("executing run method to establish connection.");
+//				logger.info("executing run method to establish connection.");
 				RevoreoConnect.getInstance().getConnection();
 			}
 		});
@@ -331,5 +332,59 @@ public class FiltersDataHandler implements RequestHandler<ApiGatewayProxyRequest
 			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
 		}
 		return response;
+	}
+	
+	public GatewayResponse getSailDate(ApiGatewayProxyRequest req, Context context) {
+
+		FilterDataDTO dataDTO = null;
+		GatewayResponse response = null;
+		FilterDataValidator dataValidator = FilterDataValidator.getInstance();
+		try {
+			FiltersData request = new Gson().fromJson(req.getBody(), FiltersData.class);
+			logger.info("input: " + request);
+			response = dataValidator.validateGetRequest(request, RCCLConstants.SAIL_DATE_F);
+			if (response == null) {
+				FilterDataService dataService = FilterDataService.getInstance();
+				dataDTO = dataService.getFilterData(request, RCCLConstants.SAIL_DATE_F);
+				
+				if (dataDTO != null && dataDTO.getFilterData() != null && dataDTO.getFilterData().size() == 0) {
+					response = ResponseUtil.getCustErrorMessage(
+							rBundleUtility.getValue(RCCLConstants.ERROR_NO_RECORDS_FOUND), RCCLConstants.SC_OK,
+							RCCLConstants.REQUEST_ID);
+				} else {
+				response = new GatewayResponse(dataDTO, ResponseUtil.getHeaders(), RCCLConstants.SC_OK,
+						RCCLConstants.REQUEST_ID);
+				}
+			}
+		} catch (Exception e) {
+			logger.error("Error occurred while invoking rev_pre_getSailDate API: " + e.getMessage());
+			return ResponseUtil.getErrorMessage(e, RCCLConstants.SC_BAD_REQUEST, RCCLConstants.REQUEST_ID);
+		}
+		return response;
+	}
+	
+	
+	public static void main(String atgs[]) {
+		
+		FiltersDataHandler fh = new FiltersDataHandler();
+		
+		ApiGatewayProxyRequest apr = new ApiGatewayProxyRequest();
+		
+		FiltersData fd = new FiltersData();
+		fd.setTable_name("temp_pause_para");
+		fd.setMetaproduct("SHORT CARIBBEAN");
+		fd.setProduct_code("BAHAMA3");
+		fd.setCat_class("B");
+		fd.setShip_code("NV");
+		
+		
+		
+		apr.setBody(new GsonBuilder().serializeNulls().create().toJson(fd));
+		
+		GatewayResponse resp = fh.getOccupancy(apr, null);//getSailDate(apr, null);
+		
+		System.out.println(resp.getBody());
+		
+		
 	}
 }

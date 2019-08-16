@@ -167,6 +167,25 @@ Resources:
             RestApiId: !Ref "ApiGateway"
             Path: /occupancies_service
             Method: post
+  POSTSailDateFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub "${FunctionNamePrefix}-POSTSailDate"
+      CodeUri: .\target\rccl-pre-api-1.0.0.jar
+      Handler: com.rccl.lambda.handler.FiltersDataHandler::getSailDate
+      Role: arn:aws:iam::677948047267:role/it-ramp-dev-lambda-sr
+      Events:
+        WarmingSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{ "warmer":true,"concurrency":3 }'
+        PostEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ApiGateway"
+            Path: /saildate_service
+            Method: post
   POSTPriceRangeFunction:
     Type: AWS::Serverless::Function
     Properties:
